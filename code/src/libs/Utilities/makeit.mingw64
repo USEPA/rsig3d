@@ -1,0 +1,37 @@
+# Compile this library on MINGW-W64 Windows platform.
+# Run this script with the command: MAKEIT
+
+PATH="/c/Users/tplessel/mingw-w64/x86_64-8.1.0-posix-seh-rt_v6-rev0/mingw64/bin:/c/Users/tplessel/MinGW/msys/1.0/bin:/c/Users/tplessel/MinGW/bin:/c/WINDOWS/System32:/c/WINDOWS"
+
+# Check that we are using the 64-bit compiler:
+#gcc -m64 -v ; exit 88
+
+cls
+
+# Verify MinGW versions of the following commands are used:
+
+which gcc ar ranlib
+
+# Copy header files:
+
+cp -p *.h ../../../include/
+rm -f  ../../../lib/Win64/libUtilities.*a
+
+# Compile debug version of library:
+
+gcc -m64 -Wno-attributes -static -g -DDEBUGGING     -I../../../include -I. -c *.c
+ar -rv ../../../lib/Win64/libUtilities.debug.a *.o
+ranlib ../../../lib/Win64/libUtilities.debug.a
+rm *.o
+
+# Compile optimized version of library:
+
+gcc -m64 -Wno-attributes -static -O -DNO_ASSERTIONS -I../../../include -I. -c *.c
+ar -rv ../../../lib/Win64/libUtilities.a *.o
+ranlib ../../../lib/Win64/libUtilities.a
+rm *.o
+
+
+ls -l ../../../lib/Win64/libUtilities.*a
+file  ../../../lib/Win64/libUtilities.*a
+

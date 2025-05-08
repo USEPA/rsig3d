@@ -1,0 +1,5 @@
+CMDLINE=cc -DEFAULT:abi=n32:isa=mips4:proc=r10k -64 -mips4 -c -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -DNDEBUG -DUSE_OPENMP -mp -O -I. putget.c
+PWD=/home/plessel/projects/eutrophic/code/src/libs/NetCDF/netcdf-3.6.0-p1/src/libsrc
+----
+----
+coord_zero 4096

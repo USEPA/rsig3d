@@ -1,0 +1,20 @@
+<!DOCTYPE RCC><RCC version="1.0">
+ <qresource>
+     <file>rsig_variables.txt</file>
+     <file>rsig_availability.txt</file>
+     <file>rsig_variables_daily.txt</file>
+     <file>rsig_variables_lstdaily.txt</file>
+     <file>rsig_variables_monthly.txt</file>
+     <file>files.txt</file>
+     <file>products.txt</file>
+     <file>image/earth_sat.png</file>
+     <file>image/star_image.png</file>
+     <file>image/star_image2.png</file>
+     <file>image/pentagon.png</file>
+     <file>RSIG3D_DataUsePolicy.txt</file>
+     <file>RSIG3D_Help.txt</file>
+</qresource>
+ </RCC>
+
+
+

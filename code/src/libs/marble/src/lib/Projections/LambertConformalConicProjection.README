@@ -1,0 +1,6 @@
+EMVL HACK hard coded the standard parallels to be
+consistent with typical CMAQ Lambert projections.
+
+This is because ViewportParams.cpp declares all
+projection objects as static const.
+

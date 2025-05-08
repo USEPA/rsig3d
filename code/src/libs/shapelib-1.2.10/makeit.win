@@ -1,0 +1,24 @@
+#!/usr//bin/sh
+# Compile this library.
+
+# Determine the platform using uname:
+
+UNAME_="`uname`"
+UNAME_M="`uname -m`"
+
+if [ "$UNAME_" == 'Linux' ]
+then
+  PLATFORM="$UNAME_.$UNAME_M"
+elif [ "$UNAME_" == 'CYGWIN_NT-5.1' ]
+then
+  PLATFORM='Win32'
+else
+  PLATFORM="$UNAME_"
+fi
+
+cp -p shapefil.h ../../../include/
+gcc -O -DNDEBUG -c -I../../../include shpopen.c dbfopen.c
+ar -rv ../../../lib/$PLATFORM/libshp.a shpopen.o dbfopen.o 
+rm *.o
+ls -l ../../../lib/$PLATFORM/libshp.a
+file  ../../../lib/$PLATFORM/libshp.a

@@ -1,0 +1,44 @@
+# Compile this library on MINGW-W64 Windows platform.
+# Run this script with the command: MAKEIT
+
+PATH="/c/Users/tplessel/mingw-w64/x86_64-8.1.0-posix-seh-rt_v6-rev0/mingw64/bin:/c/Users/tplessel/MinGW/msys/1.0/bin:/c/Users/tplessel/MinGW/bin:/c/WINDOWS/System32:/c/WINDOWS"
+
+cls
+
+# Verify MinGW versions of the following commands are used:
+
+which g++ ar ranlib
+
+# Copy header files:
+
+cp -p *.h ../../../include/
+rm -f  ../../../lib/Win64/libDataset.*a
+
+# Compile debug version of library:
+
+g++ -m64 -Wall -g -DDEBUGGING -I../../../include -I. -c *.C
+ar -rv ../../../lib/Win64/libDataset.debug.a *.o
+ranlib ../../../lib/Win64/libDataset.debug.a
+rm *.o
+
+# Compile optimized version of library:
+
+g++ -m64 -Wall -O -DNO_ASSERTIONS -I../../../include -I. -c *.C
+ar -rv ../../../lib/Win64/libDataset.a *.o
+ranlib ../../../lib/Win64/libDataset.a
+rm *.o
+
+# Compile tester:
+
+g++ -m64 -Wall -ffloat-store -g -DDEBUGGING -I../../../include -I. -c -o test/tester.o test/tester.C
+
+# Link tester with either debug or optimized version of library:
+
+  g++ -m64 -static -ffloat-store -o test/tester.exe test/tester.o -L../../../lib/Win64 -lDataset.debug -lUtilities.debug -lnetcdf -lhdf5 -lhdf5_hl -lShapefile -lGPC -lPNG -lz -lm
+##g++ -m64 -static -ffloat-store -o test/tester.exe test/tester.o -L../../../lib/Win64 -lDataset       -lUtilities       -lnetcdf -lhdf5 -lhdf5_hl -lShapefile -lGPC -lPNG -lz -lm
+
+rm test/tester.o
+
+ls -l ../../../lib/Win64/libDataset.*a test/tester.exe
+file  ../../../lib/Win64/libDataset.*a test/tester.exe
+

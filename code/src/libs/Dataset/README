@@ -1,0 +1,51 @@
+
+This Library depends on the following internal libraries:
+  Utilities
+and external open-source libraries:
+  GPC
+  shp
+  netcdf
+  PNG
+  z
+and standard system librariess:
+  m
+
+Class Dependencies:
+(*) Indicates non-instantiable
+Inheritance is indicated by indentation
+
+Dataset (*)
+  AircraftDataset
+  CALIPSODataset
+  CMAQDataset
+  PointDataset
+  PolygonDataset
+  ProfileDataset
+  SiteDataset
+  SwathDataset
+  RegriddedDataset (*)
+    RegriddedAircraftDataset
+    RegriddedCALIPSODataset
+    RegriddedPointDataset
+    RegriddedProfileDataset
+    RegriddedSiteDataset
+    RegriddedSwathDataset
+
+DatasetManager - Manages a collection of datasets. Thus uses instances of above.
+
+Helper classes used by the above classes:
+Lower classes have fewer dependencies.
+
+CMAQGridParameters
+QueryParameters
+MapProjection
+  Albers
+  Lambert
+  Mercator
+  Stereographic
+Bounds
+Timestamp
+HTTPConnection
+DataFilterParameters
+DataUtilities
+ResourceHandler

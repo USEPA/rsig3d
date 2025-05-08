@@ -1,0 +1,47 @@
+<span style="font-weight:normal;">
+<font size="5">
+<center><b>Data Use Policy: US EPA Remote Sensing Information Gateway Data</b></center><br>
+</font>
+
+The Remote Sensing Information Gateway (RSIG) is a web-based tool that allows access to a variety of distributed environmental datasets in a highly efficient manner.   RSIG is NOT the producer of the data, but a conduit for the users to the data sets. As such we request users respect the data use policies established by the providers of the data sets to which RSIG has been granted access.
+<br><br>
+
+<font size="4">
+<b>RSIG Statement of use and queries of CMAQ data:</b><br><br>
+</font>
+
+CMAQ data are being distributed through RSIG to help ease data access for users.  Users downloading and using CMAQ data are encouraged to read the following information related to CMAQ model configurations used to produce the CMAQ output available via RSIG. Use of CMAQ data in certain applications and analyses may be inappropriate and lead to improper conclusions, and it is the users responsibility to ensure the proper utilization of the data.
+<br><br>
+
+RSIG users are requested to visit the <a href=https://www2.epa.gov/air-research/community-multi-scale-air-quality-cmaq-modeling-system-air-quality-management>CMAQ website</a> for answers to general questions. Due to time constraints, it is currently not feasible to support questions regarding the implementation or data. use of CMAQ runs either by EPA scientists or support contractors regarding the science behind the CMAQ runs.
+<br><br>
+
+<font size="4">
+<b>URL links to data use policies of RSIG data providers:</b><br><br> 
+</font>
+
+The following URLs to data use policies are provided for RSIG user convenience. However, if no link is provided to a data policy for the data set(s) you are using from RSIG, it is the user's responsibility to ensure they are respecting any data use policy for the data set(s).
+<br><br>
+
+Air Quality System (AQS): <a href=https://www.epa.gov/ttn/airs/aqsdatamart>https://www.epa.gov/ttn/airs/aqsdatamart</a><br><br>
+
+AIRNow: <a href=http://www.airnowgateway.org/GatewayDataUseGuidelines.pdf>http://www.airnowgateway.org/GatewayDataUseGuidelines.pdf</a><br><br>
+
+NASA Langley Atmospheric Science Data Center: <a href=http://eosweb.larc.nasa.gov/content/how-do-i-acknowledge-use-sse-data>http://eosweb.larc.nasa.gov/content/how-do-i-acknowledge-use-sse-data</a><br><br>
+
+NASA Goddard Data Center: <a href=http://modis-atmos.gsfc.nasa.gov/MOD04_L2>href=http://modis-atmos.gsfc.nasa.gov/MOD04_L2</a><br><br>
+
+NOAA NESDIS Air Quality Remote Sensing Program GOES Aerosol and Smoke Product (GASP) Algorithm and Data: <a href=http://www.star.nesdis.noaa.gov/star/AQ_productspolicy.php>http://www.star.nesdis.noaa.gov/star/AQ_productspolicy.php</a><br><br> 
+
+IAGOS Measurement of OZone and water vapour by AIrbus in-service airCraft (MOZAIC) <a href=http://www.iagos.fr/web/rubrique13.html>http://www.iagos.fr/web/rubrique13.html</a><br><br>
+
+TROPOMI - ESA/EU Copernicus program: <a href="http://www.tropomi.eu">http://www.tropomi.eu</a><br><br>
+
+<font size="4">
+<b>RSIG Citation Policy:</b><br><br>
+</font>
+
+In the event RSIG is used as a tool to facilitate your research, please supply the following acknowledgment within your published work, in addition to complying with the stated data use policy: "Data used were obtained through the Remote Sensing Information Gateway located at the U.S. Environmental Protection Agency National Computing Center (NCC) (https://www.epa.gov/rsig)." If possible, please e-mail us citations of papers or oral presentations based on data obtained from the RSIG (rsig@epa.gov). This will help us to stay informed of how the RSIG and being used and help us communicate back to RSIG data provider.<br><br>
+
+By accepting this agreement you agree to abide by this data use policy, and by the data use policies of the respective data providers.  
+</span>

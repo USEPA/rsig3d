@@ -1,0 +1,16 @@
+<span style="font-weight:normal;">
+<font size="5">
+<center><b>RSIG3D Tips</b></center>
+</font>
+
+<font size="4">
+  <br>
+  <ul>
+   <li><b>What's new in RSIG3D?:</b> <a href="https://www.epa.gov/hesc/rsig3d-release-history">Find out here</a>.</li><br>
+   <li>You can learn about RSIG3D functions by hovering the mouse over GUI elements (buttons, menus, checkboxes, etc.).</li><br>
+   <li>Hovering the mouse over a data source will give you information about that source and its availability.</li><br>
+   <li>If you do not want to see the tooltips, they can be turned off in the "Map" tab global options.</li><br>
+   <li>Check out the <a href="https://www.epa.gov/hesc/rsig3d-video-demonstrations">tutorial videos for new users</a>.</li><br>
+  </ul><br>
+</font>
+

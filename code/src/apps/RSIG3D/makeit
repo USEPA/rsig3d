@@ -1,0 +1,533 @@
+#!/bin/sh
+#############################################################################
+# Compile RSGI3D on non-Windows platforms.
+# All script variables begin with MY_ so they don't clash with env.
+# 2024-10-21 plessel.todd@epa.gov
+#############################################################################
+
+MY_HOME=$HOME
+
+for repeat in {1..100} ; do echo ; done
+clear
+echo "Using PATH:"
+echo $PATH
+echo
+echo "Using g++:"
+which g++
+g++ -m64 -v
+
+# Determine the platform using uname:
+
+MY_UNAME="`uname`"
+MY_UNAME_M="`uname -m`"
+MY_PLATFORM="${MY_UNAME}.$MY_UNAME_M"
+
+echo ; echo "Platform is $MY_PLATFORM" ; echo
+
+#############################################################################
+# Here is where RSIG3D code is installed for this platform:
+
+#MY_RSIG3D_DIR="$MY_HOME/projects/rsig/dev/RSIG3D"
+MY_RSIG3D_DIR="/home/mfreem02/github/rsig3d"
+
+#############################################################################
+# Here is where QT is installed for this platform:
+
+if [ "$MY_PLATFORM" == 'Darwin.x86_64' ]
+then
+  #MY_QT_DIR="$MY_RSIG3D_DIR/package/QT/Darwin.x86_64/4.8.6static"
+  MY_QT_DIR="$MY_RSIG3D_DIR/code/package/QT/Darwin.x86_64/4.8.6static"
+elif [ "$MY_PLATFORM" == 'Linux.x86_64' ]
+then
+  #MY_QT_DIR="$MY_RSIG3D_DIR/package/QT/Linux.x86_64/4.8.3static"
+  MY_QT_DIR="$MY_RSIG3D_DIR/code/package/QT/Linux.x86_64/4.8.3static"
+else
+  echo 'Unsupported platform.'
+  exit 1
+fi
+
+echo "MY_QT_DIR = $MY_QT_DIR"
+
+MY_QT_INCLUDE_DIR="$MY_QT_DIR/include"
+MY_QT_LIB_DIR="$MY_QT_DIR/lib"
+MY_QT_BIN_DIR="$MY_QT_DIR/bin"
+MY_QT_RCC="$MY_QT_BIN_DIR/rcc"
+MY_QT_UIC="$MY_QT_BIN_DIR/uic"
+MY_QT_MOC="$MY_QT_BIN_DIR/moc"
+
+if [ "$MY_PLATFORM" == 'Darwin.x86_64' ]
+then
+  MY_QT_MOC="$MY_QT_MOC -D__APPLE__"
+fi
+
+MY_QT_IFLAGS=\
+" -I$MY_QT_INCLUDE_DIR "\
+" -I$MY_QT_INCLUDE_DIR/phonon "\
+" -I$MY_QT_INCLUDE_DIR/phonon_compat "\
+" -I$MY_QT_INCLUDE_DIR/ActiveQt "\
+" -I$MY_QT_INCLUDE_DIR/Qt "\
+" -I$MY_QT_INCLUDE_DIR/QtCore "\
+" -I$MY_QT_INCLUDE_DIR/QtDBus "\
+" -I$MY_QT_INCLUDE_DIR/QtDeclarative "\
+" -I$MY_QT_INCLUDE_DIR/QtDesigner "\
+" -I$MY_QT_INCLUDE_DIR/QtGui "\
+" -I$MY_QT_INCLUDE_DIR/QtHelp "\
+" -I$MY_QT_INCLUDE_DIR/QtMeeGoGraphicsSystemHelper "\
+" -I$MY_QT_INCLUDE_DIR/QtMultimedia "\
+" -I$MY_QT_INCLUDE_DIR/QtNetwork "\
+" -I$MY_QT_INCLUDE_DIR/QtOpenGL "\
+" -I$MY_QT_INCLUDE_DIR/QtOpenVG "\
+" -I$MY_QT_INCLUDE_DIR/QtScript "\
+" -I$MY_QT_INCLUDE_DIR/QtScriptTools "\
+" -I$MY_QT_INCLUDE_DIR/QtSql "\
+" -I$MY_QT_INCLUDE_DIR/QtSvg "\
+" -I$MY_QT_INCLUDE_DIR/QtTest "\
+" -I$MY_QT_INCLUDE_DIR/QtUiTools "\
+" -I$MY_QT_INCLUDE_DIR/QtWebKit "\
+" -I$MY_QT_INCLUDE_DIR/QtXml "\
+" -I$MY_QT_INCLUDE_DIR/QtXmlPatterns "\
+""
+
+MY_QT_DFLAGS=\
+" -DUNICODE "\
+" -DQT_STATIC "\
+" -DQGLVIEWER_STATIC "\
+" -DQT_NO_DEBUG "\
+" -DQT_GUI_LIB "\
+" -DQT_CORE_LIB "\
+" -DQT_NETWORK_LIB "\
+" -DQT_OPENGL_LIB "\
+" -DQT_OPENGL_SUPPORT "\
+" -DQR_XML_LIB "\
+" -DQT_HAVE_MMX "\
+" -DQT_HAVE_SSE "\
+" -DQT_HAVE_MMXEXT "\
+" -DQT_HAVE_SSE2 "\
+" -DQT_THREAD_SUPPORT "\
+""
+
+#############################################################################
+# Other (non-QT) libraries used by this application:
+
+# HACK: marble library header.h files incorrectly use #include "" instead of <dir/subdir>
+# so the entire sub-directory structure must be used with -I here:
+
+MY_MARBLE_IFLAGS=\
+" -Imarble "\
+" -Imarble/Projections "\
+" -Imarble/blendings "\
+" -Imarble/geodata "\
+" -Imarble/geodata/data "\
+" -Imarble/geodata/graphicsitem "\
+" -Imarble/geodata/handlers "\
+" -Imarble/geodata/handlers/dgml "\
+" -Imarble/geodata/handlers/kml "\
+" -Imarble/geodata/handlers/osm-namefinder "\
+" -Imarble/geodata/parser "\
+" -Imarble/geodata/scene "\
+" -Imarble/geodata/writer "\
+" -Imarble/geodata/writers "\
+" -Imarble/geodata/writers/dgml "\
+" -Imarble/geodata/writers/kml "\
+" -Imarble/graphicsview "\
+" -Imarble/layers "\
+" -Imarble/routing "\
+" -Imarble/routing/instructions "\
+""
+
+MY_INCLUDE_DIR="$MY_RSIG3D_DIR/code/include"
+MY_LIB_DIR="$MY_RSIG3D_DIR/code/lib/$MY_PLATFORM"
+
+# Available libraries: Dataset Utilities Shapefile GPC netcdf hdf hdf_hl QMapControl PropertyEditor marble glew freeglut PNG Z m
+
+MY_QT_DEPENDENT_LFLAGS=\
+" -lQMapControl "\
+" -lPropertyEditor "\
+" -lmarble "\
+""
+
+MY_LIB_LFLAGS=\
+" -lDataset "\
+" -lUtilities "\
+" -lShapefile "\
+" -lGPC "\
+" -lnetcdf "\
+" -lglew "\
+" -lPNG "\
+""
+
+#" -lhdf5_hl "\
+#" -lhdf5 "\
+
+
+#############################################################################
+# Files for this application:
+
+MY_BIN_DIR="$MY_RSIG3D_DIR/code/bin/$MY_PLATFORM"
+MY_EXECUTABLE="$MY_BIN_DIR/RSIG3D"
+MY_BUILD_DIR=junk_build_dir
+
+# Note RSIG3D.qrc requires files *.txt and image/*.png during compilation.
+
+# These are handled when compiling the marble and PropertyEditor libraries:
+#" ../../libs/marble/src/lib/libmarble.qrc "\
+#" ../../libs/marble/src/marble.qrc "\
+#" ../../libs/PropertyEditor/src/types/stringlist.qrc "\
+
+MY_QRC_FILES=\
+" RSIG3D.qrc "\
+""
+
+MY_UI_FILES=\
+" boundingbox.ui "\
+" cmaqfilereader.ui "\
+" controldockwidget.ui "\
+" datausepolicy.ui "\
+" downloaddialog.ui "\
+" filedownloader.ui "\
+" filtersetting.ui "\
+" regridparms.ui "\
+" rsig3dhelp.ui "\
+""
+
+MY_MOC_HEADER_FILES=\
+" CMAQFileReaderDialog.h "\
+" ControlDockWidget.h "\
+" DataPreferences.h "\
+" DataUsePolicy.h "\
+" FileOrientedDownloader.h "\
+" FileOrientedDownloaderWorker.h "\
+" FilterSettingDialog.h "\
+" GLProxyGraphicsWidget.h "\
+" GeoDataList.h "\
+" GeoDataObject.h "\
+" GeoDataPropertyEdit.h "\
+" GraphicsView.h "\
+" HttpDownloadDialog.h "\
+" LonlatBoundingBoxWidget.h "\
+" LookupTableWidget.h "\
+" MainWin.h "\
+" ModisTrueColor.h "\
+" OpenGLScene.h "\
+" PointRenderer.h "\
+" PolygonRenderer.h "\
+" RSIG3DHelp.h "\
+" RSIGScene.h "\
+" RegridParmsDialog.h "\
+" SlantLookupTableWidget.h "\
+" VectorRenderer.h "\
+" VisDataList.h "\
+" VisDataObject.h "\
+" VisDataObjectProperties.h "\
+" VisDataPropertyEdit.h "\
+" VisOptions.h "\
+""
+
+MY_SOURCE_FILES=\
+" loadPNG.c "\
+" CMAQFileReaderDialog.cpp "\
+" CMAQFileReaderModel.cpp "\
+" CeilometerCurtainArray.cpp "\
+" ControlDockWidget.cpp "\
+" ControlDockWidget_init.cpp "\
+" ControlDockWidget_slots.cpp "\
+" DataPreferences.cpp "\
+" DataUsePolicy.cpp "\
+" FileOrientedDownloader.cpp "\
+" FileOrientedDownloaderWorker.cpp "\
+" FilterSettingData.cpp "\
+" FilterSettingDialog.cpp "\
+" GLProxyGraphicsItem.cpp "\
+" GLProxyGraphicsWidget.cpp "\
+" GLSLProgramObject.cpp "\
+" GeoDataList.cpp "\
+" GeoDataObject.cpp "\
+" GeoDataPropertyEdit.cpp "\
+" GetData.cpp "\
+" GraphicsView.cpp "\
+" HttpDownloadDialog.cpp "\
+" LoadMapFile.cpp "\
+" LonlatBoundingBoxWidget.cpp "\
+" LookupTable.cpp "\
+" LookupTableWidget.cpp "\
+" MainWin.cpp "\
+" ModisTrueColor.cpp "\
+" OpenGLScene.cpp "\
+" PointRenderer.cpp "\
+" PolygonRenderer.cpp "\
+" RGBColormap.cpp "\
+" RSIG3DHelp.cpp "\
+" RSIGGlobal.cpp "\
+" RSIGScene.cpp "\
+" RegridParmsData.cpp "\
+" RegridParmsDialog.cpp "\
+" RenderingContext.cpp "\
+" RenderingContextRSIG.cpp "\
+" RenderingContextRSIGBase.cpp "\
+" ShadersManagement.cpp "\
+" SlantLookupTableWidget.cpp "\
+" VectorRenderer.cpp "\
+" VisDataList.cpp "\
+" VisDataObject.cpp "\
+" VisDataObjectProperties.cpp "\
+" VisDataPropertyEdit.cpp "\
+" VisOptions.cpp "\
+" main.cpp "\
+""
+
+#############################################################################
+# Compilation flags for this application:
+
+MY_CFLAGS="-m64 -Wall -Wextra -O -pipe -frtti -fexceptions -Wno-deprecated-declarations"
+MY_LDD=ldd
+
+if [ "$MY_PLATFORM" == 'Darwin.x86_64' ]
+then
+  MY_CFLAGS="$MY_CFLAGS -mmacosx-version-min=10.12"
+  MY_LDD='otool -L'
+fi
+
+#" -DGLUT_DISABLE_ATEXIT_HACK "\
+
+MY_DFLAGS=\
+" $MY_QT_DFLAGS "\
+" -DUSE_INTERNAL_MARBLE "\
+" -DUSE_QT_LIB "\
+" -DGLEW_STATIC "\
+" -DGL_SILENCE_DEPRECATED "\
+" -DNDEBUG "\
+" -DNO_ASSERTIONS "\
+""
+
+MY_IFLAGS="-I. -I$MY_BUILD_DIR $MY_QT_IFLAGS $MY_MARBLE_IFLAGS -I$MY_INCLUDE_DIR"
+
+if [ "$MY_PLATFORM" == 'Darwin.x86_64' ]
+then
+MY_SYSTEM_LFLAGS=\
+" -framework AGL "\
+" -framework Cocoa "\
+" -framework OpenGL "\
+" -framework GLUT "\
+" -framework Security "\
+" -framework Carbon "\
+" -framework ApplicationServices "\
+" -framework SystemConfiguration "\
+" -lz "\
+" -lm "\
+""
+elif [ "$MY_PLATFORM" == 'Linux.x86_64' ]
+then
+MY_SYSTEM_LFLAGS=\
+" -lglut "\
+" -lGLU "\
+" -lGL "\
+" -lmng "\
+" -lSM "\
+" -lICE "\
+" -lXrender "\
+" -lfreetype "\
+" -lXext "\
+" -lX11 "\
+" -lrt "\
+" -ldl "\
+" -lpthread "\
+" -lz "\
+" -lm "\
+""
+fi
+
+
+# The order of libraries matters! Highest level first, lowest-level last.
+
+MY_LFLAGS=\
+" -L$MY_LIB_DIR "\
+" -L$MY_QT_LIB_DIR "\
+" $MY_QT_DEPENDENT_LFLAGS "\
+" -lQtOpenGL "\
+" -lQtGui "\
+" -lQtXml "\
+" -lQtSvg "\
+" -lQtNetwork "\
+" -lQtCore "\
+" $MY_LIB_LFLAGS "\
+" $MY_SYSTEM_LFLAGS "\
+""
+
+#" -lqtmain "\
+
+
+MY_LINK_FLAGS="-m64"
+
+#############################################################################
+# Recreate build directory:
+
+if [ -d $MY_BUILD_DIR ]
+then
+  rm -rf $MY_BUILD_DIR
+fi
+
+mkdir -p $MY_BUILD_DIR/types
+
+#############################################################################
+# Run rcc on *.qrc files to create qrc_*.cxx files:
+
+echo
+echo '=============== Runnng rcc on *.qrc files to create qrc_*.cxx files'
+echo
+
+for MY_QRC_FILE in $MY_QRC_FILES
+do
+  # Extract name by removing path and extension:
+  MY_QRC_NAME=`echo $MY_QRC_FILE | awk -F/ '{ print $NF }' | awk -F. '{ print $1 }'`
+  MY_QRC_SOURCE_FILE=$MY_BUILD_DIR/qrc_$MY_QRC_NAME.cxx
+  echo
+  echo "----- $MY_QRC_FILE -> $MY_QRC_SOURCE_FILE"
+  echo
+  $MY_QT_RCC -name $MY_QRC_NAME -o $MY_QRC_SOURCE_FILE $MY_QRC_FILE &
+done
+
+for pid in `jobs -p`; do wait $pid || exit 1 ; done # Stop if any failure.
+
+#############################################################################
+# Compiling qrc_*.cxx files:
+
+echo
+echo '=============== Compiling qrc_*.cxx files'
+echo
+
+for MY_QRC_FILE in $MY_QRC_FILES
+do
+  # Extract name by removing path and extension:
+  MY_QRC_NAME=`echo $MY_QRC_FILE | awk -F/ '{ print $NF }' | awk -F. '{ print $1 }'`
+  MY_QRC_SOURCE_FILE=$MY_BUILD_DIR/qrc_$MY_QRC_NAME.cxx
+  MY_QRC_OBJECT_FILE=${MY_QRC_SOURCE_FILE%cxx}o
+  echo
+  echo "----- $MY_QRC_SOURCE_FILE -> $MY_QRC_OBJECT_FILE"
+  echo
+  g++ $MY_CFLAGS $MY_DFLAGS $MY_IFLAGS -c $MY_QRC_SOURCE_FILE -o $MY_QRC_OBJECT_FILE &
+done
+
+for pid in `jobs -p`; do wait $pid || exit 1 ; done # Stop if any failure.
+
+#############################################################################
+# Run uic on *.ui files to generate ui_*.h header files:
+
+echo
+echo '=============== Runnng uic on *.ui files to create ui_*.h files'
+echo
+
+for MY_UI_FILE in $MY_UI_FILES
+do
+  # Replace .ui with .h:
+  MY_UI_HEADER_FILE=${MY_UI_FILE%ui}h
+  # Prepend ui_ to pathed header file name:
+  MY_UI_HEADER_FILE=`echo $MY_UI_HEADER_FILE | awk -F/ '{ for (i = 1; i < NF; ++i ) { printf "%s/", $i } printf "ui_%s", $NF }'`
+  echo
+  echo "----- $MY_UI_FILE -> $MY_UI_HEADER_FILE"
+  echo
+  $MY_QT_UIC $MY_UI_FILE -o $MY_UI_HEADER_FILE &
+done
+
+for pid in `jobs -p`; do wait $pid || exit 1 ; done # Stop if any failure.
+
+#############################################################################
+# Run moc on *.h files to generate moc_*.cxx source files:
+# https://stackoverflow.com/questions/34928933/why-is-important-to-include-moc-file-at-end-of-a-qt-source-code-file
+
+echo
+echo '=============== Running moc on *.h files to create moc_*.cxx files'
+echo
+
+for MY_MOC_HEADER_FILE in $MY_MOC_HEADER_FILES
+do
+  # Replace .h with .cxx:
+  MY_MOC_SOURCE_FILE=${MY_MOC_HEADER_FILE%h}cxx
+  # Prepend moc_ to pathed source file name:
+  MY_MOC_SOURCE_FILE=`echo $MY_MOC_SOURCE_FILE | awk -F/ '{ for (i = 1; i < NF; ++i ) { printf "%s/", $i } printf "moc_%s", $NF }'`
+  MY_MOC_SOURCE_FILE=$MY_BUILD_DIR/$MY_MOC_SOURCE_FILE
+  echo
+  echo "----- $MY_MOC_HEADER_FILE -> $MY_MOC_SOURCE_FILE"
+  echo
+  $MY_QT_MOC $MY_DFLAGS $MY_IFLAGS $MY_MOC_HEADER_FILE -o $MY_MOC_SOURCE_FILE &
+done
+
+for pid in `jobs -p`; do wait $pid || exit 1 ; done # Stop if any failure.
+
+#############################################################################
+# Compile moc_*.cxx files to moc_*.o files:
+
+echo
+echo '=============== Compiling moc_.cxx files to moc_.o files'
+echo
+
+for MY_MOC_HEADER_FILE in $MY_MOC_HEADER_FILES
+do
+  # Replace .h with .cxx:
+  MY_MOC_SOURCE_FILE=${MY_MOC_HEADER_FILE%h}cxx
+  # Prepend moc_ to pathed source file name:
+  MY_MOC_SOURCE_FILE=`echo $MY_MOC_SOURCE_FILE | awk -F/ '{ for (i = 1; i < NF; ++i ) { printf "%s/", $i } printf "moc_%s", $NF }'`
+  MY_MOC_SOURCE_FILE=$MY_BUILD_DIR/$MY_MOC_SOURCE_FILE
+  MY_MOC_OBJECT_FILE=${MY_MOC_SOURCE_FILE%cxx}o
+  echo
+  echo "----- $MY_MOC_SOURCE_FILE -> $MY_MOC_OBJECT_FILE"
+  echo
+  g++ $MY_CFLAGS $MY_DFLAGS $MY_IFLAGS -c $MY_MOC_SOURCE_FILE -o $MY_MOC_OBJECT_FILE &
+done
+
+for pid in `jobs -p`; do wait $pid || exit 1 ; done # Stop if any failure.
+
+#############################################################################
+# Compile non-moc .cpp files:
+
+echo
+echo '=============== Compiling *.cpp files to *.o files'
+echo
+
+for MY_SOURCE_FILE in $MY_SOURCE_FILES
+do
+  MY_OBJECT_FILE="$MY_BUILD_DIR/${MY_SOURCE_FILE%cpp}o"
+  echo
+  echo "----- $MY_SOURCE_FILE -> $MY_OBJECT_FILE"
+  echo
+  g++ $MY_CFLAGS $MY_DFLAGS $MY_IFLAGS -c $MY_SOURCE_FILE -o $MY_OBJECT_FILE &
+done
+
+for pid in `jobs -p`; do wait $pid || exit 1 ; done # Stop if any failure.
+
+#############################################################################
+# Link all .o files with library static *.a files and system libraries:
+
+echo
+echo '=============== Linking *.o files with lib*.a files and system libraries'
+echo
+
+MY_OBJECT_FILES="$MY_BUILD_DIR/*.co $MY_BUILD_DIR/*.o"
+
+ls -l $MY_OBJECT_FILES
+file  $MY_OBJECT_FILES
+echo
+
+echo "g++ $MY_LINK_FLAGS -o $MY_EXECUTABLE $MY_OBJECT_FILES $MY_LFLAGS"
+
+g++ $MY_LINK_FLAGS -o $MY_EXECUTABLE $MY_OBJECT_FILES $MY_LFLAGS
+
+if [ $? != 0 ] ; then exit $? ; fi
+
+echo
+
+strip   $MY_EXECUTABLE
+
+if [ ! -d $MY_HOME/RSIG3D ]
+then
+  cp -pr $MY_BIN_DIR $MY_HOME/RSIG3D
+else
+  cp -p $MY_EXECUTABLE $MY_HOME/RSIG3D/
+fi
+
+$MY_LDD $MY_EXECUTABLE
+ls -l   $MY_EXECUTABLE
+file    $MY_EXECUTABLE
+ls -Flast  $MY_HOME/RSIG3D
+
+echo Done
+

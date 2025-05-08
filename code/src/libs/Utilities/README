@@ -1,0 +1,61 @@
+
+Utilities Library: Reusable C routines.
+
+README - This file.
+makeit - C Shell script to compile this code into
+         ../../../include/*.h
+         ../../../lib/$platform/libUtility.a
+         ../../../lib/$platform/libUtility.debug.a
+Assertions.h         - Assertions macros for implementing Design By Contract.
+Utilities.[hc]       - Miscellaneous C utility routines.
+DateTime.[hc]        - Date-time routines.
+PNGFile.[hc]         - PNG image file helper routines.
+ImageFile.[hc]       - .bin image file routines.
+MapFile.[hc]         - .bin map lines file routines.
+NetCDFUtilities.[hc] - NetCDF 3 file helper routines.
+Shapefile.[hc]       - ESRI Shapefile helper routines.
+KMLFile.[hc]         - KML graphics file helper routines.
+test/tester.c        - Unit tester for this library.
+test/tester          - Unit tester executable.
+test/                - Directory of test code and data.
+
+This library uses external open source libraries: -lnetcdf -lshp -lGPC -lPNG -lZ
+Here are the file dependencies (indentation means directly uses):
+
+KMLFile
+        Assertions
+      Utilities
+        Assertions
+      DateTime
+        Assertions
+  Shapefile
+          shp
+          GPC
+      Utilities
+        Assertions
+      DateTime
+        Assertions
+
+    NetCDFUtilities
+          netcdf
+        Assertions
+      Utilities
+        Assertions
+      DateTime
+        Assertions
+
+    ImageFile
+        Assertions
+      Utilities
+        Assertions
+
+    MapFile
+        Assertions
+      Utilities
+        Assertions
+
+    PNGFile
+          PNG
+            Z
+
+

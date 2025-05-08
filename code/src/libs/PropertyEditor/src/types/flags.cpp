@@ -1,0 +1,143 @@
+/***************************************************************************
+ *   This file is part of the propertyEditor project                       *
+ *   Copyright (C) 2008 by BogDan Vatra                                    *
+ *   bog_dan_ro@yahoo.com                                                  *
+ **                   GNU General Public License Usage                    **
+ *                                                                         *
+ *   This library is free software: you can redistribute it and/or modify  *
+ *   it under the terms of the GNU General Public License as published by  *
+ *   the Free Software Foundation, either version 3 of the License, or     *
+ *   (at your option) any later version.                                   *
+ *   You should have received a copy of the GNU General Public License     *
+ *   along with this program.  If not, see <http://www.gnu.org/licenses/>. *
+ *                                                                         *
+ **                  GNU Lesser General Public License                    **
+ *                                                                         *
+ *   This library is free software: you can redistribute it and/or modify  *
+ *   it under the terms of the GNU Lesser General Public License as        * 
+ *   published by the Free Software Foundation, either version 3 of the    *
+ *   License, or (at your option) any later version.                       *
+ *   You should have received a copy of the GNU Lesser General Public      *
+ *   License along with this library.                                      * 
+ *   If not, see <http://www.gnu.org/licenses/>.                           *
+ *                                                                         *
+ *   This library is distributed in the hope that it will be useful,       *
+ *   but WITHOUT ANY WARRANTY; without even the implied warranty of        *
+ *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the         *
+ *   GNU General Public License for more details.                          *
+ ****************************************************************************/
+
+#include <QtCore>
+#include <QMetaProperty>
+#include <QMetaEnum>
+#include <QPushButton>
+#include <QListWidget>
+
+#include "flagslist.h"
+#include "flags.h"
+
+namespace PropertyEditor
+{
+
+Flags::Flags(QObject* parent, QObject* object, int property, const PropertyModel* propertyModel): 
+	PropertyInterface(parent, object, property, propertyModel)
+{
+}
+
+QWidget* Flags::createEditor(QWidget * parent, const QModelIndex & index)
+{
+	ObjectInfo *info = reinterpret_cast<ObjectInfo*>(index.internalPointer());
+	m_objectInfo = info;
+	
+	QPushButton * bt = new QPushButton(parent);
+	bt->setText(tr("Change flags"));
+	connect(bt, SIGNAL(pressed()), this, SLOT(buttonPressed()));
+	return bt;
+}
+
+void Flags::buttonPressed()
+{
+	FlagsList f;
+	QObject* obj = m_objectInfo->m_object;
+	int propertyid = m_objectInfo->m_property;
+	const QMetaObject * metaobj = obj->metaObject();
+	
+	f.setWindowTitle(QString(metaobj->property(propertyid).name()) + tr(" flags"));
+	f.list->clear();
+
+	for (int en = 0; en < metaobj->enumerator(metaobj->indexOfEnumerator(metaobj->property(propertyid).typeName())).keyCount();en++)
+	{
+		f.list->addItem(metaobj->enumerator(metaobj->indexOfEnumerator(metaobj->property(propertyid).typeName())).key(en));
+		f.list->item(en)->setFlags(Qt::ItemIsUserCheckable | Qt::ItemIsEnabled | Qt::ItemIsSelectable);
+		f.list->item(en)->setCheckState((value(m_objectInfo).toInt() & metaobj->enumerator(metaobj->indexOfEnumerator(metaobj->property(propertyid).typeName())).value(en)) ? Qt::Checked : Qt::Unchecked);
+	}
+
+	if (f.exec() == QDialog::Rejected)
+		return;
+
+	int flags = 0;
+	for (int fl = 0;fl < f.list->count();fl++)
+		if (f.list->item(fl)->checkState() == Qt::Checked)
+			flags |= metaobj->enumerator(metaobj->indexOfEnumerator(metaobj->property(propertyid).typeName())).value(fl);
+
+	setValue(m_objectInfo, flags);
+}
+
+QVariant Flags::data(const QModelIndex & index)
+{
+	ObjectInfo *info = reinterpret_cast<ObjectInfo*>(index.internalPointer());	
+	if (!index.isValid() || info->m_object==NULL || info->m_property==-1)
+		return QVariant();
+
+	QObject* obj = info->m_object;
+	int propertyid = info->m_property;
+	const QMetaObject * metaobj = obj->metaObject();
+	switch (index.column())
+	{
+		case 0:
+			return metaobj->property(propertyid).name();
+
+		case 1:
+			QString s = "[";
+			for (int en = 0;en < metaobj->enumerator(metaobj->indexOfEnumerator(metaobj->property(propertyid).typeName())).keyCount();en++)
+				if (value(info).toInt() & metaobj->enumerator(metaobj->indexOfEnumerator(metaobj->property(propertyid).typeName())).value(en))
+				{
+					if (s.size() > 1)
+						s += QString("|") + QString(metaobj->enumerator(metaobj->indexOfEnumerator(metaobj->property(propertyid).typeName())).key(en));
+					else
+						s += QString(metaobj->enumerator(metaobj->indexOfEnumerator(metaobj->property(propertyid).typeName())).key(en));
+				}
+			s += "]";
+			return s;
+	}
+	return QVariant();
+}
+
+/*
+bool Flags::canHandle(QObject * object, int propertyID)const
+{
+    if (object==NULL) return false;
+    const QMetaProperty pro = object->metaObject()->property(propertyID);
+	if (pro.isFlagType())
+		return true;
+
+	return false;
+}
+*/
+
+PropertyInterface* Flags::getInstance(void)
+{
+	static Flags var;
+	var.m_shared = true;	
+	return &var;
+}
+
+int Flags::supportedTypes(int typebuffer[]) const
+{
+	//typebuffer[0] = QVariant::String;
+	return 0;
+}
+
+
+//Q_EXPORT_PLUGIN2(flags, Flags);
+}//namespace PropertyEditor

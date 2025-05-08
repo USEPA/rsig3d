@@ -1,0 +1,339 @@
+#!/bin/sh
+# PURPOSE: makeit - Compile debug and optimized library and tester.
+#
+# NOTES:
+#  Compile:
+#    makeit
+#  Run tester:
+#    test/tester
+#  Produce performance profile report:
+#    makeit 4profile ; test/tester ; makeit profile
+#  Produce code coverage report:
+#    makeit 4coverage ; test/tester ; makeit coverage
+#  Produce static analysis report:
+#    makeit lint
+#  Produce metrics report:
+#    makeit metrics
+#  Produce code API documentation:
+#    makeit doc
+#  Remove all generated artifacts:
+#    makeit clean
+#
+# HISTORY: 2013-01-27 plessel.todd@epa.gov
+
+SOURCE="\
+Utilities.c \
+DateTime.c \
+PNGFile.c \
+MapFile.c \
+ImageFile.c \
+NetCDFUtilities.c \
+Shapefile.c \
+KMLFile.c \
+"
+
+HEADERS="Assertions.h `echo $SOURCE | sed 's/\.[cC]/\.h/g'`"
+
+LIBS="-lnetcdf -lshp -lGPC -lPNG -lz -lm"
+
+# Determine the platform using uname:
+
+UNAME_="`uname`"
+UNAME_M="`uname -m`"
+PLATFORM="$UNAME_.$UNAME_M"
+
+for repeat in {1..100} ; do echo ; done
+if [ "$PLATFORM" != 'Win32' ] ; then clear ; fi
+echo ; echo "Platform is $PLATFORM" ; echo
+
+# Add utilities to path:
+
+PATH="$PATH:../../utilities/bin:../../utilities/bin/$PLATFORM"
+
+# Set Compiler flags:
+
+CC=/usr/bin/gcc
+AR='ar -r'
+RANLIB='ar -t'
+LDD=ldd
+CFLAGS=''
+
+if [ "$PLATFORM" == 'Darwin.x86_64' ] || [ "$PLATFORM" == 'Darwin.arm64' ]
+then
+  RANLIB='ranlib'
+  LDD='otool -L'
+
+## clang compiler doesn't support -fopenmp so try /usr/local/bin/g++:
+## HACK: Can't mix /usr/local/bin/g++ and /usr/bin/g++ due to throws not caught!
+##  $CC -v 2>&1 | grep clang > /dev/null
+##  if [ $? == 0 ]
+##  then
+##    if [ -f /usr/local/bin/g++ ]
+##    then
+##      PATH=/usr/local/bin:$PATH
+##      CC=/usr/local/bin/g++
+##      ##CFLAGS='-m64 -fopenmp' # BUG: Pthread (in RSIG3D) + OpenMP = crash!
+##    fi
+##  fi
+
+  # Allow 10.8 backward compatibility if posible:
+
+  OS_VERSION=`sw_vers | grep ProductVersion | awk '{ print $2 }' | awk -F. '{ printf "%02d%02d", $1, $2 }'`
+  CC_VERSION=`$CC -v 2>&1 | grep version | tr -d '[a-zA-z]' | awk -F. '{ print $1 }'`
+
+  if [ "$OS_VERSION" -le '1012' ] && [ "$CC_VERSION" -le '9' ]
+  then
+    CFLAGS='-m64 -mmacosx-version-min=10.8'
+  else
+    CFLAGS='-m64'
+  fi
+elif [ "$PLATFORM" == 'Linux.x86_64' ]
+then
+##CFLAGS='-fopenmp -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE'
+  CFLAGS='-m64 -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE'
+else
+  echo "Unsupported platform: $PLATFORM"
+  exit 1
+fi
+
+
+HERE="`pwd`"
+DOCS_DIR="../../../docs"
+INCLUDE_DIR="../../../include"
+IFLAGS="-I$INCLUDE_DIR -I."
+LIB_DIR="../../../lib/$PLATFORM"
+NAME="`pwd | tr '/' ' ' | awk '{ print $NF }'`"
+OBJECTS=`echo "$SOURCE" | sed "s/\.[cC]/\.o/g"`
+LIBRARY="$LIB_DIR/lib$NAME.a"
+LIBRARY_DEBUG="$LIB_DIR/lib$NAME.debug.a"
+LIBRARY_TEST="test/tester"
+LIBRARY_TEST_SOURCE="$LIBRARY_TEST.c"
+CFLAGS_DEBUG="-Wall -g $CFLAGS"
+#CFLAGS_DEBUG="-Wall -g -DDEBUGGING $CFLAGS"
+CFLAGS_OPTIMIZED="-Wall -O -DNO_ASSERTIONS $CFLAGS"
+LFLAGS="-L$LIB_DIR $LFLAGS"
+
+if [ "$PLATFORM" == 'Darwin.x86_64' ]
+then
+  CFLAGS_DEBUG="$CFLAGS_DEBUG -fsanitize=address"
+  LIBS="$LIBS -lgmalloc"
+fi
+
+# HACK for BUG in g++ 4.7.3 to ensure that -inf + inf = nan instead of 0:
+if [ "$PLATFORM" == 'Win32' ] ; then CFLAGS_DEBUG="$CFLAGS_DEBUG -O" ; fi
+
+if [ ! -d docs ] ; then mkdir docs ; fi # Ensure test subdirectory exists.
+if [ ! -d test ] ; then mkdir test ; fi # Ensure docs subdirectory exists.
+
+# Process options:
+
+if [ "$1" == 'clean' ] # Remove all generated (non-source code) artifacts:
+then
+  rm -f $LIBRARY $LIBRARY_DEBUG "$DOCS_DIR/$NAME"_API.txt
+  cd $INCLUDE_DIR ; rm -f $HEADERS ; cd "$HERE"
+  rm -f *.o */*.o *.g??? gmon.out test/*.out test/tester docs/*
+  exit 0
+elif [ "$1" == 'lint' ]
+then
+  flexelint -D__x86_64__ +fcp +fll -esym\(550,unused_assert_\) \
+            -esym\(752,unused_assert_static_\) \
+            -esym\(762,unused_assert_static_\) -esym\(529,unused\) \
+            $IFLAGS $SOURCE >& test/lint.out
+  echo >> test/lint.out
+  echo >> test/lint.out
+  echo Infer >> test/lint.out
+  infer run -- $CC $CFLAGS_DEBUG $IFLAGS -c $SOURCE
+  cat infer-out/bugs.txt >> test/lint.out
+  echo >> test/lint.out
+  echo >> test/lint.out
+  rm -rf *.o infer-out
+  echo >> test/lint.out
+  echo >> test/lint.out
+  echo "cppcheck --enable=all $SOURCE" >> test/lint.out
+  $HOME/cppcheck-2.4/cppcheck --enable=all $SOURCE 2>> test/lint.out
+  echo >> test/lint.out
+  touch test/junklint ; \rm -rf test/junklint ; mkdir test/junklint
+  echo scan-build >> test/lint.out
+  echo >> test/lint.out
+  scan-build -o test/junklint $CC $CFLAGS_DEBUG $IFLAGS -c $SOURCE 2>> test/lint.out
+  rm -f *.o
+  echo >> test/lint.out
+  echo >> test/lint.out
+  cat test/lint.out
+  exit 0
+elif [ "$1" == 'metrics' ]
+then
+  metrics $HEADERS $SOURCE > docs/metrics.out
+  summetrics > docs/summetrics.out
+  cat docs/summetrics.out
+  exit 0
+elif [ "$1" == 'doc' ]
+then
+  rm -f docs/*_API.txt
+  makedoc $NAME "$LIBS $LFLAGS"
+  DOC="docs/$NAME"_API.txt
+  sed "s/PRODUCTS:     $NAME.h/PRODUCTS:     $HEADERS/g" < $DOC > x ; mv x $DOC
+
+  for f in $HEADERS
+  do
+    NAME2=`echo $f | sed 's/\.[hCc]//g'`
+
+    if [ "$NAME2" != "$NAME" ]
+    then
+      makedoc $NAME2 "$LIBS $LFLAGS"
+      DOC2="docs/$NAME2"_API.txt
+      echo >> $DOC
+      echo >> $DOC
+      echo '===============================================================================' >> $DOC
+      echo >> $DOC
+      echo >> $DOC
+      tail +5 $DOC2 >> $DOC ; rm -f $DOC2
+    fi
+
+  done
+
+  cp -p $DOC $DOCS_DIR/
+  cat $DOC
+  exit 0
+elif [ "$1" == '4profile' ]
+then
+  rm -f gmon.out test/profile.out test/tester
+  CFLAGS="$CFLAGS_OPTIMIZED -pg"
+elif [ "$1" == 'profile' ]
+then
+  gprof $LIBRARY_TEST 1> test/profile.out
+  awk '/^  % /{n = 13; while (n--) {print; getline}}' < test/profile.out
+  exit 0
+elif [ "$1" == '4coverage' ]
+then
+  rm -f *.g??? test/untested.out test/tester
+  CFLAGS="$CFLAGS_DEBUG -ftest-coverage -fprofile-arcs"
+elif [ "$1" == 'coverage' ]
+then
+  rm -f test/untested.out
+
+  for f in $SOURCE
+  do
+    h="$f:r.h"
+
+    if [ -f "$h.gcov" ]
+    then
+      echo "---------------------- Untested lines in $h" 1>> test/untested.out
+      gcov -a $h 1> /dev/null
+      grep ' #####: \| $$$$$: ' < $h.gcov 1>> test/untested.out
+    fi
+
+    echo "------------------------ Untested lines in $f" 1>> test/untested.out
+    gcov -a $f 1> /dev/null
+    grep ' #####: \| $$$$$: ' < $f.gcov 1>> test/untested.out
+  done
+
+  cat test/untested.out
+  exit 0
+fi
+
+# Recompile binary artifacts:
+
+rm -f $LIBRARY $LIBRARY_DEBUG $LIBRARY_TEST *.o */*.o
+echo "cp -p $HEADERS $INCLUDE_DIR/" ; echo
+cp -p $HEADERS $INCLUDE_DIR/
+
+if [ "$1" == '' ] # Compile both versions of library and tester:
+then
+
+  touch $LIBRARY_DEBUG $LIBRARY $OBJECTS $LIBRARY_TEST
+  rm -f $LIBRARY_DEBUG $LIBRARY $OBJECTS $LIBRARY_TEST
+
+  # Compile debug version of library:
+
+  for S in $SOURCE
+  do
+    echo \
+    "$CC $CFLAGS_DEBUG $IFLAGS -c $S &"
+     $CC $CFLAGS_DEBUG $IFLAGS -c $S \
+     2>&1 \
+     | grep -v unused_ \
+     | grep -v assert_static \
+     | grep -v IfLittleEndian \
+     | grep -v expandBytesToFloats \
+     | grep -v ' warning: comparison is always true due to limited range ' \
+     | grep -v ' warning: comparison between signed and unsigned ' \
+     | grep -v 'In file included from ' \
+     | grep -v ': In member function ' \
+     | grep -v ': In function ' \
+     | grep -v '\^' \
+     &
+  done
+
+  wait
+
+  echo
+  echo \
+    "$AR $LIBRARY_DEBUG $OBJECTS" ; echo
+     $AR $LIBRARY_DEBUG $OBJECTS
+  if [ $? != 0 ] ; then exit $? ; fi
+  echo \
+    "$RANLIB $LIBRARY_DEBUG" ; echo
+     $RANLIB $LIBRARY_DEBUG
+  if [ $? != 0 ] ; then exit $? ; fi
+  rm -f $OBJECTS
+
+  # Compile optimized version of library:
+
+  for S in $SOURCE
+  do
+    echo \
+    "$CC $CFLAGS_OPTIMIZED $IFLAGS -c $S &"
+     $CC $CFLAGS_OPTIMIZED $IFLAGS -c $S 2>&1 &
+  done
+
+  wait
+
+  echo
+  echo \
+    "$AR $LIBRARY $OBJECTS" ; echo
+     $AR $LIBRARY $OBJECTS
+  if [ $? != 0 ] ; then exit $? ; fi
+  echo \
+    "$RANLIB $LIBRARY" ; echo
+     $RANLIB $LIBRARY
+  rm -f $OBJECTS
+
+  # Compile tester:
+
+  echo
+  echo \
+    "$CC $CFLAGS_DEBUG $IFLAGS -o $LIBRARY_TEST $LIBRARY_TEST_SOURCE $LIBRARY_DEBUG $LIBS $LFLAGS" ; echo
+     $CC $CFLAGS_DEBUG $IFLAGS -o $LIBRARY_TEST $LIBRARY_TEST_SOURCE $LIBRARY_DEBUG $LIBS $LFLAGS
+
+  if [ $? != 0 ] ; then exit $? ; fi
+  ls $LIBRARY_TEST 2>&1 > /dev/null
+  if [ $? != 0 ] ; then exit $? ; fi
+
+else # Compile instrumented version of tester with library source:
+
+  echo \
+    "$CC $CFLAGS $IFLAGS -o $LIBRARY_TEST $LIBRARY_TEST_SOURCE $SOURCE $LIBS $LFLAGS" ; echo
+     $CC $CFLAGS $IFLAGS -o $LIBRARY_TEST $LIBRARY_TEST_SOURCE $SOURCE $LIBS $LFLAGS \
+     2>&1 \
+     | grep -v assert_static \
+     | grep -v IfLittleEndian \
+     | grep -v overflow \
+     | grep -v tester \
+     | grep -v 'In file included from ' \
+     | grep -v ': In function ' \
+     | grep -v '\^'
+
+  echo ; ls -l *g???*
+  exit 0
+fi
+
+echo ; cd $INCLUDE_DIR ; ls -l $HEADERS ; cd "$HERE"
+echo ; ls -l $LIBRARY $LIBRARY_DEBUG $LIBRARY_TEST
+echo ; file  $LIBRARY $LIBRARY_DEBUG $LIBRARY_TEST
+echo ; $LDD $LIBRARY_TEST
+echo
+echo "To test this library run: $LIBRARY_TEST"
+echo
+
+

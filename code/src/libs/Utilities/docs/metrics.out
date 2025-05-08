@@ -1,0 +1,310 @@
+platform is Darwin
+ 
+===============================================================================
+                            Software Metrics Report
+===============================================================================
+ 
+Lines of source code:
+---------------------
+ 
+		Pure	Pure	Both		Total	Total	Total
+		Code	Comment	Cod&Com	Blank	Code	Comment	Lines	Pages
+
+Assertions.h	2622	370	8	643	2630	378	3643	66
+Utilities.h	112	16	6	65	118	22	199	4
+DateTime.h	42	9	3	25	45	12	79	2
+PNGFile.h	13	11	2	14	15	13	40	1
+MapFile.h	32	5	2	12	34	7	51	1
+ImageFile.h	11	8	2	13	13	10	34	1
+NetCDFUtilities.h	134	9	1	42	135	10	186	4
+Shapefile.h	159	20	18	76	177	38	273	5
+KMLFile.h	54	17	6	26	60	23	103	2
+Utilities.c	772	260	20	307	792	280	1359	25
+DateTime.c	540	181	27	237	567	208	985	18
+PNGFile.c	114	27	4	42	118	31	187	4
+MapFile.c	531	133	31	172	562	164	867	16
+ImageFile.c	321	38	9	73	330	47	441	8
+NetCDFUtilities.c	817	301	22	305	839	323	1445	26
+Shapefile.c	3946	894	120	1109	4066	1014	6069	109
+KMLFile.c	875	172	29	152	904	201	1228	22
+
+ALL:		11095	2471	310	3313	11405	2781	17189	314
+ 
+Pages of API documentation: 
+Fan-out: 6 Assertions DateTime ImageFile KMLFile MapFile Shapefile
+ 
+Halstead Metrics:
+-----------------
+ 
+FileName                            Length     Volume  Level     Discr. Defect
+------------------------------------------------------------------------------
+Assertions.h                         66479     612235  0.001  468646440    204
+Utilities.h                            920       6900  0.023     296100      2
+DateTime.h                             349       2237  0.059      37747      1
+PNGFile.h                               65        333  0.086       3883      0
+MapFile.h                              164        906  0.054      16888      0
+ImageFile.h                             46        223  0.097       2294      0
+NetCDFUtilities.h                      736       4932  0.030     161890      2
+Shapefile.h                           1128       8573  0.029     296335      3
+KMLFile.h                              283       1768  0.039      45088      1
+Utilities.c                           5008      42975  0.006    7142772     14
+DateTime.c                            3635      28828  0.004    6484250     10
+PNGFile.c                              717       4935  0.016     309415      2
+MapFile.c                             3434      26249  0.005    5248129      9
+ImageFile.c                           2555      18054  0.006    2948089      6
+NetCDFUtilities.c                     5316      42254  0.005    8564448     14
+Shapefile.c                          26354     256054  0.002  104847154     85
+KMLFile.c                             4362      36774  0.007    5352202     12
+
+ALL                                 121551    1094230  0.471  610403124    365
+ 
+Per-function    LOC, Cyclomatic Complexity and Fan-out (function calls):
+------------------------------------------------------------------------
+ 
+File: Functions                                           LOC    Cyclo Fan-out
+------------------------------------------------------------------------------
+Assertions.h:
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Totals:                   0      0      0
+Utilities.h:
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Totals:                   0      0      0
+DateTime.h:
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Totals:                   0      0      0
+PNGFile.h:
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Totals:                   0      0      0
+MapFile.h:
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Totals:                   0      0      0
+ImageFile.h:
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Totals:                   0      0      0
+NetCDFUtilities.h:
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Totals:                   0      0      0
+Shapefile.h:
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Totals:                   0      0      0
+KMLFile.h:
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Totals:                   0      0      0
+Utilities.c:
+    boundsOverlap                                          12      1      3
+    computeArrowVectorCoordinates                          39      1      6
+    computeArrowVectorCoordinates2                         33      1      7
+    controlMToSpace                                        15      4      2
+    copyFile                                               36      8      7
+    copyFileBytes                                          32      5     10
+    copyFiles                                              46      9     10
+    copyPaddedString                                       13      3      3
+    copyStream                                             23      4      5
+    dataColor                                              32      8      4
+    degreesPerPixel                                        16      1      3
+    directoryExists                                        11      2      4
+    directoryListing                                       68     12     11
+    fileExists                                              7      1      2
+    fileSize                                               12      2      2
+    forEachFile                                            38      9      8
+    homeDirectory                                          20      2      6
+    indexOfString                                          18      3      2
+    isNan                                                   7      1      2
+    isNanFree                                              10      2      2
+    isNanFreeF                                             10      2      2
+    isValidBounds                                          13      1      2
+    isValidColor                                            9      1      2
+    isValidLongitudeLatitude                                8      1      2
+    lexicographicTextColor                                 10      1      5
+    lowercase                                               8      2      2
+    makeRGB                                                 5      1      0
+    matchesWord                                            22      4      7
+    newMemory                                              18      4      5
+    parseValues                                            21      6      3
+    radians                                                 9      1      3
+    readFile                                               35      5     11
+    removeAllFiles                                         20      4      7
+    removeFile0                                             5      1      2
+    removeMatchedFiles                                      8      1      2
+    streamBytesToFile                                      25      5      7
+    streamFile                                             22      3      9
+    widthInMeters                                          16      1      4
+    wordCount                                              17      5      3
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Totals:                 769    128    174
+DateTime.c:
+    convertYearMonthDay                                    23      2      3
+    daysInMonth                                            23      7      3
+    daysInYear                                              9      2      3
+    decrementOneHour                                       22      3      4
+    decrementTime                                          17      3      5
+    decrementTimestamp                                     21      3      3
+    fileDateUTC                                            20      4      1
+    fromUTCTimestamp                                       21      2      2
+    gmtime_r                                                7      2      2
+    incrementDate                                          31      5      3
+    incrementDateTime                                      17      2      3
+    incrementOneHour                                       23      4      4
+    incrementTime                                          27      4      4
+    incrementTimestamp                                     21      3      2
+    isHHMMSS                                                9      1      1
+    isLeapYear                                              7      2      3
+    isUTCTimestamp                                         31      6      2
+    isValidDate                                            11      1      2
+    isValidTime                                            10      1      3
+    isValidTimestamp                                       14      1      2
+    isValidTimestepSize                                    10      1      3
+    isValidUTCTimestamp                                    20      3      3
+    isValidYYYYMMDD                                        12      1      3
+    isValidYYYYMMDDHH                                       8      1      2
+    isValidYearMonthDay                                    12      1      2
+    isYYYYMMDD                                             11      2      3
+    isYear                                                  5      1      1
+    monthAndDay                                            25      3      3
+    nowUTC                                                 14      2      2
+    offsetTimestamp                                        19      3      4
+    parseTimestamp                                         21      2      6
+    timeZoneOffset                                         30      3      2
+    timestepsInRange                                       16      2      3
+    toUTCTimestamp                                         15      1      4
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Totals:                 582     84     93
+PNGFile.c:
+    readPNGFile                                            79     17     12
+    writePNGFile                                           33      4     10
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Totals:                 112     21     12
+MapFile.c:
+    clipCoordinate                                         22      8      0
+    clipLine                                               26      7      0
+    inBoundsDouble                                         29      5      4
+    inBoundsFloat                                          29      5      4
+    minimumItemi                                           13      3      1
+    nonCoincident                                           9      4      0
+    readMapFileData                                        33      7      7
+    readMapFileHeader                                      16      4      4
+    rotate4ByteArrayIfLittleEndian                         16      2      3
+    subsetMapDouble                                       149     15      6
+    subsetMapFloat                                        152     16      6
+    sum                                                    10      2      1
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Totals:                 504     78     33
+ImageFile.c:
+    readImageFile                                         132     13     15
+    readImageFileHeader                                    43      2      6
+    subsetIndices                                         124      8      8
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Totals:                 299     23     21
+NetCDFUtilities.c:
+    closeNetCDFFile                                         6      1      3
+    createNetCDFCoordinates                                55      9      4
+    createNetCDFDimensions                                 30      4      6
+    createNetCDFFile                                       20      3      6
+    createNetCDFIOAPITFLAGVariable                         34      4      5
+    createNetCDFIOAPIVariable                              50      5      7
+    createNetCDFIOAPIVariables                             52      6      5
+    createNetCDFVariable                                   39      5      7
+    endNetCDFHeaderDefinition                              13      2      5
+    openReadableNetCDFFile                                 19      3      6
+    readNetCDFDimension                                    27      5      6
+    readNetCDFDoubleArrayAttribute                         20      3      6
+    readNetCDFDoubleAttribute                              17      3      6
+    readNetCDFFloatArrayAttribute                          25      4      8
+    readNetCDFFloatAttribute                               17      3      6
+    readNetCDFIntAttribute                                 14      2      5
+    writeNetCDFAllData                                     34      4      6
+    writeNetCDFAllIntData                                  29      3      5
+    writeNetCDFCOARDSAttributes                            32      6      3
+    writeNetCDFCOARDSContents                              70      8     11
+    writeNetCDFCharData                                    33      4      6
+    writeNetCDFDoubleArrayAttribute                        14      2      5
+    writeNetCDFDoubleAttribute                             14      2      5
+    writeNetCDFFloatArrayAttribute                         14      2      5
+    writeNetCDFFloatAttribute                              14      2      5
+    writeNetCDFIntAttribute                                13      2      5
+    writeNetCDFSomeData                                    40      4      7
+    writeNetCDFSomeIntData                                 40      4      7
+    writeNetCDFTextAttribute                               14      2      5
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Totals:                 799    107    159
+Shapefile.c:
+    0                                                       0      0      0
+    areaOfTriangle                                         10      1      1
+    clipPolylines                                          72      7     13
+    colinear                                               50      8      5
+    compareValues                                          28      8      4
+    computeGridBounds                                      60      6      4
+    computeGridCellCenters                                 33      4      4
+    computeGridCellVertices                               209      8      6
+    computePointBounds                                     27      6      0
+    computePolygonVertices                                 48      5      2
+    computeRange                                           16      4      0
+    computeSparsedPartCount                                55      5      2
+    computeSparsedVertexCount                              31      5      2
+    computeVertexBounds                                    26      6      0
+    convertTimestamp                                       31      7     10
+    copyDoubleAttribute                                    11      1      4
+    copyIntegerAttribute                                    8      1      2
+    copyPolygonVertices                                    42      6      2
+    copyPolygons                                          100     17      4
+    copyPolylineVertices                                   21      3      2
+    copyShapeData                                          63     13      6
+    copySparseVertices                                     61     10      2
+    copyStringAttribute                                     8      1      2
+    copySubsetShapefile                                    32      5      6
+    createPolyline                                         65      9      6
+    deallocatePolygons                                     20      4      5
+    deallocateShapeData                                    18      4      3
+    defineDBFColumns                                       74     15      9
+    ensureCorrectVertexOrder                               44      4      5
+    equalShapeData                                         33      6      4
+    isValidColumnName                                      11      2      2
+    isValidShapeData                                       50      8      4
+    isValidValue                                           12      1      3
+    makePolygon                                            97      9     13
+    maximumInt                                             12      2      2
+    maximumPolygonContours                                 14      3      2
+    maximumPolygonVertices                                 11      2      3
+    minimumInt                                             12      2      2
+    nearestPoint                                           44      5      3
+    nearestPolyline                                        74     11      7
+    pointInTriangles                                       53      6      5
+    pointInsideTriangle                                    16      3      1
+    pointLineDistance                                      30      4      3
+    polygonVertexCount                                     14      2      2
+    printPolygon                                           25      6      2
+    printShape                                             42      3      3
+    printShapeData                                         44      8      3
+    printTriangles                                         21      5      2
+    readAndClipShapes                                     131     11     18
+    readAndTriangulateShapes                               75      9     19
+    readDBF                                                96     17     19
+    removeShapefiles                                       20      2      5
+    reverseVertexList                                      15      2      1
+    shapefileType                                          20      3      7
+    signedAreaOfPolygon                                    18      2      1
+    storeStringValue                                       65      9      9
+    streamShapefiles                                       65      6     10
+    subsetDBFByTime                                        63      8     13
+    updatePointMinmax                                      23      6      2
+    writeASCIIGridFile                                     52      5      8
+    writeBoundsDBF                                         19      4      8
+    writeDataToCSVFile                                    163     13     18
+    writeDataToDBFFile                                    170     14     16
+    writeDouble                                            35      2      1
+    writeGridToShapefile                                  162     12     19
+    writeInt                                               20      2      1
+    writeLambertPRJFile                                    35      3      6
+    writePRJFile                                           11      1      4
+    writePointSubsetDBF                                   116     13     18
+    writePointsToShapefile                                129     16     14
+    writePolygonDBF                                       103     18     14
+    writePolygonsToShapefile                               51      5     16
+    writePolylinesToShapefile                             117     12     13
+    writeShapeData                                         83     13     16
+    writeShapeDataToText                                   46      8      7
+    writeShort                                             14      2      1
+    writeWGS84PRJFile                                      18      3      6
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Totals:                3813    482    465
+KMLFile.c:
+    colorKML                                               21      1      5
+    isValidMapImageFileInfo                                12      1      2
+    writeCellDataToKML                                    241     10      8
+    writeEndFolderKML                                       5      1      2
+    writeEndKML                                             7      1      2
+    writeKMLColors                                         28      5      2
+    writeMapImagesToKML                                    26      1      4
+    writeMapImagesToKMLHelper                              61      4      8
+    writeMapPolylinesToKML                                 42      3      5
+    writePolygonsToKML                                    154     13      7
+    writeStartFolderKML                                     7      1      2
+    writeStartKML                                          23      2      3
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Totals:                 627     43     45
+ 
+    ALL:                                                 7505    966   1002
+ 

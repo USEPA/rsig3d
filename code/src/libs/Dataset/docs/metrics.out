@@ -1,0 +1,1124 @@
+platform is Darwin
+ 
+===============================================================================
+                            Software Metrics Report
+===============================================================================
+ 
+Lines of source code:
+---------------------
+ 
+		Pure	Pure	Both		Total	Total	Total
+		Code	Comment	Cod&Com	Blank	Code	Comment	Lines	Pages
+
+ResourceHandler.h	51	25	1	23	52	26	100	2
+DataUtilities.h	452	17	1	163	453	18	633	12
+HTTPConnection.h	30	41	1	11	31	42	83	2
+Bounds.h	33	5	1	15	34	6	54	1
+Timestamp.h	58	5	1	19	59	6	83	2
+MapProjection.h	137	5	1	22	138	6	165	3
+Albers.h	49	5	1	21	50	6	76	2
+Lambert.h	45	5	1	21	46	6	72	2
+Mercator.h	38	5	1	21	39	6	65	2
+Stereographic.h	55	5	1	26	56	6	87	2
+DataFilterParameters.h	91	6	1	18	92	7	116	3
+CMAQGridParameters.h	37	5	0	14	37	5	56	1
+QueryParameters.h	109	6	1	33	110	7	149	3
+Dataset.h	494	113	1	143	495	114	751	14
+RegriddedDataset.h	42	10	1	18	43	11	71	2
+PointDataset.h	60	5	1	26	61	6	92	2
+RegriddedPointDataset.h	40	5	1	23	41	6	69	2
+SiteDataset.h	62	5	1	27	63	6	95	2
+RegriddedSiteDataset.h	40	6	1	23	41	7	70	2
+CMAQDataset.h	225	11	1	60	226	12	297	6
+SwathDataset.h	63	5	1	27	64	6	96	2
+RegriddedSwathDataset.h	40	5	1	23	41	6	69	2
+AircraftDataset.h	59	5	1	26	60	6	91	2
+RegriddedAircraftDataset.h	47	5	1	23	48	6	76	2
+ProfileDataset.h	63	6	1	27	64	7	97	2
+RegriddedProfileDataset.h	41	5	1	23	42	6	70	2
+CALIPSODataset.h	62	5	1	26	63	6	94	2
+RegriddedCALIPSODataset.h	44	6	1	21	45	7	72	2
+GridDataset.h	69	6	1	32	70	7	108	2
+RegriddedGridDataset.h	40	5	1	23	41	6	69	2
+PolygonDataset.h	79	5	1	31	80	6	116	3
+DatasetManager.h	51	5	1	22	52	6	79	2
+DataUtilities.C	801	396	5	392	806	401	1594	29
+HTTPConnection.C	130	57	0	62	130	57	249	5
+Bounds.C	125	74	0	77	125	74	276	5
+Timestamp.C	642	241	2	280	644	243	1165	21
+MapProjection.C	356	107	0	110	356	107	573	11
+Albers.C	366	97	0	130	366	97	593	11
+Lambert.C	281	87	0	117	281	87	485	9
+Mercator.C	154	73	0	97	154	73	324	6
+Stereographic.C	529	120	0	185	529	120	834	15
+DataFilterParameters.C	497	193	0	186	497	193	876	16
+CMAQGridParameters.C	592	186	0	177	592	186	955	18
+QueryParameters.C	499	162	0	208	499	162	869	16
+Dataset.C	3161	843	0	948	3161	843	4952	89
+RegriddedDataset.C	937	128	0	227	937	128	1292	24
+PointDataset.C	701	273	0	214	701	273	1188	22
+RegriddedPointDataset.C	323	177	0	117	323	177	617	12
+SiteDataset.C	870	202	0	252	870	202	1324	24
+RegriddedSiteDataset.C	283	133	0	107	283	133	523	10
+CMAQDataset.C	1734	342	1	409	1735	343	2486	45
+SwathDataset.C	973	242	1	271	974	243	1487	27
+RegriddedSwathDataset.C	262	129	0	108	262	129	499	9
+AircraftDataset.C	945	226	0	255	945	226	1426	26
+RegriddedAircraftDataset.C	460	169	0	139	460	169	768	14
+ProfileDataset.C	926	230	0	269	926	230	1425	26
+RegriddedProfileDataset.C	279	140	0	111	279	140	530	10
+CALIPSODataset.C	1067	259	0	297	1067	259	1623	29
+RegriddedCALIPSODataset.C	371	171	0	145	371	171	687	13
+GridDataset.C	1159	268	0	322	1159	268	1749	32
+RegriddedGridDataset.C	293	125	0	108	293	125	526	10
+PolygonDataset.C	791	201	0	251	791	201	1243	23
+DatasetManager.C	1009	209	0	330	1009	209	1548	28
+
+ALL:		24322	6613	40	7932	24362	6653	38907	727
+ 
+Pages of API documentation: 
+Fan-out: 18 Albers Assertions Bounds CMAQGridParameters DataFilterParameters DataUtilities HTTPConnection KMLFile Lambert MapProjection Mercator NetCDFUtilities QueryParameters ResourceHandler Shapefile Stereographic Timestamp Utilities
+ 
+Halstead Metrics:
+-----------------
+ 
+FileName                            Length     Volume  Level     Discr. Defect
+------------------------------------------------------------------------------
+ResourceHandler.h                      416       2714  0.030      91471      1
+DataUtilities.h                       3614      30026  0.006    4667539     10
+HTTPConnection.h                       289       1842  0.042      43677      1
+Bounds.h                               196       1070  0.045      23541      0
+Timestamp.h                            437       2934  0.024     122596      1
+MapProjection.h                        755       5674  0.053     107484      2
+Albers.h                               379       2490  0.046      54115      1
+Lambert.h                              350       2278  0.048      47159      1
+Mercator.h                             288       1805  0.050      36413      1
+Stereographic.h                        462       3145  0.043      73666      1
+DataFilterParameters.h                 558       3747  0.035     107989      1
+CMAQGridParameters.h                   346       2418  0.103      23438      1
+QueryParameters.h                      755       5568  0.027     205501      2
+Dataset.h                             3743      33014  0.009    3522942     11
+RegriddedDataset.h                     381       2497  0.036      69168      1
+PointDataset.h                         501       3321  0.033     101939      1
+RegriddedPointDataset.h                369       2284  0.039      59068      1
+SiteDataset.h                          508       3337  0.032     104130      1
+RegriddedSiteDataset.h                 369       2284  0.039      59068      1
+CMAQDataset.h                         1997      15814  0.013    1209769      5
+SwathDataset.h                         539       3565  0.031     115188      1
+RegriddedSwathDataset.h                369       2284  0.039      59068      1
+AircraftDataset.h                      532       3557  0.033     107145      1
+RegriddedAircraftDataset.h             457       2981  0.034      87297      1
+ProfileDataset.h                       547       3665  0.032     113881      1
+RegriddedProfileDataset.h              381       2388  0.040      59835      1
+CALIPSODataset.h                       561       3774  0.029     130979      1
+RegriddedCALIPSODataset.h              421       2691  0.039      69225      1
+GridDataset.h                          551       3684  0.031     118518      1
+RegriddedGridDataset.h                 369       2284  0.039      59068      1
+PolygonDataset.h                       650       4528  0.025     181339      2
+DatasetManager.h                       463       3096  0.032      97343      1
+DataUtilities.C                       5963      53254  0.006    8344104     18
+HTTPConnection.C                      1014       7496  0.017     442594      2
+Bounds.C                               845       5126  0.012     435251      2
+Timestamp.C                           4673      39217  0.005    7558929     13
+MapProjection.C                       2724      22825  0.013    1790067      8
+Albers.C                              2706      20967  0.008    2530049      7
+Lambert.C                             2173      16563  0.011    1535414      6
+Mercator.C                            1234       8823  0.015     602628      3
+Stereographic.C                       3339      26004  0.006    4711364      9
+DataFilterParameters.C                3069      21517  0.006    3713830      7
+CMAQGridParameters.C                  4011      32830  0.008    3887828     11
+QueryParameters.C                     3061      23918  0.008    3005902      8
+Dataset.C                            22824     226183  0.004   64252188     75
+RegriddedDataset.C                    7661      70135  0.006   11066829     23
+PointDataset.C                        8347      75853  0.007   10491416     25
+RegriddedPointDataset.C               3841      32493  0.014    2257990     11
+SiteDataset.C                         9085      82632  0.008   11007779     28
+RegriddedSiteDataset.C                3307      27921  0.018    1571180      9
+CMAQDataset.C                        19877     196800  0.006   35749574     66
+SwathDataset.C                       11478     107254  0.007   15679752     36
+RegriddedSwathDataset.C               3223      27369  0.018    1558924      9
+AircraftDataset.C                     9263      84079  0.007   12251794     28
+RegriddedAircraftDataset.C            5422      48534  0.013    3831320     16
+ProfileDataset.C                     10649      98557  0.007   13611540     33
+RegriddedProfileDataset.C             3505      29875  0.017    1708979     10
+CALIPSODataset.C                     12361     116125  0.007   17590542     39
+RegriddedCALIPSODataset.C             4942      42929  0.012    3479041     14
+GridDataset.C                        11967     112061  0.007   16680555     37
+RegriddedGridDataset.C                3274      27560  0.018    1574103      9
+PolygonDataset.C                      7729      72049  0.010    7434357     24
+DatasetManager.C                      7184      64431  0.006   10472795     21
+
+ALL                                 223304    1988139  1.460  292758177    663
+ 
+Per-function    LOC, Cyclomatic Complexity and Fan-out (function calls):
+------------------------------------------------------------------------
+ 
+File: Functions                                           LOC    Cyclo Fan-out
+------------------------------------------------------------------------------
+ResourceHandler.h:
+    ResourceHandler::get                                    2      1      0
+    ResourceHandler::handler2                               5      1      0
+    ResourceHandler::handler2_                              2      1      0
+    ResourceHandler::handler2_                              2      1      0
+    ResourceHandler::~ResourceHandler                      18      6      3
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Totals:                  29     10      3
+DataUtilities.h:
+    accumulate                                              9      2      2
+    allFinite                                               2      1      0
+    allNonZero                                             11      2      2
+    allZero                                                11      2      2
+    clampedToRange                                          7      1      2
+    copyArray                                              12      2      3
+    expandBytes                                            11      2      1
+    has                                                     9      2      1
+    isDecreasing                                           11      2      2
+    isIncreasing                                           11      2      2
+    isNan                                                   2      1      0
+    isNanFree                                               2      1      0
+    isSorted                                               11      2      2
+    maximum                                                16      3      2
+    maximumProduct2                                        13      3      2
+    minimum                                                16      3      2
+    onlyNonZeroModulo                                      15      3      3
+    range                                                  22      4      2
+    range                                                  38      8      2
+    readConvertedArray                                     23      7      7
+    scaledMaximum                                          20      5      2
+    sum                                                    10      2      2
+    sumProduct2                                            10      2      2
+    swapRows                                               15      3      1
+    writeConvertedArray                                    21      5      7
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Totals:                 328     70     46
+HTTPConnection.h:
+    HTTPConnection::getDecompressProgram                    2      1      0
+    HTTPConnection::getHTTPGetProgram                       2      1      0
+    HTTPConnection::getStream                               2      1      0
+    HTTPConnection::isInitialized                           2      1      0
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Totals:                   8      4      0
+Bounds.h:
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Totals:                   0      0      0
+Timestamp.h:
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Totals:                   0      0      0
+MapProjection.h:
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Totals:                   0      0      0
+Albers.h:
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Totals:                   0      0      0
+Lambert.h:
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Totals:                   0      0      0
+Mercator.h:
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Totals:                   0      0      0
+Stereographic.h:
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Totals:                   0      0      0
+DataFilterParameters.h:
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Totals:                   0      0      0
+CMAQGridParameters.h:
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Totals:                   0      0      0
+QueryParameters.h:
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Totals:                   0      0      0
+Dataset.h:
+    Dataset::outputKMLDataColorFunction                     2      1      0
+    Dataset::outputKMLDataColorFunction                     4      1      0
+    Dataset::outputKMLFile                                  2      1      0
+    Dataset::outputKMLFile                                  2      1      0
+    Dataset::readCoordinates                               50     10      9
+    Dataset::readIntegers                                  16      2      6
+    Dataset::readVariable                                  17      2      5
+    Dataset::writeCoordinates                              37      7     10
+    Dataset::writeIntegers                                 12      2      5
+    Dataset::writeVariable                                 15      2      5
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Totals:                 157     29     35
+RegriddedDataset.h:
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Totals:                   0      0      0
+PointDataset.h:
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Totals:                   0      0      0
+RegriddedPointDataset.h:
+    RegriddedPointDataset::RegriddedPointDataset            2      1      0
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Totals:                   2      1      0
+SiteDataset.h:
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Totals:                   0      0      0
+RegriddedSiteDataset.h:
+    RegriddedSiteDataset::RegriddedSiteDataset              2      1      0
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Totals:                   2      1      0
+CMAQDataset.h:
+    CMAQDataset::copyCellCenterCoordinates                 99      9      8
+    CMAQDataset::copyOutElevations                          5      1      2
+    CMAQDataset::copyOutElevations                          5      1      2
+    CMAQDataset::copyOutLatitudes                           5      1      2
+    CMAQDataset::copyOutLatitudes                           5      1      2
+    CMAQDataset::copyOutLongitudes                          5      1      2
+    CMAQDataset::copyOutLongitudes                          5      1      2
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Totals:                 129     15     12
+SwathDataset.h:
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Totals:                   0      0      0
+RegriddedSwathDataset.h:
+    RegriddedSwathDataset::RegriddedSwathDataset            2      1      0
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Totals:                   2      1      0
+AircraftDataset.h:
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Totals:                   0      0      0
+RegriddedAircraftDataset.h:
+    RegriddedAircraftDataset::RegriddedAircraftDataset      2      1      0
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Totals:                   2      1      0
+ProfileDataset.h:
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Totals:                   0      0      0
+RegriddedProfileDataset.h:
+    RegriddedProfileDataset::RegriddedProfileDataset        2      1      0
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Totals:                   2      1      0
+CALIPSODataset.h:
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Totals:                   0      0      0
+RegriddedCALIPSODataset.h:
+    RegriddedCALIPSODataset::RegriddedCALIPSODataset        2      1      0
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Totals:                   2      1      0
+GridDataset.h:
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Totals:                   0      0      0
+RegriddedGridDataset.h:
+    RegriddedGridDataset::RegriddedGridDataset              2      1      0
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Totals:                   2      1      0
+PolygonDataset.h:
+    PolygonDataset::PolygonShapeData::!=                    4      1      1
+    PolygonDataset::PolygonShapeData::=                     5      2      1
+    PolygonDataset::PolygonShapeData::PolygonShapeData      2      1      0
+    PolygonDataset::PolygonShapeData::PolygonShapeData      2      1      1
+    PolygonDataset::PolygonShapeData::~PolygonShapeData      2      1      1
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Totals:                  15      6      3
+DatasetManager.h:
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Totals:                   0      0      0
+DataUtilities.C:
+    aboutEqual                                             34      8      3
+    allFinite                                              12      2      3
+    allFinite                                              12      2      3
+    areaOfTriangle                                         10      1      1
+    copyFile                                               24      6      5
+    copyFileBytes                                          16      3      6
+    copyFileBytes                                          20      4      5
+    copyFileBytes                                          30      5      7
+    degrees                                                 9      1      3
+    directoryListing                                       61     10     10
+    elevationsAtSigmaPressures                             39      2      9
+    eraseDoubleQuotedCommas                                14      5      1
+    expand4ByteWords                                       12      2      2
+    expand4ByteWords                                       12      2      2
+    expand4ByteWords                                       12      2      2
+    fileExists                                              7      1      2
+    fileSize                                               12      2      2
+    indexOfString                                          19      3      2
+    isDirectory                                            14      3      4
+    isFinite                                                7      1      2
+    isInfinity                                              6      1      2
+    isLatitude                                              6      1      2
+    isLongitude                                             6      1      2
+    isLongitudeLatitude                                     7      1      2
+    isMinusInfinity                                         6      1      2
+    isNan                                                   6      1      1
+    isNanFree                                              11      2      3
+    isNanFree                                              11      2      3
+    isSignedChar                                            6      1      2
+    isSignedInt                                             6      1      2
+    isSignedLong                                            6      1      2
+    isSignedShort                                           6      1      2
+    isSizet                                                11      1      2
+    isText                                                  9      2      2
+    isUnsignedChar                                          6      1      2
+    isUnsignedInt                                          10      1      2
+    isUnsignedLong                                         11      1      2
+    isUnsignedLongLong                                     11      1      2
+    isUnsignedShort                                        11      1      2
+    isValidArgs                                            23      6      0
+    lineCount                                               9      2      1
+    lowercase                                               8      2      3
+    pointInsideTriangle                                    19      4      1
+    radians                                                 9      1      3
+    removeAllFiles                                         24      5      8
+    removeDirectory                                        25      5      9
+    reverse2ByteWordsIfLittleEndian                        14      2      4
+    reverse4ByteWordsIfLittleEndian                        16      2      4
+    reverse8ByteWordsIfLittleEndian                        21      2      4
+    streamFile                                             11      2      4
+    streamFile                                             12      2      4
+    substituteWord                                         26      6      4
+    toInteger                                              24      5      4
+    toReal                                                 23      5      4
+    wordCount                                              16      5      2
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Totals:                 808    143    163
+HTTPConnection.C:
+    HTTPConnection::HTTPConnection                         25      2      7
+    HTTPConnection::initialize                             11      1      5
+    HTTPConnection::invariant                               5      1      1
+    HTTPConnection::read                                   23      4      8
+    HTTPConnection::read                                   28      5     10
+    HTTPConnection::setDecompressProgram                   15      2      4
+    ~HTTPConnection                                         9      2      3
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Totals:                 116     17     28
+Bounds.C:
+    !=                                                      8      1      2
+    =                                                      12      2      2
+    ==                                                      8      1      2
+    Bounds::Bounds                                         10      1      2
+    Bounds::Bounds                                         12      1      2
+    Bounds::east                                            7      1      2
+    Bounds::east                                            7      1      3
+    Bounds::invariant                                       8      1      1
+    Bounds::north                                           7      1      2
+    Bounds::north                                           7      1      3
+    Bounds::overlaps                                       11      1      2
+    Bounds::south                                           7      1      2
+    Bounds::south                                           7      1      3
+    Bounds::west                                            7      1      2
+    Bounds::west                                            7      1      3
+    ~Bounds                                                 8      1      1
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Totals:                 133     17     33
+Timestamp.C:
+    !=                                                      6      1      1
+    <                                                       6      1      1
+    <=                                                      6      1      1
+    =                                                       9      2      2
+    ==                                                      6      1      1
+    >                                                       6      1      1
+    >=                                                      6      1      1
+    GMTIME_R                                                6      1      2
+    Timestamp::Timestamp                                    5      1      3
+    Timestamp::Timestamp                                    6      1      2
+    Timestamp::Timestamp                                    7      1      5
+    Timestamp::Timestamp                                    9      1      6
+    Timestamp::endOfDay                                     7      1      3
+    Timestamp::endOfHour                                   10      1      4
+    Timestamp::endOfMonth                                  16      1      5
+    Timestamp::fileDateUTC                                 21      4      2
+    Timestamp::fromScanStartTime                           16      1      4
+    Timestamp::fromUTCString                               45      3      8
+    Timestamp::hhmmss                                      16      2      4
+    Timestamp::hoursUntil                                  12      1      3
+    Timestamp::invariant                                    5      1      0
+    Timestamp::isHHMMSS                                     9      1      1
+    Timestamp::isUTCString                                 31      6      2
+    Timestamp::isYYYYDDD                                    8      1      3
+    Timestamp::isYYYYMMDD                                   8      1      1
+    Timestamp::monthsUntil                                 12      2      4
+    Timestamp::offsetHours                                 10      1      2
+    Timestamp::offsetMonths                                26      4      7
+    Timestamp::sameDay                                     19      2      4
+    Timestamp::sameHour                                    21      2      4
+    Timestamp::sameMonth                                   19      2      4
+    Timestamp::sameYear                                    17      2      3
+    Timestamp::seconds                                      7      1      2
+    Timestamp::startOfDay                                   7      1      3
+    Timestamp::startOfHour                                  8      1      4
+    Timestamp::startOfMonth                                10      1      4
+    Timestamp::timeZoneOffset                              29      3      2
+    Timestamp::toUTCString                                 20      2      6
+    Timestamp::yyyyddd                                     15      2      4
+    Timestamp::yyyydddhhmmss                               28      1      8
+    Timestamp::yyyymmdd                                    16      2      4
+    Timestamp::yyyymmddhhmmss                              11      1      4
+    dayOfMonth                                             14      2      3
+    dayOfWeek                                               9      1      3
+    dayOfYear                                              14      2      3
+    daysInYear                                              9      2      4
+    isYYYYMMDD                                             11      2      3
+    isYear                                                  5      1      0
+    monthOfYear                                            13      2      3
+    timegm                                                 13      1      2
+    ~Timestamp                                              5      1      1
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Totals:                 650     81    154
+MapProjection.C:
+    MapProjection::invariant                                5      1      1
+    MapProjection::isSpheroid                              14      1      2
+    MapProjection::lambdaDifference                        24      5      3
+    MapProjection::latitudeSphere                          17      1      5
+    MapProjection::latitudeWGS84                           17      1      5
+    MapProjection::majorSemiaxis                            9      1      2
+    MapProjection::minorSemiaxis                            9      1      2
+    MapProjection::msfn                                    20      1      3
+    MapProjection::phi2Iterate                             21      2      5
+    MapProjection::qsfn                                    27      2      4
+    MapProjection::ssfn                                    19      1      4
+    MapProjection::toLambdaPhi                             23      5      3
+    MapProjection::toLongitudeLatitude                     24      5      5
+    MapProjection::tsfn                                    22      1      4
+    ~MapProjection                                          6      1      1
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Totals:                 257     29     47
+Albers.C:
+    !=                                                      6      1      2
+    =                                                      23      2      2
+    ==                                                     13      1      2
+    Albers::Albers                                         20      1      2
+    Albers::Albers                                         31      1      3
+    Albers::centralLatitude                                 7      1      2
+    Albers::centralLongitude                                7      1      2
+    Albers::computeDerivedTerms                            75      4     15
+    Albers::invariant                                      30      1      2
+    Albers::lowerLatitude                                   7      1      2
+    Albers::name                                            6      1      1
+    Albers::newCopy                                        10      1      3
+    Albers::project                                        16      1      9
+    Albers::unproject                                      53      7      9
+    Albers::upperLatitude                                   7      1      2
+    phi1Iterate                                            31      3      8
+    ~Albers                                                17      1      1
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Totals:                 359     29     59
+Lambert.C:
+    !=                                                      6      1      2
+    =                                                      19      2      2
+    ==                                                     13      1      2
+    Lambert::Lambert                                       16      1      2
+    Lambert::Lambert                                       31      1      3
+    Lambert::centralLatitude                                7      1      2
+    Lambert::centralLongitude                               7      1      2
+    Lambert::computeDerivedTerms                           67      6     13
+    Lambert::invariant                                     24      1      1
+    Lambert::lowerLatitude                                  7      1      2
+    Lambert::name                                           6      1      1
+    Lambert::newCopy                                       10      1      3
+    Lambert::project                                       13      1      7
+    Lambert::unproject                                     30      5      8
+    Lambert::upperLatitude                                  7      1      2
+    ~Lambert                                               13      1      1
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Totals:                 276     26     40
+Mercator.C:
+    !=                                                      6      1      2
+    =                                                      13      2      2
+    ==                                                     10      1      2
+    Mercator::Mercator                                     10      1      2
+    Mercator::Mercator                                     14      1      3
+    Mercator::centralLatitude                               7      1      2
+    Mercator::centralLongitude                              7      1      2
+    Mercator::computeDerivedTerms                          14      1      4
+    Mercator::invariant                                    10      1      1
+    Mercator::name                                          6      1      1
+    Mercator::newCopy                                       8      1      3
+    Mercator::project                                      22      2      6
+    Mercator::unproject                                    15      1      6
+    ~Mercator                                               7      1      1
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Totals:                 149     16     33
+Stereographic.C:
+    !=                                                      6      1      2
+    =                                                      22      2      2
+    ==                                                     12      1      2
+    Stereographic::Stereographic                           19      1      2
+    Stereographic::Stereographic                           28      1      3
+    Stereographic::centralLatitude                          7      1      2
+    Stereographic::centralLongitude                         7      1      2
+    Stereographic::computeDerivedTerms                    104      8     15
+    Stereographic::invariant                               19      1      1
+    Stereographic::name                                     6      1      1
+    Stereographic::newCopy                                  9      1      3
+    Stereographic::project                                 21      2      9
+    Stereographic::projectSphere                           50      8      5
+    Stereographic::projectSpheroid                         47      4     10
+    Stereographic::secantLatitude                           7      1      2
+    Stereographic::unproject                               18      2      7
+    Stereographic::unprojectSphere                         46      9      9
+    Stereographic::unprojectSpheroid                       58      8     10
+    ~Stereographic                                         16      1      1
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Totals:                 502     54     79
+DataFilterParameters.C:
+    !=                                                      6      1      2
+    =                                                      33      3      2
+    ==                                                     30      1      2
+    DataFilterParameters::CALIPSOMaximumAcceptedUncertainty      6      1      2
+    DataFilterParameters::CALIPSOMaximumAcceptedUncertainty      7      1      2
+    DataFilterParameters::CALIPSOMinimumAcceptedCADScore      6      1      2
+    DataFilterParameters::CALIPSOMinimumAcceptedCADScore      7      1      2
+    DataFilterParameters::DataFilterParameters             30      2      2
+    DataFilterParameters::DataFilterParameters             43      1      1
+    DataFilterParameters::DataFilterParameters             72      2      2
+    DataFilterParameters::GASPAODMaximum                    7      1      2
+    DataFilterParameters::GASPAODMinimum                    7      1      2
+    DataFilterParameters::GASPAODRange                      8      1      2
+    DataFilterParameters::GASPCH1Maximum                    7      1      2
+    DataFilterParameters::GASPCH1Minimum                    7      1      2
+    DataFilterParameters::GASPCH1Range                      8      1      2
+    DataFilterParameters::GASPCLSMaximum                    7      1      2
+    DataFilterParameters::GASPCLSMinimum                    7      1      2
+    DataFilterParameters::GASPCLSRange                      8      1      2
+    DataFilterParameters::GASPMOSMaximum                    7      1      2
+    DataFilterParameters::GASPMOSMinimum                    7      1      2
+    DataFilterParameters::GASPMOSRange                      8      1      2
+    DataFilterParameters::GASPSCAMaximum                    7      1      2
+    DataFilterParameters::GASPSCAMinimum                    7      1      2
+    DataFilterParameters::GASPSCARange                      8      1      2
+    DataFilterParameters::GASPSFCMaximum                    7      1      2
+    DataFilterParameters::GASPSFCMinimum                    7      1      2
+    DataFilterParameters::GASPSFCRange                      8      1      2
+    DataFilterParameters::GASPSIGMaximum                    7      1      2
+    DataFilterParameters::GASPSIGMinimum                    7      1      2
+    DataFilterParameters::GASPSIGRange                      8      1      2
+    DataFilterParameters::GASPSTDMaximum                    7      1      2
+    DataFilterParameters::GASPSTDMinimum                    7      1      2
+    DataFilterParameters::GASPSTDRange                      8      1      2
+    DataFilterParameters::TROPOMIMinimumAcceptedQuality      6      1      2
+    DataFilterParameters::TROPOMIMinimumAcceptedQuality      7      1      2
+    DataFilterParameters::VIIRSNOAAMinimumAcceptedQuality     10      2      2
+    DataFilterParameters::VIIRSNOAAMinimumAcceptedQuality      8      1      3
+    DataFilterParameters::invariant                        26      1      1
+    ~DataFilterParameters                                  23      1      1
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Totals:                 496     45     75
+CMAQGridParameters.C:
+    !=                                                      6      1      2
+    =                                                      31      2      3
+    ==                                                     29      1      2
+    CMAQGridParameters::A                                   7      1      2
+    CMAQGridParameters::CMAQGridParameters                 28      1      3
+    CMAQGridParameters::CMAQGridParameters                 37      1      5
+    CMAQGridParameters::CMAQGridParameters                 74      5     10
+    CMAQGridParameters::CMAQGridParameters                 83      1      3
+    CMAQGridParameters::P0                                  7      1      2
+    CMAQGridParameters::R                                   7      1      2
+    CMAQGridParameters::T0                                  7      1      2
+    CMAQGridParameters::computeThicknesses                 31      3      8
+    CMAQGridParameters::g                                   7      1      2
+    CMAQGridParameters::gdtyp                               7      1      2
+    CMAQGridParameters::invariant                          13      1      1
+    CMAQGridParameters::isValidParameters                  62      1      1
+    CMAQGridParameters::layerThickness                      7      1      2
+    CMAQGridParameters::ncols                               7      1      2
+    CMAQGridParameters::nlays                               7      1      2
+    CMAQGridParameters::nrows                               7      1      2
+    CMAQGridParameters::p_alp                               8      1      2
+    CMAQGridParameters::p_bet                               8      1      2
+    CMAQGridParameters::p_gam                               8      1      2
+    CMAQGridParameters::sphereRadius                        7      1      2
+    CMAQGridParameters::vglvls                              7      1      2
+    CMAQGridParameters::vgtop                               7      1      2
+    CMAQGridParameters::vgtyp                               9      1      2
+    CMAQGridParameters::xcell                               9      1      2
+    CMAQGridParameters::xcent                               7      1      2
+    CMAQGridParameters::xorig                               7      1      2
+    CMAQGridParameters::ycell                               9      1      2
+    CMAQGridParameters::ycent                               7      1      2
+    CMAQGridParameters::yorig                               7      1      2
+    ~CMAQGridParameters                                    27      1      2
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Totals:                 591     41     78
+QueryParameters.C:
+    !=                                                      6      1      2
+    =                                                      24      2      2
+    ==                                                     22      1      2
+    QueryParameters::QueryParameters                       21      1      2
+    QueryParameters::QueryParameters                       34      1      2
+    QueryParameters::QueryParameters                       56      1      2
+    QueryParameters::aggregateMethod                        6      1      2
+    QueryParameters::aggregateMethod                        7      1      2
+    QueryParameters::bounds                                 6      1      2
+    QueryParameters::bounds                                 7      1      2
+    QueryParameters::boundsZ                               14      1      2
+    QueryParameters::boundsZMaximum                         8      1      2
+    QueryParameters::boundsZMinimum                         8      1      2
+    QueryParameters::cmaqGridParameters                     6      1      2
+    QueryParameters::cmaqGridParameters                     7      1      2
+    QueryParameters::compress                               6      1      1
+    QueryParameters::compress                               6      1      2
+    QueryParameters::dataFilterParameters                   6      1      2
+    QueryParameters::dataFilterParameters                   7      1      2
+    QueryParameters::directory                              6      1      1
+    QueryParameters::directory                              6      1      2
+    QueryParameters::endingTimestamp                        7      1      2
+    QueryParameters::format                                 6      1      2
+    QueryParameters::format                                 7      1      2
+    QueryParameters::getMetadata                            6      1      1
+    QueryParameters::getMetadata                            6      1      2
+    QueryParameters::integrateCMAQLayers                    6      1      1
+    QueryParameters::integrateCMAQLayers                    6      1      2
+    QueryParameters::invariant                             41      5      2
+    QueryParameters::pathedFileName                        57     13      6
+    QueryParameters::regridAggregateMethod                  6      1      2
+    QueryParameters::regridAggregateMethod                  7      1      2
+    QueryParameters::regridMethod                           6      1      2
+    QueryParameters::regridMethod                           7      1      2
+    QueryParameters::startingTimestamp                      7      1      2
+    QueryParameters::timestamps                            10      1      2
+    QueryParameters::variables                              6      1      2
+    QueryParameters::variables                              7      1      2
+    isElevation                                             6      1      1
+    ~QueryParameters                                       12      1      1
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Totals:                 485     57     72
+Dataset.C:
+    !=                                                      2      1      1
+    ==                                                      6      3      0
+    Dataset::Dataset                                       20      1      0
+    Dataset::allZeroHour                                   16      2      4
+    Dataset::bounds                                         7      1      2
+    Dataset::cellCenter                                    21      2      4
+    Dataset::cellType                                       5      1      0
+    Dataset::cellVertexCount                                6      1      0
+    Dataset::cellVertices                                  13      2      3
+    Dataset::columns                                        5      1      0
+    Dataset::computeBounds                                 28      6      7
+    Dataset::computeCMAQGridLongitudesLatitudes            83      6     17
+    Dataset::computeVariableRanges                         20      2      6
+    Dataset::computeVerticalRectangleCoordinates          106     12     12
+    Dataset::copy                                          33      2      1
+    Dataset::copyOutCornerCoordinate                       46      6      6
+    Dataset::copyOutElevations                             22      3      6
+    Dataset::copyOutLatitudes                              22      3      6
+    Dataset::copyOutLongitudes                             22      3      6
+    Dataset::copyOutVariable                               18      2      5
+    Dataset::createCOARDSVariables                         47      9      7
+    Dataset::dataVariable                                   6      1      2
+    Dataset::dataVariable                                   7      1      2
+    Dataset::description                                    7      1      2
+    Dataset::endingTimestamp                                7      1      2
+    Dataset::equal                                         36      2      3
+    Dataset::fileName                                       7      1      2
+    Dataset::hasArea                                        5      1      0
+    Dataset::hasElevation                                   5      1      0
+    Dataset::hasVolume                                      5      1      0
+    Dataset::invariant                                     35      1      1
+    Dataset::isGroup                                        5      1      0
+    Dataset::isInBounds                                    14      1      3
+    Dataset::isInTimeRange                                 13      1      5
+    Dataset::isInTimeRange                                 14      1      5
+    Dataset::isInTimeRange                                 47      6     10
+    Dataset::isStationary                                   5      1      0
+    Dataset::isStructuredGrid                               5      1      0
+    Dataset::isSurfaceData                                  5      1      1
+    Dataset::isValidCoordinates                            26      7      8
+    Dataset::isValidData                                   23      2      8
+    Dataset::isValidDescription                            14      2      3
+    Dataset::isValidName                                   13      2      3
+    Dataset::isValidRange                                  12      2      2
+    Dataset::isValidVariableNamesAndUnits                  26      5      5
+    Dataset::isVector                                       5      1      0
+    Dataset::layers                                         5      1      0
+    Dataset::loadedDataSubset                               6      1      2
+    Dataset::matchingTimestamps                            39      5      8
+    Dataset::matchingTimestamps                            41      5      8
+    Dataset::matchingTimestamps                            44      5      8
+    Dataset::matchingTimestamps                            46      5      8
+    Dataset::maximum                                       29      3      5
+    Dataset::minimum                                       11      2      2
+    Dataset::name                                           6      1      2
+    Dataset::name                                           7      1      2
+    Dataset::overlappedTimeRange                           16      1      3
+    Dataset::overlappedTimeRange                           21      1      7
+    Dataset::overlappedTimeRange                           25      1      7
+    Dataset::overlappedTimeRange                           68      6     12
+    Dataset::pathedFileName                                11      1      4
+    Dataset::pointInCell                                   35      4      5
+    Dataset::probe                                         16      1      5
+    Dataset::readAndMatchLine                              15      3      4
+    Dataset::readAndMatchLine2                             28      5      3
+    Dataset::readBounds                                    33      5      7
+    Dataset::readDescription                               20      4      7
+    Dataset::readDimensions                                28      5      9
+    Dataset::readProjectionAndGrid                         89     10     14
+    Dataset::readProjectionParameters                      54     13      3
+    Dataset::readRegridded32BitVariables                   74     10     14
+    Dataset::readRegridded64BitVariables                   83     14     14
+    Dataset::readStrings                                   34      7      7
+    Dataset::readTimestamp                                 35      7      8
+    Dataset::readVariablesAndUnits                         78     13     14
+    Dataset::rows                                           5      1      0
+    Dataset::setDatasetNameFromDescriptionAndVariable     117     25     15
+    Dataset::setEndingTimestamp                            26      3      8
+    Dataset::skipBytes                                     20      4      4
+    Dataset::skipLine                                      19      4      5
+    Dataset::startingTimestamp                              7      1      2
+    Dataset::subset                                        78      2      5
+    Dataset::timeseries                                    31      2      6
+    Dataset::timestepSize                                   5      1      0
+    Dataset::timesteps                                      5      1      0
+    Dataset::variableName                                   8      1      2
+    Dataset::variableUnits                                  8      1      2
+    Dataset::variables                                      7      1      2
+    Dataset::vtimeseries                                   46      6      7
+    Dataset::write                                         16      2      6
+    Dataset::writeBounds                                   21      3      8
+    Dataset::writeBufferedCOARDSVariables                  67      7     13
+    Dataset::writeCOARDSCommon                             61      5     17
+    Dataset::writeCOARDSCoordinates                        57      7     14
+    Dataset::writeCOARDSDateTime                           23      5      8
+    Dataset::writeCOARDSNotes                              27      5      8
+    Dataset::writeCOARDSVariables                          44      5     11
+    Dataset::writeIOAPIAttributes                         164     13     19
+    Dataset::writeIOAPIHeader                              87      5     10
+    Dataset::writeIOAPITFLAGVariable                       33      5      8
+    Dataset::writeProjectionAndGrid                        23      3      7
+    Dataset::writeProjectionParameters                     60      6      7
+    Dataset::writeRegridded32BitCoordinatesAndVariables     20      3      5
+    Dataset::writeRegridded64BitCoordinatesAndVariables     20      3      5
+    Dataset::writeStrings                                  28      5      8
+    isPoint                                                 6      1      1
+    ~Dataset                                               20      1      0
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Totals:                3051    391    557
+RegriddedDataset.C:
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Totals:                   0      0      0
+PointDataset.C:
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Totals:                   0      0      0
+RegriddedPointDataset.C:
+    !=                                                      6      1      2
+    =                                                       9      2      3
+    ==                                                      6      1      2
+    RegriddedPointDataset::RegriddedPointDataset           21      2      4
+    RegriddedPointDataset::RegriddedPointDataset           27      3      6
+    RegriddedPointDataset::RegriddedPointDataset            8      2      3
+    RegriddedPointDataset::invariant                       15      1      1
+    RegriddedPointDataset::readXDR                         87      4     26
+    RegriddedPointDataset::regrid                          10      1      3
+    RegriddedPointDataset::sample                           8      1      3
+    RegriddedPointDataset::write                           28      8     14
+    RegriddedPointDataset::writeXDR                        49      5     11
+    ~RegriddedPointDataset                                  4      1      1
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Totals:                 278     32     68
+SiteDataset.C:
+    !=                                                      6      1      2
+    =                                                      11      2      3
+    ==                                                     10      1      2
+    SiteDataset::SiteDataset                               10      2      3
+    SiteDataset::SiteDataset                               22      2      5
+    SiteDataset::SiteDataset                               28      3      7
+    SiteDataset::findNearestStation                        36      5      2
+    SiteDataset::invariant                                 20      1      1
+    SiteDataset::note                                       7      1      2
+    SiteDataset::readXDRData                               79     15     13
+    SiteDataset::readXDRHeader                             44      1     14
+    SiteDataset::regrid                                    10      1      3
+    SiteDataset::sample                                     8      1      3
+    SiteDataset::stations                                   7      1      2
+    SiteDataset::vprobe                                    35      4      4
+    SiteDataset::vsubset                                   81      4      5
+    SiteDataset::vtimeseries                               57      6      5
+    SiteDataset::write                                     26      7     13
+    SiteDataset::writeASCII                                81      9     12
+    SiteDataset::writeCOARDS                               71      9     18
+    SiteDataset::writeKML                                  80      7     22
+    SiteDataset::writeXDR                                  82     11     13
+    ~SiteDataset                                            4      1      1
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Totals:                 815     95    133
+RegriddedSiteDataset.C:
+    !=                                                      6      1      2
+    =                                                       9      2      3
+    ==                                                      6      1      2
+    RegriddedSiteDataset::RegriddedSiteDataset             21      2      4
+    RegriddedSiteDataset::RegriddedSiteDataset             27      3      6
+    RegriddedSiteDataset::RegriddedSiteDataset              8      2      3
+    RegriddedSiteDataset::invariant                        15      1      1
+    RegriddedSiteDataset::readXDR                          60      1     20
+    RegriddedSiteDataset::regrid                           10      1      3
+    RegriddedSiteDataset::sample                            8      1      3
+    RegriddedSiteDataset::write                            28      8     14
+    RegriddedSiteDataset::writeXDR                         45      5     11
+    ~RegriddedSiteDataset                                   4      1      1
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Totals:                 247     29     62
+CMAQDataset.C:
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Totals:                   0      0      0
+SwathDataset.C:
+    !=                                                      6      1      2
+    =                                                      11      2      3
+    ==                                                     16      2      4
+    SwathDataset::SwathDataset                             10      2      3
+    SwathDataset::SwathDataset                             19      2      4
+    SwathDataset::SwathDataset                             25      3      6
+    SwathDataset::invariant                                17      1      1
+    SwathDataset::points                                    7      1      2
+    SwathDataset::probedPoint                              29      4      4
+    SwathDataset::readScanData                             96     10     17
+    SwathDataset::readScanTimestamps                       22      4      7
+    SwathDataset::readXDR                                  76      2     18
+    SwathDataset::regrid                                   10      1      3
+    SwathDataset::sample                                    8      1      3
+    SwathDataset::scans                                     7      1      3
+    SwathDataset::timestamp                                 7      1      2
+    SwathDataset::vprobe                                   36      5      6
+    SwathDataset::vsubset                                 103      6     11
+    SwathDataset::write                                    26      7     13
+    SwathDataset::writeASCII                              116      8     21
+    SwathDataset::writeCOARDS                              42      6     12
+    SwathDataset::writeKML                                 72      5     18
+    SwathDataset::writeScanData                            89     15     10
+    SwathDataset::writeScanTimestamps                      22      3     10
+    SwathDataset::writeXDR                                 60      9     14
+    ~SwathDataset                                           3      1      0
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Totals:                 935    103    179
+RegriddedSwathDataset.C:
+    !=                                                      6      1      2
+    =                                                       9      2      3
+    ==                                                      6      1      2
+    RegriddedSwathDataset::RegriddedSwathDataset           20      2      4
+    RegriddedSwathDataset::RegriddedSwathDataset           26      3      6
+    RegriddedSwathDataset::RegriddedSwathDataset            8      2      3
+    RegriddedSwathDataset::invariant                       15      1      1
+    RegriddedSwathDataset::readXDR                         59      2     20
+    RegriddedSwathDataset::regrid                          10      1      3
+    RegriddedSwathDataset::sample                           8      1      3
+    RegriddedSwathDataset::write                           28      8     14
+    RegriddedSwathDataset::writeXDR                        30      4     12
+    ~RegriddedSwathDataset                                  5      1      1
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Totals:                 230     29     62
+AircraftDataset.C:
+    !=                                                      6      1      2
+    =                                                      13      2      3
+    ==                                                     20      3      4
+    AircraftDataset::AircraftDataset                       12      2      3
+    AircraftDataset::AircraftDataset                       20      2      4
+    AircraftDataset::AircraftDataset                       26      3      6
+    AircraftDataset::invariant                             28      1      1
+    AircraftDataset::isSurfaceData                          5      1      0
+    AircraftDataset::note                                   7      1      2
+    AircraftDataset::points                                 7      1      2
+    AircraftDataset::readTrackData                         81      8     18
+    AircraftDataset::readXDR                               73      2     19
+    AircraftDataset::regrid                                10      1      3
+    AircraftDataset::sample                                 8      1      3
+    AircraftDataset::trackBounds                            7      1      2
+    AircraftDataset::tracks                                 7      1      3
+    AircraftDataset::vprobe                                94     13      9
+    AircraftDataset::vsubset                              153     10     13
+    AircraftDataset::write                                 26      7     13
+    AircraftDataset::writeASCII                            82      7     22
+    AircraftDataset::writeCOARDS                           46      7     13
+    AircraftDataset::writeKML                              66      6     20
+    AircraftDataset::writeTrackData                        57      5     14
+    AircraftDataset::writeXDR                              53      8     15
+    ~AircraftDataset                                        3      1      0
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Totals:                 910     95    174
+RegriddedAircraftDataset.C:
+    !=                                                      6      1      2
+    =                                                      10      2      3
+    ==                                                      8      1      2
+    RegriddedAircraftDataset::RegriddedAircraftDataset     20      2      4
+    RegriddedAircraftDataset::RegriddedAircraftDataset     26      3      6
+    RegriddedAircraftDataset::RegriddedAircraftDataset      9      2      3
+    RegriddedAircraftDataset::invariant                    19      1      1
+    RegriddedAircraftDataset::isSurfaceData                 5      1      0
+    RegriddedAircraftDataset::readXDR                      74      2     26
+    RegriddedAircraftDataset::regrid                       10      1      3
+    RegriddedAircraftDataset::sample                        8      1      3
+    RegriddedAircraftDataset::subsetNotes                   7      1      2
+    RegriddedAircraftDataset::write                        28      8     14
+    RegriddedAircraftDataset::writeASCII                   85      8     14
+    RegriddedAircraftDataset::writeCOARDS                  46      5     13
+    RegriddedAircraftDataset::writeXDR                     47      5     13
+    ~RegriddedAircraftDataset                               4      1      1
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Totals:                 412     45     97
+ProfileDataset.C:
+    !=                                                      6      1      2
+    =                                                      12      2      3
+    ==                                                     20      3      4
+    ProfileDataset::ProfileDataset                         11      2      3
+    ProfileDataset::ProfileDataset                         19      2      4
+    ProfileDataset::ProfileDataset                         25      3      6
+    ProfileDataset::invariant                              21      1      1
+    ProfileDataset::isSurfaceData                           5      1      0
+    ProfileDataset::note                                    7      1      2
+    ProfileDataset::points                                  7      1      2
+    ProfileDataset::profiles                                7      1      3
+    ProfileDataset::readProfileData                       102     13     17
+    ProfileDataset::readXDR                                69      2     18
+    ProfileDataset::regrid                                 10      1      3
+    ProfileDataset::sample                                  8      1      3
+    ProfileDataset::storeSubsetPointers                    20      1      4
+    ProfileDataset::timestamp                               7      1      2
+    ProfileDataset::vprobe                                 57      9      5
+    ProfileDataset::vsubset                               107     10      9
+    ProfileDataset::write                                  26      7     13
+    ProfileDataset::writeASCII                             90      7     19
+    ProfileDataset::writeCOARDS                            46      7     13
+    ProfileDataset::writeKML                               69      6     21
+    ProfileDataset::writeProfileData                       75     10     11
+    ProfileDataset::writeXDR                               49      8     13
+    ~ProfileDataset                                         3      1      0
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Totals:                 878    102    160
+RegriddedProfileDataset.C:
+    !=                                                      6      1      2
+    =                                                       9      2      3
+    ==                                                      6      1      2
+    RegriddedProfileDataset::RegriddedProfileDataset       20      2      4
+    RegriddedProfileDataset::RegriddedProfileDataset       26      3      6
+    RegriddedProfileDataset::RegriddedProfileDataset        8      2      3
+    RegriddedProfileDataset::invariant                     16      1      1
+    RegriddedProfileDataset::isSurfaceData                  5      1      0
+    RegriddedProfileDataset::readXDR                       66      2     24
+    RegriddedProfileDataset::regrid                        10      1      3
+    RegriddedProfileDataset::sample                         8      1      3
+    RegriddedProfileDataset::write                         28      8     14
+    RegriddedProfileDataset::writeXDR                      30      4     12
+    ~RegriddedProfileDataset                                4      1      1
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Totals:                 242     30     66
+CALIPSODataset.C:
+    !=                                                      6      1      2
+    =                                                      12      2      3
+    ==                                                     20      2      4
+    CALIPSODataset::CALIPSODataset                         11      2      3
+    CALIPSODataset::CALIPSODataset                         19      2      4
+    CALIPSODataset::CALIPSODataset                         25      3      6
+    CALIPSODataset::invariant                              22      1      1
+    CALIPSODataset::isSurfaceData                          10      2      1
+    CALIPSODataset::readScanData                          103     11     19
+    CALIPSODataset::readScanTimestamps                     23      4      7
+    CALIPSODataset::readXDR                                83      3     19
+    CALIPSODataset::regrid                                 10      1      3
+    CALIPSODataset::sample                                  8      1      3
+    CALIPSODataset::scanBounds                              7      1      2
+    CALIPSODataset::scanGroundPoints                        7      1      2
+    CALIPSODataset::scanVerticalPoints                      7      1      2
+    CALIPSODataset::scans                                   7      1      3
+    CALIPSODataset::timestamp                               7      1      2
+    CALIPSODataset::vprobe                                 91     14      5
+    CALIPSODataset::vsubset                               102      5      9
+    CALIPSODataset::write                                  26      7     13
+    CALIPSODataset::writeASCII                            141      9     21
+    CALIPSODataset::writeCOARDS                            43      6     12
+    CALIPSODataset::writeKML                               59      7     18
+    CALIPSODataset::writeScanData                          95     11     11
+    CALIPSODataset::writeScanTimestamps                    22      3     10
+    CALIPSODataset::writeXDR                               60      9     15
+    ~CALIPSODataset                                         3      1      0
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Totals:                1029    112    182
+RegriddedCALIPSODataset.C:
+    !=                                                      6      1      2
+    =                                                      10      2      3
+    ==                                                      8      1      2
+    RegriddedCALIPSODataset::RegriddedCALIPSODataset       21      2      4
+    RegriddedCALIPSODataset::RegriddedCALIPSODataset       27      3      6
+    RegriddedCALIPSODataset::RegriddedCALIPSODataset        9      2      3
+    RegriddedCALIPSODataset::invariant                     17      1      1
+    RegriddedCALIPSODataset::isSurfaceData                  5      1      0
+    RegriddedCALIPSODataset::layers                         6      1      1
+    RegriddedCALIPSODataset::readXDR                       75      2     24
+    RegriddedCALIPSODataset::regrid                        10      1      3
+    RegriddedCALIPSODataset::sample                         8      1      3
+    RegriddedCALIPSODataset::write                         28      8     14
+    RegriddedCALIPSODataset::writeCoordinates              34      4      8
+    RegriddedCALIPSODataset::writeData                     35      5     10
+    RegriddedCALIPSODataset::writeXDR                      31      4     13
+    ~RegriddedCALIPSODataset                                5      1      1
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Totals:                 335     40     88
+GridDataset.C:
+    !=                                                      6      1      2
+    =                                                      11      2      3
+    ==                                                     10      1      2
+    GridDataset::GridDataset                               10      2      3
+    GridDataset::GridDataset                               25      2      5
+    GridDataset::GridDataset                               30      3      7
+    GridDataset::columns                                    6      1      1
+    GridDataset::invariant                                 15      1      1
+    GridDataset::loadedDataSubset                          35      5      9
+    GridDataset::probedPoint                               42      6      4
+    GridDataset::readData                                  94     11     14
+    GridDataset::readXDRData                               78      8     14
+    GridDataset::readXDRHeader                             51      2     12
+    GridDataset::regrid                                    10      1      3
+    GridDataset::rows                                       6      1      1
+    GridDataset::sample                                     8      1      3
+    GridDataset::timestepOfTimestamp                       10      1      3
+    GridDataset::timestepsOfTimestamps                     21      2      3
+    GridDataset::vprobe                                    54      8      4
+    GridDataset::vsubset                                  107      4      5
+    GridDataset::vtimeseries                               99     14      8
+    GridDataset::write                                     26      7     13
+    GridDataset::writeASCII                                86      9     23
+    GridDataset::writeCOARDS                               53      6     11
+    GridDataset::writeKML                                  98     11     22
+    GridDataset::writeXDR                                 111     18     22
+    ~GridDataset                                            5      1      0
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Totals:                1107    129    176
+RegriddedGridDataset.C:
+    !=                                                      6      1      2
+    =                                                       9      2      3
+    ==                                                      6      1      2
+    RegriddedGridDataset::RegriddedGridDataset             20      2      4
+    RegriddedGridDataset::RegriddedGridDataset             26      3      6
+    RegriddedGridDataset::RegriddedGridDataset              8      2      3
+    RegriddedGridDataset::invariant                        15      1      1
+    RegriddedGridDataset::readXDR                          61      1     21
+    RegriddedGridDataset::regrid                           10      1      3
+    RegriddedGridDataset::sample                            8      1      3
+    RegriddedGridDataset::write                            28      8     14
+    RegriddedGridDataset::writeXDR                         55      6     15
+    ~RegriddedGridDataset                                   5      1      1
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Totals:                 257     30     63
+PolygonDataset.C:
+    !=                                                      6      1      2
+    =                                                      12      2      3
+    ==                                                     11      1      2
+    ==                                                     16      3      2
+    PolygonDataset::PolygonDataset                         11      2      3
+    PolygonDataset::PolygonDataset                         21      2      5
+    PolygonDataset::PolygonDataset                         27      3      7
+    PolygonDataset::PolygonShapeData::copy                 17      5      2
+    PolygonDataset::PolygonShapeData::deallocate           12      3      0
+    PolygonDataset::invariant                              21      1      1
+    PolygonDataset::readXDRData                           153     22     18
+    PolygonDataset::readXDRHeader                          34      4      9
+    PolygonDataset::regrid                                 10      1      3
+    PolygonDataset::sample                                  8      1      3
+    PolygonDataset::unbinShapefile                         26      5      7
+    PolygonDataset::vprobe                                 29      3      5
+    PolygonDataset::vsubset                                68      5      6
+    PolygonDataset::write                                  28      9     14
+    PolygonDataset::writeASCII                             37      4      9
+    PolygonDataset::writeCOARDS                           128     13     23
+    PolygonDataset::writeKML                               27      3      8
+    PolygonDataset::writeShapefile                         25      4      8
+    PolygonDataset::writeXDR                                9      2      4
+    compareSubsetPointers                                   4      1      0
+    reverseGrayColor                                       23      7      3
+    ~PolygonDataset                                         4      1      1
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Totals:                 767    108    145
+DatasetManager.C:
+    DatasetManager::DOSPath                                37      6      9
+    DatasetManager::append                                  8      1      4
+    DatasetManager::appendDatasetFromFile                  10      1      6
+    DatasetManager::appendRetrievedDataset                 12      1      6
+    DatasetManager::checkAndSetServerHost                  76      8     11
+    DatasetManager::count                                   7      1      3
+    DatasetManager::invariant                              11      2      3
+    DatasetManager::readDataset                            33      6     10
+    DatasetManager::remoteVersion                           7      1      2
+    DatasetManager::remove                                  9      1      4
+    DatasetManager::removeAll                              11      2      4
+    DatasetManager::retrieveDataset                        34      7     11
+    DatasetManager::retrieveDatasetToFile                  23      4     11
+    DatasetManager::retrieveFile                           17      3      8
+    DatasetManager::serverHost                             17      2      8
+    DatasetManager::webservice                             11      2      4
+    DatasetManager::writeAll                               13      3      4
+    []                                                      8      1      2
+    appendCALIPSOParameters                                23      2     10
+    appendGASPParameters                                   37      2     10
+    appendLevelParameters                                  68      6     19
+    appendRegriddingParameters                             87      5     24
+    appendTROPOMIParameters                                22      2     10
+    appendVIIRSNOAAParameters                              22      2     10
+    lookupCreator                                          17      3      2
+    lookupCreatorFromFile                                   6      1      1
+    lookupCreatorFromStream                                 6      1      1
+    newAircraftDataset                                      2      1      1
+    newAircraftDataset                                      2      1      1
+    newCALIPSODataset                                       2      1      1
+    newCALIPSODataset                                       2      1      1
+    newCMAQDataset                                          2      1      1
+    newCMAQDataset                                          2      1      1
+    newGridDataset                                          2      1      1
+    newGridDataset                                          2      1      1
+    newPointDataset                                         2      1      1
+    newPointDataset                                         2      1      1
+    newPolygonDataset                                       2      1      1
+    newPolygonDataset                                       2      1      1
+    newProfileDataset                                       2      1      1
+    newProfileDataset                                       2      1      1
+    newRegriddedAircraftDataset                             2      1      1
+    newRegriddedAircraftDataset                             2      1      1
+    newRegriddedCALIPSODataset                              2      1      1
+    newRegriddedCALIPSODataset                              2      1      1
+    newRegriddedGridDataset                                 2      1      1
+    newRegriddedGridDataset                                 2      1      1
+    newRegriddedPointDataset                                2      1      1
+    newRegriddedPointDataset                                2      1      1
+    newRegriddedProfileDataset                              2      1      1
+    newRegriddedProfileDataset                              2      1      1
+    newRegriddedSiteDataset                                 2      1      1
+    newRegriddedSiteDataset                                 2      1      1
+    newRegriddedSwathDataset                                2      1      1
+    newRegriddedSwathDataset                                2      1      1
+    newSiteDataset                                          2      1      1
+    newSiteDataset                                          2      1      1
+    newSwathDataset                                         2      1      1
+    newSwathDataset                                         2      1      1
+    toURLString                                           157     14     38
+    toURLString                                            16      2      8
+    urlCallback                                             9      2      4
+    ~DatasetManager                                         7      1      2
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Totals:                 885    127    262
+ 
+    ALL:                                                17880   2193   3434
+ 

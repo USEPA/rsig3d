@@ -1,0 +1,23 @@
+CMDLINE=cc -DEFAULT:abi=n32:isa=mips4:proc=r10k -64 -mips4 -c -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -DNDEBUG -DUSE_OPENMP -mp -O -I../libsrc -I. ncgentab.c
+PWD=/home/plessel/projects/eutrophic/code/src/libs/NetCDF/netcdf-3.6.0-p1/src/ncgen
+----
+----
+termstring 5000
+yylhs 154
+yylen 154
+yydefred 214
+yydgoto 78
+yysindex 214
+yyrindex 214
+yygindex 78
+yytable 454
+yycheck 454
+__iob 3200
+yy_accept 498
+yy_ec 1024
+yy_meta 232
+yy_base 518
+yy_def 518
+yy_nxt 1002
+yy_chk 1002
+errstr 100

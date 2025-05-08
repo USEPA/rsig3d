@@ -1,0 +1,3 @@
+EMVL HACK hard coded in two places the reference lat/lon to be
+consistent with typical CMAQ HEMI visualizations.
+

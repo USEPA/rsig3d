@@ -1,0 +1,16 @@
+#!/bin/sh
+# Compile this library.
+
+# Determine the platform using uname:
+
+UNAME_="`uname`"
+UNAME_M="`uname -m`"
+PLATFORM="$UNAME_.$UNAME_M"
+
+cp -p shapefil.h ../../../include/
+gcc -m64 -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -DNDEBUG -O -c -I../../../include shpopen.c dbfopen.c
+ar -rv ../../../lib/$PLATFORM/libshp.a shpopen.o dbfopen.o 
+rm *.o
+ls -l ../../../lib/$PLATFORM/libshp.a
+file  ../../../lib/$PLATFORM/libshp.a
+

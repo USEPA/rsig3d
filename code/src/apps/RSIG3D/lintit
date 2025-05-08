@@ -1,0 +1,64 @@
+#!/bin/sh
+# lintit - Run static analysis utility on source code to find defects.
+
+# Determine the platform using uname:
+
+UNAME_="`uname`"
+UNAME_M="`uname -m`"
+
+if [ "$UNAME_" == 'Linux' ]
+then
+  PLATFORM="$UNAME_.$UNAME_M"
+elif [ "$UNAME_" == 'CYGWIN_NT-5.1' ]
+then
+  PLATFORM='Win32'
+else
+  PLATFORM="$UNAME_"
+fi
+
+# Editable variables:
+
+BASE="$HOME/projects/rsig/dev/RSIG3D"
+CC="/usr/bin/g++"
+INFER="$HOME/bin/$PLATFORM/infer"
+SCAN_BUILD="$HOME/bin/$PLATFORM/scan-build"
+DFLAGS="-DGLEW_STATIC -DNO_ASSERTIONS -DNDEBUG -DPROJ_PATH=\"$BASE/code\" -DQGLVIEWER_STATIC -DQT_CORE_LIB -DQT_GUI_LIB -DQT_NETWORK_LIB -DQT_NO_DEBUG -DQT_OPENGL_LIB -DQT_STATIC -DQT_XML_LIB -DUSE_INTERNAL_MARBLE -DUSE_QT_LIB"
+#CFLAGS="-fpermissive -O3"
+CFLAGS="-O"
+
+# Derived variables:
+
+QT_INCLUDE="$BASE/package/QT/$PLATFORM/4.8.6static/include"
+QT_IFLAGS="-I$QT_INCLUDE -I$QT_INCLUDE/QtOpenGL -I$QT_INCLUDE/QtGui -I$QT_INCLUDE/QtXml -I$QT_INCLUDE/QtNetwork -I$QT_INCLUDE/QtCore"
+GLEW_IFLAGS="-I$BASE/code/src/libs/glew-1.8.0/include"
+MARBLE_BASE="$BASE/code/src/libs/marble"
+MARBLE_IFLAGS="-I$MARBLE_BASE/src/lib -I$MARBLE_BASE/src/lib/geodata -I$MARBLE_BASE/src/lib/geodata/data -I$MARBLE_BASE/src/lib/geodata/parser"
+IFLAGS="-I/opt/X11/include $GLEW_IFLAGS $QT_IFLAGS -I$BASE/code/src/libs/PropertyEditor/src -I$BASE/code/src/libs/QMapControl/src $MARBLE_IFLAGS -I$BASE/build/src/apps/RSIG3D -I$BASE/code/include"
+SOURCE="*.cpp"
+
+echo > lint.out
+echo Infer >> lint.out
+echo >> lint.out
+echo \
+"$INFER run -- $CC $DFLAGS $IFLAGS $CFLAGS -c $SOURCE " >> lint.out
+ $INFER run -- $CC $DFLAGS $IFLAGS $CFLAGS -c $SOURCE
+cat infer-out/bugs.txt >> lint.out
+\rm -rf infer-out *.o
+echo >> lint.out
+echo >> lint.out
+echo "cppcheck --enable=all $SOURCE" >> lint.out
+$HOME/cppcheck-2.4/cppcheck --enable=all $SOURCE 2>> lint.out
+echo >> lint.out
+echo >> lint.out
+touch junklint ; \rm -rf junklint ; mkdir junklint
+echo scan-build >> lint.out
+echo >> lint.out
+echo \
+"$SCAN_BUILD -o junklint $CC $DFLAGS $IFLAGS $CFLAGS -c $SOURCE 2>> lint.out" >> lint.out
+ $SCAN_BUILD -o junklint $CC $DFLAGS $IFLAGS $CFLAGS -c $SOURCE 2>> lint.out
+rm -rf *.o junklint
+echo >> lint.out
+echo >> lint.out
+
+cat lint.out
+

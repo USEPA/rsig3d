@@ -1,0 +1,1006 @@
+
+Infer
+
+/Users/plessel/bin/Darwin/infer run -- /usr/bin/g++ -DGLEW_STATIC -DNO_ASSERTIONS -DNDEBUG -DPROJ_PATH="/Users/plessel/projects/rsig/dev/RSIG3D/code" -DQGLVIEWER_STATIC -DQT_CORE_LIB -DQT_GUI_LIB -DQT_NETWORK_LIB -DQT_NO_DEBUG -DQT_OPENGL_LIB -DQT_STATIC -DQT_XML_LIB -DUSE_INTERNAL_MARBLE -DUSE_QT_LIB -I/opt/X11/include -I/Users/plessel/projects/rsig/dev/RSIG3D/code/src/libs/glew-1.8.0/include -I/Users/plessel/projects/rsig/dev/RSIG3D/package/QT/Darwin/4.8.6static/include -I/Users/plessel/projects/rsig/dev/RSIG3D/package/QT/Darwin/4.8.6static/include/QtOpenGL -I/Users/plessel/projects/rsig/dev/RSIG3D/package/QT/Darwin/4.8.6static/include/QtGui -I/Users/plessel/projects/rsig/dev/RSIG3D/package/QT/Darwin/4.8.6static/include/QtXml -I/Users/plessel/projects/rsig/dev/RSIG3D/package/QT/Darwin/4.8.6static/include/QtNetwork -I/Users/plessel/projects/rsig/dev/RSIG3D/package/QT/Darwin/4.8.6static/include/QtCore -I/Users/plessel/projects/rsig/dev/RSIG3D/code/src/libs/PropertyEditor/src -I/Users/plessel/projects/rsig/dev/RSIG3D/code/src/libs/QMapControl/src -I/Users/plessel/projects/rsig/dev/RSIG3D/code/src/libs/marble/src/lib -I/Users/plessel/projects/rsig/dev/RSIG3D/code/src/libs/marble/src/lib/geodata -I/Users/plessel/projects/rsig/dev/RSIG3D/code/src/libs/marble/src/lib/geodata/data -I/Users/plessel/projects/rsig/dev/RSIG3D/code/src/libs/marble/src/lib/geodata/parser -I/Users/plessel/projects/rsig/dev/RSIG3D/build/src/apps/RSIG3D -I/Users/plessel/projects/rsig/dev/RSIG3D/code/include -O -c *.cpp 
+Found 8 issues
+
+LoadMapFile.cpp:46: error: RESOURCE_LEAK
+  resource of type `__sFILE` acquired by call to `fopen()` at line 46, column 44 is not released after line 46, column 32.
+  44.   unsigned int loadMapFile( const char* mapFileName ) {
+  45.     PRE02( mapFileName, *mapFileName );
+  46. >   emvl::ResourceHandler<FILE*> fileCloser( fopen( mapFileName, "rb" ), fclose );
+  47.     FILE* const mapFile = fileCloser.get();
+  48.     unsigned int result = 0;
+
+PolygonRenderer.cpp:232: error: DEAD_STORE
+  The value written to &BUFFSIZE4 (type int) is never used.
+  230.     const size_t cellVertexCount = dataset->cellVertexCount();
+  231.     const int BUFFSIZE = PolygonRenderer::BUFFSIZE;
+  232. >   const int BUFFSIZE4 = BUFFSIZE << 2;
+  233.     Vector4f vertices[ BUFFSIZE4 ]; // Buffer copy of many quad vertices.
+  234.     assert( sizeof vertices / sizeof *vertices >= count * 4 );
+
+CeilometerCurtainArray.cpp:436: error: NULL_DEREFERENCE
+  pointer `profileDataset` last assigned on line 430 could be null and is dereferenced by call to `sumProfilePoints()` at line 436, column 30.
+  434.       // (Re)allocate and/or initialize arrays to zero:
+  435.   
+  436. >     const size_t sumPoints = sumProfilePoints( profileDataset, ceilometerName );
+  437.       MLA_times.clear();      // Set size to 0 and keep capacity
+  438.       MLA_elevations.clear(); // (does not deallocate).
+
+GetData.cpp:484: error: RESOURCE_LEAK
+  resource of type `__sFILE` acquired by call to `fopen()` at line 484, column 48 is not released after line 484, column 36.
+  482.         // Use a resource handler to ensure output file is finalized and closed:
+  483.   
+  484. >       emvl::ResourceHandler<FILE*> fileCloser( fopen( outputKMLFileName.c_str(),
+  485.                                                         "wb" ),
+  486.                                                  finishKMLFile );
+
+PointRenderer.cpp:953: error: UNINITIALIZED_VALUE
+  The value read from thisColor.x was never initialized.
+  951.                 }
+  952.   
+  953. >               glColor4f(thisColor.x, thisColor.y, thisColor.z, alpha);
+  954.                 glBegin(GL_QUADS);
+  955.                 glVertex2f(screenX0, screenY0);
+
+PointRenderer.cpp:953: error: UNINITIALIZED_VALUE
+  The value read from thisColor.y was never initialized.
+  951.                 }
+  952.   
+  953. >               glColor4f(thisColor.x, thisColor.y, thisColor.z, alpha);
+  954.                 glBegin(GL_QUADS);
+  955.                 glVertex2f(screenX0, screenY0);
+
+PointRenderer.cpp:953: error: UNINITIALIZED_VALUE
+  The value read from thisColor.z was never initialized.
+  951.                 }
+  952.   
+  953. >               glColor4f(thisColor.x, thisColor.y, thisColor.z, alpha);
+  954.                 glBegin(GL_QUADS);
+  955.                 glVertex2f(screenX0, screenY0);
+
+ControlDockWidget_init.cpp:739: error: DEAD_STORE
+  The value written to &N (type int) is never used.
+  737.     
+  738.     //create object nodes
+  739. >   const int N = 1;
+  740.     GeoDataObject* geoObjs[N] = {NULL};
+  741.     GeoDataList* datalist = GeoDataListSingleton::getInstance();
+
+Summary of the reports
+
+  UNINITIALIZED_VALUE: 3
+        RESOURCE_LEAK: 2
+           DEAD_STORE: 2
+     NULL_DEREFERENCE: 1
+
+cppcheck --enable=all *.cpp
+CMAQFileReaderDialog.h:101:3: style: Class 'CMAQFileReaderDialog' has a constructor with 1 argument that is not explicit. [noExplicitConstructor]
+  CMAQFileReaderDialog( CMAQFileReaderModel& theModel );
+  ^
+CMAQFileReaderModel.cpp:533:46: error: There is an unknown macro here somewhere. Configuration is required. If ; is a macro then please configure it. [unknownMacro]
+  DEBUG( std::cerr << outputFile << std::endl; )
+                                             ^
+CeilometerCurtainArray.cpp:86:12: performance: Inefficient usage of string::find() in condition; string::starts_with() could be faster. [stlIfStrFind]
+      if ( datasetName.find( "ceilomenter" ) == 0 ) {
+           ^
+CeilometerCurtainArray.cpp:262:12: performance: Inefficient usage of string::find() in condition; string::starts_with() could be faster. [stlIfStrFind]
+      if ( datasetName.find( "ceilometer" ) == 0 ) {
+           ^
+GeoDataObject.h:66:3: error: There is an unknown macro here somewhere. Configuration is required. If Q_PROPERTY is a macro then please configure it. [unknownMacro]
+  Q_PROPERTY(QString varName READ varName DESIGNABLE true USER true CONSTANT)
+  ^
+GLProxyGraphicsWidget.h:26:3: style: Class 'GLProxyGraphicsWidget' has a constructor with 1 argument that is not explicit. [noExplicitConstructor]
+  GLProxyGraphicsWidget(OpenGLScene* sceneptr, QWidget * parent = 0);
+  ^
+GLSLProgramObject.h:58:0: information: Skipping configuration 'GL_TEXTURE_2D_ARRAY' since the value of 'GL_TEXTURE_2D_ARRAY' is unknown. Use -D if you want to check it. You can use -U to skip it explicitly. [ConfigurationNotChecked]
+        const unsigned int textarget = GL_TEXTURE_2D_ARRAY;
+^
+GLSLProgramObject.h:61:0: information: Skipping configuration 'GL_TEXTURE_2D_ARRAY_EXT' since the value of 'GL_TEXTURE_2D_ARRAY_EXT' is unknown. Use -D if you want to check it. You can use -U to skip it explicitly. [ConfigurationNotChecked]
+        const unsigned int textarget = GL_TEXTURE_2D_ARRAY_EXT;
+^
+VisDataObject.h:30:3: error: There is an unknown macro here somewhere. Configuration is required. If Q_PROPERTY is a macro then please configure it. [unknownMacro]
+  Q_PROPERTY(bool showObject READ showObject WRITE setShowObject DESIGNABLE true USER true)
+  ^
+LoadMapFile.cpp:172:54: error: There is an unknown macro here somewhere. Configuration is required. If ; is a macro then please configure it. [unknownMacro]
+  DEBUG( fprintf( stderr, "gen list = %d\n", result ); )
+                                                     ^
+RSIGGlobal.cpp:45:16: style: Condition 'end!=argv0' is always false [knownConditionTrueFalse]
+      if ( end != argv0 ) {
+               ^
+RSIGGlobal.cpp:43:14: note: Assuming condition 'end!=0' is true
+    if ( end != 0 ) {
+             ^
+RSIGGlobal.cpp:45:16: note: Condition 'end!=argv0' is always false
+      if ( end != argv0 ) {
+               ^
+RenderingContext.cpp:30:0: information: Skipping configuration 'GL_COLOR_ATTACHMENT8_EXT' since the value of 'GL_COLOR_ATTACHMENT8_EXT' is unknown. Use -D if you want to check it. You can use -U to skip it explicitly. [ConfigurationNotChecked]
+    GL_COLOR_ATTACHMENT8_EXT,
+^
+RenderingContextRSIG.h:22:16: style: The function 'unbind' overrides a function in a base class but is not marked with a 'override' specifier. [missingOverride]
+  virtual void unbind();
+               ^
+RenderingContext.h:31:16: note: Virtual function in base class
+  virtual void unbind() = 0;
+               ^
+RenderingContextRSIG.h:22:16: note: Function in derived class
+  virtual void unbind();
+               ^
+RenderingContextRSIG.h:23:16: style: The function 'initShaderProgram' overrides a function in a base class but is not marked with a 'override' specifier. [missingOverride]
+  virtual void initShaderProgram();
+               ^
+RenderingContext.h:32:16: note: Virtual function in base class
+  virtual void initShaderProgram() = 0;
+               ^
+RenderingContextRSIG.h:23:16: note: Function in derived class
+  virtual void initShaderProgram();
+               ^
+RenderingContextRSIG.h:35:16: style: The function 'bind' overrides a function in a base class but is not marked with a 'override' specifier. [missingOverride]
+  virtual void bind( const int pass,
+               ^
+RenderingContext.h:27:16: note: Virtual function in base class
+  virtual void bind( const int pass,
+               ^
+RenderingContextRSIG.h:35:16: note: Function in derived class
+  virtual void bind( const int pass,
+               ^
+RenderingContextRSIG.h:39:16: style: The function 'initRenderTarget' overrides a function in a base class but is not marked with a 'override' specifier. [missingOverride]
+  virtual void initRenderTarget(const int w, const int h) {};
+               ^
+RenderingContext.h:34:16: note: Virtual function in base class
+  virtual void initRenderTarget(const int w, const int h) = 0;
+               ^
+RenderingContextRSIG.h:39:16: note: Function in derived class
+  virtual void initRenderTarget(const int w, const int h) {};
+               ^
+RenderingContextRSIG.h:48:16: style: The function 'unbind' overrides a function in a base class but is not marked with a 'override' specifier. [missingOverride]
+  virtual void unbind();
+               ^
+RenderingContext.h:31:16: note: Virtual function in base class
+  virtual void unbind() = 0;
+               ^
+RenderingContextRSIG.h:48:16: note: Function in derived class
+  virtual void unbind();
+               ^
+RenderingContextRSIG.h:49:16: style: The function 'initShaderProgram' overrides a function in a base class but is not marked with a 'override' specifier. [missingOverride]
+  virtual void initShaderProgram();
+               ^
+RenderingContext.h:32:16: note: Virtual function in base class
+  virtual void initShaderProgram() = 0;
+               ^
+RenderingContextRSIG.h:49:16: note: Function in derived class
+  virtual void initShaderProgram();
+               ^
+RenderingContextRSIG.h:61:16: style: The function 'bind' overrides a function in a base class but is not marked with a 'override' specifier. [missingOverride]
+  virtual void bind( const int pass,
+               ^
+RenderingContext.h:27:16: note: Virtual function in base class
+  virtual void bind( const int pass,
+               ^
+RenderingContextRSIG.h:61:16: note: Function in derived class
+  virtual void bind( const int pass,
+               ^
+RenderingContextRSIG.h:65:16: style: The function 'initRenderTarget' overrides a function in a base class but is not marked with a 'override' specifier. [missingOverride]
+  virtual void initRenderTarget(const int w, const int h) {};
+               ^
+RenderingContext.h:34:16: note: Virtual function in base class
+  virtual void initRenderTarget(const int w, const int h) = 0;
+               ^
+RenderingContextRSIG.h:65:16: note: Function in derived class
+  virtual void initRenderTarget(const int w, const int h) {};
+               ^
+RenderingContextRSIG.h:74:16: style: The function 'unbind' overrides a function in a base class but is not marked with a 'override' specifier. [missingOverride]
+  virtual void unbind();
+               ^
+RenderingContext.h:31:16: note: Virtual function in base class
+  virtual void unbind() = 0;
+               ^
+RenderingContextRSIG.h:74:16: note: Function in derived class
+  virtual void unbind();
+               ^
+RenderingContextRSIG.h:75:16: style: The function 'initShaderProgram' overrides a function in a base class but is not marked with a 'override' specifier. [missingOverride]
+  virtual void initShaderProgram();
+               ^
+RenderingContext.h:32:16: note: Virtual function in base class
+  virtual void initShaderProgram() = 0;
+               ^
+RenderingContextRSIG.h:75:16: note: Function in derived class
+  virtual void initShaderProgram();
+               ^
+RenderingContextRSIG.h:87:16: style: The function 'bind' overrides a function in a base class but is not marked with a 'override' specifier. [missingOverride]
+  virtual void bind( const int pass,
+               ^
+RenderingContext.h:27:16: note: Virtual function in base class
+  virtual void bind( const int pass,
+               ^
+RenderingContextRSIG.h:87:16: note: Function in derived class
+  virtual void bind( const int pass,
+               ^
+RenderingContextRSIG.h:91:16: style: The function 'initRenderTarget' overrides a function in a base class but is not marked with a 'override' specifier. [missingOverride]
+  virtual void initRenderTarget(const int w, const int h) {};
+               ^
+RenderingContext.h:34:16: note: Virtual function in base class
+  virtual void initRenderTarget(const int w, const int h) = 0;
+               ^
+RenderingContextRSIG.h:91:16: note: Function in derived class
+  virtual void initRenderTarget(const int w, const int h) {};
+               ^
+RenderingContextRSIG.h:100:16: style: The function 'unbind' overrides a function in a base class but is not marked with a 'override' specifier. [missingOverride]
+  virtual void unbind();
+               ^
+RenderingContext.h:31:16: note: Virtual function in base class
+  virtual void unbind() = 0;
+               ^
+RenderingContextRSIG.h:100:16: note: Function in derived class
+  virtual void unbind();
+               ^
+RenderingContextRSIG.h:101:16: style: The function 'initShaderProgram' overrides a function in a base class but is not marked with a 'override' specifier. [missingOverride]
+  virtual void initShaderProgram();
+               ^
+RenderingContext.h:32:16: note: Virtual function in base class
+  virtual void initShaderProgram() = 0;
+               ^
+RenderingContextRSIG.h:101:16: note: Function in derived class
+  virtual void initShaderProgram();
+               ^
+RenderingContextRSIG.h:115:16: style: The function 'bind' overrides a function in a base class but is not marked with a 'override' specifier. [missingOverride]
+  virtual void bind( const int pass,
+               ^
+RenderingContext.h:27:16: note: Virtual function in base class
+  virtual void bind( const int pass,
+               ^
+RenderingContextRSIG.h:115:16: note: Function in derived class
+  virtual void bind( const int pass,
+               ^
+RenderingContextRSIG.h:119:16: style: The function 'initRenderTarget' overrides a function in a base class but is not marked with a 'override' specifier. [missingOverride]
+  virtual void initRenderTarget(const int w, const int h) {};
+               ^
+RenderingContext.h:34:16: note: Virtual function in base class
+  virtual void initRenderTarget(const int w, const int h) = 0;
+               ^
+RenderingContextRSIG.h:119:16: note: Function in derived class
+  virtual void initRenderTarget(const int w, const int h) {};
+               ^
+RenderingContextRSIG.h:128:16: style: The function 'unbind' overrides a function in a base class but is not marked with a 'override' specifier. [missingOverride]
+  virtual void unbind();
+               ^
+RenderingContext.h:31:16: note: Virtual function in base class
+  virtual void unbind() = 0;
+               ^
+RenderingContextRSIG.h:128:16: note: Function in derived class
+  virtual void unbind();
+               ^
+RenderingContextRSIG.h:129:16: style: The function 'initShaderProgram' overrides a function in a base class but is not marked with a 'override' specifier. [missingOverride]
+  virtual void initShaderProgram();
+               ^
+RenderingContext.h:32:16: note: Virtual function in base class
+  virtual void initShaderProgram() = 0;
+               ^
+RenderingContextRSIG.h:129:16: note: Function in derived class
+  virtual void initShaderProgram();
+               ^
+RenderingContextRSIG.h:143:16: style: The function 'bind' overrides a function in a base class but is not marked with a 'override' specifier. [missingOverride]
+  virtual void bind( const int pass,
+               ^
+RenderingContext.h:27:16: note: Virtual function in base class
+  virtual void bind( const int pass,
+               ^
+RenderingContextRSIG.h:143:16: note: Function in derived class
+  virtual void bind( const int pass,
+               ^
+RenderingContextRSIG.h:147:16: style: The function 'initRenderTarget' overrides a function in a base class but is not marked with a 'override' specifier. [missingOverride]
+  virtual void initRenderTarget(const int w, const int h) {};
+               ^
+RenderingContext.h:34:16: note: Virtual function in base class
+  virtual void initRenderTarget(const int w, const int h) = 0;
+               ^
+RenderingContextRSIG.h:147:16: note: Function in derived class
+  virtual void initRenderTarget(const int w, const int h) {};
+               ^
+RenderingContextRSIG.h:156:16: style: The function 'unbind' overrides a function in a base class but is not marked with a 'override' specifier. [missingOverride]
+  virtual void unbind();
+               ^
+RenderingContext.h:31:16: note: Virtual function in base class
+  virtual void unbind() = 0;
+               ^
+RenderingContextRSIG.h:156:16: note: Function in derived class
+  virtual void unbind();
+               ^
+RenderingContextRSIG.h:157:16: style: The function 'initShaderProgram' overrides a function in a base class but is not marked with a 'override' specifier. [missingOverride]
+  virtual void initShaderProgram();
+               ^
+RenderingContext.h:32:16: note: Virtual function in base class
+  virtual void initShaderProgram() = 0;
+               ^
+RenderingContextRSIG.h:157:16: note: Function in derived class
+  virtual void initShaderProgram();
+               ^
+RenderingContextRSIG.h:169:16: style: The function 'bind' overrides a function in a base class but is not marked with a 'override' specifier. [missingOverride]
+  virtual void bind( const int pass,
+               ^
+RenderingContext.h:27:16: note: Virtual function in base class
+  virtual void bind( const int pass,
+               ^
+RenderingContextRSIG.h:169:16: note: Function in derived class
+  virtual void bind( const int pass,
+               ^
+RenderingContextRSIG.h:173:16: style: The function 'initRenderTarget' overrides a function in a base class but is not marked with a 'override' specifier. [missingOverride]
+  virtual void initRenderTarget(const int w, const int h) {};
+               ^
+RenderingContext.h:34:16: note: Virtual function in base class
+  virtual void initRenderTarget(const int w, const int h) = 0;
+               ^
+RenderingContextRSIG.h:173:16: note: Function in derived class
+  virtual void initRenderTarget(const int w, const int h) {};
+               ^
+VisDataObjectProperties.h:29:3: error: There is an unknown macro here somewhere. Configuration is required. If Q_PROPERTY is a macro then please configure it. [unknownMacro]
+  Q_PROPERTY(bool showObject READ showObject WRITE setShowObject DESIGNABLE true USER true)
+  ^
+VisOptions.cpp:38:3: performance: Variable 'trueColorType' is assigned in constructor body. Consider performing initialization in initialization list. [useInitializationList]
+  trueColorType = "None";
+  ^
+VisOptions.cpp:53:3: performance: Variable 'filenameScenario' is assigned in constructor body. Consider performing initialization in initialization list. [useInitializationList]
+  filenameScenario = QString("myScenario.xml");
+  ^
+GLSLProgramObject.cpp:110:0: style: The function 'attachFragmentShader' is never used. [unusedFunction]
+
+^
+GLSLProgramObject.cpp:152:0: style: The function 'attachGeometryShader' is never used. [unusedFunction]
+
+^
+GLSLProgramObject.cpp:138:0: style: The function 'attachGeometryShaderString' is never used. [unusedFunction]
+
+^
+GLSLProgramObject.cpp:73:0: style: The function 'attachVertexShader' is never used. [unusedFunction]
+
+^
+GLSLProgramObject.cpp:309:0: style: The function 'bindFragDataLocation' is never used. [unusedFunction]
+
+^
+GLProxyGraphicsItem.cpp:63:0: style: The function 'boundingRect' is never used. [unusedFunction]
+
+^
+OpenGLScene.cpp:265:0: style: The function 'checkPaintEngine' is never used. [unusedFunction]
+
+^
+RSIGGlobal.cpp:115:0: style: The function 'checkRsig3dUpdate' is never used. [unusedFunction]
+
+^
+RenderingContext.cpp:100:0: style: The function 'check_GL_errors' is never used. [unusedFunction]
+
+^
+RSIG3DHelp.cpp:62:0: style: The function 'cleanUp' is never used. [unusedFunction]
+
+^
+CeilometerCurtainArray.cpp:318:0: style: The function 'createCCA' is never used. [unusedFunction]
+
+^
+CeilometerCurtainArray.cpp:416:0: style: The function 'createMLA' is never used. [unusedFunction]
+
+^
+ShadersManagement.cpp:75:0: style: The function 'createShaderProgram' is never used. [unusedFunction]
+
+^
+RSIGGlobal.cpp:93:0: style: The function 'downloadUpdate' is never used. [unusedFunction]
+
+^
+OpenGLScene.cpp:193:0: style: The function 'drawBackground' is never used. [unusedFunction]
+
+^
+VisOptions.cpp:264:0: style: The function 'getBboxMaxLat' is never used. [unusedFunction]
+
+^
+VisOptions.cpp:260:0: style: The function 'getBboxMaxLon' is never used. [unusedFunction]
+
+^
+VisOptions.cpp:256:0: style: The function 'getBboxMinLat' is never used. [unusedFunction]
+
+^
+VisOptions.cpp:252:0: style: The function 'getBboxMinLon' is never used. [unusedFunction]
+
+^
+DataUsePolicy.cpp:92:0: style: The function 'getButtonPress' is never used. [unusedFunction]
+
+^
+VisOptions.cpp:184:0: style: The function 'getCalipsoScaleFactor' is never used. [unusedFunction]
+
+^
+CeilometerCurtainArray.cpp:223:0: style: The function 'getCeilometerInfo' is never used. [unusedFunction]
+
+^
+VisOptions.cpp:216:0: style: The function 'getCeilometerMaxAltitude' is never used. [unusedFunction]
+
+^
+VisOptions.cpp:212:0: style: The function 'getCeilometerMinAltitude' is never used. [unusedFunction]
+
+^
+VisOptions.cpp:220:0: style: The function 'getCeilometerPlotScrollerValue' is never used. [unusedFunction]
+
+^
+VisOptions.cpp:100:0: style: The function 'getCeilometerShowLocations' is never used. [unusedFunction]
+
+^
+VisOptions.cpp:104:0: style: The function 'getCeilometerShowMixingLayer' is never used. [unusedFunction]
+
+^
+VisOptions.cpp:224:0: style: The function 'getCeilometerSize' is never used. [unusedFunction]
+
+^
+VisOptions.cpp:128:0: style: The function 'getCurProjection' is never used. [unusedFunction]
+
+^
+VisOptions.cpp:268:0: style: The function 'getCurrentDayNum' is never used. [unusedFunction]
+
+^
+RSIGGlobal.cpp:124:0: style: The function 'getCurrentUTCString' is never used. [unusedFunction]
+
+^
+VisOptions.cpp:76:0: style: The function 'getDataSourceList' is never used. [unusedFunction]
+
+^
+VisOptions.cpp:296:0: style: The function 'getDownloadsOutstanding' is never used. [unusedFunction]
+
+^
+VisOptions.cpp:112:0: style: The function 'getDrawModisTrueColor' is never used. [unusedFunction]
+
+^
+RSIGGlobal.cpp:212:0: style: The function 'getEndRenderTimestamp' is never used. [unusedFunction]
+
+^
+VisOptions.cpp:84:0: style: The function 'getFilenamePng' is never used. [unusedFunction]
+
+^
+VisOptions.cpp:88:0: style: The function 'getFilenamePngDefault' is never used. [unusedFunction]
+
+^
+VisOptions.cpp:80:0: style: The function 'getFilenameScenario' is never used. [unusedFunction]
+
+^
+FilterSettingDialog.cpp:158:0: style: The function 'getFilterSetting' is never used. [unusedFunction]
+
+^
+VisOptions.cpp:136:0: style: The function 'getFlattenCMAQ' is never used. [unusedFunction]
+
+^
+GLSLProgramObject.cpp:320:0: style: The function 'getFragDataLocation' is never used. [unusedFunction]
+
+^
+VisOptions.cpp:132:0: style: The function 'getLonlatLabelOrientation' is never used. [unusedFunction]
+
+^
+VisOptions.cpp:272:0: style: The function 'getMapOverlayFile' is never used. [unusedFunction]
+
+^
+VisOptions.cpp:276:0: style: The function 'getMaplineColor' is never used. [unusedFunction]
+
+^
+VisOptions.cpp:232:0: style: The function 'getNeubrewMaxAltitude' is never used. [unusedFunction]
+
+^
+VisOptions.cpp:228:0: style: The function 'getNeubrewMinAltitude' is never used. [unusedFunction]
+
+^
+VisOptions.cpp:236:0: style: The function 'getNeubrewPlotScrollerValue' is never used. [unusedFunction]
+
+^
+VisOptions.cpp:108:0: style: The function 'getNeubrewShowLocations' is never used. [unusedFunction]
+
+^
+VisOptions.cpp:240:0: style: The function 'getNeubrewSize' is never used. [unusedFunction]
+
+^
+VisOptions.cpp:116:0: style: The function 'getOpacityModisTrueColor' is never used. [unusedFunction]
+
+^
+VisOptions.cpp:140:0: style: The function 'getPersistBEHR' is never used. [unusedFunction]
+
+^
+VisOptions.cpp:164:0: style: The function 'getPersistBEHRHours' is never used. [unusedFunction]
+
+^
+VisOptions.cpp:156:0: style: The function 'getPersistHMS' is never used. [unusedFunction]
+
+^
+VisOptions.cpp:180:0: style: The function 'getPersistHMSHours' is never used. [unusedFunction]
+
+^
+VisOptions.cpp:144:0: style: The function 'getPersistMODIS' is never used. [unusedFunction]
+
+^
+VisOptions.cpp:168:0: style: The function 'getPersistMODISHours' is never used. [unusedFunction]
+
+^
+VisOptions.cpp:152:0: style: The function 'getPersistTROPOMI' is never used. [unusedFunction]
+
+^
+VisOptions.cpp:176:0: style: The function 'getPersistTROPOMIHours' is never used. [unusedFunction]
+
+^
+VisOptions.cpp:148:0: style: The function 'getPersistVIIRS' is never used. [unusedFunction]
+
+^
+VisOptions.cpp:172:0: style: The function 'getPersistVIIRSHours' is never used. [unusedFunction]
+
+^
+RSIGGlobal.cpp:33:0: style: The function 'getProgramDirectory' is never used. [unusedFunction]
+
+^
+RGBColormap.cpp:452:0: style: The function 'getRGBColormapFunction' is never used. [unusedFunction]
+
+^
+RGBColormap.cpp:456:0: style: The function 'getRGBColormapIndex' is never used. [unusedFunction]
+
+^
+RGBColormap.cpp:444:0: style: The function 'getRGBColormapName' is never used. [unusedFunction]
+
+^
+VisOptions.cpp:248:0: style: The function 'getRulerLat' is never used. [unusedFunction]
+
+^
+VisOptions.cpp:244:0: style: The function 'getRulerLon' is never used. [unusedFunction]
+
+^
+VisOptions.cpp:92:0: style: The function 'getSaveDir' is never used. [unusedFunction]
+
+^
+VisOptions.cpp:288:0: style: The function 'getSaveFileFormatIndex' is never used. [unusedFunction]
+
+^
+VisOptions.cpp:284:0: style: The function 'getSaveMetadataFlag' is never used. [unusedFunction]
+
+^
+VisOptions.cpp:160:0: style: The function 'getShowRuler' is never used. [unusedFunction]
+
+^
+VisOptions.cpp:120:0: style: The function 'getTrueColorType' is never used. [unusedFunction]
+
+^
+VisOptions.cpp:292:0: style: The function 'getUniqueId' is never used. [unusedFunction]
+
+^
+VisOptions.cpp:124:0: style: The function 'getViewResetFlag' is never used. [unusedFunction]
+
+^
+VisOptions.cpp:200:0: style: The function 'getWindVectorAutosparse' is never used. [unusedFunction]
+
+^
+VisOptions.cpp:204:0: style: The function 'getWindVectorLabel' is never used. [unusedFunction]
+
+^
+VisOptions.cpp:208:0: style: The function 'getWindVectorLength' is never used. [unusedFunction]
+
+^
+VisOptions.cpp:188:0: style: The function 'getWindVectorScaleFactor' is never used. [unusedFunction]
+
+^
+VisOptions.cpp:196:0: style: The function 'getWindVectorSparseness' is never used. [unusedFunction]
+
+^
+VisOptions.cpp:192:0: style: The function 'getWindVectorTipSize' is never used. [unusedFunction]
+
+^
+OpenGLScene.cpp:122:0: style: The function 'glSceneItem' is never used. [unusedFunction]
+
+^
+CeilometerCurtainArray.cpp:114:0: style: The function 'haveCeilometerMixingLayerHeightDataset' is never used. [unusedFunction]
+
+^
+CeilometerCurtainArray.cpp:72:0: style: The function 'haveCeilometerNonMixingLayerHeightDataset' is never used. [unusedFunction]
+
+^
+RenderingContextRSIG.cpp:1208:0: style: The function 'initRenderingContexts' is never used. [unusedFunction]
+
+^
+ShadersManagement.cpp:138:0: style: The function 'linkShaderProgram' is never used. [unusedFunction]
+
+^
+CeilometerCurtainArray.cpp:154:0: style: The function 'loadCeilometerMixingLayerHeightDataset' is never used. [unusedFunction]
+
+^
+VisDataPropertyEdit.cpp:102:0: style: The function 'onParentObjectRemoved' is never used. [unusedFunction]
+
+^
+GLProxyGraphicsItem.cpp:82:0: style: The function 'paint' is never used. [unusedFunction]
+
+^
+GLProxyGraphicsWidget.cpp:52:0: style: The function 'paintEvent' is never used. [unusedFunction]
+
+^
+GLProxyGraphicsWidget.cpp:69:0: style: The function 'render' is never used. [unusedFunction]
+
+^
+OpenGLScene.cpp:144:0: style: The function 'reservedMaxZDepth' is never used. [unusedFunction]
+
+^
+OpenGLScene.cpp:133:0: style: The function 'reservedMinZDepth' is never used. [unusedFunction]
+
+^
+OpenGLScene.cpp:170:0: style: The function 'resizeEvent' is never used. [unusedFunction]
+
+^
+FileOrientedDownloaderWorker.cpp:24:0: style: The function 'run' is never used. [unusedFunction]
+
+^
+VisOptions.cpp:489:0: style: The function 'setBboxMaxLat' is never used. [unusedFunction]
+
+^
+VisOptions.cpp:485:0: style: The function 'setBboxMaxLon' is never used. [unusedFunction]
+
+^
+VisOptions.cpp:481:0: style: The function 'setBboxMinLat' is never used. [unusedFunction]
+
+^
+VisOptions.cpp:477:0: style: The function 'setBboxMinLon' is never used. [unusedFunction]
+
+^
+VisOptions.cpp:409:0: style: The function 'setCalipsoScaleFactor' is never used. [unusedFunction]
+
+^
+VisOptions.cpp:441:0: style: The function 'setCeilometerMaxAltitude' is never used. [unusedFunction]
+
+^
+VisOptions.cpp:437:0: style: The function 'setCeilometerMinAltitude' is never used. [unusedFunction]
+
+^
+VisOptions.cpp:445:0: style: The function 'setCeilometerPlotScrollerValue' is never used. [unusedFunction]
+
+^
+VisOptions.cpp:325:0: style: The function 'setCeilometerShowLocations' is never used. [unusedFunction]
+
+^
+VisOptions.cpp:329:0: style: The function 'setCeilometerShowMixingLayer' is never used. [unusedFunction]
+
+^
+VisOptions.cpp:449:0: style: The function 'setCeilometerSize' is never used. [unusedFunction]
+
+^
+VisOptions.cpp:353:0: style: The function 'setCurProjection' is never used. [unusedFunction]
+
+^
+VisOptions.cpp:493:0: style: The function 'setCurrentDayNum' is never used. [unusedFunction]
+
+^
+VisOptions.cpp:301:0: style: The function 'setDataSourceList' is never used. [unusedFunction]
+
+^
+VisOptions.cpp:521:0: style: The function 'setDownloadsOutstanding' is never used. [unusedFunction]
+
+^
+VisOptions.cpp:337:0: style: The function 'setDrawModisTrueColor' is never used. [unusedFunction]
+
+^
+VisOptions.cpp:309:0: style: The function 'setFilenamePng' is never used. [unusedFunction]
+
+^
+VisOptions.cpp:313:0: style: The function 'setFilenamePngDefault' is never used. [unusedFunction]
+
+^
+VisOptions.cpp:305:0: style: The function 'setFilenameScenario' is never used. [unusedFunction]
+
+^
+VisOptions.cpp:361:0: style: The function 'setFlattenCMAQ' is never used. [unusedFunction]
+
+^
+RSIGGlobal.cpp:35:0: style: The function 'setLocation' is never used. [unusedFunction]
+
+^
+VisOptions.cpp:357:0: style: The function 'setLonlatLabelOrientation' is never used. [unusedFunction]
+
+^
+RenderingContextRSIGBase.cpp:48:0: style: The function 'setLutMinMax' is never used. [unusedFunction]
+
+^
+RenderingContextRSIGBase.cpp:42:0: style: The function 'setLutToTextureChannel0' is never used. [unusedFunction]
+
+^
+RenderingContextRSIGBase.cpp:55:0: style: The function 'setLutValues' is never used. [unusedFunction]
+
+^
+VisOptions.cpp:497:0: style: The function 'setMapOverlayFile' is never used. [unusedFunction]
+
+^
+VisOptions.cpp:501:0: style: The function 'setMaplineColor' is never used. [unusedFunction]
+
+^
+VisOptions.cpp:505:0: style: The function 'setMaplineColorIndex' is never used. [unusedFunction]
+
+^
+RenderingContextRSIG.cpp:158:0: style: The function 'setMaplineFlag' is never used. [unusedFunction]
+
+^
+VisOptions.cpp:321:0: style: The function 'setMode2D' is never used. [unusedFunction]
+
+^
+VisOptions.cpp:457:0: style: The function 'setNeubrewMaxAltitude' is never used. [unusedFunction]
+
+^
+VisOptions.cpp:453:0: style: The function 'setNeubrewMinAltitude' is never used. [unusedFunction]
+
+^
+VisOptions.cpp:461:0: style: The function 'setNeubrewPlotScrollerValue' is never used. [unusedFunction]
+
+^
+VisOptions.cpp:333:0: style: The function 'setNeubrewShowLocations' is never used. [unusedFunction]
+
+^
+VisOptions.cpp:465:0: style: The function 'setNeubrewSize' is never used. [unusedFunction]
+
+^
+VisOptions.cpp:341:0: style: The function 'setOpacityModisTrueColor' is never used. [unusedFunction]
+
+^
+RenderingContextRSIG.cpp:230:0: style: The function 'setParameters' is never used. [unusedFunction]
+
+^
+VisOptions.cpp:365:0: style: The function 'setPersistBEHR' is never used. [unusedFunction]
+
+^
+VisOptions.cpp:389:0: style: The function 'setPersistBEHRHours' is never used. [unusedFunction]
+
+^
+VisOptions.cpp:381:0: style: The function 'setPersistHMS' is never used. [unusedFunction]
+
+^
+VisOptions.cpp:405:0: style: The function 'setPersistHMSHours' is never used. [unusedFunction]
+
+^
+VisOptions.cpp:369:0: style: The function 'setPersistMODIS' is never used. [unusedFunction]
+
+^
+VisOptions.cpp:393:0: style: The function 'setPersistMODISHours' is never used. [unusedFunction]
+
+^
+VisOptions.cpp:377:0: style: The function 'setPersistTROPOMI' is never used. [unusedFunction]
+
+^
+VisOptions.cpp:401:0: style: The function 'setPersistTROPOMIHours' is never used. [unusedFunction]
+
+^
+VisOptions.cpp:373:0: style: The function 'setPersistVIIRS' is never used. [unusedFunction]
+
+^
+VisOptions.cpp:397:0: style: The function 'setPersistVIIRSHours' is never used. [unusedFunction]
+
+^
+VisOptions.cpp:473:0: style: The function 'setRulerLat' is never used. [unusedFunction]
+
+^
+VisOptions.cpp:469:0: style: The function 'setRulerLon' is never used. [unusedFunction]
+
+^
+VisOptions.cpp:317:0: style: The function 'setSaveDir' is never used. [unusedFunction]
+
+^
+VisOptions.cpp:513:0: style: The function 'setSaveFileFormatIndex' is never used. [unusedFunction]
+
+^
+VisOptions.cpp:509:0: style: The function 'setSaveMetadataFlag' is never used. [unusedFunction]
+
+^
+VisOptions.cpp:385:0: style: The function 'setShowRuler' is never used. [unusedFunction]
+
+^
+RenderingContextRSIGBase.cpp:66:0: style: The function 'setTextureWeight' is never used. [unusedFunction]
+
+^
+VisOptions.cpp:345:0: style: The function 'setTrueColorType' is never used. [unusedFunction]
+
+^
+VisOptions.cpp:517:0: style: The function 'setUniqueId' is never used. [unusedFunction]
+
+^
+VisOptions.cpp:349:0: style: The function 'setViewResetFlag' is never used. [unusedFunction]
+
+^
+VisOptions.cpp:425:0: style: The function 'setWindVectorAutosparse' is never used. [unusedFunction]
+
+^
+VisOptions.cpp:429:0: style: The function 'setWindVectorLabel' is never used. [unusedFunction]
+
+^
+VisOptions.cpp:433:0: style: The function 'setWindVectorLength' is never used. [unusedFunction]
+
+^
+VisOptions.cpp:413:0: style: The function 'setWindVectorScaleFactor' is never used. [unusedFunction]
+
+^
+VisOptions.cpp:421:0: style: The function 'setWindVectorSparseness' is never used. [unusedFunction]
+
+^
+VisOptions.cpp:417:0: style: The function 'setWindVectorTipSize' is never used. [unusedFunction]
+
+^
+VisDataPropertyEdit.cpp:47:0: style: The function 'showContextMenu' is never used. [unusedFunction]
+
+^
+DataUsePolicy.cpp:28:0: style: The function 'toggleAcceptButton' is never used. [unusedFunction]
+
+^
+DataUsePolicy.cpp:39:0: style: The function 'toggleCancelButton' is never used. [unusedFunction]
+
+^
+DataUsePolicy.cpp:50:0: style: The function 'toggleOkButton' is never used. [unusedFunction]
+
+^
+nofile:0:0: information: Cppcheck cannot find all the include files (use --check-config for details) [missingInclude]
+
+
+
+scan-build
+
+/Users/plessel/bin/Darwin/scan-build -o junklint /usr/bin/g++ -DGLEW_STATIC -DNO_ASSERTIONS -DNDEBUG -DPROJ_PATH="/Users/plessel/projects/rsig/dev/RSIG3D/code" -DQGLVIEWER_STATIC -DQT_CORE_LIB -DQT_GUI_LIB -DQT_NETWORK_LIB -DQT_NO_DEBUG -DQT_OPENGL_LIB -DQT_STATIC -DQT_XML_LIB -DUSE_INTERNAL_MARBLE -DUSE_QT_LIB -I/opt/X11/include -I/Users/plessel/projects/rsig/dev/RSIG3D/code/src/libs/glew-1.8.0/include -I/Users/plessel/projects/rsig/dev/RSIG3D/package/QT/Darwin/4.8.6static/include -I/Users/plessel/projects/rsig/dev/RSIG3D/package/QT/Darwin/4.8.6static/include/QtOpenGL -I/Users/plessel/projects/rsig/dev/RSIG3D/package/QT/Darwin/4.8.6static/include/QtGui -I/Users/plessel/projects/rsig/dev/RSIG3D/package/QT/Darwin/4.8.6static/include/QtXml -I/Users/plessel/projects/rsig/dev/RSIG3D/package/QT/Darwin/4.8.6static/include/QtNetwork -I/Users/plessel/projects/rsig/dev/RSIG3D/package/QT/Darwin/4.8.6static/include/QtCore -I/Users/plessel/projects/rsig/dev/RSIG3D/code/src/libs/PropertyEditor/src -I/Users/plessel/projects/rsig/dev/RSIG3D/code/src/libs/QMapControl/src -I/Users/plessel/projects/rsig/dev/RSIG3D/code/src/libs/marble/src/lib -I/Users/plessel/projects/rsig/dev/RSIG3D/code/src/libs/marble/src/lib/geodata -I/Users/plessel/projects/rsig/dev/RSIG3D/code/src/libs/marble/src/lib/geodata/data -I/Users/plessel/projects/rsig/dev/RSIG3D/code/src/libs/marble/src/lib/geodata/parser -I/Users/plessel/projects/rsig/dev/RSIG3D/build/src/apps/RSIG3D -I/Users/plessel/projects/rsig/dev/RSIG3D/code/include -O -c *.cpp 2>> lint.out
+In file included from GLSLProgramObject.cpp:15:
+./ShadersManagement.h:45:59: warning: 'gluErrorString' is deprecated: first deprecated in macOS 10.9 [-Wdeprecated-declarations]
+    fprintf (stderr, "[%s] GL error %s \n", functionName, gluErrorString(error));
+                                                          ^
+/System/Library/Frameworks/OpenGL.framework/Headers/glu.h:260:24: note: 'gluErrorString' has been explicitly marked deprecated here
+extern const GLubyte * gluErrorString (GLenum error) OPENGL_DEPRECATED(10_0, 10_9);
+                       ^
+1 warning generated.
+In file included from OpenGLScene.cpp:18:
+In file included from /Users/plessel/projects/rsig/dev/RSIG3D/package/QT/Darwin/4.8.6static/include/QtOpenGL/QtOpenGL:9:
+/Users/plessel/projects/rsig/dev/RSIG3D/package/QT/Darwin/4.8.6static/include/QtOpenGL/qglfunctions.h:46:2: warning: qglfunctions.h is not compatible with GLEW, GLEW defines will be undefined [-W#warnings]
+#warning qglfunctions.h is not compatible with GLEW, GLEW defines will be undefined
+ ^
+/Users/plessel/projects/rsig/dev/RSIG3D/package/QT/Darwin/4.8.6static/include/QtOpenGL/qglfunctions.h:47:2: warning: To use GLEW with Qt, do not include <QtOpenGL> or <QGLFunctions> after glew.h [-W#warnings]
+#warning To use GLEW with Qt, do not include <QtOpenGL> or <QGLFunctions> after glew.h
+ ^
+2 warnings generated.
+PointRenderer.cpp:392:7: warning: 'glutBitmapCharacter' is deprecated: first deprecated in macOS 10.9 [-Wdeprecated-declarations]
+      glutBitmapCharacter( font, *c );
+      ^
+/System/Library/Frameworks/GLUT.framework/Headers/glut.h:560:22: note: 'glutBitmapCharacter' has been explicitly marked deprecated here
+extern void APIENTRY glutBitmapCharacter(void *font, int character) OPENGL_DEPRECATED(10_0, 10_9);
+                     ^
+PointRenderer.cpp:717:7: warning: 'gluProject' is deprecated: first deprecated in macOS 10.9 - "Use GLKMathProject" [-Wdeprecated-declarations]
+      gluProject( ceilometerDatasetLongitude, ceilometerDatasetLatitude, 0.0,
+      ^
+/System/Library/Frameworks/OpenGL.framework/Headers/glu.h:280:14: note: 'gluProject' has been explicitly marked deprecated here
+extern GLint gluProject (GLdouble objX, GLdouble objY, GLdouble objZ, const GLdouble *model, const GLdouble *proj, const GLint *view, GLdouble* winX, GLdouble* winY, GLdouble* winZ) OPENGL_DEPRECATED_MSG(10_0, 10_9, "Use GLKMathProject");
+             ^
+PointRenderer.cpp:1113:9: warning: 'gluProject' is deprecated: first deprecated in macOS 10.9 - "Use GLKMathProject" [-Wdeprecated-declarations]
+        gluProject(point.longitude, point.latitude, 0.0, modelview, projection, viewport, &xWinLoc, &yWinLoc, &zWinLoc);
+        ^
+/System/Library/Frameworks/OpenGL.framework/Headers/glu.h:280:14: note: 'gluProject' has been explicitly marked deprecated here
+extern GLint gluProject (GLdouble objX, GLdouble objY, GLdouble objZ, const GLdouble *model, const GLdouble *proj, const GLint *view, GLdouble* winX, GLdouble* winY, GLdouble* winZ) OPENGL_DEPRECATED_MSG(10_0, 10_9, "Use GLKMathProject");
+             ^
+3 warnings generated.
+PolygonRenderer.cpp:170:5: warning: 'glutBitmapCharacter' is deprecated: first deprecated in macOS 10.9 [-Wdeprecated-declarations]
+    glutBitmapCharacter(font, *c);
+    ^
+/System/Library/Frameworks/GLUT.framework/Headers/glut.h:560:22: note: 'glutBitmapCharacter' has been explicitly marked deprecated here
+extern void APIENTRY glutBitmapCharacter(void *font, int character) OPENGL_DEPRECATED(10_0, 10_9);
+                     ^
+1 warning generated.
+RSIGScene.cpp:1426:25: warning: 'gluUnProject' is deprecated: first deprecated in macOS 10.9 - "Use GLKMathUnproject" [-Wdeprecated-declarations]
+    const int result1 = gluUnProject(xLoc, yLoc, 0.0, modelview, projection, viewport, &rLonNear, &rLatNear, &rZNear); 
+                        ^
+/System/Library/Frameworks/OpenGL.framework/Headers/glu.h:297:14: note: 'gluUnProject' has been explicitly marked deprecated here
+extern GLint gluUnProject (GLdouble winX, GLdouble winY, GLdouble winZ, const GLdouble *model, const GLdouble *proj, const GLint *view, GLdouble* objX, GLdouble* objY, GLdouble* objZ) OPENGL_DEPRECATED_MSG(10_0, 10_9, "Use GLKMathUnproject");
+             ^
+RSIGScene.cpp:1427:25: warning: 'gluUnProject' is deprecated: first deprecated in macOS 10.9 - "Use GLKMathUnproject" [-Wdeprecated-declarations]
+    const int result2 = gluUnProject(xLoc, yLoc, 1.0, modelview, projection, viewport, &rLonFar,  &rLatFar,  &rZFar); 
+                        ^
+/System/Library/Frameworks/OpenGL.framework/Headers/glu.h:297:14: note: 'gluUnProject' has been explicitly marked deprecated here
+extern GLint gluUnProject (GLdouble winX, GLdouble winY, GLdouble winZ, const GLdouble *model, const GLdouble *proj, const GLint *view, GLdouble* objX, GLdouble* objY, GLdouble* objZ) OPENGL_DEPRECATED_MSG(10_0, 10_9, "Use GLKMathUnproject");
+             ^
+RSIGScene.cpp:1745:5: warning: 'glutBitmapCharacter' is deprecated: first deprecated in macOS 10.9 [-Wdeprecated-declarations]
+    glutBitmapCharacter( font, *string );
+    ^
+/System/Library/Frameworks/GLUT.framework/Headers/glut.h:560:22: note: 'glutBitmapCharacter' has been explicitly marked deprecated here
+extern void APIENTRY glutBitmapCharacter(void *font, int character) OPENGL_DEPRECATED(10_0, 10_9);
+                     ^
+RSIGScene.cpp:1764:7: warning: 'glutStrokeCharacter' is deprecated: first deprecated in macOS 10.9 [-Wdeprecated-declarations]
+      glutStrokeCharacter(font, *string);
+      ^
+/System/Library/Frameworks/GLUT.framework/Headers/glut.h:562:22: note: 'glutStrokeCharacter' has been explicitly marked deprecated here
+extern void APIENTRY glutStrokeCharacter(void *font, int character) OPENGL_DEPRECATED(10_0, 10_9);
+                     ^
+RSIGScene.cpp:1766:7: warning: 'glutBitmapCharacter' is deprecated: first deprecated in macOS 10.9 [-Wdeprecated-declarations]
+      glutBitmapCharacter(GLUT_BITMAP_HELVETICA_12, *string);
+      ^
+/System/Library/Frameworks/GLUT.framework/Headers/glut.h:560:22: note: 'glutBitmapCharacter' has been explicitly marked deprecated here
+extern void APIENTRY glutBitmapCharacter(void *font, int character) OPENGL_DEPRECATED(10_0, 10_9);
+                     ^
+RSIGScene.cpp:2183:11: warning: 'gluProject' is deprecated: first deprecated in macOS 10.9 - "Use GLKMathProject" [-Wdeprecated-declarations]
+          gluProject(testLon, labelLat, 0.0, modelview, projection, viewport, &xWinLoc, &yWinLoc, &zWinLoc);
+          ^
+/System/Library/Frameworks/OpenGL.framework/Headers/glu.h:280:14: note: 'gluProject' has been explicitly marked deprecated here
+extern GLint gluProject (GLdouble objX, GLdouble objY, GLdouble objZ, const GLdouble *model, const GLdouble *proj, const GLint *view, GLdouble* winX, GLdouble* winY, GLdouble* winZ) OPENGL_DEPRECATED_MSG(10_0, 10_9, "Use GLKMathProject");
+             ^
+RSIGScene.cpp:2204:11: warning: 'gluProject' is deprecated: first deprecated in macOS 10.9 - "Use GLKMathProject" [-Wdeprecated-declarations]
+          gluProject(labelLon, testLat, 0.0, modelview, projection, viewport, &xWinLoc, &yWinLoc, &zWinLoc);
+          ^
+/System/Library/Frameworks/OpenGL.framework/Headers/glu.h:280:14: note: 'gluProject' has been explicitly marked deprecated here
+extern GLint gluProject (GLdouble objX, GLdouble objY, GLdouble objZ, const GLdouble *model, const GLdouble *proj, const GLint *view, GLdouble* winX, GLdouble* winY, GLdouble* winZ) OPENGL_DEPRECATED_MSG(10_0, 10_9, "Use GLKMathProject");
+             ^
+RSIGScene.cpp:2224:3: warning: 'GLUquadricObj' is deprecated: first deprecated in macOS 10.9 [-Wdeprecated-declarations]
+  GLUquadricObj *qObj = gluNewQuadric();
+  ^
+/System/Library/Frameworks/OpenGL.framework/Headers/glu.h:224:26: note: 'GLUquadricObj' has been explicitly marked deprecated here
+typedef class GLUquadric GLUquadricObj OPENGL_DEPRECATED(10_0, 10_9);
+                         ^
+RSIGScene.cpp:2224:25: warning: 'gluNewQuadric' is deprecated: first deprecated in macOS 10.9 [-Wdeprecated-declarations]
+  GLUquadricObj *qObj = gluNewQuadric();
+                        ^
+/System/Library/Frameworks/OpenGL.framework/Headers/glu.h:267:20: note: 'gluNewQuadric' has been explicitly marked deprecated here
+extern GLUquadric* gluNewQuadric (void) OPENGL_DEPRECATED(10_0, 10_9);
+                   ^
+RSIGScene.cpp:2225:3: warning: 'gluQuadricNormals' is deprecated: first deprecated in macOS 10.9 [-Wdeprecated-declarations]
+  gluQuadricNormals(qObj, GLU_SMOOTH);
+  ^
+/System/Library/Frameworks/OpenGL.framework/Headers/glu.h:284:13: note: 'gluQuadricNormals' has been explicitly marked deprecated here
+extern void gluQuadricNormals (GLUquadric* quad, GLenum normal) OPENGL_DEPRECATED(10_0, 10_9);
+            ^
+RSIGScene.cpp:2226:3: warning: 'gluQuadricTexture' is deprecated: first deprecated in macOS 10.9 [-Wdeprecated-declarations]
+  gluQuadricTexture(qObj, GL_TRUE);
+  ^
+/System/Library/Frameworks/OpenGL.framework/Headers/glu.h:286:13: note: 'gluQuadricTexture' has been explicitly marked deprecated here
+extern void gluQuadricTexture (GLUquadric* quad, GLboolean texture) OPENGL_DEPRECATED(10_0, 10_9);
+            ^
+RSIGScene.cpp:2230:3: warning: 'gluSphere' is deprecated: first deprecated in macOS 10.9 [-Wdeprecated-declarations]
+  gluSphere(qObj, 180.0f, 64, 64);
+  ^
+/System/Library/Frameworks/OpenGL.framework/Headers/glu.h:288:13: note: 'gluSphere' has been explicitly marked deprecated here
+extern void gluSphere (GLUquadric* quad, GLdouble radius, GLint slices, GLint stacks) OPENGL_DEPRECATED(10_0, 10_9);
+            ^
+RSIGScene.cpp:2537:7: warning: 'gluPerspective' is deprecated: first deprecated in macOS 10.9 - "Use GLKMatrix4MakePerspective" [-Wdeprecated-declarations]
+      gluPerspective(fov_angle, aspect, zNear, zFar);
+      ^
+/System/Library/Frameworks/OpenGL.framework/Headers/glu.h:278:13: note: 'gluPerspective' has been explicitly marked deprecated here
+extern void gluPerspective (GLdouble fovy, GLdouble aspect, GLdouble zNear, GLdouble zFar) OPENGL_DEPRECATED_MSG(10_0, 10_9, "Use GLKMatrix4MakePerspective");
+            ^
+RSIGScene.cpp:2538:7: warning: 'gluLookAt' is deprecated: first deprecated in macOS 10.9 - "Use GLKMatrix4MakeLookAt" [-Wdeprecated-declarations]
+      gluLookAt(eyeX, eyeY, eyeZ, centerX, centerY, centerZ, upX, upY, upZ);  
+      ^
+/System/Library/Frameworks/OpenGL.framework/Headers/glu.h:265:13: note: 'gluLookAt' has been explicitly marked deprecated here
+extern void gluLookAt (GLdouble eyeX, GLdouble eyeY, GLdouble eyeZ, GLdouble centerX, GLdouble centerY, GLdouble centerZ, GLdouble upX, GLdouble upY, GLdouble upZ) OPENGL_DEPRECATED_MSG(10_0, 10_9, "Use GLKMatrix4MakeLookAt");
+            ^
+RSIGScene.cpp:2560:5: warning: 'gluPerspective' is deprecated: first deprecated in macOS 10.9 - "Use GLKMatrix4MakePerspective" [-Wdeprecated-declarations]
+    gluPerspective(fov_angle, aspect , zNear, zFar);
+    ^
+/System/Library/Frameworks/OpenGL.framework/Headers/glu.h:278:13: note: 'gluPerspective' has been explicitly marked deprecated here
+extern void gluPerspective (GLdouble fovy, GLdouble aspect, GLdouble zNear, GLdouble zFar) OPENGL_DEPRECATED_MSG(10_0, 10_9, "Use GLKMatrix4MakePerspective");
+            ^
+RSIGScene.cpp:2561:5: warning: 'gluLookAt' is deprecated: first deprecated in macOS 10.9 - "Use GLKMatrix4MakeLookAt" [-Wdeprecated-declarations]
+    gluLookAt(eyeX, eyeY, eyeZ, centerX, centerY, centerZ, upX, upY, upZ);  
+    ^
+/System/Library/Frameworks/OpenGL.framework/Headers/glu.h:265:13: note: 'gluLookAt' has been explicitly marked deprecated here
+extern void gluLookAt (GLdouble eyeX, GLdouble eyeY, GLdouble eyeZ, GLdouble centerX, GLdouble centerY, GLdouble centerZ, GLdouble upX, GLdouble upY, GLdouble upZ) OPENGL_DEPRECATED_MSG(10_0, 10_9, "Use GLKMatrix4MakeLookAt");
+            ^
+RSIGScene.cpp:2584:9: warning: 'gluProject' is deprecated: first deprecated in macOS 10.9 - "Use GLKMathProject" [-Wdeprecated-declarations]
+        gluProject(-98.5, 39.8, 0, modelview, projection, viewport, &x1, &y1, &z1);
+        ^
+/System/Library/Frameworks/OpenGL.framework/Headers/glu.h:280:14: note: 'gluProject' has been explicitly marked deprecated here
+extern GLint gluProject (GLdouble objX, GLdouble objY, GLdouble objZ, const GLdouble *model, const GLdouble *proj, const GLint *view, GLdouble* winX, GLdouble* winY, GLdouble* winZ) OPENGL_DEPRECATED_MSG(10_0, 10_9, "Use GLKMathProject");
+             ^
+RSIGScene.cpp:2585:9: warning: 'gluProject' is deprecated: first deprecated in macOS 10.9 - "Use GLKMathProject" [-Wdeprecated-declarations]
+        gluProject(-98.5, 39.8, 0.1, modelview, projection, viewport, &x2, &y2, &z2);
+        ^
+/System/Library/Frameworks/OpenGL.framework/Headers/glu.h:280:14: note: 'gluProject' has been explicitly marked deprecated here
+extern GLint gluProject (GLdouble objX, GLdouble objY, GLdouble objZ, const GLdouble *model, const GLdouble *proj, const GLint *view, GLdouble* winX, GLdouble* winY, GLdouble* winZ) OPENGL_DEPRECATED_MSG(10_0, 10_9, "Use GLKMathProject");
+             ^
+RSIGScene.cpp:2977:27: warning: 'gluUnProject' is deprecated: first deprecated in macOS 10.9 - "Use GLKMathUnproject" [-Wdeprecated-declarations]
+      const int result1 = gluUnProject(xLast, sceneRect().height()-yLast, 0.0, modelview, projection, viewport, &rLonNear, &rLatNear, &rZNear);
+                          ^
+/System/Library/Frameworks/OpenGL.framework/Headers/glu.h:297:14: note: 'gluUnProject' has been explicitly marked deprecated here
+extern GLint gluUnProject (GLdouble winX, GLdouble winY, GLdouble winZ, const GLdouble *model, const GLdouble *proj, const GLint *view, GLdouble* objX, GLdouble* objY, GLdouble* objZ) OPENGL_DEPRECATED_MSG(10_0, 10_9, "Use GLKMathUnproject");
+             ^
+RSIGScene.cpp:2978:27: warning: 'gluUnProject' is deprecated: first deprecated in macOS 10.9 - "Use GLKMathUnproject" [-Wdeprecated-declarations]
+      const int result2 = gluUnProject(xLast, sceneRect().height()-yLast, 1.0, modelview, projection, viewport, &rLonFar,  &rLatFar,  &rZFar);
+                          ^
+/System/Library/Frameworks/OpenGL.framework/Headers/glu.h:297:14: note: 'gluUnProject' has been explicitly marked deprecated here
+extern GLint gluUnProject (GLdouble winX, GLdouble winY, GLdouble winZ, const GLdouble *model, const GLdouble *proj, const GLint *view, GLdouble* objX, GLdouble* objY, GLdouble* objZ) OPENGL_DEPRECATED_MSG(10_0, 10_9, "Use GLKMathUnproject");
+             ^
+20 warnings generated.
+In file included from ShadersManagement.cpp:9:
+./ShadersManagement.h:45:59: warning: 'gluErrorString' is deprecated: first deprecated in macOS 10.9 [-Wdeprecated-declarations]
+    fprintf (stderr, "[%s] GL error %s \n", functionName, gluErrorString(error));
+                                                          ^
+/System/Library/Frameworks/OpenGL.framework/Headers/glu.h:260:24: note: 'gluErrorString' has been explicitly marked deprecated here
+extern const GLubyte * gluErrorString (GLenum error) OPENGL_DEPRECATED(10_0, 10_9);
+                       ^
+1 warning generated.
+
+

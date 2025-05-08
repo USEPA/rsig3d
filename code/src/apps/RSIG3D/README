@@ -1,0 +1,106 @@
+Notes on RSIG3D application.
+Project begain Oct 2005.
+Project PI (customer): james.j.szykman@nasa.gov
+Developers:
+  Architect, Data Processing (Subsetters, webservices) plessel.todd@epa.gov
+  GUI and Visualization: freeman.matt@epa.gov
+Size: 166 KLOC (C/C++/PERL/csh) as of 2021. See ../misc/RSIG_code_metrics
+
+Uses the following computers / webservices:
+  1. User computer - Mac, Windows or Linux.
+  2. https://ofmpub.epa.gov/rsig/rsigserver - public host for forwarding
+     access to maple.
+  3. https://maple.hesc.epa.gov:rsig/rsigserver - internal computer hosting
+     CMAQ, VIIRS, TROPOMI data archives, subset programs, etc.
+  4. cain.larc.nasa.gov - NASA Langley computer hosting CALIPSO satellite data.
+  5. https://modwebsrv.modaps.eosdis.nasa.gov/cgi-bin/RSIGservice - NASA Langley
+     computer hosting CALIPSO satellite data.
+  6. https://gibs.earthdata.nasa.gov/wms/epsg4326/best/wms.cgi - For true color
+     satellite images.
+
+rsigserver, RSIGservice and calipsoserver are the EMVL-developed OGC-WCS
+webservices that invoke EMVL-developed Subset programs for extracting subsets
+(by time, lon-lat box and variable) of data from sets of data files.
+
+Depends on the following:
+
+Programs at Runtime:
+External Open Source:
+  1. curl - for invoking webservices to get data.
+  2. gzip - for compressing/decompressing data streams.
+  3. ffmpeg - for creating video files
+  4. ssh, scp - for accessing other client computers for CMAQ file read/load.
+Internal EMVL-developed:
+  1. CMAQSubset - For reading subsets of CMAQ data files.
+
+Compiling utilities:
+  1. make
+  2. cmake
+  3. g++
+  4. gcc
+  5. ar
+System libraries:
+  1. OpenGL for graphics.
+External Open Source Libraries (C and C++):
+  2. Qt (GUI) ../../../../package/QT
+  All other source code is at ../../libs/ 
+  3. QMapControl
+  4. PropertEditor
+  5. Marble (projected maps).
+  6. glew
+  7. netcdf
+  8. shapelib
+  9. GPC (polygon clipping)
+  10. png
+  11. zlib
+Internal EMVL-developed Libraries (C and C++):
+  1. vector*.h - templates for vectors.
+  2. Utilities - emvl utility macros and routines.
+  3. Dataset - emvl::Dataset and emvl::DatasetManager which retrieves data from
+     rsigserver public webservice.
+
+Key Runtime Object Structure:
+  1. emvl::DatasetManager - Singleton that manages (creates, owns, deletes)
+     emvl::Datasets.
+  2. emvl::Dataset - Holds data retrieved. May page large (CMAQ, Grid, Swath)
+     datasets to/from disk.
+  - All subset data files are written to and read from $HOME/.rsig/*.xdr
+  3. RSIGScene - Singleton Model (see also RSIGState).
+  4. MainWin - Singleton View/Controller (see also ControlDockWidget).
+  5. GeoDataList - Singleton list of GeoDataObjects.
+  6. VisDataList - Singleton list of VisDataObjects.
+  7. GeoDataObject - ->mObject points to a emvl::Dataset and adds objects for
+     rendering:
+  8. LookupTable - a colormap "lut".
+  9. VisDataObject - Defines user-editable rendering properties, opacity, etc.
+
+  emvl::DatasetManager[ index of emvl::Dataset ]
+  GeoDataList[ index of GeoDataObjects ]
+  GeoDataObject->mModel = pointer to emvl::Dataset owned by emvl::DatasetManager.
+  VisDataObject.point/vector/polygon = Rendering options associated with a
+  parent GeoDataObject.
+  VisDataObject.lut = Colormap for parent GeoDataObject.
+ 
+  Call chain for data input (reading into $HOME.rsig then loading into memory)
+  and output (saving to $HOME in various file formats):
+  ControlDockWidgets_slots.cpp - search for IMPORTANT.
+  Up to 5 datasets can be selected and retrieved concurrently via threads.
+  CMAQFileReaderDialog (sub-Controller) uses CMAQFileReaderModel (sub-Model of
+  RSIGScene) synchronously/blocking. 
+
+  - List of available data sources/variables is found in the set of files:
+    rsig_variables*.txt which are read at compile time to generate a GUI menu.
+  
+  - Application state is saved to $HOME/.rsig3d.xml each time the user quits
+    the program (other than via control-c / kill -9).
+
+  - To install the application on a client computer:
+    1. https://www.epa.gov/rsig
+    2. Click link for platform-specific zip file on "Downloading RSIG" sidebar.
+
+  - To remove the application from a client computer:
+    1. Delete $HOME/.rsig
+    2. Delete $HOME/.rsig3d.xml
+    3. Delete $HOME/RSIG3D
+
+

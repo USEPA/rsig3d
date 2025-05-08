@@ -1,0 +1,166 @@
+ 
+===============================================================================
+                      Software Metrics Summary Report
+===============================================================================
+ 
+                        TEXT	LOC	DOC (pages)
+                        ----	---	-----------
+  1 Directories:	34278	24237	0
+ 
+ 46 Source files
+ 971 Routines
+ 29% Comment Ratio
+ 134 Maintainability Index
+ 
+Per Routine:            Mean	Max	No. and % > 50,10,10
+                        ----	---	--------------------
+Non-comment Source LOC:  14.1	253	48	4.9%
+Cyclomatic Complexity:   2.4	37	31	3.2%
+Fan-out:                 3.1	59	64	6.6%
+ 
+Recommend reducing the size of the following routines:
+    VectorRenderer::drawVectors                           253     37     59
+    render3d                                              250     30     29
+    LibCurlDataGet::start                                 211      9     35
+    copyAndDrawQuads                                      195     34     43
+    ControlDockWidget::onSaveFileClicked                  190     29     59
+    model                                                 183      3     42
+    ControlDockWidget::setVisWidgetState                  155     20     20
+    VisDataList::renderGeometryObjects                    142     22     12
+    ControlDockWidget::onDownloadWorkFinished             124     25     56
+    ControlDockWidget::readSourceTree                     121     35     20
+    ControlDockWidget::onGetdataClicked                   121     19     53
+    downloadData                                          115     20     29
+    ControlDockWidget::initTab2ClientData                 112      5     18
+    PolygonRenderer::drawCalipsoAxesOpengl                107     14     24
+    LookupTable::setMattLookupTable                       107     18     12
+    manageIncludes                                        102     14     17
+    ControlDockWidget::initTab1ClientData                  95      1     28
+    ControlDockWidget::onTreeWidgetItemChanged             92     11     15
+    drawHorizontalLookupTable                              86     12     22
+    reduceVerticesToLowestLayer                            85     18      1
+    CALIPSOUncertaintyVariable                             84      3      4
+    disableUiWidgets                                       82     23      4
+    MarbleSphericalProjectionRC::initShaderProgram         79      2      4
+    ControlDockWidget::onSaveVideoToggled                  79      8     28
+    ControlDockWidget::downloadImage                       78      6     27
+    ControlDockWidget::check_sources                       77     15     10
+    readResourceHelper                                     73     18     13
+    LambertConformalConicProjectionRC::initShaderProgram     73      2      4
+    FileOrientedDownloaderWorker::run                      71     15     23
+    ModisTrueColor::downloadImage                          70      8     22
+    StereographicProjectionRC::initShaderProgram           68      3      4
+    ControlDockWidget::handleUpdate                        66      5     21
+    CMAQFileReaderDialog::updateFromModel                  64      8     13
+    getCeilometerInfo                                      63      6     15
+    PolygonRenderer::drawQuadArray                         62     18     28
+    drawOneGroup                                           61     10     11
+    createCCA                                              60      5     13
+    mTimer                                                 59      1     25
+    QObject                                                59      1      2
+    ControlDockWidget::onColormapIndexChanged              59     33     22
+    MainWin::initFromDOMElement                            57     10     17
+    CMAQFileReaderModel::setHost                           55      6     10
+    QMapMercatorProjectionRC::initShaderProgram            53      2      4
+    MarbleMercatorProjectionRC::initShaderProgram          53      2      4
+    HttpDownloadDialog::runLibCurlHttp                     53      1     11
+    MainWin::saveSnapshot                                  52     11     19
+    ControlDockWidget::onDurationChanged                   52     25     11
+    setUiValues                                            51      6      6
+Recommend reducing the complexity of the following routines:
+    VectorRenderer::drawVectors                           253     37     59
+    ControlDockWidget::readSourceTree                     121     35     20
+    copyAndDrawQuads                                      195     34     43
+    ControlDockWidget::onColormapIndexChanged              59     33     22
+    render3d                                              250     30     29
+    ControlDockWidget::onSaveFileClicked                  190     29     59
+    ControlDockWidget::onDurationChanged                   52     25     11
+    ControlDockWidget::onDownloadWorkFinished             124     25     56
+    disableUiWidgets                                       82     23      4
+    VisDataList::renderGeometryObjects                    142     22     12
+    downloadData                                          115     20     29
+    ControlDockWidget::setVisWidgetState                  155     20     20
+    ControlDockWidget::onGetdataClicked                   121     19     53
+    reduceVerticesToLowestLayer                            85     18      1
+    readResourceHelper                                     73     18     13
+    PolygonRenderer::drawQuadArray                         62     18     28
+    LookupTable::setMattLookupTable                       107     18     12
+    RegridParmsData::init                                  26     17     16
+    FileOrientedDownloaderWorker::run                      71     15     23
+    ControlDockWidget::check_sources                       77     15     10
+    manageIncludes                                        102     14     17
+    PolygonRenderer::drawCalipsoAxesOpengl                107     14     24
+    GraphicsView::keyPressEvent                            43     14      7
+    ControlDockWidget::switchSpecialControlsWidget         35     14      2
+    getMaplineColorIndex                                   26     12      0
+    drawHorizontalLookupTable                              86     12     22
+    createShaderProgram                                    49     12      5
+    MainWin::saveSnapshot                                  52     11     19
+    ControlDockWidget::setVariablesToComboBox2             37     11      6
+    ControlDockWidget::pack_selectedData                   17     11      2
+    ControlDockWidget::onTreeWidgetItemChanged             92     11     15
+Recommend reducing the fan-out of the following routines:
+    VectorRenderer::drawVectors                           253     37     59
+    ControlDockWidget::onSaveFileClicked                  190     29     59
+    ControlDockWidget::onDownloadWorkFinished             124     25     56
+    ControlDockWidget::onGetdataClicked                   121     19     53
+    copyAndDrawQuads                                      195     34     43
+    model                                                 183      3     42
+    LibCurlDataGet::start                                 211      9     35
+    RegridParmsData::init_from_file                        44      3     30
+    render3d                                              250     30     29
+    downloadData                                          115     20     29
+    PolygonRenderer::drawQuadArray                         62     18     28
+    ControlDockWidget::onSaveVideoToggled                  79      8     28
+    ControlDockWidget::initTab1ClientData                  95      1     28
+    QDialog                                                44      2     27
+    ControlDockWidget::run_downloader                      44      4     27
+    ControlDockWidget::downloadImage                       78      6     27
+    main                                                   34      1     26
+    mTimer                                                 59      1     25
+    PolygonRenderer::drawCalipsoAxesOpengl                107     14     24
+    FileOrientedDownloaderWorker::run                      71     15     23
+    ControlDockWidget::useCMAQFileReaderDialog             43      4     23
+    drawHorizontalLookupTable                              86     12     22
+    ModisTrueColor::downloadImage                          70      8     22
+    ControlDockWidget::onColormapIndexChanged              59     33     22
+    ControlDockWidget::handleUpdate                        66      5     21
+    ControlDockWidget::setVisWidgetState                  155     20     20
+    ControlDockWidget::readSourceTree                     121     35     20
+    MainWin::saveSnapshot                                  52     11     19
+    HttpDownloadDialog::onHttpDownloadDialogFinished       37      7     18
+    GeoDataPropertyEdit::showContextMenu                   40      6     18
+    ControlDockWidget::initTab2ClientData                 112      5     18
+    reloadDatasets                                         34      5     17
+    manageIncludes                                        102     14     17
+    MainWin::initFromDOMElement                            57     10     17
+    loadCeilometerMixingLayerHeightDataset                 44      2     16
+    createMLA                                              49      4     16
+    VisDataPropertyEdit::showContextMenu                   35      6     16
+    RegridParmsData::init                                  26     17     16
+    FileOrientedDownloader::beginDownload                  27      3     16
+    ControlDockWidget::onShowDataUsePolicy                 37      5     16
+    getCeilometerInfo                                      63      6     15
+    ControlDockWidget::onTreeWidgetItemChanged             92     11     15
+    ControlDockWidget::addVariablesHelper2                 25      2     15
+    ControlDockWidget::onUpdateRsigFinished                20      2     14
+    saveData                                               39      6     13
+    readResourceHelper                                     73     18     13
+    createCCA                                              60      5     13
+    ControlDockWidget::generateDefaultPngFilename          31      5     13
+    CMAQFileReaderDialog::updateListing                    47     10     13
+    CMAQFileReaderDialog::updateFromModel                  64      8     13
+    VisDataList::renderGeometryObjects                    142     22     12
+    MainWin::saveStateToFile                               44      8     12
+    MainWin::restoreStateFromFile                          37      5     12
+    LookupTable::setMattLookupTable                       107     18     12
+    ControlDockWidget::initTab3ClientData                  44      1     12
+    pagedBufferDraw                                        46      7     11
+    drawOneGroup                                           61     10     11
+    checkAndLoadCeilometerMixingLayerHeightDataset         42      4     11
+    HttpDownloadDialog::runLibCurlHttp                     53      1     11
+    FilterSettingDialog::validateKey                       23      3     11
+    ControlDockWidget::setRegionOfInterest                 18      1     11
+    ControlDockWidget::onMinSpinboxChanged                 23      4     11
+    ControlDockWidget::onMaxSpinboxChanged                 23      4     11
+    ControlDockWidget::onDurationChanged                   52     25     11

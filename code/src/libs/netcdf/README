@@ -1,0 +1,66 @@
+
+Changes to NetCDF source files:
+
+netcdf-3.6.0-p1/src/libsrc/nc.c
+netcdf-3.6.0-p1/src/libsrc/ncx.c
+
+# IRIX64:
+
+setenv SGI_ABI "-64"
+setenv CC "cc -64 -mips4"
+setenv CFLAGS "-D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE"
+setenv CFLAGS "-D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -DNDEBUG -DUSE_OPENMP -mp -O"
+setenv LD "$CC -lmp"
+
+# Linux.ia64:
+
+setenv CC "icc"
+setenv LD "$CC"
+setenv CFLAGS "-D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE"
+setenv CFLAGS "-D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -DNDEBUG -mp -ftz -DUSE_OPENMP -openmp -O -funroll-loops"
+
+# Darwin:
+
+setenv CC "gcc"
+setenv LD "$CC"
+setenv CFLAGS "-D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -g -arch ppc -arch ppc64 -arch i686 -arch x86_64"
+setenv CFLAGS "$CFLAGS -O -DNDEBUG"
+setenv CXX "g++"
+setenv CXXFLAGS "$CFLAGS"
+setenv F77 "gfortran"
+setenv F90 "gfortran"
+setenv FFLAGS "-m64 -fopenmp"
+setenv RANLIB "ranlib"
+setenv AR "libtool"
+setenv ARFLAGS "-static -o"
+
+# Linux.x86_64, Linux.i686:
+
+setenv CC "gcc"
+setenv LD "$CC"
+setenv CFLAGS "-D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE"
+setenv CFLAGS "-D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -DNDEBUG"
+
+# SunOS:
+
+setenv CC "cc -xarch=v9"
+setenv CXX "CC -xarch=v9"
+setenv LD "$CC"
+setenv F77 "f77 -xarch=v9"
+setenv F90 "f90 -xarch=v9"
+setenv FFLAGS "-xarch=v9"
+setenv CFLAGS "-D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE"
+setenv CFLAGS "-D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -DNDEBUG"
+
+
+configure -prefix=`pwd` \
+--enable-long-long --enable-error-checking=all --enable-g=dbg \
+--disable-sharedlibs --disable-f77 --disable-f90 --disable-cxx -with-logging=no
+
+
+configure -prefix=`pwd` \
+--enable-long-long --enable-error-checking=all --enable-g=dbg \
+--disable-sharedlibs -with-logging=no
+
+
+
