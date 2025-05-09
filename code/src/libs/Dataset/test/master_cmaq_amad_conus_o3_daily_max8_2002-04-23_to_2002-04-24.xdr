@@ -1,18 +1,0 @@
-SUBSET 9.0 CMAQ
-M_02_99BRACE
-http://www.epa.gov/ttn/scram/,CMAQSubset
-2002-04-23T00:00:00-0000
-# data dimensions: timesteps variables layers rows columns:
-2 4 2 3 4
-# subset indices (0-based time, 1-based layer/row/column): first-timestep last-timestep first-layer last-layer first-row last-row first-column last-column:
- 0 1 1 2 1 3 1 4
-# Variable names:
-LONGITUDE LATITUDE ELEVATION DAILY_MAX8_O3 
-# Variable units:
-deg deg m ppmV 
-# lcc projection: lat_1 lat_2 lat_0 lon_0 major_semiaxis minor_semiaxis
-30 60 40 -100 6.371e+06 6.371e+06
-# Grid: ncols nrows xorig yorig xcell ycell vgtyp vgtop vglvls[3]:
-4 3 1.578e+06 -1.27e+06 2000 2000 2 10000 1 0.995 0.99
-# IEEE-754 32-bit reals data[variables][timesteps][layers][rows][columns]:
-Â¨[BÂ¨QDÂ¨GEÂ¨=GÂ¨YBÂ¨OCÂ¨EDÂ¨;EÂ¨WAÂ¨MAÂ¨CBÂ¨9BÂ¨[BÂ¨QDÂ¨GEÂ¨=GÂ¨YBÂ¨OCÂ¨EDÂ¨;EÂ¨WAÂ¨MAÂ¨CBÂ¨9BÂ¨[BÂ¨QDÂ¨GEÂ¨=GÂ¨YBÂ¨OCÂ¨EDÂ¨;EÂ¨WAÂ¨MAÂ¨CBÂ¨9BÂ¨[BÂ¨QDÂ¨GEÂ¨=GÂ¨YBÂ¨OCÂ¨EDÂ¨;EÂ¨WAÂ¨MAÂ¨CBÂ¨9BAØ;œAØ4zAØ-UAØ&.AØ_:AØXAØPòAØIÊAØ‚ÙAØ{µAØtAØmgAØ;œAØ4zAØ-UAØ&.AØ_:AØXAØPòAØIÊAØ‚ÙAØ{µAØtAØmgAØ;œAØ4zAØ-UAØ&.AØ_:AØXAØPòAØIÊAØ‚ÙAØ{µAØtAØmgAØ;œAØ4zAØ-UAØ&.AØ_:AØXAØPòAØIÊAØ‚ÙAØ{µAØtAØmgA™œA™œA™œA™œA™œA™œA™œA™œA™œA™œA™œA™œBeÑĞBeÑĞBeÑĞBeÑĞBeÑĞBeÑĞBeÑĞBeÑĞBeÑĞBeÑĞBeÑĞBeÑĞA™œA™œA™œA™œA™œA™œA™œA™œA™œA™œA™œA™œBeÑĞBeÑĞBeÑĞBeÑĞBeÑĞBeÑĞBeÑĞBeÑĞBeÑĞBeÑĞBeÑĞBeÑĞ=ñ±=ø='.=ç=¡h=¶==Z½=×= Å=’Û=e=÷À=b=KA=@=§×=Ú=Az=”=ñ.=H6=É=Lú=S3=T~K=U€Ü=VMw=TSÌ=V¨k=Xl=Y r=Wå^=[&j=\â|=^!=S*=T‚Á=Uy=VLÆ=T[ò=V«(=Wş=Y=Wë»=[%ı=\Ú=^…
