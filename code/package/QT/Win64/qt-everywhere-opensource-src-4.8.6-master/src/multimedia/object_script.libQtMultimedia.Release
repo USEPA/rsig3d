@@ -1,0 +1,27 @@
+CREATE ../../lib/libQtMultimedia.a
+ADDMOD tmp/obj/release_static/qaudio.o
+ADDMOD tmp/obj/release_static/qaudioformat.o
+ADDMOD tmp/obj/release_static/qaudiodeviceinfo.o
+ADDMOD tmp/obj/release_static/qaudiooutput.o
+ADDMOD tmp/obj/release_static/qaudioinput.o
+ADDMOD tmp/obj/release_static/qaudioengineplugin.o
+ADDMOD tmp/obj/release_static/qaudioengine.o
+ADDMOD tmp/obj/release_static/qaudiodevicefactory.o
+ADDMOD tmp/obj/release_static/qaudiodeviceinfo_win32_p.o
+ADDMOD tmp/obj/release_static/qaudiooutput_win32_p.o
+ADDMOD tmp/obj/release_static/qaudioinput_win32_p.o
+ADDMOD tmp/obj/release_static/qabstractvideobuffer.o
+ADDMOD tmp/obj/release_static/qabstractvideosurface.o
+ADDMOD tmp/obj/release_static/qimagevideobuffer.o
+ADDMOD tmp/obj/release_static/qmemoryvideobuffer.o
+ADDMOD tmp/obj/release_static/qvideoframe.o
+ADDMOD tmp/obj/release_static/qvideosurfaceformat.o
+ADDMOD tmp/obj/release_static/moc_qaudioinput.o
+ADDMOD tmp/obj/release_static/moc_qaudiooutput.o
+ADDMOD tmp/obj/release_static/moc_qaudioengineplugin.o
+ADDMOD tmp/obj/release_static/moc_qaudioengine.o
+ADDMOD tmp/obj/release_static/moc_qaudioinput_win32_p.o
+ADDMOD tmp/obj/release_static/moc_qaudiooutput_win32_p.o
+ADDMOD tmp/obj/release_static/moc_qaudiodeviceinfo_win32_p.o
+ADDMOD tmp/obj/release_static/moc_qabstractvideosurface.o
+SAVE

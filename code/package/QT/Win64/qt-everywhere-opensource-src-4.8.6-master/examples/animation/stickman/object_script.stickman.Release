@@ -1,0 +1,14 @@
+INPUT(
+./tmp/obj/release_static/main.o
+./tmp/obj/release_static/stickman.o
+./tmp/obj/release_static/animation.o
+./tmp/obj/release_static/node.o
+./tmp/obj/release_static/lifecycle.o
+./tmp/obj/release_static/graphicsview.o
+./tmp/obj/release_static/rectbutton.o
+./tmp/obj/release_static/moc_stickman.o
+./tmp/obj/release_static/moc_node.o
+./tmp/obj/release_static/moc_graphicsview.o
+./tmp/obj/release_static/moc_rectbutton.o
+./tmp/obj/release_static/qrc_stickman.o
+);

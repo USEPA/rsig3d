@@ -1,0 +1,18 @@
+prefix=C:\Users\tplessel\projects\rsig\dev\RSIG3D\package\QT\Win64\4.8.6
+exec_prefix=${prefix}
+libdir=C:/Users/tplessel/projects/rsig/dev/RSIG3D/package/QT/Win64/4.8.6/lib
+includedir=C:/Users/tplessel/projects/rsig/dev/RSIG3D/package/QT/Win64/4.8.6/include/QtTest
+qt_config=include_source_dir lex yacc warn_on uic resources incremental_off windows release ReleaseBuild Release build_pass qt warn_on release link_prl copy_dir_files debug_and_release debug_and_release_target precompile_header release static stl exceptions rtti mmx sse sse2 largefile minimal-config small-config medium-config large-config full-config release incremental create_prl link_prl depend_includepath QTDIR_build release ReleaseBuild Release build_pass qt_install_headers qt warn_on depend_includepath qmake_cache target_qt debug_and_release largefile static create_pc release ReleaseBuild Release build_pass no_autoqmake staticlib static moc thread
+moc_location=C:/Users/tplessel/projects/rsig/dev/RSIG3D/package/QT/Win64/4.8.6/bin/moc
+uic_location=C:/Users/tplessel/projects/rsig/dev/RSIG3D/package/QT/Win64/4.8.6/bin/uic
+rcc_location=C:/Users/tplessel/projects/rsig/dev/RSIG3D/package/QT/Win64/4.8.6/bin/rcc
+lupdate_location=C:/Users/tplessel/projects/rsig/dev/RSIG3D/package/QT/Win64/4.8.6/bin/lupdate
+lrelease_location=C:/Users/tplessel/projects/rsig/dev/RSIG3D/package/QT/Win64/4.8.6/bin/lrelease
+
+Name: Qttest
+Description: Qttest Library
+Version: 4.8.6
+Libs: -L${libdir} -l..\..\lib\pkgconfig\QtTest 
+Libs.private: -lQtCore -lole32 -luuid -lws2_32 -ladvapi32 -lshell32 -luser32 -lkernel32   
+Cflags: -DQT_THREAD_SUPPORT -IC:/Users/tplessel/projects/rsig/dev/RSIG3D/package/QT/Win64/4.8.6/include -I${includedir}
+

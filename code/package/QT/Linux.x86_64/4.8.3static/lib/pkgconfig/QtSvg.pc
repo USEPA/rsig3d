@@ -1,0 +1,19 @@
+prefix=/home/nzhang/QT
+exec_prefix=${prefix}
+libdir=${prefix}/lib
+includedir=${prefix}/include/QtSvg
+qt_config=lex yacc warn_on uic resources qt warn_on release incremental link_prl gdb_dwarf_index def_files_disabled exceptions no_mocdepend release stl qt_no_framework release static largefile stl precompile_header mmx 3dnow sse sse2 sse3 ssse3 dylib create_prl link_prl depend_includepath QTDIR_build qt_install_headers qt warn_on depend_includepath qmake_cache target_qt hide_symbols create_pc create_libtool explicitlib moc thread staticlib static
+moc_location=/home/nzhang/QT/bin/moc
+uic_location=/home/nzhang/QT/bin/uic
+rcc_location=/home/nzhang/QT/bin/rcc
+lupdate_location=/home/nzhang/QT/bin/lupdate
+lrelease_location=/home/nzhang/QT/bin/lrelease
+
+Name: Qtsvg
+Description: Qtsvg Library
+Version: 4.8.3
+Libs: -L${libdir} -lQtSvg 
+Libs.private: -L/home/nzhang/QT/lib  -lQtGui -L/home/nzhang/QT/lib -L/usr/X11R6/lib64 -lmng -lfreetype -lSM -lICE -lXrender -lXext -lX11 -lQtCore -lm -ldl -lrt -lpthread   
+Cflags: -I/home/nzhang/QT/include -I${includedir}
+Requires: QtCore QtGui
+

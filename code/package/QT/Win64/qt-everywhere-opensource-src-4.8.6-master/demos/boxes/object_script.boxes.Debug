@@ -1,0 +1,12 @@
+INPUT(
+./tmp/obj/debug_static/fbm.o
+./tmp/obj/debug_static/glbuffers.o
+./tmp/obj/debug_static/glextensions.o
+./tmp/obj/debug_static/main.o
+./tmp/obj/debug_static/qtbox.o
+./tmp/obj/debug_static/roundedbox.o
+./tmp/obj/debug_static/scene.o
+./tmp/obj/debug_static/trackball.o
+./tmp/obj/debug_static/moc_scene.o
+./tmp/obj/debug_static/qrc_boxes.o
+);

@@ -1,0 +1,12 @@
+CREATE ../../../lib/libQAxContainer.a
+ADDMOD tmp/obj/release_static/qaxbase.o
+ADDMOD tmp/obj/release_static/qaxdump.o
+ADDMOD tmp/obj/release_static/qaxwidget.o
+ADDMOD tmp/obj/release_static/qaxobject.o
+ADDMOD tmp/obj/release_static/qaxscript.o
+ADDMOD tmp/obj/release_static/qaxscriptwrapper.o
+ADDMOD tmp/obj/release_static/qaxselect.o
+ADDMOD tmp/obj/release_static/qaxtypes.o
+ADDMOD tmp/obj/release_static/moc_qaxscript.o
+ADDMOD tmp/obj/release_static/moc_qaxselect.o
+SAVE

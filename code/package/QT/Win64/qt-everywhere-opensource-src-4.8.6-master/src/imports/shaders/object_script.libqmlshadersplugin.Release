@@ -1,0 +1,12 @@
+CREATE ../../../imports/Qt/labs/shaders/libqmlshadersplugin.a
+ADDMOD tmp/obj/release_static/qmlshadersplugin_plugin.o
+ADDMOD tmp/obj/release_static/shadereffect.o
+ADDMOD tmp/obj/release_static/shadereffectitem.o
+ADDMOD tmp/obj/release_static/shadereffectsource.o
+ADDMOD tmp/obj/release_static/qsggeometry.o
+ADDMOD tmp/obj/release_static/shadereffectbuffer.o
+ADDMOD tmp/obj/release_static/moc_qmlshadersplugin_plugin.o
+ADDMOD tmp/obj/release_static/moc_shadereffect.o
+ADDMOD tmp/obj/release_static/moc_shadereffectitem.o
+ADDMOD tmp/obj/release_static/moc_shadereffectsource.o
+SAVE

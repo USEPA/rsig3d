@@ -1,0 +1,13 @@
+INPUT(
+./tmp/obj/debug_static/qcontext2dcanvas.o
+./tmp/obj/debug_static/context2d.o
+./tmp/obj/debug_static/domimage.o
+./tmp/obj/debug_static/environment.o
+./tmp/obj/debug_static/window.o
+./tmp/obj/debug_static/main.o
+./tmp/obj/debug_static/moc_qcontext2dcanvas.o
+./tmp/obj/debug_static/moc_context2d.o
+./tmp/obj/debug_static/moc_environment.o
+./tmp/obj/debug_static/moc_window.o
+./tmp/obj/debug_static/qrc_context2d.o
+);

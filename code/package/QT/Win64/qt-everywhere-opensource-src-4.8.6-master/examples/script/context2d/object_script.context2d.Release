@@ -1,0 +1,13 @@
+INPUT(
+./tmp/obj/release_static/qcontext2dcanvas.o
+./tmp/obj/release_static/context2d.o
+./tmp/obj/release_static/domimage.o
+./tmp/obj/release_static/environment.o
+./tmp/obj/release_static/window.o
+./tmp/obj/release_static/main.o
+./tmp/obj/release_static/moc_qcontext2dcanvas.o
+./tmp/obj/release_static/moc_context2d.o
+./tmp/obj/release_static/moc_environment.o
+./tmp/obj/release_static/moc_window.o
+./tmp/obj/release_static/qrc_context2d.o
+);

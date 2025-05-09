@@ -1,0 +1,6 @@
+#!/bin/sh
+if [ "$#" -gt 0 ]; then
+  /root/qt-everywhere-opensource-src-4.8.6/configure --platform=linux-g++-64 -confirm-license "$@"
+else
+  /root/qt-everywhere-opensource-src-4.8.6/configure --platform=linux-g++-64 -confirm-license
+fi

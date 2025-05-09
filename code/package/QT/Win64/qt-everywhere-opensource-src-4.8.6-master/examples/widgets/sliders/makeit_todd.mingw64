@@ -1,0 +1,188 @@
+#############################################################################
+# Run MAKEIT_TODD.BAT to launch a UNIX Bourne shell that runs this script.
+# Use UNIX commands (those that MinGW provides) and DOS commands.
+# UNIX convensions (forward slash) are used.
+# But double quotes are used instead of single quotes.
+# All script variables begin with MY_ so they don't clash with env.
+# 2024-09-04 plessel.todd@epa.gov
+#############################################################################
+
+# Set and check environment for compiling:
+
+PATH="/c/Users/tplessel/mingw-w64/x86_64-8.1.0-posix-seh-rt_v6-rev0/mingw64/bin:/c/Users/tplessel/MinGW/msys/1.0/bin:/c/Users/tplessel/MinGW/bin:/c/WINDOWS/System32:/c/WINDOWS"
+
+cls
+echo "Using PATH:"
+echo $PATH
+echo
+echo "Using g++:"
+where g++
+g++ -m64 -v
+
+#############################################################################
+# Here is where QT is installed for this platform:
+
+MY_QT_DIR="/c/Users/tplessel/projects/rsig/dev/RSIG3D/package/QT/Win64/qt-everywhere-opensource-src-4.8.6-master"
+MY_QT_INCLUDE_DIR="$MY_QT_DIR/include"
+MY_QT_LIB_DIR="$MY_QT_DIR/lib"
+MY_QT_BIN_DIR="$MY_QT_DIR/bin"
+MY_QT_MOC="$MY_QT_BIN_DIR/moc.exe -D__GNUC__ -DWIN32C"
+MY_QT_IFLAGS=\
+" -I$MY_QT_DIR/mkspecs/win32-g++-4.6 "\
+" -I$MY_QT_INCLUDE_DIR "\
+" -I$MY_QT_INCLUDE_DIR/phonon "\
+" -I$MY_QT_INCLUDE_DIR/phonon_compat "\
+" -I$MY_QT_INCLUDE_DIR/ActiveQt "\
+" -I$MY_QT_INCLUDE_DIR/Qt "\
+" -I$MY_QT_INCLUDE_DIR/QtCore "\
+" -I$MY_QT_INCLUDE_DIR/QtDBus "\
+" -I$MY_QT_INCLUDE_DIR/QtDeclarative "\
+" -I$MY_QT_INCLUDE_DIR/QtDesigner "\
+" -I$MY_QT_INCLUDE_DIR/QtGui "\
+" -I$MY_QT_INCLUDE_DIR/QtHelp "\
+" -I$MY_QT_INCLUDE_DIR/QtMeeGoGraphicsSystemHelper "\
+" -I$MY_QT_INCLUDE_DIR/QtMultimedia "\
+" -I$MY_QT_INCLUDE_DIR/QtNetwork "\
+" -I$MY_QT_INCLUDE_DIR/QtOpenGL "\
+" -I$MY_QT_INCLUDE_DIR/QtOpenVG "\
+" -I$MY_QT_INCLUDE_DIR/QtScript "\
+" -I$MY_QT_INCLUDE_DIR/QtScriptTools "\
+" -I$MY_QT_INCLUDE_DIR/QtSql "\
+" -I$MY_QT_INCLUDE_DIR/QtSvg "\
+" -I$MY_QT_INCLUDE_DIR/QtTest "\
+" -I$MY_QT_INCLUDE_DIR/QtUiTools "\
+" -I$MY_QT_INCLUDE_DIR/QtWebKit "\
+" -I$MY_QT_INCLUDE_DIR/QtXml "\
+" -I$MY_QT_INCLUDE_DIR/QtXmlPatterns "\
+""
+
+MY_QT_DFLAGS="-DUNICODE -DQT_NO_DEBUG -DQT_GUI_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQT_THREAD_SUPPORT"
+
+
+#############################################################################
+# Other (non-QT) libraries used by this application:
+
+MY_INCLUDE_DIR="/c/Users/tplessel/projects/rsig/dev/RSIG3D/code/include"
+MY_LIB_DIR="/c/Users/tplessel/projects/rsig/dev/RSIG3D/code/lib/Win64"
+
+# Available libraries: Dataset Utilities Shapefile GPC netcdf hdf hdf_hl QMapControl PropertyEditor marblewidget glew freeglut PNG Z m
+
+# From RSIG3D: ..\..\..\lib\libglew.a ..\..\..\lib\libQMapControl.a ..\..\..\lib\libPropertyEditor.a ..\..\..\lib\libmarblewidget.a C:\Users\tplessel\projects\rsig\dev\RSIG3D\code\..\package\freeglut\Win32\freeglut\lib\libfreeglut.a 
+
+MY_LIB_LFLAGS=\
+" -L$MY_LIB_DIR "\
+" -lDataset "\
+" -lUtilities "\
+" -lShapefile "\
+" -lGPC "\
+" -lnetcdf "\
+" -lhdf5 "\
+" -lhdf5_hl "\
+" -lglew "\
+" -lfreeglut "\
+" -lPNG "\
+" -lZ "\
+" -lm "\
+""
+
+
+#############################################################################
+# Files for this application:
+
+#MY_BIN_DIR="/c/Users/tplessel/projects/rsig/dev/RSIG3D/code/bin/Win64"
+MY_BIN_DIR="."
+MY_EXECUTABLE="$MY_BIN_DIR/sliders.exe"
+MY_BUILD_DIR=junk_build_dir
+MY_MOC_HEADER_FILES="slidersgroup.h window.h"
+MY_SOURCE_FILES="slidersgroup.cpp window.cpp main.cpp"
+
+#############################################################################
+# Compilation flags for this application:
+
+MY_CFLAGS="-m64 -Wall -Wextra -O -pipe -frtti -fexceptions -fno-keep-inline-dllexport -mthreads"
+
+MY_DFLAGS="$MY_QT_DFLAGS"
+
+#MY_IFLAGS="-I. -I$MY_BUILD_DIR $MY_QT_IFLAGS -I$MY_INCLUDE_DIR"
+MY_IFLAGS="-I. -I$MY_BUILD_DIR $MY_QT_IFLAGS"
+
+MY_SYSTEM_LFLAGS=\
+" -lmingw32 "\
+" -lglu32 "\
+" -lopengl32 "\
+" -lgdi32 "\
+" -lcomdlg32 "\
+" -loleaut32 "\
+" -limm32 "\
+" -lwinmm "\
+" -lwinspool "\
+" -lmsimg32 "\
+" -lole32 "\
+" -luuid "\
+" -lws2_32 "\
+" -ladvapi32 "\
+" -lshell32 "\
+" -luser32 "\
+" -lkernel32 "\
+""
+
+#MY_LFLAGS="$MY_LIB_LFLAGS -L$MY_QT_LIB_DIR -lQtGui -lQtCore -lqtmain $MY_SYSTEM_LFLAGS"
+MY_LFLAGS="-L$MY_QT_LIB_DIR -lQtGui -lQtCore -lqtmain $MY_SYSTEM_LFLAGS"
+
+# -static (except system DLLs) -Wl,-s strips the symbol table.
+
+MY_LINK_FLAGS="-m64 -mthreads -static -Wl,-s -Wl,-subsystem,windows"
+
+#############################################################################
+# Create build directory:
+
+if [ ! -d $MY_BUILD_DIR ]
+then
+  mkdir -p $MY_BUILD_DIR
+else
+  rm -rf $MY_BUILD_DIR/*
+fi
+
+#############################################################################
+# Run moc on .h files to generate temporary .cpp source files:
+
+for MY_MOC_HEADER_FILE in $MY_MOC_HEADER_FILES
+do
+  MY_MOC_SOURCE_FILE=$MY_BUILD_DIR/moc_${MY_MOC_HEADER_FILE%h}cpp
+  $MY_QT_MOC $MY_DFLAGS $MY_IFLAGS $MY_MOC_HEADER_FILE -o $MY_MOC_SOURCE_FILE &
+done
+
+wait
+
+#############################################################################
+# Compile .cpp files to .o files:
+
+# Compile moc .cpp files:
+
+for MY_MOC_HEADER_FILE in $MY_MOC_HEADER_FILES
+do
+  MY_MOC_SOURCE_FILE=$MY_BUILD_DIR/moc_${MY_MOC_HEADER_FILE%h}cpp
+  MY_MOC_OBJECT_FILE=$MY_BUILD_DIR/moc_${MY_MOC_HEADER_FILE%h}o
+  g++ $MY_CFLAGS $MY_DFLAGS $MY_IFLAGS -c $MY_MOC_SOURCE_FILE -o $MY_MOC_OBJECT_FILE &
+done
+
+wait
+
+# Compile non-moc .cpp files:
+
+for MY_SOURCE_FILE in $MY_SOURCE_FILES
+do
+  MY_OBJECT_FILE="$MY_BUILD_DIR/${MY_SOURCE_FILE%cpp}o"
+  g++ $MY_CFLAGS $MY_DFLAGS $MY_IFLAGS -c $MY_SOURCE_FILE -o $MY_OBJECT_FILE &
+done
+
+wait
+
+#############################################################################
+# Link all .o files with library static .a files and system libraries:
+
+g++ $MY_LINK_FLAGS -o $MY_EXECUTABLE $MY_BUILD_DIR/*.o $MY_LFLAGS
+
+objdump -p $MY_EXECUTABLE | grep "DLL Name:"
+ls -l      $MY_EXECUTABLE
+file       $MY_EXECUTABLE

@@ -1,0 +1,15 @@
+INPUT(
+./tmp/obj/debug_static/main.o
+./tmp/obj/debug_static/numerus.o
+./tmp/obj/debug_static/translator.o
+./tmp/obj/debug_static/translatormessage.o
+./tmp/obj/debug_static/qm.o
+./tmp/obj/debug_static/qph.o
+./tmp/obj/debug_static/po.o
+./tmp/obj/debug_static/ts.o
+./tmp/obj/debug_static/xliff.o
+./tmp/obj/debug_static/ioutils.o
+./tmp/obj/debug_static/proitems.o
+./tmp/obj/debug_static/profileparser.o
+./tmp/obj/debug_static/profileevaluator.o
+);

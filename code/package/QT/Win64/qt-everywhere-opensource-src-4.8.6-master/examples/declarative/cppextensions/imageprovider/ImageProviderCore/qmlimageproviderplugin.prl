@@ -1,0 +1,5 @@
+QMAKE_PRL_BUILD_DIR = C:/Users/tplessel/projects/rsig/dev/RSIG3D/package/QT/Win64/qt-everywhere-opensource-src-4.8.6-master/examples/declarative/cppextensions/imageprovider
+QMAKE_PRO_INPUT = imageprovider.pro
+QMAKE_PRL_TARGET = libqmlimageproviderplugin
+QMAKE_PRL_CONFIG = include_source_dir lex yacc warn_on debug uic resources incremental_off windows debug DebugBuild Debug build_pass qt warn_on link_prl copy_dir_files debug_and_release debug_and_release_target precompile_header static stl exceptions rtti mmx sse sse2 largefile minimal-config small-config medium-config large-config full-config incremental create_prl link_prl depend_includepath QTDIR_build debug DebugBuild Debug build_pass qt plugin debug DebugBuild Debug build_pass no_autoqmake moc thread staticlib static
+QMAKE_PRL_LIBS = -lQtDeclaratived -lQtScriptd -lQtSvgd -lQtSqld -lQtXmlPatternsd -lQtGuid -lgdi32 -lcomdlg32 -loleaut32 -limm32 -lwinmm -lwinspool -lmsimg32 -lQtNetworkd -lQtCored -lole32 -luuid -lws2_32 -ladvapi32 -lshell32 -luser32 -lkernel32  

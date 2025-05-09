@@ -1,0 +1,15 @@
+INPUT(
+./tmp/obj/debug_static/qmlruntime.o
+./tmp/obj/debug_static/proxysettings.o
+./tmp/obj/debug_static/qdeclarativetester.o
+./tmp/obj/debug_static/loggerwidget.o
+./tmp/obj/debug_static/deviceorientation.o
+./tmp/obj/debug_static/main.o
+./tmp/obj/debug_static/moc_qmlruntime.o
+./tmp/obj/debug_static/moc_proxysettings.o
+./tmp/obj/debug_static/moc_qdeclarativetester.o
+./tmp/obj/debug_static/moc_deviceorientation.o
+./tmp/obj/debug_static/moc_loggerwidget.o
+./tmp/obj/debug_static/qrc_browser.o
+./tmp/obj/debug_static/qrc_startup.o
+);

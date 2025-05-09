@@ -1,0 +1,15 @@
+INPUT(
+./tmp/obj/release_static/main.o
+./tmp/obj/release_static/docuwindow.o
+./tmp/obj/release_static/mainwindow.o
+./tmp/obj/release_static/invokemethod.o
+./tmp/obj/release_static/changeproperties.o
+./tmp/obj/release_static/ambientproperties.o
+./tmp/obj/release_static/controlinfo.o
+./tmp/obj/release_static/moc_docuwindow.o
+./tmp/obj/release_static/moc_mainwindow.o
+./tmp/obj/release_static/moc_invokemethod.o
+./tmp/obj/release_static/moc_changeproperties.o
+./tmp/obj/release_static/moc_ambientproperties.o
+./tmp/obj/release_static/moc_controlinfo.o
+);

@@ -1,0 +1,5 @@
+QMAKE_PRL_BUILD_DIR = C:/Users/tplessel/projects/rsig/dev/RSIG3D/package/QT/Win64/qt-everywhere-opensource-src-4.8.6-master/src/imports/gestures
+QMAKE_PRO_INPUT = gestures.pro
+QMAKE_PRL_TARGET = libqmlgesturesplugin
+QMAKE_PRL_CONFIG = include_source_dir lex yacc warn_on uic resources incremental_off windows release ReleaseBuild Release build_pass qt warn_on release link_prl copy_dir_files debug_and_release debug_and_release_target precompile_header release static stl exceptions rtti mmx sse sse2 largefile minimal-config small-config medium-config large-config full-config release incremental create_prl link_prl depend_includepath QTDIR_build release ReleaseBuild Release build_pass qt plugin debug_and_release release ReleaseBuild Release build_pass no_autoqmake moc thread staticlib static
+QMAKE_PRL_LIBS = -lQtDeclarative -lQtScript -lQtSvg -lQtSql -lQtXmlPatterns -lQtGui -lgdi32 -lcomdlg32 -loleaut32 -limm32 -lwinmm -lwinspool -lmsimg32 -lQtNetwork -lQtCore -lole32 -luuid -lws2_32 -ladvapi32 -lshell32 -luser32 -lkernel32  

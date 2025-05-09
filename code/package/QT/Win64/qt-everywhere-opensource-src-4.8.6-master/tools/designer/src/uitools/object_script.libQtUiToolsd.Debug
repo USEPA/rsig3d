@@ -1,0 +1,12 @@
+CREATE ../../../../lib/libQtUiToolsd.a
+ADDMOD tmp/obj/debug_static/abstractformbuilder.o
+ADDMOD tmp/obj/debug_static/formbuilder.o
+ADDMOD tmp/obj/debug_static/ui4.o
+ADDMOD tmp/obj/debug_static/properties.o
+ADDMOD tmp/obj/debug_static/formbuilderextra.o
+ADDMOD tmp/obj/debug_static/resourcebuilder.o
+ADDMOD tmp/obj/debug_static/textbuilder.o
+ADDMOD tmp/obj/debug_static/quiloader.o
+ADDMOD tmp/obj/debug_static/moc_properties_p.o
+ADDMOD tmp/obj/debug_static/moc_quiloader.o
+SAVE

@@ -1,0 +1,6 @@
+QMAKE_PRL_BUILD_DIR = /home/nzhang/qt-everywhere-opensource-src-4.8.3/src/script/
+QMAKE_PRO_INPUT = script.pro
+QMAKE_PRL_TARGET = libQtScript.a
+QMAKE_PRL_CONFIG = lex yacc uic resources qt release incremental link_prl gdb_dwarf_index def_files_disabled exceptions no_mocdepend release stl qt_no_framework release static largefile stl precompile_header mmx 3dnow sse sse2 sse3 ssse3 dylib create_prl link_prl depend_includepath QTDIR_build qt_install_headers qt depend_includepath qmake_cache target_qt hide_symbols create_pc create_libtool explicitlib building-libs standalone_package depend_includepath moc thread staticlib static
+QMAKE_PRL_VERSION = 4.8.3
+QMAKE_PRL_LIBS = -L/home/nzhang/QT/lib  -lQtCore -L/home/nzhang/QT/lib -lm -ldl -lrt -lpthread  

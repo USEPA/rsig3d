@@ -1,0 +1,26 @@
+CREATE ../../lib/libQtTestd.a
+ADDMOD tmp/obj/debug_static/qtestcase.o
+ADDMOD tmp/obj/debug_static/qtestlog.o
+ADDMOD tmp/obj/debug_static/qtesttable.o
+ADDMOD tmp/obj/debug_static/qtestdata.o
+ADDMOD tmp/obj/debug_static/qtestresult.o
+ADDMOD tmp/obj/debug_static/qasciikey.o
+ADDMOD tmp/obj/debug_static/qplaintestlogger.o
+ADDMOD tmp/obj/debug_static/qxmltestlogger.o
+ADDMOD tmp/obj/debug_static/qsignaldumper.o
+ADDMOD tmp/obj/debug_static/qabstracttestlogger.o
+ADDMOD tmp/obj/debug_static/qbenchmark.o
+ADDMOD tmp/obj/debug_static/qbenchmarkmeasurement.o
+ADDMOD tmp/obj/debug_static/qbenchmarkvalgrind.o
+ADDMOD tmp/obj/debug_static/qbenchmarkevent.o
+ADDMOD tmp/obj/debug_static/qbenchmarkmetric.o
+ADDMOD tmp/obj/debug_static/qtestelement.o
+ADDMOD tmp/obj/debug_static/qtestelementattribute.o
+ADDMOD tmp/obj/debug_static/qtestbasicstreamer.o
+ADDMOD tmp/obj/debug_static/qtestxunitstreamer.o
+ADDMOD tmp/obj/debug_static/qtestxmlstreamer.o
+ADDMOD tmp/obj/debug_static/qtestlightxmlstreamer.o
+ADDMOD tmp/obj/debug_static/qtestlogger.o
+ADDMOD tmp/obj/debug_static/qtestfilelogger.o
+ADDMOD tmp/obj/debug_static/moc_qtesteventloop.o
+SAVE

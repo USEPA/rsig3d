@@ -1,0 +1,17 @@
+INPUT(
+./tmp/obj/debug_static/customwidgetsinfo.o
+./tmp/obj/debug_static/databaseinfo.o
+./tmp/obj/debug_static/driver.o
+./tmp/obj/debug_static/treewalker.o
+./tmp/obj/debug_static/ui4.o
+./tmp/obj/debug_static/validator.o
+./tmp/obj/debug_static/cppextractimages.o
+./tmp/obj/debug_static/cppwritedeclaration.o
+./tmp/obj/debug_static/cppwriteicondata.o
+./tmp/obj/debug_static/cppwriteicondeclaration.o
+./tmp/obj/debug_static/cppwriteiconinitialization.o
+./tmp/obj/debug_static/cppwriteincludes.o
+./tmp/obj/debug_static/cppwriteinitialization.o
+./tmp/obj/debug_static/main.o
+./tmp/obj/debug_static/uic.o
+);
