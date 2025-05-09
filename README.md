@@ -48,6 +48,7 @@ Internal EMVL-developed:
 
 ### Compiling utilities:  
   1. g++
+  2. On Windows: both MinGW (for UNIX command-line utilities such as /bin/sh) and mingw-w64 (for g++ -m64).
   
 ### System libraries:
   1. OpenGL for graphics.  
