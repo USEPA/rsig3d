@@ -710,7 +710,7 @@ QString ControlDockWidget::get_variableCoverage(QString item) {
 
     if (availNames[i] != "") {
 
-      if (item.contains(availNames[i])) {
+      if (item.contains(availNames[i] + '.')) {
 
         // process special cases first
 

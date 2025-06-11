@@ -106,18 +106,15 @@ void ControlDockWidget::readDataAvailability() {
     }
   }
 
-  QStringList parse;
-  bool ok;
   QTextStream s( &f );
-  int ind=0;
 
-  while (!s.atEnd()) {
-    QString line = s.readLine();
-    parse = line.split(' ');
-    availNames[ind] = parse[0];
-    minAvailDate[ind] = parse[1].toLong(&ok, 10);
-    maxAvailDate[ind] = parse[2].toLong(&ok, 10);
-    ind += 1;
+  for ( int index = 0; ! s.atEnd(); ++index ) {
+    const QString line(s.readLine());
+    const QStringList parse(line.split(' '));
+    bool ok = false;
+    availNames[index] = parse[0];
+    minAvailDate[index] = parse[1].toLong(&ok, 10);
+    maxAvailDate[index] = parse[2].toLong(&ok, 10);
   }
 }
 

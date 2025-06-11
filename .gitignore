@@ -1,32 +1,6 @@
-# Prerequisites
-*.d
-
-# Compiled Object files
-*.slo
-*.lo
-*.o
-*.obj
-
-# Precompiled Headers
-*.gch
-*.pch
-
-# Compiled Dynamic libraries
-*.so
-*.dylib
-*.dll
-
-# Fortran module files
-*.mod
-*.smod
-
-# Compiled Static libraries
-*.lai
-*.la
-*.a
-*.lib
-
-# Executables
-*.exe
-*.out
-*.app
+publish_code
+deploy
+code/src/apps/RSIG3D/junk_build_dir.*
+code/src/libs/Dataset/test/testdata/CONC.ncf
+code/src/libs/Dataset/test/testdata/MET/METCRO3D
+code/src/libs/Dataset/test/master_hrrr_wind_2020-02-17_to_2020-02-18.xdr

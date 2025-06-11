@@ -2985,6 +2985,9 @@ void Dataset::readRegridded64BitVariables( FILE* stream,
   const size_t totalPoints = coordinates_.size() / cellVertexCount();
   const size_t count = variables_ * totalPoints;
   const int integerVariables = 2 + ( layersPerPoint != 0 );
+  const bool isSwathMolecules =
+    AND2( cellType_ == QUADRILATERAL,
+          ! strcmp( variableUnits_[ dataVariable_ ].c_str(), "molecules/cm2"));
   data_.resize( count ); //x
   CHECK( data_.size() == count );
   bool ok = false;
@@ -3008,7 +3011,10 @@ void Dataset::readRegridded64BitVariables( FILE* stream,
 
     if ( ok ) { // Replicate columns and rows for all layers:
       reverse8ByteWordsIfLittleEndian( &data_[ 0 ], count );
-      updateMissingValues( &data_[ 0 ], count );
+
+      if ( ! isSwathMolecules ) {
+        updateMissingValues( &data_[ 0 ], count );
+      }
 
       for (size_t point = surfacePoints, index = surfacePoints *layersPerPoint;
             point > 0; ) {
@@ -3029,7 +3035,10 @@ void Dataset::readRegridded64BitVariables( FILE* stream,
 
     if ( ok ) {
       reverse8ByteWordsIfLittleEndian( &data_[ 0 ], count );
-      updateMissingValues( &data_[ 0 ], count );
+
+      if ( ! isSwathMolecules ) {
+        updateMissingValues( &data_[ 0 ], count );
+      }
     }
   }
 
