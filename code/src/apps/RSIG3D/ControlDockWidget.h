@@ -187,7 +187,9 @@ protected Q_SLOTS:
   void onStateTimeOut();
   void onTabWidgetIndexChanged(int);
   void generateDefaultPngFilename();
-        
+  void onSetMapDoubleClickOption1(int);
+  void onSetMapDoubleClickOption2(int);
+
   // time controls
   void onAnimationSpeedChanged(int speed);
   void ontimestepSliderChanged(int timestep);

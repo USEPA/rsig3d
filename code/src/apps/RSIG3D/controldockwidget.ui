@@ -92,7 +92,7 @@
        <enum>QTabWidget::Rounded</enum>
       </property>
       <property name="currentIndex">
-       <number>1</number>
+       <number>0</number>
       </property>
       <property name="elideMode">
        <enum>Qt::ElideNone</enum>
@@ -484,6 +484,45 @@
          </property>
          <property name="text">
           <string>GUI font size</string>
+         </property>
+        </widget>
+        <widget class="QCheckBox" name="chk_mapDoubleClickOption1">
+         <property name="geometry">
+          <rect>
+           <x>204</x>
+           <y>40</y>
+           <width>137</width>
+           <height>17</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>Print Google Map URL</string>
+         </property>
+        </widget>
+        <widget class="QLabel" name="label_40">
+         <property name="geometry">
+          <rect>
+           <x>192</x>
+           <y>24</y>
+           <width>105</width>
+           <height>16</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>On double click:</string>
+         </property>
+        </widget>
+        <widget class="QCheckBox" name="chk_mapDoubleClickOption2">
+         <property name="geometry">
+          <rect>
+           <x>204</x>
+           <y>56</y>
+           <width>137</width>
+           <height>17</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>Open Google Map URL</string>
          </property>
         </widget>
        </widget>

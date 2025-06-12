@@ -86,6 +86,8 @@ struct RSIGState {
   bool mShowLUTs;
   bool mShowNavigator;
   bool mShowDataProbe;
+  bool mShowGooglemapUrl;
+  bool mOpenGooglemapUrl;
   enum CheckUpdateType mCheckUpdate;
   unsigned int mCounter;
     
@@ -99,6 +101,8 @@ struct RSIGState {
     ,mShowLUTs(true)
     ,mShowNavigator(true)
     ,mShowDataProbe(false)
+    ,mShowGooglemapUrl(false)
+    ,mOpenGooglemapUrl(false)
     ,mCheckUpdate(CHECK_QUIT)
     ,mCounter(0)
   {

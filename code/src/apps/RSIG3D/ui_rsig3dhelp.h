@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'rsig3dhelp.ui'
 **
-** Created: Thu May 8 12:58:25 2025
+** Created: Thu Jun 12 13:29:43 2025
 **      by: Qt User Interface Compiler version 4.8.3
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!

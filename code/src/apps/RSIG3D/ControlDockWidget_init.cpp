@@ -556,6 +556,9 @@ void ControlDockWidget::initTab0ClientData() {
   connect(ui->chk_tooltips, SIGNAL(clicked(bool)), this, SLOT(setWidgetTooltips()));  
   connect(ui->guiFontsizeSpinbox, SIGNAL(valueChanged(int)), this, SLOT(onGuiFontsizeChanged(int)) );
 
+  connect(ui->chk_mapDoubleClickOption1, SIGNAL(stateChanged(int)), this, SLOT(onSetMapDoubleClickOption1(int)));  
+  connect(ui->chk_mapDoubleClickOption2, SIGNAL(stateChanged(int)), this, SLOT(onSetMapDoubleClickOption2(int)));  
+  
   QFont font = qApp->font();
   ui->guiFontsizeSpinbox->setValue(font.pointSize());
    

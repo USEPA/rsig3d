@@ -811,6 +811,20 @@ void ControlDockWidget::onShowScaleChanged(int val) {
 
 
 
+void ControlDockWidget::onSetMapDoubleClickOption1(int val) {
+  RSIGState *gState = RSIGStateSingleton::getInstance();
+  gState->mShowGooglemapUrl = bool(val>0);
+  Q_EMIT requestRedraw();
+}
+
+void ControlDockWidget::onSetMapDoubleClickOption2(int val) {
+  RSIGState *gState = RSIGStateSingleton::getInstance();
+  gState->mOpenGooglemapUrl = bool(val>0);
+  Q_EMIT requestRedraw();
+}
+
+
+
 void ControlDockWidget::onLonlatLabelOrientationChanged(int val) {
   VisOptions* vOptions = VisOptionsSingleton::getInstance();
   vOptions->setLonlatLabelOrientation(val);

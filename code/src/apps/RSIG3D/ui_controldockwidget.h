@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'controldockwidget.ui'
 **
-** Created: Thu May 8 12:58:25 2025
+** Created: Thu Jun 12 13:29:43 2025
 **      by: Qt User Interface Compiler version 4.8.3
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -76,6 +76,9 @@ public:
     QCheckBox *chkUseDataPrefs;
     QSpinBox *guiFontsizeSpinbox;
     QLabel *label_39;
+    QCheckBox *chk_mapDoubleClickOption1;
+    QLabel *label_40;
+    QCheckBox *chk_mapDoubleClickOption2;
     QWidget *tab_2;
     QWidget *layoutWidget_2;
     QHBoxLayout *horizontalLayout;
@@ -445,6 +448,15 @@ public:
         label_39 = new QLabel(otherGroupBox);
         label_39->setObjectName(QString::fromUtf8("label_39"));
         label_39->setGeometry(QRect(16, 72, 89, 16));
+        chk_mapDoubleClickOption1 = new QCheckBox(otherGroupBox);
+        chk_mapDoubleClickOption1->setObjectName(QString::fromUtf8("chk_mapDoubleClickOption1"));
+        chk_mapDoubleClickOption1->setGeometry(QRect(204, 40, 137, 17));
+        label_40 = new QLabel(otherGroupBox);
+        label_40->setObjectName(QString::fromUtf8("label_40"));
+        label_40->setGeometry(QRect(192, 24, 105, 16));
+        chk_mapDoubleClickOption2 = new QCheckBox(otherGroupBox);
+        chk_mapDoubleClickOption2->setObjectName(QString::fromUtf8("chk_mapDoubleClickOption2"));
+        chk_mapDoubleClickOption2->setGeometry(QRect(204, 56, 137, 17));
         tabWidget->addTab(mapTab, QString());
         tab_2 = new QWidget();
         tab_2->setObjectName(QString::fromUtf8("tab_2"));
@@ -1710,7 +1722,7 @@ public:
 
         retranslateUi(ControlUIForm);
 
-        tabWidget->setCurrentIndex(1);
+        tabWidget->setCurrentIndex(0);
         specialControlsStackedWidget->setCurrentIndex(9);
 
 
@@ -1752,6 +1764,9 @@ public:
         chk_tooltips->setText(QApplication::translate("ControlUIForm", "Show widget tooltips", 0, QApplication::UnicodeUTF8));
         chkUseDataPrefs->setText(QApplication::translate("ControlUIForm", "Apply data preferences", 0, QApplication::UnicodeUTF8));
         label_39->setText(QApplication::translate("ControlUIForm", "GUI font size", 0, QApplication::UnicodeUTF8));
+        chk_mapDoubleClickOption1->setText(QApplication::translate("ControlUIForm", "Print Google Map URL", 0, QApplication::UnicodeUTF8));
+        label_40->setText(QApplication::translate("ControlUIForm", "On double click:", 0, QApplication::UnicodeUTF8));
+        chk_mapDoubleClickOption2->setText(QApplication::translate("ControlUIForm", "Open Google Map URL", 0, QApplication::UnicodeUTF8));
         tabWidget->setTabText(tabWidget->indexOf(mapTab), QApplication::translate("ControlUIForm", "Map", 0, QApplication::UnicodeUTF8));
         tabWidget->setTabToolTip(tabWidget->indexOf(mapTab), QApplication::translate("ControlUIForm", "Set map preferences", 0, QApplication::UnicodeUTF8));
         scenarioLabel->setText(QApplication::translate("ControlUIForm", "<b>Scenario", 0, QApplication::UnicodeUTF8));

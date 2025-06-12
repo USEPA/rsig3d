@@ -17,6 +17,7 @@ HISTORY: 2012-11-12 zhang.nan@epa.gov
 #include <set>       // For class std::set.
 #include <algorithm> // For std::min(), std::max().
 #include <iostream>
+#include <QDesktopServices>      //QDesktopServices::openUrl(QUrl);
 
 #if _MSC_VER
 #define NOMINMAX
@@ -3902,8 +3903,24 @@ void RSIGScene::mouseDoubleClickEvent ( QGraphicsSceneMouseEvent * event ) {
   const bool hasButton = (event->buttons() & Qt::LeftButton) != 0;
 
   if (hasButton) {
+    MainWin& mainWin = MainWin::getInstance();
+    ControlDockWidget* const controlDockWidget = mainWin.controlWidget();
+    const RSIGState *gState = RSIGStateSingleton::getInstance();
+    
     const QPointF currentGeoPos = this->toGeoPointF(event->scenePos());
-    this->centerAt(currentGeoPos);
+    //this->centerAt(currentGeoPos);
+
+    // generate Google Map URL for Luke
+    //qDebug() << currentGeoPos.x() << currentGeoPos.y();
+    QString myURL = "https://www.google.com/maps/@" + QString::number(currentGeoPos.y()) + "," + QString::number(currentGeoPos.x()) + ",500m";
+
+    if (gState->mShowGooglemapUrl) {
+      controlDockWidget->postMessage(myURL, RSIGState::NORMAL_TEXT);
+    }
+    if (gState->mOpenGooglemapUrl) {
+      QDesktopServices::openUrl(myURL);
+    }
+    
   }
 }
 

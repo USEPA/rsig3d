@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'ControlDockWidget.h'
 **
-** Created: Thu May 8 12:58:26 2025
+** Created: Thu Jun 12 13:29:44 2025
 **      by: The Qt Meta Object Compiler version 63 (Qt 4.8.3)
 **
 ** WARNING! All changes made in this file will be lost!
@@ -23,7 +23,7 @@ static const uint qt_meta_data_ControlDockWidget[] = {
        6,       // revision
        0,       // classname
        0,    0, // classinfo
-     144,   14, // methods
+     146,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -90,93 +90,95 @@ static const uint qt_meta_data_ControlDockWidget[] = {
     1672,   18,   18,   18, 0x09,
     1689,   18,   18,   18, 0x09,
     1718,   18,   18,   18, 0x09,
-    1753, 1747,   18,   18, 0x09,
-    1791, 1782,   18,   18, 0x09,
-    1820,   18,   18,   18, 0x09,
-    1842,   18,   18,   18, 0x09,
-    1867,   18,   18,   18, 0x09,
-    1894,   18,   18,   18, 0x09,
-    1916,   18,   18,   18, 0x09,
-    1940,   18,   18,   18, 0x09,
-    1968,   18,   18,   18, 0x09,
-    1998,   18,   18,   18, 0x09,
-    2024,   18,   18,   18, 0x09,
-    2050,   18,   18,   18, 0x09,
-    2078,   18,   18,   18, 0x09,
-    2106,   18,   18,   18, 0x09,
-    2134,   18,   18,   18, 0x09,
-    2164,   18,   18,   18, 0x09,
-    2189,   18,   18,   18, 0x09,
-    2215,   18,   18,   18, 0x09,
-    2246,   18,   18,   18, 0x09,
-    2280,   18,   18,   18, 0x09,
-    2314,   18,   18,   18, 0x09,
-    2349,   18,   18,   18, 0x09,
-    2384,   18,   18,   18, 0x09,
-    2421,   18,   18,   18, 0x09,
-    2456,   18,   18,   18, 0x09,
-    2489,   18,   18,   18, 0x09,
-    2521,   18,   18,   18, 0x09,
-    2549,   18,   18,   18, 0x09,
-    2586,   18,   18,   18, 0x09,
-    2620,   18,   18,   18, 0x09,
-    2654,   18,   18,   18, 0x09,
-    2680,   18,   18,   18, 0x09,
-    2709,   18,   18,   18, 0x09,
-    2735,   18,   18,   18, 0x09,
-    2763,   18,   18,   18, 0x09,
-    2791,   18,   18,   18, 0x09,
+    1747,   18,   18,   18, 0x09,
+    1779,   18,   18,   18, 0x09,
+    1817, 1811,   18,   18, 0x09,
+    1855, 1846,   18,   18, 0x09,
+    1884,   18,   18,   18, 0x09,
+    1906,   18,   18,   18, 0x09,
+    1931,   18,   18,   18, 0x09,
+    1958,   18,   18,   18, 0x09,
+    1980,   18,   18,   18, 0x09,
+    2004,   18,   18,   18, 0x09,
+    2032,   18,   18,   18, 0x09,
+    2062,   18,   18,   18, 0x09,
+    2088,   18,   18,   18, 0x09,
+    2114,   18,   18,   18, 0x09,
+    2142,   18,   18,   18, 0x09,
+    2170,   18,   18,   18, 0x09,
+    2198,   18,   18,   18, 0x09,
+    2228,   18,   18,   18, 0x09,
+    2253,   18,   18,   18, 0x09,
+    2279,   18,   18,   18, 0x09,
+    2310,   18,   18,   18, 0x09,
+    2344,   18,   18,   18, 0x09,
+    2378,   18,   18,   18, 0x09,
+    2413,   18,   18,   18, 0x09,
+    2448,   18,   18,   18, 0x09,
+    2485,   18,   18,   18, 0x09,
+    2520,   18,   18,   18, 0x09,
+    2553,   18,   18,   18, 0x09,
+    2585,   18,   18,   18, 0x09,
+    2613,   18,   18,   18, 0x09,
+    2650,   18,   18,   18, 0x09,
+    2684,   18,   18,   18, 0x09,
+    2718,   18,   18,   18, 0x09,
+    2744,   18,   18,   18, 0x09,
+    2773,   18,   18,   18, 0x09,
+    2799,   18,   18,   18, 0x09,
     2827,   18,   18,   18, 0x09,
-    2865,   18,   18,   18, 0x09,
-    2908,   18,   18,   18, 0x09,
-    2951,   18,   18,   18, 0x09,
-    2991,   18,   18,   18, 0x09,
-    3031,   18,   18,   18, 0x09,
-    3071,   18,   18,   18, 0x09,
-    3111,   18,   18,   18, 0x09,
-    3144,   18,   18,   18, 0x09,
-    3177,   18,   18,   18, 0x09,
+    2855,   18,   18,   18, 0x09,
+    2891,   18,   18,   18, 0x09,
+    2929,   18,   18,   18, 0x09,
+    2972,   18,   18,   18, 0x09,
+    3015,   18,   18,   18, 0x09,
+    3055,   18,   18,   18, 0x09,
+    3095,   18,   18,   18, 0x09,
+    3135,   18,   18,   18, 0x09,
+    3175,   18,   18,   18, 0x09,
     3208,   18,   18,   18, 0x09,
-    3240,   18,   18,   18, 0x09,
+    3241,   18,   18,   18, 0x09,
     3272,   18,   18,   18, 0x09,
-    3306,   18,   18,   18, 0x09,
-    3338,   18,   18,   18, 0x09,
-    3368,  979,   18,   18, 0x09,
-    3396,  979,   18,   18, 0x09,
-    3422,   18,   18,   18, 0x09,
-    3449, 3443,   18,   18, 0x09,
-    3478, 3443,   18,   18, 0x09,
-    3507, 3443,   18,   18, 0x09,
-    3546, 3443,   18,   18, 0x09,
-    3585, 3443,   18,   18, 0x09,
-    3626, 3443,   18,   18, 0x09,
-    3662, 3443,   18,   18, 0x09,
-    3698, 3443,   18,   18, 0x09,
-    3734,   18,   18,   18, 0x09,
-    3755,   18,   18,   18, 0x09,
-    3783, 3779,   18,   18, 0x09,
-    3829, 3820,   18,   18, 0x09,
-    3871,   18,   18,   18, 0x09,
-    3891,   18,   18,   18, 0x09,
-    3919, 3907,   18,   18, 0x09,
-    3961, 3947,   18,   18, 0x09,
-    3991,   18,   18,   18, 0x09,
-    4020,   18,   18,   18, 0x09,
-    4044,   18,   18,   18, 0x09,
-    4064,  979,   18,   18, 0x09,
-    4096,  979,   18,   18, 0x09,
-    4130,  979,   18,   18, 0x09,
-    4173, 4164,   18,   18, 0x09,
-    4199,   18,   18,   18, 0x09,
-    4218,   18,   18,   18, 0x09,
-    4238,   18,   18,   18, 0x09,
-    4262,   18,   18,   18, 0x08,
-    4288,   18,   18,   18, 0x08,
-    4317,   18,   18,   18, 0x08,
-    4346,   18,   18,   18, 0x08,
-    4375,   18,   18,   18, 0x08,
-    4404,   18,   18,   18, 0x08,
-    4433,   18,   18,   18, 0x08,
+    3304,   18,   18,   18, 0x09,
+    3336,   18,   18,   18, 0x09,
+    3370,   18,   18,   18, 0x09,
+    3402,   18,   18,   18, 0x09,
+    3432,  979,   18,   18, 0x09,
+    3460,  979,   18,   18, 0x09,
+    3486,   18,   18,   18, 0x09,
+    3513, 3507,   18,   18, 0x09,
+    3542, 3507,   18,   18, 0x09,
+    3571, 3507,   18,   18, 0x09,
+    3610, 3507,   18,   18, 0x09,
+    3649, 3507,   18,   18, 0x09,
+    3690, 3507,   18,   18, 0x09,
+    3726, 3507,   18,   18, 0x09,
+    3762, 3507,   18,   18, 0x09,
+    3798,   18,   18,   18, 0x09,
+    3819,   18,   18,   18, 0x09,
+    3847, 3843,   18,   18, 0x09,
+    3893, 3884,   18,   18, 0x09,
+    3935,   18,   18,   18, 0x09,
+    3955,   18,   18,   18, 0x09,
+    3983, 3971,   18,   18, 0x09,
+    4025, 4011,   18,   18, 0x09,
+    4055,   18,   18,   18, 0x09,
+    4084,   18,   18,   18, 0x09,
+    4108,   18,   18,   18, 0x09,
+    4128,  979,   18,   18, 0x09,
+    4160,  979,   18,   18, 0x09,
+    4194,  979,   18,   18, 0x09,
+    4237, 4228,   18,   18, 0x09,
+    4263,   18,   18,   18, 0x09,
+    4282,   18,   18,   18, 0x09,
+    4302,   18,   18,   18, 0x09,
+    4326,   18,   18,   18, 0x08,
+    4352,   18,   18,   18, 0x08,
+    4381,   18,   18,   18, 0x08,
+    4410,   18,   18,   18, 0x08,
+    4439,   18,   18,   18, 0x08,
+    4468,   18,   18,   18, 0x08,
+    4497,   18,   18,   18, 0x08,
 
        0        // eod
 };
@@ -232,7 +234,9 @@ static const char qt_meta_stringdata_ControlDockWidget[] = {
     "onUpdateRsigError(QProcess::ProcessError)\0"
     "onExitClicked()\0onStateTimeOut()\0"
     "onTabWidgetIndexChanged(int)\0"
-    "generateDefaultPngFilename()\0speed\0"
+    "generateDefaultPngFilename()\0"
+    "onSetMapDoubleClickOption1(int)\0"
+    "onSetMapDoubleClickOption2(int)\0speed\0"
     "onAnimationSpeedChanged(int)\0timestep\0"
     "ontimestepSliderChanged(int)\0"
     "onPlayButtonClicked()\0onForwardButtonClicked()\0"
@@ -383,93 +387,95 @@ void ControlDockWidget::qt_static_metacall(QObject *_o, QMetaObject::Call _c, in
         case 54: _t->onStateTimeOut(); break;
         case 55: _t->onTabWidgetIndexChanged((*reinterpret_cast< int(*)>(_a[1]))); break;
         case 56: _t->generateDefaultPngFilename(); break;
-        case 57: _t->onAnimationSpeedChanged((*reinterpret_cast< int(*)>(_a[1]))); break;
-        case 58: _t->ontimestepSliderChanged((*reinterpret_cast< int(*)>(_a[1]))); break;
-        case 59: _t->onPlayButtonClicked(); break;
-        case 60: _t->onForwardButtonClicked(); break;
-        case 61: _t->onForwardButton24Clicked(); break;
-        case 62: _t->onBackButtonClicked(); break;
-        case 63: _t->onBackButton24Clicked(); break;
-        case 64: _t->onOpacitySliderChanged((*reinterpret_cast< int(*)>(_a[1]))); break;
-        case 65: _t->onThresholdSliderChanged((*reinterpret_cast< int(*)>(_a[1]))); break;
-        case 66: _t->onShowCMAQRowChanged((*reinterpret_cast< int(*)>(_a[1]))); break;
-        case 67: _t->onShowCMAQColChanged((*reinterpret_cast< int(*)>(_a[1]))); break;
-        case 68: _t->onShowCMAQLayerChanged((*reinterpret_cast< int(*)>(_a[1]))); break;
-        case 69: _t->onCMAQRowSliderChanged((*reinterpret_cast< int(*)>(_a[1]))); break;
-        case 70: _t->onCMAQColSliderChanged((*reinterpret_cast< int(*)>(_a[1]))); break;
-        case 71: _t->onCMAQLayerSliderChanged((*reinterpret_cast< int(*)>(_a[1]))); break;
-        case 72: _t->onVisibilityChanged((*reinterpret_cast< int(*)>(_a[1]))); break;
-        case 73: _t->onDataDefaultChanged((*reinterpret_cast< int(*)>(_a[1]))); break;
-        case 74: _t->onShowCellBoundaryChanged((*reinterpret_cast< int(*)>(_a[1]))); break;
-        case 75: _t->onCheckboxFlattenCMAQChanged((*reinterpret_cast< int(*)>(_a[1]))); break;
-        case 76: _t->onCheckboxPersistBEHRChanged((*reinterpret_cast< int(*)>(_a[1]))); break;
-        case 77: _t->onCheckboxPersistMODISChanged((*reinterpret_cast< int(*)>(_a[1]))); break;
-        case 78: _t->onCheckboxPersistVIIRSChanged((*reinterpret_cast< int(*)>(_a[1]))); break;
-        case 79: _t->onCheckboxPersistTROPOMIChanged((*reinterpret_cast< int(*)>(_a[1]))); break;
-        case 80: _t->onCheckboxPersistTEMPOChanged((*reinterpret_cast< int(*)>(_a[1]))); break;
-        case 81: _t->onCheckboxPersistHMSChanged((*reinterpret_cast< int(*)>(_a[1]))); break;
-        case 82: _t->onThresholdCheckboxChanged((*reinterpret_cast< int(*)>(_a[1]))); break;
-        case 83: _t->onRulerCheckboxChanged((*reinterpret_cast< int(*)>(_a[1]))); break;
-        case 84: _t->onCeilometerPlotScrollerChanged((*reinterpret_cast< int(*)>(_a[1]))); break;
-        case 85: _t->onPandoraPlotScrollerChanged((*reinterpret_cast< int(*)>(_a[1]))); break;
-        case 86: _t->onNeubrewPlotScrollerChanged((*reinterpret_cast< int(*)>(_a[1]))); break;
-        case 87: _t->onNeubrewSizeChanged((*reinterpret_cast< int(*)>(_a[1]))); break;
-        case 88: _t->onCeilometerSizeChanged((*reinterpret_cast< int(*)>(_a[1]))); break;
-        case 89: _t->onPandoraSizeChanged((*reinterpret_cast< int(*)>(_a[1]))); break;
-        case 90: _t->onMinSpinboxChanged((*reinterpret_cast< double(*)>(_a[1]))); break;
-        case 91: _t->onMaxSpinboxChanged((*reinterpret_cast< double(*)>(_a[1]))); break;
-        case 92: _t->onCalipsoScaleFactorChanged((*reinterpret_cast< double(*)>(_a[1]))); break;
-        case 93: _t->onWindVectorSparsenessChanged((*reinterpret_cast< double(*)>(_a[1]))); break;
-        case 94: _t->onCeilometerMinimumAltitudeChanged((*reinterpret_cast< double(*)>(_a[1]))); break;
-        case 95: _t->onCeilometerMaximumAltitudeChanged((*reinterpret_cast< double(*)>(_a[1]))); break;
-        case 96: _t->onPandoraMinimumAltitudeChanged((*reinterpret_cast< double(*)>(_a[1]))); break;
-        case 97: _t->onPandoraMaximumAltitudeChanged((*reinterpret_cast< double(*)>(_a[1]))); break;
-        case 98: _t->onNeubrewMinimumAltitudeChanged((*reinterpret_cast< double(*)>(_a[1]))); break;
-        case 99: _t->onNeubrewMaximumAltitudeChanged((*reinterpret_cast< double(*)>(_a[1]))); break;
-        case 100: _t->onRulerLonSpinBoxChanged((*reinterpret_cast< double(*)>(_a[1]))); break;
-        case 101: _t->onRulerLatSpinBoxChanged((*reinterpret_cast< double(*)>(_a[1]))); break;
-        case 102: _t->onPersistBEHRHoursChanged((*reinterpret_cast< int(*)>(_a[1]))); break;
-        case 103: _t->onPersistMODISHoursChanged((*reinterpret_cast< int(*)>(_a[1]))); break;
-        case 104: _t->onPersistVIIRSHoursChanged((*reinterpret_cast< int(*)>(_a[1]))); break;
-        case 105: _t->onPersistTROPOMIHoursChanged((*reinterpret_cast< int(*)>(_a[1]))); break;
-        case 106: _t->onPersistTEMPOHoursChanged((*reinterpret_cast< int(*)>(_a[1]))); break;
-        case 107: _t->onPersistHMSHoursChanged((*reinterpret_cast< int(*)>(_a[1]))); break;
-        case 108: _t->onColormapIndexChanged((*reinterpret_cast< int(*)>(_a[1]))); break;
-        case 109: _t->onVizVarIndexChanged((*reinterpret_cast< int(*)>(_a[1]))); break;
-        case 110: _t->onDataClearClicked(); break;
-        case 111: _t->onRadioButton2DToggled((*reinterpret_cast< bool(*)>(_a[1]))); break;
-        case 112: _t->onRadioButton3DToggled((*reinterpret_cast< bool(*)>(_a[1]))); break;
-        case 113: _t->onRadioButtonPanelDisplayToggled((*reinterpret_cast< bool(*)>(_a[1]))); break;
-        case 114: _t->onCeilometerShowLocationsToggled((*reinterpret_cast< bool(*)>(_a[1]))); break;
-        case 115: _t->onCeilometerShowMixingLayerToggled((*reinterpret_cast< bool(*)>(_a[1]))); break;
-        case 116: _t->onPandoraShowLocationsToggled((*reinterpret_cast< bool(*)>(_a[1]))); break;
-        case 117: _t->onNeubrewShowLocationsToggled((*reinterpret_cast< bool(*)>(_a[1]))); break;
-        case 118: _t->onWindVectorAutosparseChanged((*reinterpret_cast< bool(*)>(_a[1]))); break;
-        case 119: _t->onViewResetPressed(); break;
-        case 120: _t->onViewAutozoomPressed(); break;
-        case 121: _t->onLonlatLabelOrientationChanged((*reinterpret_cast< int(*)>(_a[1]))); break;
-        case 122: _t->onTreeWidgetItemChanged((*reinterpret_cast< QTreeWidgetItem*(*)>(_a[1]))); break;
-        case 123: _t->onSaveTypeClicked(); break;
-        case 124: _t->downloadImage(); break;
-        case 125: _t->downloadImageError((*reinterpret_cast< QString(*)>(_a[1]))); break;
-        case 126: _t->downloadImageMessage((*reinterpret_cast< QString(*)>(_a[1]))); break;
-        case 127: _t->deleteModisTrueColorImages(); break;
-        case 128: _t->onSaveFilenameChanged(); break;
-        case 129: _t->onMaplinesChanged(); break;
-        case 130: _t->onMaplineColorIndexChanged((*reinterpret_cast< int(*)>(_a[1]))); break;
-        case 131: _t->onPanelDisplaySource1Changed((*reinterpret_cast< int(*)>(_a[1]))); break;
-        case 132: _t->onPanelDisplaySource2Changed((*reinterpret_cast< int(*)>(_a[1]))); break;
-        case 133: _t->onGuiFontsizeChanged((*reinterpret_cast< int(*)>(_a[1]))); break;
-        case 134: _t->onGetdataClicked(); break;
-        case 135: _t->onSaveFileClicked(); break;
-        case 136: _t->onCheckServersClicked(); break;
-        case 137: _t->onBoundingGeoBoxChanged(); break;
-        case 138: _t->onSelectedLayer1Changed((*reinterpret_cast< int(*)>(_a[1]))); break;
-        case 139: _t->onSelectedLayer2Changed((*reinterpret_cast< int(*)>(_a[1]))); break;
-        case 140: _t->onSelectedLayer3Changed((*reinterpret_cast< int(*)>(_a[1]))); break;
-        case 141: _t->onSelectedLayer4Changed((*reinterpret_cast< int(*)>(_a[1]))); break;
-        case 142: _t->onSelectedLayer5Changed((*reinterpret_cast< int(*)>(_a[1]))); break;
-        case 143: _t->onTest((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 57: _t->onSetMapDoubleClickOption1((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 58: _t->onSetMapDoubleClickOption2((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 59: _t->onAnimationSpeedChanged((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 60: _t->ontimestepSliderChanged((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 61: _t->onPlayButtonClicked(); break;
+        case 62: _t->onForwardButtonClicked(); break;
+        case 63: _t->onForwardButton24Clicked(); break;
+        case 64: _t->onBackButtonClicked(); break;
+        case 65: _t->onBackButton24Clicked(); break;
+        case 66: _t->onOpacitySliderChanged((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 67: _t->onThresholdSliderChanged((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 68: _t->onShowCMAQRowChanged((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 69: _t->onShowCMAQColChanged((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 70: _t->onShowCMAQLayerChanged((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 71: _t->onCMAQRowSliderChanged((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 72: _t->onCMAQColSliderChanged((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 73: _t->onCMAQLayerSliderChanged((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 74: _t->onVisibilityChanged((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 75: _t->onDataDefaultChanged((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 76: _t->onShowCellBoundaryChanged((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 77: _t->onCheckboxFlattenCMAQChanged((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 78: _t->onCheckboxPersistBEHRChanged((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 79: _t->onCheckboxPersistMODISChanged((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 80: _t->onCheckboxPersistVIIRSChanged((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 81: _t->onCheckboxPersistTROPOMIChanged((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 82: _t->onCheckboxPersistTEMPOChanged((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 83: _t->onCheckboxPersistHMSChanged((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 84: _t->onThresholdCheckboxChanged((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 85: _t->onRulerCheckboxChanged((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 86: _t->onCeilometerPlotScrollerChanged((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 87: _t->onPandoraPlotScrollerChanged((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 88: _t->onNeubrewPlotScrollerChanged((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 89: _t->onNeubrewSizeChanged((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 90: _t->onCeilometerSizeChanged((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 91: _t->onPandoraSizeChanged((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 92: _t->onMinSpinboxChanged((*reinterpret_cast< double(*)>(_a[1]))); break;
+        case 93: _t->onMaxSpinboxChanged((*reinterpret_cast< double(*)>(_a[1]))); break;
+        case 94: _t->onCalipsoScaleFactorChanged((*reinterpret_cast< double(*)>(_a[1]))); break;
+        case 95: _t->onWindVectorSparsenessChanged((*reinterpret_cast< double(*)>(_a[1]))); break;
+        case 96: _t->onCeilometerMinimumAltitudeChanged((*reinterpret_cast< double(*)>(_a[1]))); break;
+        case 97: _t->onCeilometerMaximumAltitudeChanged((*reinterpret_cast< double(*)>(_a[1]))); break;
+        case 98: _t->onPandoraMinimumAltitudeChanged((*reinterpret_cast< double(*)>(_a[1]))); break;
+        case 99: _t->onPandoraMaximumAltitudeChanged((*reinterpret_cast< double(*)>(_a[1]))); break;
+        case 100: _t->onNeubrewMinimumAltitudeChanged((*reinterpret_cast< double(*)>(_a[1]))); break;
+        case 101: _t->onNeubrewMaximumAltitudeChanged((*reinterpret_cast< double(*)>(_a[1]))); break;
+        case 102: _t->onRulerLonSpinBoxChanged((*reinterpret_cast< double(*)>(_a[1]))); break;
+        case 103: _t->onRulerLatSpinBoxChanged((*reinterpret_cast< double(*)>(_a[1]))); break;
+        case 104: _t->onPersistBEHRHoursChanged((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 105: _t->onPersistMODISHoursChanged((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 106: _t->onPersistVIIRSHoursChanged((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 107: _t->onPersistTROPOMIHoursChanged((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 108: _t->onPersistTEMPOHoursChanged((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 109: _t->onPersistHMSHoursChanged((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 110: _t->onColormapIndexChanged((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 111: _t->onVizVarIndexChanged((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 112: _t->onDataClearClicked(); break;
+        case 113: _t->onRadioButton2DToggled((*reinterpret_cast< bool(*)>(_a[1]))); break;
+        case 114: _t->onRadioButton3DToggled((*reinterpret_cast< bool(*)>(_a[1]))); break;
+        case 115: _t->onRadioButtonPanelDisplayToggled((*reinterpret_cast< bool(*)>(_a[1]))); break;
+        case 116: _t->onCeilometerShowLocationsToggled((*reinterpret_cast< bool(*)>(_a[1]))); break;
+        case 117: _t->onCeilometerShowMixingLayerToggled((*reinterpret_cast< bool(*)>(_a[1]))); break;
+        case 118: _t->onPandoraShowLocationsToggled((*reinterpret_cast< bool(*)>(_a[1]))); break;
+        case 119: _t->onNeubrewShowLocationsToggled((*reinterpret_cast< bool(*)>(_a[1]))); break;
+        case 120: _t->onWindVectorAutosparseChanged((*reinterpret_cast< bool(*)>(_a[1]))); break;
+        case 121: _t->onViewResetPressed(); break;
+        case 122: _t->onViewAutozoomPressed(); break;
+        case 123: _t->onLonlatLabelOrientationChanged((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 124: _t->onTreeWidgetItemChanged((*reinterpret_cast< QTreeWidgetItem*(*)>(_a[1]))); break;
+        case 125: _t->onSaveTypeClicked(); break;
+        case 126: _t->downloadImage(); break;
+        case 127: _t->downloadImageError((*reinterpret_cast< QString(*)>(_a[1]))); break;
+        case 128: _t->downloadImageMessage((*reinterpret_cast< QString(*)>(_a[1]))); break;
+        case 129: _t->deleteModisTrueColorImages(); break;
+        case 130: _t->onSaveFilenameChanged(); break;
+        case 131: _t->onMaplinesChanged(); break;
+        case 132: _t->onMaplineColorIndexChanged((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 133: _t->onPanelDisplaySource1Changed((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 134: _t->onPanelDisplaySource2Changed((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 135: _t->onGuiFontsizeChanged((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 136: _t->onGetdataClicked(); break;
+        case 137: _t->onSaveFileClicked(); break;
+        case 138: _t->onCheckServersClicked(); break;
+        case 139: _t->onBoundingGeoBoxChanged(); break;
+        case 140: _t->onSelectedLayer1Changed((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 141: _t->onSelectedLayer2Changed((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 142: _t->onSelectedLayer3Changed((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 143: _t->onSelectedLayer4Changed((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 144: _t->onSelectedLayer5Changed((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 145: _t->onTest((*reinterpret_cast< int(*)>(_a[1]))); break;
         default: ;
         }
     }
@@ -507,9 +513,9 @@ int ControlDockWidget::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 144)
+        if (_id < 146)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 144;
+        _id -= 146;
     }
     return _id;
 }
