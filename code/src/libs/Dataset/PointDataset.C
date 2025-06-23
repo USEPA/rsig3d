@@ -255,21 +255,21 @@ bool PointDataset::invariant() const {
             ! strcmp( variableNames_[1].c_str(), "count" ) );
     result =
       AND10( variables_      == hasId + hasCount + 1 + isVector_,
-           cellType_         == POINT,
-           hasArea_          == false,
-           hasVolume_        == false,
-           isGroup_          == false,
-           isStructuredGrid_ == false,
-           timestamps_.size() > 0,
-           coordinates_.size() == timestamps_.size(),
-           data_.size() == variables_ * timestamps_.size(),
-           OR2( notes_.size() == 0,
-                AND6( notes_.size() == timestamps_.size(),
-                      notes_[ 0 ].length() > 0,
-                      notes_[ notes_.size() - 1 ].length() > 0,
-                      idNotes_.size() == timestamps_.size(),
-                      idNotes_[ 0 ].length() > 0,
-                      idNotes_[ idNotes_.size() - 1 ].length() > 0 ) ) );
+             cellType_         == POINT,
+             hasArea_          == false,
+             hasVolume_        == false,
+             isGroup_          == false,
+             isStructuredGrid_ == false,
+             timestamps_.size() > 0,
+             coordinates_.size() == timestamps_.size(),
+             data_.size() == variables_ * timestamps_.size(),
+             OR2( notes_.size() == 0,
+                  AND6( notes_.size() == timestamps_.size(),
+                        notes_[ 0 ].length() > 0,
+                        notes_[ notes_.size() - 1 ].length() > 0,
+                        idNotes_.size() == timestamps_.size(),
+                        idNotes_[ 0 ].length() > 0,
+                        idNotes_[ idNotes_.size() - 1 ].length() > 0 ) ) );
   }
 
   return result;
@@ -859,7 +859,8 @@ void PointDataset::readXDRData( FILE* stream ) {
     variableNames_[ to ] = variableNames_[ from ];
     variableUnits_[ to ] = variableUnits_[ from ];
 
-    if ( ! strcmp( variableNames_[ to ].c_str(), "id" ) ) {
+    if ( OR2( ! strcmp( variableNames_[ to ].c_str(), "id" ),
+         ! strcmp( variableNames_[ to ].c_str(), "yearly_id" ) ) ) {
       idVariable = to;
     }
   }
@@ -915,7 +916,7 @@ void PointDataset::readXDRData( FILE* stream ) {
         updateMissingValues( &data_[ 0 ], dataSize );
         computeVariableRanges(); //x
 
-        if ( AND2( idVariable > -1, notes_.size() ) ) {
+        if ( AND2( notes_.size(), idVariable > -1 ) ) {
           size_t idIndex = points * idVariable;
           idNotes_.reserve( notes_.size() ); //x
 
