@@ -44,14 +44,18 @@ public:
 
   int CADmin;
 
+  int HRRRStride;
+
   int TropomiQuality;
   double TropomiMaxCloudFraction;
   int TropomiGroundPixelMinimum;
   int TropomiGroundPixelMaximum;
   bool TropomiAllowNegativeCounts;
+
   double TEMPOMaxCloudFraction;
   double TEMPOMaxSolarZenithAngle;
   bool TEMPOAllowNegativeCounts;
+
   double OMIMaxCloudFraction;
   double OMIMaxSolarZenithAngle;
   bool OMIAllowNegativeCounts;

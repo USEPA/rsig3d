@@ -64,6 +64,7 @@ INPUTS:  const double CALIPSOMinimumAcceptedCADScore  [20, 100].
          const double PurpleAirMaximumRatio [0, 1].
          const double PurpleAirMinimumAggregationCountPercentage [0, 100].
          const double PurpleAirDefaultHumidity [0, 100].
+         const int HRRRStride [1, 100].
          const std::String& dataVersion
 RETURNS: bool true if valid, else false.
 ******************************************************************************/
@@ -109,6 +110,7 @@ bool DataFilterParameters::isValidParameters(
   const double PurpleAirMaximumRatio,
   const double PurpleAirMinimumAggregationCountPercentage,
   const double PurpleAirDefaultHumidity,
+  const int HRRRStride,
   const std::string& dataVersion ) {
 
   const bool result =
@@ -130,7 +132,8 @@ bool DataFilterParameters::isValidParameters(
            IN_RANGE( GASPMOSMaximum, GASPMOSMinimum, 0.425 ),
            IN_RANGE( GASPSCAMinimum, 0.0, 255.0 ),
            IN_RANGE( GASPSCAMaximum, GASPSCAMinimum, 255.0 ),
-           AND2( IN_RANGE( TROPOMIMinimumAcceptedQuality, 50, 100 ),
+           AND3( IN_RANGE( HRRRStride, 1, 100 ),
+                 IN_RANGE( TROPOMIMinimumAcceptedQuality, 50, 100 ),
                  IN_RANGE( TROPOMIMaximumCloudFraction, 0.0, 1.0 ) ),
            OR2( AND2( TROPOMIGroundPixelMinimum == IMISSING,
                       TROPOMIGroundPixelMaximum == IMISSING ),
@@ -201,6 +204,7 @@ DataFilterParameters::~DataFilterParameters() {
   PurpleAirMaximumRatio_ = 0.0;
   PurpleAirMinimumAggregationCountPercentage_ = 0.0;
   PurpleAirDefaultHumidity_ = 0.0;
+  HRRRStride_ = 0;
 }
 
 
@@ -247,8 +251,9 @@ DataFilterParameters::DataFilterParameters() {
   PurpleAirMaximumRatio_ = 0.7;
   PurpleAirMinimumAggregationCountPercentage_ = 75.0;
   PurpleAirDefaultHumidity_ = MISSING;
+  HRRRStride_ = 1;
 
-  POST29( CALIPSOMinimumAcceptedCADScore() == 20.0,
+  POST30( CALIPSOMinimumAcceptedCADScore() == 20.0,
           CALIPSOMaximumAcceptedUncertainty() == 99.0,
           GASPAODMinimum() == -0.5,
           GASPAODMaximum() == 2.05,
@@ -284,7 +289,8 @@ DataFilterParameters::DataFilterParameters() {
           PurpleAirMaximumDifference() == 5.0,
           PurpleAirMaximumRatio() == 0.7,
           PurpleAirMinimumAggregationCountPercentage() == 75.0,
-          PurpleAirDefaultHumidity() == MISSING );
+          PurpleAirDefaultHumidity() == MISSING,
+          HRRRStride() == 1 );
 }
 
 
@@ -331,6 +337,7 @@ INPUTS:  const double CALIPSOMinimumAcceptedCADScore  [20, 100].
          const double PurpleAirMaximumRatio
          const double PurpleAirMinimumAggregationCountPercentage
          const double PurpleAirDefaultHumidity
+         const int HRRRStride [1, 100].
          const std::String& dataVersion
 ******************************************************************************/
 
@@ -375,6 +382,7 @@ DataFilterParameters::DataFilterParameters(
   const double PurpleAirMaximumRatio,
   const double PurpleAirMinimumAggregationCountPercentage,
   const double PurpleAirDefaultHumidity,
+  const int HRRRStride,
   const std::string& dataVersion ) {
 
   PRE0( isValidParameters( CALIPSOMinimumAcceptedCADScore,
@@ -417,6 +425,7 @@ DataFilterParameters::DataFilterParameters(
                            PurpleAirMaximumRatio,
                            PurpleAirMinimumAggregationCountPercentage,
                            PurpleAirDefaultHumidity,
+                           HRRRStride,
                            dataVersion ) );
 
   CALIPSOMinimumAcceptedCADScore_    = CALIPSOMinimumAcceptedCADScore;
@@ -448,6 +457,7 @@ DataFilterParameters::DataFilterParameters(
   OMIMaximumCloudFraction_       = OMIMaximumCloudFraction;
   OMIMaximumSolarZenithAngle_    = OMIMaximumSolarZenithAngle;
   OMIAllowNegativeCounts_        = OMIAllowNegativeCounts;
+  HRRRStride_ = HRRRStride;
 
   // Assign to static const literal storage:
 
@@ -504,7 +514,8 @@ DataFilterParameters::DataFilterParameters(
           this->GASPMOSMaximum() == GASPMOSMaximum,
           this->GASPSCAMinimum() == GASPSCAMinimum,
           this->GASPSCAMaximum() == GASPSCAMaximum,
-          AND5( this->TROPOMIMinimumAcceptedQuality() ==
+          AND6( this->HRRRStride() == HRRRStride,
+               this->TROPOMIMinimumAcceptedQuality() ==
                   TROPOMIMinimumAcceptedQuality,
                 this->TROPOMIMaximumCloudFraction() ==
                   TROPOMIMaximumCloudFraction,
@@ -592,7 +603,7 @@ DataFilterParameters::DataFilterParameters(const DataFilterParameters& other) {
   PurpleAirMinimumAggregationCountPercentage_ =
     other.PurpleAirMinimumAggregationCountPercentage_;
   PurpleAirDefaultHumidity_ = other.PurpleAirDefaultHumidity_;
-
+  HRRRStride_ = other.HRRRStride_;
   dataVersion_ = other.dataVersion_;
 
   POST( *this == other );
@@ -652,7 +663,7 @@ DataFilterParameters& DataFilterParameters::operator=(
     PurpleAirMinimumAggregationCountPercentage_ =
       other.PurpleAirMinimumAggregationCountPercentage_;
     PurpleAirDefaultHumidity_ = other.PurpleAirDefaultHumidity_;
-
+    HRRRStride_ = other.HRRRStride_;
     dataVersion_ = other.dataVersion_;
   }
 
@@ -821,6 +832,19 @@ void DataFilterParameters::GASPSCARange( const double minimum,
   GASPSCAMinimum_ = minimum;
   GASPSCAMaximum_ = maximum;
   POST2( GASPSCAMinimum() == minimum, GASPSCAMaximum() == maximum );
+}
+
+
+
+/******************************************************************************
+PURPOSE: HRRRStride - Set named attribute to value.
+INPUTS:  const int value  Value to set named attribute to.
+******************************************************************************/
+
+void DataFilterParameters::HRRRStride( const int value ) {
+  PRE( IN_RANGE( value, 1, 100 ) );
+  HRRRStride_ = value;
+  POST( HRRRStride() == value );
 }
 
 
@@ -1176,7 +1200,8 @@ bool DataFilterParameters::operator==( const DataFilterParameters& other )
            GASPMOSMaximum_ == other.GASPMOSMaximum_,
            GASPSCAMinimum_ == other.GASPSCAMinimum_,
            GASPSCAMaximum_ == other.GASPSCAMaximum_,
-           AND4( TROPOMIMinimumAcceptedQuality_ ==
+           AND5( HRRRStride_ == other.HRRRStride_,
+                 TROPOMIMinimumAcceptedQuality_ ==
                    other.TROPOMIMinimumAcceptedQuality_,
                  TROPOMIGroundPixelMinimum_ == other.TROPOMIGroundPixelMinimum_,
                  TROPOMIGroundPixelMaximum_ == other.TROPOMIGroundPixelMaximum_,
@@ -1275,6 +1300,7 @@ bool DataFilterParameters::invariant() const {
                        PurpleAirMaximumRatio_,
                        PurpleAirMinimumAggregationCountPercentage_,
                        PurpleAirDefaultHumidity_,
+                       HRRRStride_,
                        dataVersion_ );
   return result;
 }
@@ -1528,6 +1554,20 @@ double DataFilterParameters::GASPSCAMaximum() const {
   PRE( true );
   const double result = GASPSCAMaximum_;
   POST( IN_RANGE( result, 0.0, 255.0 ) );
+  return result;
+}
+
+
+
+/******************************************************************************
+PURPOSE: HRRRStride - Returns value of named attribute.
+RETURNS: int TROPOMIMinimumAcceptedQuality.
+******************************************************************************/
+
+int DataFilterParameters::HRRRStride() const {
+  PRE( true );
+  const int result = HRRRStride_;
+  POST( IN_RANGE( result, 1, 100 ) );
   return result;
 }
 

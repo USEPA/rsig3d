@@ -286,6 +286,9 @@ static void appendOMIParameters( const QueryParameters& queryParameters,
 static void appendOAQPSParameters( const QueryParameters& queryParameters,
                                    URLString url );
 
+static void appendHRRRParameters( const QueryParameters& queryParameters,
+                                   URLString url );
+
 static void appendRegriddingParameters( const QueryParameters& queryParameters,
                                         URLString url );
 
@@ -370,7 +373,7 @@ const char* DatasetManager::DOSPath( const char* const path ) {
 
 /******************************************************************************
 PURPOSE: checkAndSetServerHost - Establish url to webservice.
-INPUTS:  const char* const path  Path to curlCommand used to query webservice.
+INPUTS:  const char* const path  Path to deployed executables.
 NOTES:   It initializes the pathed commands for curl and gzip and queries the
          webservice to get the currently deployed version (YYYYMMDD) of RSIG3D.
          It tries to query the (faster) internal host webservice
@@ -387,7 +390,7 @@ void DatasetManager::checkAndSetServerHost( const char* const path ) {
   server = EXTERNAL_SERVER; // Fallback default.
   remoteYYYYMMDD = 0;
 
-  // Set pathedCurlCommand and pathedDecompressCommand:
+  // On Windows, if path contains spaces then encode it:
 
   memset( pathWithoutSpaces, 0,
           sizeof pathWithoutSpaces / sizeof *pathWithoutSpaces );
@@ -413,45 +416,31 @@ void DatasetManager::checkAndSetServerHost( const char* const path ) {
     }
   }
 
-  const char slash = '\\';
-#else
-  const char slash = '/';
 #endif
 
+  // Set pathedCurlCommand and pathedDecompressCommand:
+
+#ifdef _WIN32
   snprintf( pathedCurlCommand,
             sizeof pathedCurlCommand / sizeof *pathedCurlCommand,
-            "%s%c%s", pathWithoutSpaces, slash, curlCommand );
-  pathedCurlCommand[ sizeof  pathedCurlCommand /
-                     sizeof *pathedCurlCommand - 1 ] = '\0';
-
-  CHECK( *pathedCurlCommand );
-
-#ifdef __APPLE__
-
-  /*
-   * HACK. 2023-11-21 testing with Langley's katherine.travis@nasa.gov,
-   * new Macs (M1 processor, OS 13.6.0) kill RSIG-pathed gzip -
-   * even when cp -p /usr/bin/gzip . is used to install a copy of the system
-   * gzip!
-   * But RSIG-pathed RSIG3D, curl, ffmeg all work fine.
-   * (Also, to remove file 'attributes': xattr -cr .)
-   * Instead use system path to gzip and hope that it exists and works.
-   * Note, on these new Macs, the sysyem gzip contains executables for both
-   * x86_64 and arm64.
-   */
-
+            "%s\\%s", pathWithoutSpaces, curlCommand );
+  snprintf( pathedDecompressCommand,
+            sizeof pathedDecompressCommand / sizeof *pathedDecompressCommand,
+            "%s\\%s", pathWithoutSpaces, decompressCommand );
+#else
+  snprintf( pathedCurlCommand,
+            sizeof pathedCurlCommand / sizeof *pathedCurlCommand,
+            "/usr/bin/%s", curlCommand );
   snprintf( pathedDecompressCommand,
             sizeof pathedDecompressCommand / sizeof *pathedDecompressCommand,
             "/usr/bin/%s", decompressCommand );
-#else
-  snprintf( pathedDecompressCommand,
-            sizeof pathedDecompressCommand / sizeof *pathedDecompressCommand,
-            "%s%c%s", pathWithoutSpaces, slash, decompressCommand );
 #endif
 
+  pathedCurlCommand[ sizeof  pathedCurlCommand /
+                     sizeof *pathedCurlCommand - 1 ] = '\0';
   pathedDecompressCommand[ sizeof  pathedDecompressCommand /
                            sizeof *pathedDecompressCommand - 1 ] = '\0';
-
+  CHECK( *pathedCurlCommand );
   CHECK( *pathedDecompressCommand );
 
   // (Re)initialize HTTPConnection:
@@ -726,7 +715,20 @@ void DatasetManager::retrieveFile( const std::string& remoteFileName,
   toURLString( printURL, remoteFileName, url );
 
   if ( urlCallback ) {
-    urlCallback( url );
+
+
+    // Erase possible RSIG_ID option from url passed to callback:
+
+    URLString urlEdited = "";
+    memset( urlEdited, 0, sizeof urlEdited );
+    strncpy( urlEdited, url, sizeof urlEdited - 1 );
+    char* const rsig_id = strstr( urlEdited, "&RSIG_ID=" );
+
+    if ( rsig_id ) {
+      *rsig_id = '\0';
+    }
+
+    urlCallback( urlEdited );
   }
 
   HTTPConnection connection( url, timeoutSeconds ); //x
@@ -769,7 +771,19 @@ void DatasetManager::retrieveDatasetToFile( const QueryParameters&
   toURLString( printURL, queryParameters, url );
 
   if ( urlCallback ) {
-    urlCallback( url );
+
+    // Erase possible RSIG_ID option from url passed to callback:
+
+    URLString urlEdited = "";
+    memset( urlEdited, 0, sizeof urlEdited );
+    strncpy( urlEdited, url, sizeof urlEdited - 1 );
+    char* const rsig_id = strstr( urlEdited, "&RSIG_ID=" );
+
+    if ( rsig_id ) {
+      *rsig_id = '\0';
+    }
+
+    urlCallback( urlEdited );
   }
 
   const bool useDecompression = strstr( url, "COMPRESS=1" );
@@ -867,7 +881,19 @@ Dataset* DatasetManager::retrieveDataset( const QueryParameters&
   toURLString( printURL, queryParameters, url );
 
   if ( urlCallback ) {
-    urlCallback( url );
+
+    // Erase possible RSIG_ID option from url passed to callback:
+
+    URLString urlEdited = "";
+    memset( urlEdited, 0, sizeof urlEdited );
+    strncpy( urlEdited, url, sizeof urlEdited - 1 );
+    char* const rsig_id = strstr( urlEdited, "&RSIG_ID=" );
+
+    if ( rsig_id ) {
+      *rsig_id = '\0';
+    }
+
+    urlCallback( urlEdited );
   }
 
   HTTPConnection connection( url, timeoutSeconds ); //x
@@ -1469,7 +1495,7 @@ bool DatasetManager::ensureDirectoryExists( const std::string& user,
 /******************************************************************************
 PURPOSE: getDirectoryListing - Get sorted list of names of subdirectories
          and CMAQ files in directory.
-RETURNS:  const std::string  sorted newline-delimited names or empty if failed.
+RETURNS: const std::string  sorted newline-delimited names or empty if failed.
 NOTES: Runs subsetter process and reads result from it.
 ******************************************************************************/
 
@@ -1482,7 +1508,16 @@ std::string DatasetManager::getDirectoryListing( const std::string& user,
   command.reserve( 256 ); //x
   commandPrefix( user, host, command );
   command += " -ls ";
-  command += directory;
+
+  const bool directoryContainsSpaces = strchr( directory.c_str(), ' ' ) != 0;
+
+  if ( directoryContainsSpaces ) {
+    command += '"';
+    command += directory;
+    command += '"';
+  } else {
+    command += directory;
+  }
 
   std::string result; //x
   result.reserve( 4096 ); //x
@@ -1512,7 +1547,16 @@ std::string DatasetManager::getVariableListing( const std::string& user,
   command.reserve( 256 ); //x
   commandPrefix( user, host, command );
   command += " -list -files ";
-  command += file;
+
+  const bool fileContainsSpaces = strchr( file.c_str(), ' ' ) != 0;
+
+  if ( fileContainsSpaces ) {
+    command += '"';
+    command += file;
+    command += '"';
+  } else {
+    command += file;
+  }
 
   std::string result; //x
   result.reserve( 4096 ); //x
@@ -1573,18 +1617,42 @@ std::string DatasetManager::subsetCMAQFile(
   std::string command; //x
   command.reserve( 4096 ); //x
   commandPrefix( user, host, command );
-
   command += " -files ";
-  command += pathedDataFileName;
+
+  bool fileContainsSpaces = strchr( pathedDataFileName.c_str(), ' ' ) != 0;
+
+  if ( fileContainsSpaces ) {
+    command += '"';
+    command += pathedDataFileName;
+    command += '"';
+  } else {
+    command += pathedDataFileName;
+  }
 
   if ( ! pathedHTFileName.empty() ) {
     command += " -ht ";
-    command += pathedHTFileName;
+    fileContainsSpaces = strchr( pathedHTFileName.c_str(), ' ' ) != 0;
+
+    if ( fileContainsSpaces ) {
+      command += '"';
+      command += pathedHTFileName;
+      command += '"';
+    } else {
+      command += pathedHTFileName;
+    }
   }
 
   if ( ! pathedZFFileName.empty() ) {
     command += " -zf ";
-    command += pathedZFFileName;
+    fileContainsSpaces = strchr( pathedZFFileName.c_str(), ' ' ) != 0;
+
+    if ( fileContainsSpaces ) {
+      command += '"';
+      command += pathedZFFileName;
+      command += '"';
+    } else {
+      command += pathedZFFileName;
+    }
   }
 
   bool windVariable = false;
@@ -1592,7 +1660,16 @@ std::string DatasetManager::subsetCMAQFile(
   if ( AND2( IN3( dataVariable, "UWIND", "VWIND" ),
              ! pathedWWINDFileName.empty() ) ) {
     command += " -wwind ";
-    command += pathedWWINDFileName;
+    fileContainsSpaces = strchr( pathedWWINDFileName.c_str(), ' ' ) != 0;
+
+    if ( fileContainsSpaces ) {
+      command += '"';
+      command += pathedWWINDFileName;
+      command += '"';
+    } else {
+      command += pathedWWINDFileName;
+    }
+
     command += " -variable UWIND VWIND"; // Change to get 3D wind.
     windVariable = true;
   } else {
@@ -1635,7 +1712,17 @@ std::string DatasetManager::subsetCMAQFile(
   std::string result; //x
   result.reserve( 256 ); //x
 
-  result += outputDirectoryName;
+  const bool directoryContainsSpaces =
+    strchr( outputDirectoryName.c_str(), ' ' ) != 0;
+
+  if ( directoryContainsSpaces ) {
+    result += '"';
+    result += outputDirectoryName;
+    result += '"';
+  } else {
+    result += outputDirectoryName;
+  }
+
   result += slash;
   result += "cmaq_";
 
@@ -1739,7 +1826,18 @@ static void commandPrefix( const std::string& user,
   } else {
 
     if ( ! localSubsetterDirectory.empty() ) {
-      command += localSubsetterDirectory + slash;
+      const bool directoryContainsSpaces =
+        strchr( localSubsetterDirectory.c_str(), ' ' ) != 0;
+
+      if ( directoryContainsSpaces ) {
+        command += '"';
+        command += localSubsetterDirectory;
+        command += '"';
+      } else {
+        command += localSubsetterDirectory;
+      }
+
+      command += slash;
     }
   }
 
@@ -1883,8 +1981,17 @@ static void toURLString( const bool printURL,
   double boundsZMaximum = queryParameters.boundsZMaximum();
 
   if ( boundsZMinimum > MISSING ) {
-    snprintf( boundsZ, sizeof boundsZ / sizeof *boundsZ, ",%lg,%lg",
-              boundsZMinimum, boundsZMaximum );
+
+    if ( OR4( strstr( coverage, "tempo.l2.o3prof." ) == coverage,
+              strstr( coverage, "tempo.l3.o3prof." ) == coverage,
+              strstr( coverage, "tempoepa.l2.o3prof." ) == coverage,
+              strstr( coverage, "tempoepa.l3.o3prof." ) == coverage ) ) {
+      snprintf( boundsZ, sizeof boundsZ / sizeof *boundsZ, "&LAYER=%g",
+                boundsZMinimum );
+    } else {
+      snprintf( boundsZ, sizeof boundsZ / sizeof *boundsZ, ",%g,%g",
+                boundsZMinimum, boundsZMaximum );
+    }
   }
 
   const bool isGridded =
@@ -1892,7 +1999,7 @@ static void toURLString( const bool printURL,
          strstr( coverage, "omibehrioapi." ) == coverage,
          strstr( coverage, "cmaq." ) == coverage,
          strstr( coverage, "tempo.l3." ) == coverage,
-         strstr( coverage, "tempo2.l3." ) == coverage );
+         strstr( coverage, "tempoepa.l3." ) == coverage );
   const bool regridding =
     AND3( queryParameters.regridMethod() != QueryParameters::REGRID_NONE,
           ! isGridded,
@@ -1900,9 +2007,11 @@ static void toURLString( const bool printURL,
   const int aggregateMethod = queryParameters.aggregateMethod();
   const bool aggregating =
     AND2( aggregateMethod != QueryParameters::AGGREGATE_NONE,
-          OR4( strstr( coverage, "pandora." ) == coverage,
+          OR6( strstr( coverage, "pandora." ) == coverage,
                strstr( coverage, "omibehrioapi." ) == coverage,
                strstr( coverage, "cmaq." ) == coverage,
+               strstr( coverage, "openaq." ) == coverage,
+               strstr( coverage, "castnet." ) == coverage,
                AND3( strstr( coverage, "aqs." ) == coverage,
                      ! strstr( coverage, "_daily_" ),
                      ! strstr( coverage, "_average" ) ) ) );
@@ -1980,12 +2089,16 @@ static void toURLString( const bool printURL,
       appendVIIRSNOAAParameters( queryParameters, url );
     } else if ( strstr( coverage, "pandora." ) ) {
       appendPandoraParameters( queryParameters, url );
-    } else if ( strstr( coverage, "purpleair" ) ) {
+    } else if ( strstr( coverage, "purpleair." ) == coverage ) {
       appendPurpleAirParameters( queryParameters, coverage, url );
     } else if ( strstr( coverage, "tempo" ) == coverage ) {
       appendTEMPOParameters( queryParameters, url );
     } else if ( strstr( coverage, "cmaq.oaqps." ) == coverage ) {
       appendOAQPSParameters( queryParameters, url );
+    } else if ( strstr( coverage, "cmaq.oarintl." ) == coverage ) {
+      appendOAQPSParameters( queryParameters, url );
+    } else if ( strstr( coverage, "hrrr." ) == coverage ) {
+      appendHRRRParameters( queryParameters, url );
     }
 
     if ( aggregating ) {
@@ -2051,12 +2164,35 @@ static void toURLString( const bool printURL,
     }
   }
 
-  CHECK( url[ sizeof (URLString) / sizeof (char) - 1 ] == '\0' );
-  DEBUG( fprintf( stderr, "url = %s\n", url ); )
-
   if ( printURL ) {
     puts( url );
   }
+
+  // Append secret RSIG_ID=rsig3d to avoid process-limit check in rsigserver:
+
+  {
+    const size_t urlLength = strlen( url );
+    const size_t urlLengthAvailable =
+      sizeof (URLString) / sizeof (char) - 1 - urlLength;
+    char address[ 80 ] = "";
+    memset( address, 0, sizeof address );
+    getIPAddress( address, sizeof address );
+    char serialNumber[ 80 ] = "";
+    memset( serialNumber, 0, sizeof serialNumber );
+    getSerialNumber( serialNumber, sizeof serialNumber );
+    const char* const option = "&RSIG_ID=rsig3d-";
+    const size_t optionLength = strlen( option );
+
+    if ( optionLength <= urlLengthAvailable ) {
+      strncat( url, option, urlLengthAvailable - strlen( url ) );
+      strncat( url, address, urlLengthAvailable - strlen( url ) );
+      strncat( url, "-", urlLengthAvailable - strlen( url ) );
+      strncat( url, serialNumber, urlLengthAvailable - strlen( url ) );
+    }
+  }
+
+  CHECK( url[ sizeof (URLString) / sizeof (char) - 1 ] == '\0' );
+  DEBUG( fprintf( stderr, "url = %s\n", url ); )
 
   POST02( *url, strlen( url ) < sizeof (URLString) / sizeof (char) );
 }
@@ -2077,7 +2213,7 @@ static void appendGASPParameters( const QueryParameters& queryParameters,
 
   const DataFilterParameters& dataFilterParameters =
     queryParameters.dataFilterParameters();
-  char options[ 256 ] = "";
+  char options[ 512 ] = "";
   memset( options, 0, sizeof options );
   snprintf( options, sizeof options / sizeof *options,
             "&aod_range=%lg,%lg"
@@ -2510,6 +2646,52 @@ static void appendOAQPSParameters( const QueryParameters& queryParameters,
   if ( AND2( key.length(), isalnum( key[ 0 ] ) ) ) {
     options += "&KEY=";
     options += key.c_str();
+  }
+
+  // Append options to url:
+
+  const size_t urlLength = strlen( url );
+  const size_t urlLengthAvailable =
+  sizeof (URLString) / sizeof (char) - 1 - urlLength;
+  const size_t optionsLength = options.length();
+
+  if ( optionsLength <= urlLengthAvailable ) {
+    strncat( url, options.c_str(), optionsLength );
+  }
+
+  CHECK( url[ sizeof (URLString) / sizeof (char) - 1 ] == '\0' );
+  DEBUG( fprintf( stderr, "url = %s\n", url ); )
+  POST02( *url, strlen( url ) < sizeof (URLString) / sizeof (char) );
+}
+
+
+
+/******************************************************************************
+PURPOSE: appendHRRRParameters - Append HRRR-specific parameters to a
+         URL (OGC-WCS query).
+INPUTS:  const QueryParameters& queryParameters  Query parameters to convert.
+OUTPUTS: URLString url                           HTTP OGC-WCS query string.
+******************************************************************************/
+
+static void appendHRRRParameters( const QueryParameters& queryParameters,
+                                  URLString url ) {
+
+  PRE03( queryParameters.invariant(), url, *url );
+
+  std::string options; //x
+  const DataFilterParameters& dataFilterParameters =
+    queryParameters.dataFilterParameters();
+
+  // KEY:
+
+  const int HRRRStride = dataFilterParameters.HRRRStride();
+
+  if ( HRRRStride > 1 ) {
+    char buffer[ 256 ] = "";
+    memset( buffer, 0, sizeof buffer );
+    snprintf( buffer, sizeof buffer / sizeof *buffer, "%d", HRRRStride );
+    options += "&STRIDE=";
+    options += buffer;
   }
 
   // Append options to url:

@@ -260,8 +260,28 @@ void ControlDockWidget::onGuiFontsizeChanged(int fontsize) {
   QApplication::setFont(font);
 
   foreach (QWidget *widget, QApplication::allWidgets()) {
-    widget->setFont(QApplication::font());
+    //qDebug() << "setting" << widget->objectName() << fontsize;
+    //widget->setFont(QApplication::font());
+    widget->setFont(font);
+
+    // make sure certain widgets expand to accomodate the new font size
+    if (QString::fromStdString(widget->metaObject()->className()).compare("QSpinBox") == 0 ||
+        QString::fromStdString(widget->metaObject()->className()).compare("QCheckBox") == 0 ||
+        QString::fromStdString(widget->metaObject()->className()).compare("QComboBox") == 0 ||
+        QString::fromStdString(widget->metaObject()->className()).compare("QPushButton") == 0 ||
+        //QString::fromStdString(widget->metaObject()->className()).compare("QPlainTextEdit") == 0 ||
+        QString::fromStdString(widget->metaObject()->className()).compare("QDateEdit") == 0 ||
+        QString::fromStdString(widget->metaObject()->className()).compare("QLabel") == 0 ||
+        QString::fromStdString(widget->metaObject()->className()).compare("QPropertyEdit") == 0 ||
+        QString::fromStdString(widget->metaObject()->className()).compare("QTreeView") == 0 ||
+        QString::fromStdString(widget->metaObject()->className()).compare("QToolButton") == 0 ) {
+      //qDebug() << "adjusting" << widget->objectName() << widget->metaObject()->className();
+      widget->adjustSize();
+    }
+
     widget->update();
+    widget->updateGeometry();
+
   }
 
   
@@ -321,6 +341,7 @@ void ControlDockWidget::doResize(int w, int h) {
   h = ui->viewTab->height();
   ui->viewTab->resize(w, h);
   m_viewSplitter->resize( w-9, h-2);
+
 }
 
 
@@ -634,6 +655,7 @@ void ControlDockWidget::postMessage(const QString &msg, int mode) {
   };
 
   QMetaObject::invokeMethod(ui->textBrowser, "append", Qt::QueuedConnection, Q_ARG(QString, text));
+  
 }
 
 
@@ -1099,7 +1121,6 @@ void ControlDockWidget::onRadioButton3DToggled(bool value) {
 
     //if ( curName.contains( "cmaq" ) ||
     //     curName.contains( "omibehrioapi" ) ||
-    //     curName.contains( "geoschem" ) ||
     //     curName.contains( "hrrr" ) ||
     //     curName.contains( "compare" ) ||
     if ( isGrid ) {
@@ -1609,18 +1630,18 @@ QString swap_compare_operator(QString source_string) {
   if (return_string.contains("abs_diff.")) {
     return_string.remove("abs_diff.");
     return_string.append("-abs_diff");
-
   } else if (return_string.contains("percent_diff.")) {
     return_string.remove("percent_diff.");
     return_string.append("-percent_diff");
-
   } else if (return_string.contains("diff.")) {
     return_string.remove("diff.");
     return_string.append("-diff");
-  
   } else if (return_string.contains("ratio.")) {
     return_string.remove("ratio.");
     return_string.append("-ratio");
+  } else if (return_string.contains("replace.")) {
+    return_string.remove("replace.");
+    return_string.append("-replace");
   }
 
   return return_string;
@@ -1634,12 +1655,25 @@ void ControlDockWidget::check_sources(QString s1, QString s2, QString s3, QStrin
   bool ok;
   long selectedDate = date.toString(Qt::ISODate).remove(QString('-')).toLong(&ok, 10);
 
+  // to support logic to distinguish between nesdis and nesdis.pm25sat
+  bool s1Passed = false;
+  bool s2Passed = false;
+  bool s3Passed = false;
+  bool s4Passed = false;
+  bool s5Passed = false;
+  
   for (int i=0; i<availNamesSize; ++i) {
     bool isInRange = selectedDate>=minAvailDate[i] && selectedDate<=maxAvailDate[i];
 
     if (availNames[i] != "") {
 
-      if (s1.contains(availNames[i]+'.') && !isInRange) {
+      //qDebug() << availNames[i] << minAvailDate[i] << maxAvailDate[i];
+      //qDebug() << s1;
+      //qDebug() << s1.contains(availNames[i]+'.') << isInRange;
+      if (!s1Passed && s1.startsWith(availNames[i]+'.') && isInRange) {
+        s1Passed = true;
+      }
+      if (!s1Passed && s1.startsWith(availNames[i]+'.') && !isInRange) {
         msg.append("- ");
         msg.append(s1);
         msg.append("\n");
@@ -1651,7 +1685,10 @@ void ControlDockWidget::check_sources(QString s1, QString s2, QString s3, QStrin
         match += 1;
       }
 
-      if (s2.contains(availNames[i]+'.') && !isInRange) {
+      if (!s2Passed && s2.startsWith(availNames[i]+'.') && isInRange) {
+        s2Passed = true;
+      }
+      if (!s2Passed && s2.startsWith(availNames[i]+'.') && !isInRange) {
         msg.append("- ");
         msg.append(s2);
         msg.append("\n");
@@ -1663,7 +1700,10 @@ void ControlDockWidget::check_sources(QString s1, QString s2, QString s3, QStrin
         match += 1;
       }
 
-      if (s3.contains(availNames[i]+'.') && !isInRange) {
+      if (!s3Passed && s3.startsWith(availNames[i]+'.') && isInRange) {
+        s3Passed = true;
+      }
+      if (!s3Passed && s3.startsWith(availNames[i]+'.') && !isInRange) {
         msg.append("- ");
         msg.append(s3);
         msg.append("\n");
@@ -1675,7 +1715,10 @@ void ControlDockWidget::check_sources(QString s1, QString s2, QString s3, QStrin
         match += 1;
       }
 
-      if (s4.contains(availNames[i]+'.') && !isInRange) {
+      if (!s4Passed && s4.startsWith(availNames[i]+'.') && isInRange) {
+        s4Passed = true;
+      }
+      if (!s4Passed && s4.startsWith(availNames[i]+'.') && !isInRange) {
         msg.append("- ");
         msg.append(s4);
         msg.append("\n");
@@ -1687,7 +1730,10 @@ void ControlDockWidget::check_sources(QString s1, QString s2, QString s3, QStrin
         match += 1;
       }
 
-      if (s5.contains(availNames[i]+'.') && !isInRange) {
+      if (!s5Passed && s5.startsWith(availNames[i]+'.') && isInRange) {
+        s5Passed = true;
+      }
+      if (!s5Passed && s5.startsWith(availNames[i]+'.') && !isInRange) {
         msg.append("- ");
         msg.append(s5);
         msg.append("\n");
@@ -1723,8 +1769,12 @@ void ControlDockWidget::downloadImage() {
     myLayer = "MODIS_Aqua_CorrectedReflectance_TrueColor";
   } else if (curTrueColor.compare("MODIS-TERRA") == 0) {
     myLayer = "MODIS_Terra_CorrectedReflectance_TrueColor";
-  } else if (curTrueColor.compare("VIIRS") == 0) {
+  } else if (curTrueColor.compare("VIIRS-SNPP") == 0) {
     myLayer = "VIIRS_SNPP_CorrectedReflectance_TrueColor";
+  } else if (curTrueColor.compare("VIIRS-NOAA20") == 0) {
+    myLayer = "VIIRS_NOAA20_CorrectedReflectance_TrueColor";
+  } else if (curTrueColor.compare("VIIRS-NOAA21") == 0) {
+    myLayer = "VIIRS_NOAA21_CorrectedReflectance_TrueColor";
   }
   
   if (curTrueColor.compare("None") != 0) {
@@ -1749,7 +1799,15 @@ void ControlDockWidget::downloadImage() {
     QThread* thread_3857[ndays];
     ModisTrueColor* myMTC_4326[ndays];
     ModisTrueColor* myMTC_3857[ndays];
-   
+
+    QString uniqueID = vOptions->getUniqueId();
+    QString bboxString =
+      QString::number(vOptions->getBboxMinLon()) + "_" +
+      QString::number(vOptions->getBboxMinLat()) + "_" +
+      QString::number(vOptions->getBboxMinLon()) + "_" +
+      QString::number(vOptions->getBboxMinLat());
+
+      
     for (int day=0; day<ndays; ++day) {
       const QDate xdate = ui->dateDateEdit->date().addDays(day);
       QString time = QString::number(xdate.year()) + "-" + QString::number(xdate.month()).rightJustified(2, '0') + "-" +  QString::number(xdate.day()).rightJustified(2, '0');
@@ -1759,8 +1817,8 @@ void ControlDockWidget::downloadImage() {
       QString yyyymmdd = yyyy + mm + dd;
       QString url_4326 = "https://gibs.earthdata.nasa.gov/wms/epsg4326/best/wms.cgi?SERVICE=WMS&REQUEST=GetMap&VERSION=1.1.1&LAYERS=" + myLayer + "&STYLES=&FORMAT=image%2Fpng&TRANSPARENT=true&HEIGHT=1500&WIDTH=3000&SRS=EPSG:4326&TIME=" + time + "&bbox=" + extent_4326;
       QString url_3857 = "https://gibs.earthdata.nasa.gov/wms/epsg3857/best/wms.cgi?SERVICE=WMS&REQUEST=GetMap&VERSION=1.1.1&LAYERS=" + myLayer + "&STYLES=&FORMAT=image%2Fpng&TRANSPARENT=true&HEIGHT=1500&WIDTH=3000&SRS=EPSG:3857&TIME=" + time + "&bbox=" + extent_3857;
-      QString filename_4326 = QDir::homePath() + "/.rsig/trueColor_" + curTrueColor + "_" + yyyymmdd +"_4326.png";
-      QString filename_3857 = QDir::homePath() + "/.rsig/trueColor_" + curTrueColor + "_" + yyyymmdd +"_3857.png";
+      QString filename_4326 = QDir::homePath() + "/.rsig/trueColor_" + curTrueColor + "_" + yyyymmdd + "_4326_" + bboxString + ".png";
+      QString filename_3857 = QDir::homePath() + "/.rsig/trueColor_" + curTrueColor + "_" + yyyymmdd + "_3857_" + bboxString + ".png";
 
       thread_4326[day] = new QThread;
       myMTC_4326[day] = new ModisTrueColor();
@@ -1817,6 +1875,7 @@ int ControlDockWidget::getAggregateIndex(QString text) {
   int return_val = -1;
 
   if      (text == "None")           { return_val = emvl::QueryParameters::AGGREGATE_NONE; }
+  else if (text == "UTC daily")      { return_val = emvl::QueryParameters::AGGREGATE_DAILY; }
   else if (text == "UTC daily mean") { return_val = emvl::QueryParameters::AGGREGATE_DAILY_MEAN; }
   else if (text == "UTC daily max")  { return_val = emvl::QueryParameters::AGGREGATE_DAILY_MAX; }
 
@@ -1892,12 +1951,26 @@ void ControlDockWidget::onCheckServersClicked() {
   QStringList sourcesToExclude;
   sourcesToExclude << "aquarius" << "buoy" << "dv" << "erddap" << "landuse" << "nerrs" << "nldas" << "ofs" << "smap" << "tidal" << "wqp";
   
-  QString myMessage = "Data servers that have been offline during the last 24 hours.<br><br>";
+  QString myMessage = "";
+  bool firstOutageFound = false;
   for (int listInd=0; listInd<outageList.size(); listInd++) {
     QString thisOutageString = outageList.at(listInd);
     QStringList thisOutageStringSplit = thisOutageString.split(',');
-    if (thisOutageStringSplit.size() > 1) {
 
+    // process server load
+    if (thisOutageString.startsWith("Current server load")) {
+      myMessage.append("<b>" + thisOutageString + "</b>"); 
+      myMessage.append("<br>"); 
+    }  
+
+    
+    // process outages by source
+    if (thisOutageStringSplit.size() > 1) {
+      if (firstOutageFound == false) {
+        myMessage.append("<br>Data servers that have been offline during the last 24 hours.<br><br>");
+        firstOutageFound = true;
+      }
+      
       // get the timestamp
       myMessage.append(thisOutageStringSplit[0] + ": ");
 
@@ -1916,7 +1989,7 @@ void ControlDockWidget::onCheckServersClicked() {
 
       // finished processing all sources in the outage string
       if (nMatches == 0) {
-        myMessage.append("ok<br>");
+        myMessage.append("non-RSIG dataset<br>");
       } else {
         
         if (myMessage.endsWith(", ")) {
@@ -1954,7 +2027,8 @@ PURPOSE: onGetdataClicked - Callback to begin the data input process of
 ******************************************************************************/
 
 void ControlDockWidget::onGetdataClicked() {
-
+  //qDebug() << "in ControlDockWidget::onGetdataClicked";
+  
   // get the list of recent data outages
   QStringList outageList = this->getOutage();
 
@@ -2037,7 +2111,6 @@ void ControlDockWidget::onGetdataClicked() {
   ui->panelDisplayListWidget->clear();
   setPanelDisplaySource1Selection("");
   setPanelDisplaySource2Selection("");
-  
   
   VisDataList* vislist = VisDataListSingleton::getInstance();
   int arraySize = sizeof(oldVisProperties)/sizeof(oldVisProperties[0]);
@@ -2198,9 +2271,12 @@ void ControlDockWidget::deleteAllDataObjects() {
 
   GeoDataList* const geoDataList = GeoDataListSingleton::getInstance();
   geoDataList->clear();
-    
+
+  
   emvl::DatasetManager* const datasetManager = getDatasetManager();
   datasetManager->removeAll(); // Delete all loaded datasets.
+
+
 }
 
 
@@ -2803,9 +2879,14 @@ static void getCoverageProperties( const QString coverage,
   // Check if coverage is a multi-layer grid and if so, enable Layer typein:
 
   const bool isCompare = coverage.startsWith( "compare." );
+  const bool isTEMPOO3PROF =
+    OR4( coverage.contains( "tempo.l2.o3prof." ),
+         coverage.contains( "tempo.l3.o3prof." ),
+         coverage.contains( "tempoepa.l2.o3prof." ),
+         coverage.contains( "tempoepa.l3.o3prof." ) );
 
   isMultiLayered =
-    OR2( AND2( coverage.startsWith( "cmaq." ),
+    OR3( AND2( coverage.startsWith( "cmaq." ),
                ! OR11( coverage.contains( "2d." ),
                        AND2( coverage.contains( ".emis." ),
                              ! coverage.contains( "hemi.emis." ) ),
@@ -2820,9 +2901,10 @@ static void getCoverageProperties( const QString coverage,
                        coverage.contains( ".wetdep." ) ) ),
          AND2( isCompare,
                OR2( coverage.contains( "acam." ),
-                    coverage.contains( "calipso." ) ) ) );
+                    coverage.contains( "calipso." ) ) ),
+         isTEMPOO3PROF );
 
-  forceSingleLayer = false; // Must initialize output parameter!
+  forceSingleLayer = isTEMPOO3PROF; // Must initialize output parameter!
 
   // Check if coverage is already CMAQ-format (so cannot be regridded again)
   // and if so, disable Regrid button:
@@ -2831,7 +2913,7 @@ static void getCoverageProperties( const QString coverage,
     OR8( coverage.startsWith( "cmaq." ),
          coverage.startsWith( "omibehrioapi." ),
          coverage.startsWith( "tempo.l3." ),
-         coverage.startsWith( "tempo2.l3." ),
+         coverage.startsWith( "tempoepa.l3." ),
          coverage.startsWith( "hrrr." ),
          coverage.startsWith( "regridded." ),
          coverage.startsWith( "compare." ),
@@ -2882,6 +2964,7 @@ void ControlDockWidget::onTreeWidgetItemChanged( QTreeWidgetItem* item ) {
                              forceSingleLayer,
                              noRegrid );
 
+      
       // Find first empty position, starting from top:
 
       size_t index = 0;
@@ -2906,17 +2989,18 @@ void ControlDockWidget::onTreeWidgetItemChanged( QTreeWidgetItem* item ) {
       const RSIGState* gState = RSIGStateSingleton::getInstance();
 
       if ( canAggregate && ( gState->mTimebaseType == RSIGState::TIMEBASE_HOURLY || gState->mTimebaseType == RSIGState::TIMEBASE_DAILY )) {
-        options.selectedData->setFixedWidth( selectedDataShortWidth );
+        //options.selectedData->setFixedWidth( selectedDataShortWidth );
         options.selectedData->moveCursor( QTextCursor::End ); // Show var.
         options.aggregateMenu->show();
       } else {
-        options.selectedData->setFixedWidth( selectedDataLongWidth );
+        //options.selectedData->setFixedWidth( selectedDataLongWidth );
         options.aggregateMenu->hide();
       }
 
       // Set state of Layer typein:
 
       options.layer->setValue( 0 ); // Default to all layers.
+      options.layer->setMinimum(-1);
 
       if ( isMultiLayered ) {
         options.layer->setEnabled( true );
@@ -2924,6 +3008,7 @@ void ControlDockWidget::onTreeWidgetItemChanged( QTreeWidgetItem* item ) {
 
         if ( forceSingleLayer ) {
           options.layer->setValue( 1 ); // Change 0=all to layer 1 only.
+          options.layer->setMinimum(1);
         }
       } else {
         options.layer->setEnabled( false );
@@ -2962,7 +3047,7 @@ void ControlDockWidget::onTreeWidgetItemChanged( QTreeWidgetItem* item ) {
       Options& options = table[ index ];
       options.selectedData->setPlainText( "" );
       options.selectedData->setToolTip( "" );
-      options.selectedData->setFixedWidth( selectedDataLongWidth );
+      //options.selectedData->setFixedWidth( selectedDataLongWidth );
       options.layer->setValue( 0 );
       options.layer->setEnabled( false );
       options.layer->hide();
@@ -3749,19 +3834,19 @@ void ControlDockWidget::switchSpecialControlsWidget( const bool isGrid,
     } else if (curName.startsWith("neubrew")) {
       ui->specialControlsStackedWidget->setCurrentIndex(3);
       ui->SpecialControlLabel->setText("NEUBrew\nControls    ");
-    } else if (curName.startsWith("behr")) { // behr and behrioapi
+    } else if (curName.startsWith("behr") || curName.startsWith("behr_tropomi_")) { // behr and behrioapi
       ui->specialControlsStackedWidget->setCurrentIndex(4);
       ui->SpecialControlLabel->setText("BEHR\nControls    ");
-    } else if (curName.startsWith("modis_")) {
+    } else if (curName.startsWith("modis_") || curName.startsWith("regridded_modis_")) {
       ui->specialControlsStackedWidget->setCurrentIndex(5);
       ui->SpecialControlLabel->setText("MODIS\nControls    ");
-    } else if (curName.startsWith("viirs")) {
+    } else if (curName.startsWith("viirs") || curName.startsWith("regridded_viirs_")) {
       ui->specialControlsStackedWidget->setCurrentIndex(6);
       ui->SpecialControlLabel->setText("VIIRS\nControls    ");
-    } else if (curName.startsWith("tropomi_")) {
+    } else if (curName.startsWith("tropomi_") || curName.startsWith("regridded_tropomi_")) {
       ui->specialControlsStackedWidget->setCurrentIndex(7);
       ui->SpecialControlLabel->setText("TROPOMI\nControls    ");
-    } else if (curName.startsWith("hms_")) {
+    } else if (curName.startsWith("hms_") || curName.startsWith("regridded_hms_")) {
       ui->specialControlsStackedWidget->setCurrentIndex(8);
       ui->SpecialControlLabel->setText("HMS\nControls    ");
     } else if (curName.startsWith("pandora")) {
@@ -3778,7 +3863,7 @@ void ControlDockWidget::switchSpecialControlsWidget( const bool isGrid,
 
   } else {
     ui->specialControlsStackedWidget->setCurrentIndex(9);
-    ui->SpecialControlLabel->setText("Panel Display\nControls    ");
+    ui->SpecialControlLabel->setText("Panel\nDisplay\nControls    ");
   }
 }
 
@@ -3842,7 +3927,7 @@ void ControlDockWidget::onColormapIndexChanged(int index) {
 
       // Check to see if special colormap is valid to use with the selected variable
       if ( (colormapName.contains("AQI-PM25-24hr") && !(variableName.contains("pm25_daily_average") || (variableName.contains("_pm25") && aggregate.contains("daily"))) )                                                 ||
-           (colormapName.contains("AQI-Ozone-1hr") && !(variableName.endsWith("ozone.point") && aggregate.contains("none")))                                                                                              ||
+           (colormapName.contains("AQI-Ozone-1hr") && !((variableName.endsWith("ozone.point") || variableName.endsWith("o3.point")) && aggregate.contains("none")))                                                       ||
            (colormapName.contains("AQI-Ozone-8hr") && !(variableName.contains("ozone_8hour_average") || variableName.contains("ozone_daily_8hour") || (variableName.contains("_ozone") && aggregate.contains("daily"))))  ||
            (colormapName.contains("AQI-CO-8hr")    && !(variableName.contains("aqs_co") && aggregate.contains("daily")))                                                                                                  ||
            (colormapName.contains("AQI-NO2-1hr")   && !(variableName.endsWith("no2.point") && aggregate.contains("none")))                                                                                                ||
@@ -3887,6 +3972,9 @@ void ControlDockWidget::onColormapIndexChanged(int index) {
                 variableName.contains("airnow_ozone")                                || // hourly (because no aggregation for airnow)
                 variableName.contains("airnow_no2")                                  || // hourly
                 variableName.contains("airnow_so2")                                  || // hourly
+               (variableName.contains("openaq_pm25") && aggregate.contains("daily")) || // aggregated or hourly
+               (variableName.contains("quantaq_pm25") && aggregate.contains("daily")) || // aggregated or hourly
+               (variableName.contains("purpleair_pm25_corrected") && aggregate.contains("daily")) || // aggregated or hourly
                 variableName.contains("_o3")                                           ) && colormapName.contains("AQI") ) {
           QStringList airnowCategories; airnowCategories << "Good" << "Moderate" <<"Sens Grp" << "Unhealthy" << "Very unhealthy" << "Hazardous";
           mySlantText = airnowCategories;
@@ -4380,8 +4468,8 @@ void ControlDockWidget::onCheckDataUsePolicyAccepted() {
   } else {
     qDebug() << "\nRSIG3D Data Policy Use Agreement was previously accepted.";
     qDebug() << "To view the policy, click RSIG Web -> Show Data Use Policy.\n";
-    this->postMessage( "RSIG3D Data Policy Use Agreement was previously accepted.", RSIGState::NORMAL_TEXT );
-    this->postMessage( "To view the policy, click RSIG Web -> Show Data Use Policy.", RSIGState::NORMAL_TEXT );
+    //this->postMessage( "RSIG3D Data Policy Use Agreement was previously accepted.", RSIGState::NORMAL_TEXT );
+    //this->postMessage( "To view the policy, click RSIG Web -> Show Data Use Policy.", RSIGState::NORMAL_TEXT );
     accepted = true;
   }
 
@@ -4520,7 +4608,7 @@ void ControlDockWidget::enableGetDataButton() {
  */
 void ControlDockWidget::onDownloadWorkFinished(QObject *data) {
 
-  //qDebug() << "oldSelectedDatasource=" << oldSelectedDatasource;
+  //qDebug() << "in ControlDockWidget::onDownloadWorkFinished";
 
   mutex.lock();
   VisOptions* vOptions = VisOptionsSingleton::getInstance();
@@ -4575,6 +4663,69 @@ void ControlDockWidget::onDownloadWorkFinished(QObject *data) {
 
     //get min/max range.
     dataObj->computeMinmaxVal();
+
+    // if dataset is too large to fit into memory, swath persist is disabled
+    // note: TEMPO is always disabled because it is hourly and geostationary.
+    const emvl::Dataset* const dataset = dataObj->model();
+    //qDebug() << QString::fromStdString(dataset->name()) << dataset->isPagedFromDisk();
+    const bool isBEHR    = dataset->description().find("BEHR") != std::string::npos;
+    const bool isMODIS   = dataset->description().find("MODIS") != std::string::npos;
+    const bool isVIIRS   = dataset->description().find("VIIRS") != std::string::npos;
+    const bool isTROPOMI = dataset->description().find("TROPOMI") != std::string::npos;
+    const bool isHMS     = dataset->description().find("hmsserver") != std::string::npos;
+
+    // enable persist ui option by default
+    ui->persistBEHR->setEnabled(true);
+    ui->persistMODIS->setEnabled(true);
+    ui->persistVIIRS->setEnabled(true);
+    ui->persistTROPOMI->setEnabled(true);
+    ui->persistHMS->setEnabled(true);
+
+    vOptions->setIsBEHRPagedFromDisk(false);
+    vOptions->setIsMODISPagedFromDisk(false);
+    vOptions->setIsVIIRSPagedFromDisk(false);
+    vOptions->setIsTROPOMIPagedFromDisk(false);
+    vOptions->setIsHMSPagedFromDisk(false);
+    vOptions->setIsTEMPOPagedFromDisk(false);
+    
+    // disable persist ui option and turn vis option off if too big for memory
+    QString memMsg = "swath persist option unavailable because dataset size exceeds " + QString::number(emvl::Dataset::PAGE_THREHOLD_BYTES) + " bytes. If you need this option, try using a smaller bounding box.";
+    if (dataset->isPagedFromDisk() && isBEHR) {
+      ui->persistBEHR->setEnabled(false);
+      ui->persistBEHR->setChecked(false);
+      vOptions->setPersistBEHR(false);
+      vOptions->setIsBEHRPagedFromDisk(true);
+      postMessage("BEHR " + memMsg, RSIGState::WARNING_TEXT);
+    }
+    if (dataset->isPagedFromDisk() && isMODIS) {
+      ui->persistMODIS->setEnabled(false);
+      ui->persistMODIS->setChecked(false);
+      vOptions->setPersistMODIS(false);
+      vOptions->setIsMODISPagedFromDisk(true);
+      postMessage("MODIS " + memMsg, RSIGState::WARNING_TEXT);
+    }
+    if (dataset->isPagedFromDisk() && isVIIRS) {
+      ui->persistVIIRS->setEnabled(false);
+      ui->persistVIIRS->setChecked(false);
+      vOptions->setPersistVIIRS(false);
+      vOptions->setIsVIIRSPagedFromDisk(true);
+      postMessage("VIIRS " + memMsg, RSIGState::WARNING_TEXT);
+    }
+    if (dataset->isPagedFromDisk() && isTROPOMI) {
+      ui->persistTROPOMI->setEnabled(false);
+      ui->persistTROPOMI->setChecked(false);
+      vOptions->setPersistTROPOMI(false);
+      vOptions->setIsTROPOMIPagedFromDisk(true);
+      postMessage("TROPOMI " + memMsg, RSIGState::WARNING_TEXT);
+    }
+    if (dataset->isPagedFromDisk() && isHMS) {
+      ui->persistHMS->setEnabled(false);
+      ui->persistHMS->setChecked(false);
+      vOptions->setPersistHMS(false);
+      vOptions->setIsHMSPagedFromDisk(true);
+      postMessage("HMS " + memMsg, RSIGState::WARNING_TEXT);
+    }
+    
     
     // Append GeoDataObject onto the GeoDataList:
 
@@ -4587,12 +4738,12 @@ void ControlDockWidget::onDownloadWorkFinished(QObject *data) {
 
     VisDataList* vislist = VisDataListSingleton::getInstance();
     LookupTableWidget* lut = dataObj->createDefaultLookupTable();
-    
+
     if (lut != NULL) {
       vislist->push_back(lut);
       connect(lut, SIGNAL(valueChanged()), this, SIGNAL(requestRedraw()));
     }
-    
+
     // Create a default VisDataObject and append it onto the VisDataList:
 
     VisDataObject* visObj = dataObj->createDefaultVisualizationObject();
@@ -4610,7 +4761,7 @@ void ControlDockWidget::onDownloadWorkFinished(QObject *data) {
 
       // populate panel display probe menus
       QStringList allowedProbeSources;
-      allowedProbeSources << "airnow" << "aqs" << "purpleair" << "metar" << "hms" << "uvnet"; // UGLY: hourly_pandora handled seperately below
+      allowedProbeSources << "airnow" << "aqs" << "openaq" << "castnet" << "purpleair" << "metar" << "hms" << "uvnet"; // UGLY: hourly_pandora handled seperately below
 
       if (visObj->objectName().contains(".point")) {
         QString topLevelSourceName    = visObj->objectName().split("_")[0];
@@ -4797,9 +4948,10 @@ void ControlDockWidget::onDownloadWorkFinished(QObject *data) {
   }
 
   Q_EMIT requestRedraw();
-}
 
+}
 
 
 void ControlDockWidget::onSaveWorkFinished(QObject*) {
 }
+

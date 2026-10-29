@@ -57,7 +57,7 @@ DatasetManager.C \
 
 HEADERS="ResourceHandler.h `echo $SOURCE | sed 's/\.[cC]/\.h/g'`"
 #LIBS="-lUtilities.debug -lnetcdf -lshp -lGPC -lPNG -lz -lm"
-LIBS="-lUtilities.debug -lNetCDF -lShapefile -lGPC -lPNG -lZ -lcurl -lm"
+LIBS="-lUtilities.debug -lnetcdf -lShapefile -lGPC -lPNG -lZ -lcurl -lm"
 
 # Determine the platform using uname:
 

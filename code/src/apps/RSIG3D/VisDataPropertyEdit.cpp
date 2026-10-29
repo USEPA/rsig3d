@@ -14,6 +14,9 @@ HISTORY: 2013/03/08, Nan Zhang <zhang.nan@epa.gov>, Created.
 #include <QModelIndex>
 #include <PropertyEditor/propertymodel.h>
 #include "VisDataPropertyEdit.h"
+#include <QObject>
+#include <QString>
+#include <QObjectList>
 
 
 /*!
@@ -34,8 +37,6 @@ VisDataPropertyEdit::VisDataPropertyEdit(QWidget *parent, bool useClassName, int
 }
 
 
-
-
 /*!
  Destructor.
  */
@@ -43,8 +44,23 @@ VisDataPropertyEdit::~VisDataPropertyEdit() {
 }
 
 
+void VisDataPropertyEdit::addObjectEMVL(QObject* myObj) {
+  //qDebug() << "in VisDataPropertyEdit::addObjectEMVL";
+
+  // BUG: if we prevent the lut from appearing in the info tab it works, but there will be a seg fault on the next "get data"
+  //if (! myObj->objectName().contains(".lut")) {
+  //  //qDebug() << "adding" << myObj->objectName();
+  //  this->addObject(myObj);
+  //}
+
+  this->addObject(myObj);
+
+}
+
 
 void VisDataPropertyEdit::showContextMenu(const QPoint& localPos) {
+  //qDebug() << "in VisDataPropertyEdit::showContextMenu" << localPos;
+  
   const QModelIndex mindex = this->indexAt(localPos);
   const QModelIndex topIndex = this->topLevelModelIndex(mindex);
 
@@ -54,6 +70,7 @@ void VisDataPropertyEdit::showContextMenu(const QPoint& localPos) {
 
   const int objID = topIndex.row();
   QMenu myMenu(this);
+  
   QAction actionDel(QString("Delete current object"), NULL);
   myMenu.addAction(&actionDel);
   myMenu.addSeparator();
@@ -104,12 +121,12 @@ void VisDataPropertyEdit::onParentObjectRemoved( QObject* obj ) {
   if (m_model==NULL) {
     return;
   }
-
+  
   QObject *ptr;
   int i=0;
 
   while ( ( ptr=object( i ) ) != NULL ) {
-
+    
     if (ptr->parent() == obj) {
       removeObject(i);
     } else {

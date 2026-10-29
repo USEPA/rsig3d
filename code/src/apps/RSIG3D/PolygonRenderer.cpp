@@ -303,7 +303,8 @@ copyAndDrawQuads(const QRectF& viewBounds,
     const size_t cellIndex = index % cellCount;
     const size_t cellLayer = isGriddedData ? cellIndex / rowsTimesColumns : 0;
     const double value = data[ index ];
-    const bool valueIsNonMissing = OR2( showNullSample, value > emvl::MISSING );
+////const bool valueIsNonMissing = OR2( showNullSample, value > emvl::MISSING );
+    const bool valueIsNonMissing = OR2( showNullSample, value > -9e+36 );
     const bool valueIsInThresholdRange =
       IMPLIES( showThreshold, value >= threshold );
     const bool isLayerCell = cellLayer + 1 == layer;

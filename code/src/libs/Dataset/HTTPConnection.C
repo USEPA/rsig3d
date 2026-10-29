@@ -113,7 +113,7 @@ HTTPConnection::HTTPConnection( const char* url,
 #endif
   const char* const pipeOption = useDecompression ? " | " : "";
   const char* const decompressOption = useDecompression ? decompressProgram :"";
-  char command[ 2048 ] = "";
+  char command[ 4096 ] = "";
   memset( command, 0, sizeof command );
   snprintf( command, sizeof command / sizeof *command - 30, "%s %d %c%s%c%s%s",
             HTTPGetProgram, timeoutSeconds, quote, url, quote,

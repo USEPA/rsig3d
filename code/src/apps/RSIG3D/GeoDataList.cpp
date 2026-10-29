@@ -123,6 +123,7 @@ void GeoDataList::onObjectRemoved(int indexVal) {
       qDebug()<<errorMessage0;
     }
   }
+
 }
 
 

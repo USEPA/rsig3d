@@ -47,17 +47,13 @@ public:
   // Types:
 
   /*
-   * If dataset xdr file is larger than PAGE_THREHOLD_GB bytes then use buffing
-   * to page-in one timestep at a time from disk into memory.
-   * This is needed to reduce the memory used by a dataset since 32-bit Windows
+   * If dataset xdr file is larger than PAGE_THREHOLD_BYTES then use buffering
+   * to page-in one (hour) timestep at a time from disk into memory.
+   * This is needed to reduce the memory used by a dataset otherwise laptops
    * can fail to read the entire dataset into memory.
-   * Even with paging a single timestep at a time (see BUFFERED_DATA_TIMESTEPS
-   * below) Windows can still fail to read a single timestep of data when the
-   * single timestep of data is still too large to allocate and read into
-   * 32-bit limited memory. E.g., TEMPO L3 gridded data for ite entire grid.
    */
 
-  enum { PAGE_THREHOLD_GB = 256 * 1024 * 1024 };
+  enum { PAGE_THREHOLD_BYTES = 1024 * 1024 * 1024 };
 
   /*
    * If dataFileOffset_ != 0, then data_[variable][time][cells] contains only

@@ -1,0 +1,2441 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+<HEAD>
+    <META NAME="Generator" CONTENT="Cosmo Create 1.0.3">
+</HEAD>
+<BODY>
+<CENTER><H2 ALIGN="CENTER">
+<STRONG><B>C / C++ Coding Standard</B></STRONG></H2>
+</CENTER><P>
+<FONT SIZE="4">Contents</FONT></P>
+<OL>
+    <LI>
+    <A HREF="#Purpose">Purpose</A> 
+    <LI>
+    <A HREF="#References">References</A> 
+    <LI>
+    <A HREF="#Tools">Tools</A> 
+    <LI>
+    <A HREF="#Guidelines">Guidelines</A> 
+    <LI>
+    <A HREF="#Exemplars">Exemplars</A> 
+    <OL>
+        <LI>
+        <A HREF="#makeit">makeit script</A> 
+        <LI>
+        <A HREF="#Header">Header File</A> 
+        <LI>
+        <A HREF="#Source">Source File</A> 
+        <LI>
+        <A HREF="#testit">Unit test script</A> 
+        <LI>
+        <A HREF="#Doc">Document File</A> 
+        <LI>
+        <A HREF="#lint.out">Lint File</A> 
+        <LI>
+        <A HREF="#prof.out">Profile File</A> 
+        <LI>
+        <A HREF="#SampleMetricsFile">Metrics Report</A> 
+        <LI>
+        <A HREF="#summetrics.out">Summetrics Report</A> 
+    </OL>
+</OL>
+<P>
+<B>1. <A NAME="Purpose">Purpose</A></B></P>
+<P>
+The purpose of this coding standard is to help communicate expectations 
+of and techniques to achieve consistent high-quality of coding 
+artifacts across the project(s) and its developers. Consistency (of 
+both form and semantic models) enhances understandability, ease of use, 
+testability, extendibility, reusability and compatibility.</P>
+<P>
+This document is a start but should not be considered a complete 
+definition of all of the expectations of coding style.</P>
+<P>
+This document defines references to baseline source documents upon 
+which this standard is based - the &quot;required and recommended 
+reading&quot; of developers on these projects. It also lists the 
+guidelines that developers are expected to adhere to and review each 
+others code against. Guidelines are &quot;musts&quot; unless they are 
+worded otherwise (e.g., &quot;prefer&quot;). Finally, exemplars are 
+provided for each coding artifact and reviewed code will be compared 
+against them. The Quality Assurance Lead will have final authority on 
+disputes with this standard and proposals to change it.</P>
+<P>
+<A NAME="References"><B>2. References</B></A></P>
+<P>
+Guidelines for general OO programming methods employed here are found 
+in:</P>
+<P>
+OO and Eiffel Method (required reading):</P>
+<P>
+Meyer, Bertrand, <A HREF="http://www.eiffel.com/doc/oosc.html"
+ TARGET="_blank"><I>Object-Oriented Software Construction, Second 
+Edition</I></A>, Prentice Hall, Upper Saddle River, New Jersey, 1997.</P>
+<P>
+Plessel, Todd, <A HREF="../../research/DBC.html" TARGET="_blank">Design 
+By Contract: A Missing Link In The Quest For Quality Software.</A></P>
+<P>
+A good source of basic and C-specific guidelines is:</P>
+<P>
+McConnell, Steve, <A HREF="http://www.construx.com/stevemcc/cc.htm"
+ TARGET="_blank"><I>Code Complete</I></A>, Microsoft Press, Redmond, 
+WA, 1993.</P>
+<P>
+For avoiding the many pitfalls of C++, the following are required 
+reading:</P>
+<P>
+Meyer, Scott, <I>Effective C++: 50 Specific Ways to Improve Your 
+Programs and Designs</I>, Addison Wesley, Reading, MA, 1992.</P>
+<P>
+Meyer, Scott, More <I>Effective C++: 35 New Ways to Improve Your 
+Programs and Designs</I>, Addison Wesley, Reading, MA, 1996.</P>
+<P>
+Muller, Harald M., &quot;Ten Rules For Handling Exception Handling 
+Successfully&quot;, <I>C++ Report</I>, vol. 8, no. 1, January 1996, pp 
+23 - 36.</P>
+<P>
+Another good source for improving one's C++ programming style is:</P>
+<P>
+Cargill, Tom, <I>C++ Programming Style</I>, Addison Wesley, Reading, 
+MA, 1992.</P>
+<P>
+C++ Baseline Coding Standard document:</P>
+<P>
+<A HREF="http://www.doc.ic.ac.uk/lab/cplus/c++.rules/">Ellemtel C++ 
+Style Guide</A> (See exceptions below)</P>
+<P>
+<B>3. <A NAME="Tools">Tools</A></B></P>
+<P>
+The following tools are used for C/C++ development:</P>
+<UL>
+    <LI>
+    C Compiler: gcc on all platforms (using Cygwin on Win32). 
+    <LI>
+    C++ Compiler: g++ on all platforms.
+    <LI>
+    Metrics Utilities: metrics, summetrics, cdash. 
+    <LI>
+    Static and dynamic analysis tools: g++ -Wall, flexelint. 
+    <LI>
+    Other tools: editors (Xcode, emacs), opendiff, etc. 
+</UL>
+<P>
+<A NAME="Guidelines"><B>4. Guidelines</B></A></P>
+<P>
+<A HREF="http://www.construx.com/chk.htm" TARGET="_blank">McConnell's 
+Software Development Checklists</A> contain useful items to 
+incorportate.</P>
+<P>
+<A HREF="http://www.doc.ic.ac.uk/lab/cplus/c++.rules/" TARGET="_blank">Ellemtel 
+C++ Coding Standard</A> is a good starting point C++ standard. The 
+following guidelines include some exceptions to Ellemtel.</P>
+<P>
+1. Use .C and .h for C++ source files.</P>
+<P><strike>
+2. Avoid #include &quot;Foo.h&quot; and instead use #include 
+&lt;Foo.h&gt; and -I. (last) to detect name clashes at the point they 
+are introduced (so they can be corrected). Header and library search 
+paths (-I and -L) are ordered from most standard to least standard. For 
+example, -L/usr/lib -L/usr/lib/X11 -L../external/lib/$arch 
+-L../lib/$arch -L.</strike>
+</P>
+<P>
+Ok to use #include "File.h" // For non-public headers in the current directory.
+</P>
+<P>
+3. Always #include the header that defines the entity used. Don't rely 
+on it being #included by other headers.</P>
+<P>
+4. Don't #include headers that are not used. If they are conditionally 
+used, #include them conditionally.</P>
+<PRE>
+  #ifdef TIMING_TESTS
+  #include &lt;Timer.h&gt; /* TimerGetElapsedSec(). */
+  #endif
+</PRE>
+<P>
+5. Always document why a header is being #included. E.g.,</P>
+<PRE>
+  #include &lt;iodecl3.h&gt; /* For IOAPI_Bdesc3, IOAPI_Cdesc3, NAMLEN3. */
+</PRE>
+<P>
+This facilitates removal of obsolete #includes (if its documented 
+entities are no longer referenced in the file).</P>
+<P>
+6. (For libraries at least) use Design By Contract implemented using the <A
+ HREF="../../research/Assertions.h" TARGET="_blank">Assertions.h</A> <A
+ NAME="AssertionsMacros">macros</A>. Write detailed contracts. For 
+example, in POST(), define the value of each output argument both upon 
+success and failure of the routine. For example:</P>
+<PRE>
+  POST( IMPLIES_ELSE( ok,
+                      AND2( fileSelector-&gt;hostName[ 0 ],
+                            fileSelector-&gt;userID[ 0 ] ),
+                      IS_ZERO2( fileSelector-&gt;hostName[ 0 ],
+                                fileSelector-&gt;userID[ 0 ] ) ) );
+</PRE>
+<P>
+Also, make PRE() the first executable statement of the routine and 
+POST() the last:</P>
+<PRE>
+void fileReadString( File* file, char s[], Integer n ) {
+  <b>PRE3</b>( fileIsReadable( file ), s, n &gt; 0 );
+  ...
+  <b>POST2</b>( isReadMode( file ), strlen( s ) &lt;= n );
+}
+</PRE>
+<P>
+Note all these assertion macros require semi-colons except DEBUG() and 
+CHECKING() (since they can enclose arbitrary segments of code).</P>
+<P><strike>
+7. Use <A NAME="BasicNumerics">BasicNumerics.h</A> for integer and real 
+basic data types (at least for public interfaces):</P>
+<PRE>
+#include &lt;<A HREF="../misc/ExampleFLTK/include/BasicNumerics.h" TARGET="_blank">BasicNumerics.h</A>&gt; /* For Integer, Real. */
+</PRE>
+<P>
+This facilitates efficient (non-copying), lossless, cross-language, 
+cross-platform data sharing. Integer and Real are defined as (exactly) 
+64-bit types compatible with FORTRAN INTEGER(KIND=8) and REAL(KIND=8), 
+respectively (and Java long and double). Read the NumericTypes.h header 
+and read the source code of NumericTypesTest.c and the File Library 
+(File.c) to learn how to use these types and their routines. Be careful 
+to check ranges before passing (truncating) integers to external 
+routines that expect int, long, size_t, etc. - see the File Library for 
+examples of this.</P></strike>
+<P>
+For this project, it is OK to use various built-in types appropriately.
+Note: <b>double</b> and <b>long long</b> are 64-bits on all platforms.
+</P>
+<P>
+8. In C, implement Failure-handling using the <A NAME="FailureLibrary">Failure 
+Library</A> which supports a global failure() routine, optional 
+console-logging of messages (on by default), an optional callback and a 
+global failure count.</P>
+<P>
+In C++ use the standard <b>std::exception</b> classes and <b>throw-catch</b> logic
+but do not use throw specifications on routines (they are problematic and deprecated).
+</P>
+<P>
+9. In C, use the <A NAME="MemoryLibrary">Memory Library</A> for 
+dynamic memory allocation and deallocation. This provides macros that 
+are convenient and defect trapping as well as a single point for memory 
+management to facilitate instrumented debugging, testing and 
+extendibility (e.g., to shared memory). Avoid using malloc(), free(), 
+realloc(), calloc(), strdup(), etc.</P>
+<P>
+In C++ use operator <b>new</b>.
+</P>
+<P><strike>
+10. Use the<A NAME="StreamLibrary"> Stream Library</A> for ASCII and 
+binary data I/O. It provides convenient robust efficient and portable 
+functionality. (See exemplar.)</strike></P>
+<P>
+11. Familiarize yourself with the other existing libraries used on the 
+project. Read their documentation files (docs/*.txt), ask their authors 
+if you have questions or suggested improvements and reuse them in code 
+you develop.</P>
+<P>
+12. Follow the format of the exemplar (which is processed by document 
+generation utilties) including:</P>
+<UL>
+    <LI>
+    File comment block (also see exemplar below): 
+</UL>
+<PRE>
+/******************************************************************************
+PURPOSE: Stream.h - Declare streams for reading and writing to ASCII and
+         portable binary (XDR/IEEE-754/MSB) files, pipes and sockets.
+         Provides an efficient, portable (multi-platform, cross-language
+         compatible), convenient and compatible alternative to fopen, popen
+         and socket and associated fread/fwrite/xdr_vector calls.
+
+NOTES:   Example usage:
+
+         #include &lt;Stream.h&gt;
+
+         int main( void ) {
+           int ok = 0;
+           Stream* stream = newPipeStream( &quot;rsh -l cws sequoia ls&quot;, &quot;r&quot; );
+
+           if ( stream ) {
+
+             while ( stream-&gt;ok( stream ) &amp;&amp; ! stream-&gt;isAtEnd( stream ) ) {
+               char string[ 10 ];
+               stream-&gt;readString( stream, string, 10 );
+
+               if ( stream-&gt;ok( stream ) ) {
+                 printf( &quot;%s\n&quot;, string );
+               }
+             }
+
+             ok = stream-&gt;ok( stream );
+             FREE_OBJECT( stream );
+           }
+
+           return ! ok;
+         }
+
+         cc -n32 -mips3 -xansi -fullwarn -g \
+            -I. -I/usr/include -I/usr/include/sys -I/usr/include/rpc \
+            -I/usr/include/netinet -I../../../../include -I. \
+            -o test_pipe test_pipe.c \
+            -L/usr/lib32/mips3 -L/usr/lib32 -L../../../../lib/IRIX \
+            -lStream.debug -lMemory.debug -lFailure.debug -lmalloc -lc
+
+         test_pipe
+
+         Uses a pipe to list (up to the first 9 letters of) names of files
+         in the home directory on the remote host.
+
+HISTORY: 1995-12-15 plessel.todd@epa.gov
+STATUS:  <b>reviewed tested</b>
+******************************************************************************/
+
+</PRE>
+
+</PRE>
+
+<P>
+<b>STATUS</b> (checked by custom <b>cdash</b> utility) contains only these boldface words:
+<LI> <b>inchoate</b> (not yet code; won't even compile)
+<LI> <b>unreviewed</b> (code that has not yet completed review)
+<LI> <b>reviewed</b> (code has <i>completed</i> review)
+<LI> <b>untested</b> (code that has not yet completed unit-testing)
+<LI> <b>tested</b> (code has <i>completed</i> unit-testing)
+</P>
+
+<UL>
+    <LI>
+    Function comment blocks (see exemplar, omit lines that are 
+    inapplicable): 
+</UL>
+<PRE>
+
+/******************************************************************************
+PURPOSE: offset - Get the current byte offset from the beginning of the file.
+INPUTS:  const Stream* self   The stream to check.
+RETURNS: Integer the current byte offset from the beginning of the file.
+NOTES:   Const-cast-away is used since ftell() is non-const (why?) therefore
+         this routine is possibly not thread-safe.
+******************************************************************************/
+
+</PRE>
+<UL>
+    <LI>
+    2-space indentation (no tabs). This is the minimum needed to clearly show
+    block structure while allowing the most code to fit on a line.
+    <LI>
+    Uses a blank line before conditionals and loops for clarity and emphasis
+    (like paragraphs in English). 
+    <LI>
+    Except in short struct or array declarations:
+    (const char* const a[2] = { &quot;foo&quot;, 
+    &quot;bar&quot; };), braces should be formatted to show the logical 
+    structure using &quot;pure block emulation&quot; form [<A
+     HREF="http://www.construx.com/stevemcc/cc.htm">McConnell</A>, page 
+    414) as illustrated in this non-sensical example: 
+    <PRE>
+<b>int</b> foo( <b>int</b> argument ) {
+  <b>int</b> result = 0;
+
+  <b>if</b> ( argument < 0 ) {
+    result = bar();
+  } <b>else if</b> ( argument == 0 ) {
+    result = goo( argument );
+  } <b>else</b> {
+
+    <b>do</b> {
+      moo();
+      result += goo( argument );
+    } <b>while</b> ( ! boo() );
+
+    <b>for</b> ( result = coo(); result >= 0; --result ) {
+      moo();
+    }
+
+    <b>switch</b> ( loo() ) {
+    <b>case</b> 'a':
+      result = moo();
+      <b>break</b>;
+    <b>default</b>:
+      result = goo( result );
+      <b>break</b>;
+    }
+  }
+
+  <b>return</b> result;
+}
+
+</PRE>
+    <LI>
+    As shown above, use spaces around <b>keywords</b> and punctuation (!, &amp;&amp;, ||, +, -, *, / %, (, ), 
+    [, ], {, }, etc.). 
+    <UL>
+        <LI>
+        A few end spaces may be omitted only if it avoids a multi-line break. 
+        <LI>
+        Functions look like <PRE><b>function( argument );</b> /* not 'function (argument);' */</PRE>
+        <LI>
+        Statements look like:
+        <PRE><b>} while ( ! condition );</b> /* not '}while(!condition);' */</PRE>
+    </UL>
+    <LI>
+    Use meaningful unabbreviated reasonable-length naming (not fcntl.h, hdr_idx, i, j, numLays, but 
+    FileControl.h, headerIndex, column, row, layers) 
+    <UL>
+    <LI>
+    Use ALLCAPITALS for common acronyms: RGBColor color; CMAQDataset dataset;
+    </UL> 
+    <LI>
+    Use ALL_CAPITALS for compile-time constants (#define, enum) and 
+    acronyms as part of names, e.g., CMAQ_VARIABLES.
+    <LI>
+    FirstLetterCapitalized for types: VoidList, XDRStream. 
+    <LI>
+    firstLetterLowercase for routines and variables: fileOk(), gridList. 
+    <LI>
+    In C, prefix global (non-pointer-encapsulated) ADT/library routines with the 
+    name of the &quot;class&quot;/library: <I>file</I>ReadString(), <I>timer</I>ElapsedSeconds() 
+    - note first letter is lowercase since it is a routine instead of a 
+    type or constant. Omit this prefix for encapsulated routines: 
+    myFile-&gt;readString( myFile, line, 80 ). See guideline #38 for an 
+    example of these two approaches. 
+</UL>
+<P>
+13. Use standard section comments (so the makedoc utility processes them correctly):</P>
+<PRE>
+
+/*================================ INCLUDES =================================*/
+/*================================= MACROS ==================================*/
+/*================================== TYPES ==================================*/
+/*========================== FORWARD DECLARATIONS ===========================*/
+/*============================ PUBLIC FUNCTIONS =============================*/
+/*============================ PRIVATE FUNCTIONS ============================*/
+
+</PRE>
+<P>
+In header files use this comment instead of &quot;PUBLIC 
+FUNCTIONS&quot; (since they're all public):</P>
+<PRE>
+/*================================ FUNCTIONS ================================*/
+
+</PRE>
+<P>
+In C++ use C++ one line comments: 
+<PRE>
+//================================ FUNCTIONS ==================================
+
+</PRE>
+<P>
+14. Use 0 instead of NULL. This avoids problems with ill-defined NULLs. 
+Declaration and use of enum { NIL }; is ok but only for file scope 
+usage. Ditto for other problem areas of C: BOOLEAN, TRUE / FALSE, 
+MIN()/MAX()...</P>
+<P>
+15. Use enums for integral constants rather than #define. (They have 
+the advantage of being printable in dbx.)</P>
+<P>
+not:</P>
+<PRE>
+ #define MAXIMUM_LENGTH 80
+</PRE>
+<P>
+but:</P>
+<PRE>
+ enum { MAXIMUM_LENGTH = 80 };
+ // Alternatively, in C++ code:
+ static const int BUFFER_SIZE = 1024 * 1024;
+</PRE>
+<P>
+16. Maximize use of const - even if it requires a cast in the call. (C 
+const is not multi-level like C++). E.g.,:</P>
+<PRE>
+ void f( Integer count, const Integer subset[][ 2 ] );
+
+ f( count, (const Integer (*)[2]) subset ); /* Cast required but worth it. */
+
+ static const char* const readOnlyStrings[] = { &quot;foo&quot;, &quot;bar&quot; };
+
+ if ( condition ) {
+   const char* const speciesName = speciesList[ index ];
+   /* speciesName is fixed to point to a read-only string. */
+ }
+</PRE>
+<P>
+17. In declarations, try to separate the type from the variable name. 
+In particular, declare pointers:</P>
+<P>
+not:</P>
+<PRE>
+ int *count, *second;
+</PRE>
+<P>
+but:</P>
+<PRE>
+ int* count  = 0;
+ int* second = 0;
+</PRE>
+<P>
+For complicated types, use typedefs</P>
+<PRE>
+typedef void (*FailureHandler)( Integer failureNumber, const char* message );
+extern void failureSetHandler( FailureHandler newFailureHandler );
+</PRE>
+<P>
+18. Write well-structured (single-entry-single-exit) loops and routines:</P>
+<UL>
+    <LI>
+    Don't use <TT>return</TT> in procedures (<TT>void</TT> routines). 
+    <LI>
+    Don't use multiple returns in functions. 
+    <LI>
+    Place <TT>return result;</TT> alone on a line after <TT>POST(</TT>) 
+    and before the closing brace. 
+    <LI>
+    Don't use <TT>break</TT>, <TT>continue</TT> or <TT>goto</TT>. 
+</UL>
+<P>
+Well-structured form generally yields better testability (simpler 
+graphs, applicable theory), understandability (tracing control/data 
+flows) and extendibility (inserting new code into a routine).</P>
+<P>
+19. Don't use () around the result of <TT>return</TT> statements and <TT>sizeof</TT>
+ operator's operands:</P>
+<PRE>
+  return result; /* Not return(some-expression); */
+  sizeof myList  /* Not sizeof(myList) */
+</PRE>
+<P>
+They are not functions so they should not appear as such.</P>
+<P>
+20. Prefer pre-increment to post-increment where the effect is 
+semantically equivalent. (It reads better &quot;increment value&quot; 
+(verb noun) vs &quot;value increment&quot; (noun verb) and is more 
+efficient, especially for arbitrary types in C++, since it avoids 
+copying to a temporary.)</P>
+<PRE>
+ post-increment is:                            pre-increment is:
+   const BigNumber copy( value );                /* No copy. */
+   value = value + 1;                            value = value + 1;
+   return copy;                                  return value;
+</PRE>
+<P>
+21. In routines with output arguments, make them last (after input 
+arguments). Declare in/out arguments after inputs and before outputs. 
+Exceptions to this are for routines intended to be compatible with 
+other routines (e.g., standard library, strcpy) or that have self/this 
+as the first argument. Note: an input argument is defined as one whose 
+value is read by the routine and an output argument is one that is 
+written.</P>
+<P>
+22. To the extent possible, declare variables nearest their first use. 
+Consider using extra {} to achieve this. This minimization of 
+&quot;locality of reference&quot; facilitates understandability (by 
+chunking), data-flow analysis (both by human readers and optimizing 
+compilers) and testing (often allowing for const declarations which 
+might not otherwise be possible). For example:</P>
+<PRE>
+  if ( foo ) {
+    const char* const firstName = foo-&gt;names[ index ][ 0 ];
+    ... /* firstName is unchangable and scope limited to this block */
+  }
+</PRE>
+<P>
+23. Initialize variables during declaration (especially pointers).</P>
+<PRE>
+  Foo* foo = 0; /* Avoid pointers to garbage. */
+</PRE>
+<P>
+Note: even <I>reading</I> an uninitialized value results in <I>undefined 
+behavior</I>:</P>
+<PRE>
+  Foo* p;
+  ...many lines later...
+  if ( a &amp;&amp; b || c &amp;&amp; p ) /* May crash if p wasn't initialized! */
+</PRE>
+<P>
+24. Prefer switch-case statements to long chains of if-then-else 
+if...-else-end. (Switch is more efficient and often more readable.)</P>
+<P>
+25. Prefer table-driven approaches to switch-case statements. (More 
+easily extendible - just add a table entry and the handler vs modify 
+existing code.) Here's an example:</P>
+<PRE>
+static int parseCommandLineOptions( int argc, const char* argv[],
+                                    UserParms* p ) {
+  /* Table-driven option handling: */
+
+  typedef int (*OptionHandler)( int, const char**, int*, UserParms* );
+
+  typedef struct { const char* option; OptionHandler handler;} OptionTableEntry;
+
+  static const OptionTableEntry optionsTable[] = {
+    { &quot;-site&quot;,            readSiteOption           },
+    { &quot;-grid&quot;,            readGridOption           },
+    { &quot;-output&quot;,          readOutputOption         },
+    { &quot;-gridvar&quot;,         readGridVarOption        },
+    { &quot;-sitevar&quot;,         readSiteVarOption        },
+    { &quot;-sitevarlat&quot;,      readSiteVarLatOption     },
+    { &quot;-sitevarlon&quot;,      readSiteVarLonOption     },
+    { &quot;-sitevarstat&quot;,     readSiteVarStatOption    },
+    { &quot;-siteregion&quot;,      readSiteRegionOption     },
+    { &quot;-sitetstep&quot;,       readSiteTstepOption      },
+    { &quot;-tsteppick&quot;,       readTstepPickOption      },
+    { &quot;-gridsamplesize&quot;,  readGridSampleSizeOption },
+    { &quot;-gridellipse&quot;,     readGridEllipseOption    },
+    { 0, 0 }
+  };
+
+  int ok = 1, arg = 0;
+
+  PRE3( argc &gt;= 1, argv, p );
+
+  for ( arg = 1; AND2( ok, arg &lt; argc ); ) {
+    const char* const opt = argv[ arg ];
+    int option = -1;
+    int index;
+
+    for ( index = 0; AND2( option == -1, optionsTable[ index ].option );
+          ++index ) {
+
+      if ( strcmp( opt, optionsTable[ index ].option ) == 0 ) {
+        option = index;
+      }
+    }
+
+    if ( option != -1 ) {
+      ok = optionsTable[ option ].handler( argc, (const char**) argv, &amp;arg, p );
+    } else {
+      failure( &quot;Invalid command-line option '%s'.&quot;, opt );
+      ok = 0;
+    }
+  }
+
+  ok = AND2( ok, finalUserParmsChecks( p ) );
+  POST( IMPLIES( ok, isValidUserParms( p ) ) );
+  return ok;
+}
+
+</PRE>
+<P>
+26. Prefer (static const) data to code. (More easily extendible. 
+Reduced logic to write, check, test, maintain.)</P>
+<P>
+27. Use the <A NAME="LogicMacros">logic macros</A> in <A
+ HREF="../../research/Assertions.h" TARGET="_blank"><I>Assertions.h</I></A>
+ (Experiments have shown them to be are more readily understandable 
+than the usual C punctuation and will eliminate precedence defects.) 
+Examples:</P>
+<PRE>
+  POST( IMPLIES_ELSE( ok, list-&gt;count == OLD( list_count ) + 1,
+                          list-&gt;count == OLD( list_count ) ) );
+
+  POST( IS_ZERO3( list-&gt;site, list-&gt;count, list-&gt;alloc ) );
+
+  POST2( IN_RANGE( *longitude, -180.0, 180.0 ),
+         IN_RANGE( *latitude,   -90.0,  90.0 ) );
+
+  POST( IMPLIES_ELSE( ok, siteList-&gt;count, siteList-&gt;count == 0 ) );
+
+  POST2( *arg &gt; OLD( arg ),
+         IMPLIES( ok, AND3( OR2( *arg == OLD( arg ) + 2, *arg == OLD(arg) + 3),
+                            p-&gt;site_tstep[ LOWER ] &gt;= 0,
+                            p-&gt;site_tstep[ UPPER ] &gt;= 0 ) ) );
+
+  return AND3( list,
+               IN_RANGE( list-&gt;count, 0, list-&gt;alloc ),
+               IMPLIES_ELSE( list-&gt;alloc, list-&gt;var, list-&gt;var == 0 ) );
+
+</PRE>
+<P>
+28. Always match parenthesis, brackes, braces - even in comments. (This 
+allows editors such as AME to match properly.) Where the use of a 
+single opening version is required, use a comment to supply the closing 
+one.</P>
+<P>
+29. Macros, if used, must be safe:</P>
+<OL>
+    <LI>
+    ALL_CAPS - to warn the user that it is not a function. 
+    <LI>
+    Where possible, in the definition: 
+    <OL>
+        <LI>
+        Use parenthesis around each argument. 
+        <LI>
+        Use parenthesis around the entire macro. 
+        <LI>
+        Make sure the macro is a single statement. Use 'do { statement1; 
+        statement2; ... } while ( 0 )' or the comma operator to wrap multiple 
+        statements. 
+    </OL>
+    <LI>
+    Don't pass arguments with side-effects to macros. (This includes 
+    function calls.) 
+    <LI>
+    Don't use comments inside of macros. (It leads to unexpected surprises 
+    when macro calls are commented out.) 
+    <PRE>
+    #define IS_VALID_GRID_DATA_TYPE(type) ((type) >= 0 && (type) < GRID_DATA_TYPES)
+    </PRE>
+</OL>
+<P>
+30. In C++, prefer inline functions and constants to macros.</P>
+<P>
+31. In C, &quot;Boolean&quot; functions should be declared to return exactly 
+Integer 1 or 0:</P>
+<P>
+RETURNS: Integer 1 if successful, else 0.</P>
+<P>
+rather than the more vague:</P>
+<P>
+RETURNS: 0 = failure; otherwise success</P>
+<P>
+and &quot;Boolean&quot; variables should always be exactly 0 or 1. Use <TT>IS_BOOL()</TT>
+ to verify this (in PRE() and POST()).</P>
+<P>
+32a. Don't leave trailing whitespace at the end of a line (it messes-up some editors).
+</P>
+<P>
+32b. Remove all DOS control-M characters from source files - it messes-up text processing utilities in UNIX.
+</P>
+<P>
+33. Always leave a few blank lines at the end of a source file - to facilitate concatenation of files during printing.
+<P>
+34. Use explicit braces to enclose multi-line statements such as 
+conditionals and loops.</P>
+<P>
+not:</P>
+<PRE>
+ if ( ... )
+   for ( ... )
+     ...
+</PRE>
+<P>
+but:</P>
+<PRE>
+ if ( ... ) {
+
+   for ( ... ) {
+     ...
+   }
+ }
+</PRE>
+<P>
+35. PRE and POST are not conditional. For example:</P>
+<PRE>
+   if ( ok ) {
+     POST( isValid( result ) );
+   }
+
+   return ok;
+</PRE>
+<P>
+must be written as:</P>
+<PRE>
+   POST( IMPLIES( ok, isValid( result ) ) );
+   return ok;
+</PRE>
+<P>
+or better (e.g., if result is a pointer):</P>
+<PRE>
+   POST( IMPLIES_ELSE( ok, isValid( result ), result == 0 ) );
+   return ok;
+</PRE>
+<P>
+36. Use horizonal spacing to vertically align similar text to improve 
+readability: E.g.,</P>
+<PRE>
+  subset[ LAYER    ][ LOWER ] == subset[ LAYER    ][ UPPER ],
+  subset[ TIMESTEP ][ LOWER ] == subset[ TIMESTEP ][ UPPER ],
+</PRE>
+<P>
+37. Use vertical spacing (blank lines before and/or after) to separate 
+&quot;paragraphs&quot;: multi-line statements (declarations, if, while, 
+for, PRE(), comment lines/blocks, etc.) to improve readability. 
+Examples:</P>
+<PRE>
+...
+
+  /*  Null out the unused variable slots (just for fun)  */
+
+  for ( variableIndex = 0; variableIndex &lt; bdesc-&gt;nvars; ++variableIndex ) {
+    bdesc-&gt;vtype[ variableIndex ] = 0;
+
+    memset( cdesc-&gt;vname[ variableIndex ], 0,
+            sizeof( cdesc-&gt;vname[ variableIndex ] ) );
+
+    memset( cdesc-&gt;vdesc[ variableIndex ], 0,
+            sizeof( cdesc-&gt;vdesc[ variableIndex ] ) );
+
+    ...
+  }
+
+  /*  Finally cook the return values  */
+
+  if ( inGrid ) {
+
+    /*
+     *  NOTE: An assumption this tool makes is that layer 1 cell in the
+     *  grid file is sufficient for the query.  See the SRS for details.
+     */
+
+    CHECK3( timestep &gt;= 0, row &gt;= 0.0, column &gt;= 0.0 );
+
+    subset[ TIMESTEP ][ LOWER ] = subset[ TIMESTEP ][ UPPER ] = timestep;
+    subset[ LAYER    ][ LOWER ] = subset[ LAYER    ][ UPPER ] = GRID_SITE_LAYER;
+    subset[ ROW      ][ LOWER ] = subset[ ROW      ][ UPPER ] = row;
+    subset[ COLUMN   ][ LOWER ] = subset[ COLUMN   ][ UPPER ] = column;
+  }
+
+  TimerStop( TIMER_COMPUTE_GRID_LOC );
+</PRE>
+<P>
+See exemplars.</P>
+<P>
+38. In C, use an object-based approach for components. That is, 
+define a structure for the ADT (but keeps its data definition private) 
+and define the set of commands and queries for operating on it. These 
+routines may either be global, in which their names must be prefixed 
+with the name of the ADT type (example 1) or they may be embedded in 
+the structure (example 2) in which case they can be concise since there 
+is no global namespace clashes.</P>
+<P>
+Example 1, <I>global function form</I>:</P>
+<PRE>
+/*================================= MACROS =================================*/
+
+/* Macro version of destructor zeros pointer to avoid dangling references: */
+
+#define fileClose(f) (fileClose_(f), (void)((f) = 0))
+
+/*================================== TYPES ==================================*/
+
+/* Except for the implementation, File is just an opaque structure: */
+
+typedef struct File_ File;
+
+/*================================ FUNCTIONS ================================*/
+
+/* Constructors: */
+
+extern File* fileOpen( const char* fileName, const char* mode );
+...
+/* Destructor: */
+
+extern void fileClose_( File* file ); /* Used via fileClose() macro. */
+
+/* Queries: */
+
+extern Integer     fileIsValid(    const File* file ); /* Invariant. */
+extern Integer     fileIsReadable( const File* file );
+...
+extern Integer     fileOk(         const File* file ); /*Last command work?*/
+
+/* Commands: */
+
+extern void fileFlush(           File* file );
+...
+extern void fileWrite64BitReals( File* file, const Real* a, Integer n );
+
+</PRE>
+<P>
+Usage:</P>
+<PRE>
+  File* gridFile = fileOpen( &quot;foo.dat&quot;, &quot;wb&quot; );
+  
+  if ( gridFile ) {
+    fileWrite64BitReals( gridFile, gridCoordinates, count );
+
+    if ( fileOk( gridFile ) ) {
+      ...
+    }
+
+    fileClose( gridFile );
+  }
+
+</PRE>
+<P>
+Example 2, <I>function-pointer form</I>:</P>
+<PRE>
+/*================================== TYPES ==================================*/
+
+struct VoidListPrivate_; /* Opaque. */
+
+typedef struct VoidList_ {
+
+  /* Private data members: */
+
+  struct VoidListPrivate_* p;
+
+  /* Public functions: */
+
+  /* Destructor: */
+
+  void (*free)( struct VoidList_* );
+
+  /* Queries: */
+
+  Integer     (*invariant)( const struct VoidList_* ); /* In valid state?    */
+  Integer     (*ok)(        const struct VoidList_* ); /* Last command work? */
+  Integer     (*count)(     const struct VoidList_* ); /* How many items?    */
+  const void* (*item)(      const struct VoidList_*, Integer ); /* Read item.*/
+  ...
+
+  /* Commands: */
+
+  void (*insert)(  struct VoidList_*, void*, Integer ); /* Insert an item */
+  void (*remove)(  struct VoidList_*,        Integer ); /* Remove an item */
+  void (*replace)( struct VoidList_*, void*, Integer ); /* Replace an item*/
+
+} VoidList;
+
+/*================================ FUNCTIONS ================================*/
+
+/* Constructor: */
+
+extern VoidList* newVoidList( VoidDestroyCallback dcb, VoidCompareCallback cmp);
+...
+
+</PRE>
+<P>
+Usage:</P>
+<PRE>
+  VoidList* gridList = newVoidList( destroyGridList, compareGrids );
+
+  if ( gridList ) {
+    ...
+    gridList-&gt;insert( gridList, newGrid, 0 );
+
+    if ( gridList-&gt;ok( gridList ) ) {
+      ...
+    }
+    ...
+  }
+
+</PRE>
+<P>
+Note: the second form allows for more concise routine naming and 
+minimizes global namespace pollution. However, if the component must be 
+interfaced with non-C/C++ code (e.g., FORTRAN), it will become 
+necessary to write global wrappers anyway.</P>
+<P>
+39a. Create a Bourne Shell script called <b>makeit</b> that will compile the module
+(i.e., source files in the current directory) on all platforms.
+</P>
+<P>
+39b. For libraries, <b>makeit</b> (without any arguments) will compile both a
+debug version (-Wall -g and assertions enabled) and optimized version
+(-O -DNO_ASSERTIONS) of the library:
+<b>libFoo.debug.a libFoo.a</b>.
+</P>
+<P>
+39c. For applications, <b>makeit</b> creates a debug version of the executable and
+<b>makeit optimized</b> creates an optimized, <i>stripped</i> executable.
+</P>
+<P>
+40. Generate the following artifacts (per class/library/application):</P>
+<UL>
+    <LI>
+    makeit 
+    <LI>
+    Name.C (source file of implementation) 
+    <LI>
+    Name.h (header file) 
+    <LI>
+    test/testit (regression test script for module) 
+    <LI>
+    test/NameTest.C (test driver for class) 
+    <LI>
+    test/lint.out (makeit lint) 
+    <LI>
+    test/metrics.out (makeit metrics) 
+    <LI>
+    docs/Name_API.txt (makeit doc) 
+    <LI>
+    ../../../lib/$platform/libName.debug.a (debug version of library - with assertions enabled) 
+    <LI>
+    ../../../lib/$platform/libName.a (optimized version of library - with assertions disabled and 
+    compiler optimizations enabled) 
+</UL>
+<P>
+41. Familiarize yourself with the existing software used in the project.</P>
+<P>
+42. The module developer should examine and resolve issues reported in
+lint.out, summetrics.out, etc. or be prepared to (briefly verbally) explain
+to peers why 'there is no problem'. (E.g., tools like lint report many 
+errors/warnings that are, in fact, benign when the full context of the 
+code is considered.)
+<strike>These artifacts will be examined during review and 
+outstanding problems must be satisfactorially justifiable to the 
+Quality Assurance Lead before acceptance.</strike>
+</P>
+<P>
+To maximize understandability and testability:
+</P>
+43. Routines should not exceed 50 LOC (non-blank, non-comment lines of code).
+(Try using a string-of-pearls development approach (Tips.pdf page 44) to avoid
+creating long routines or, after-the-fact, try to factor-out cohesive chunks of code
+into a separate routine.)
+</P>
+<P>
+44. Routines should not exceed cyclomatic complexity of 10 (Tips.pdf, page 52).
+That is, they should not have more than 10 independent paths.
+</P>
+<P>
+45. If you are unsure of any standards-related issues, ask the <A
+ HREF="projectplan.html#StaffOrganization">Quality Assurance Lead</A>.
+</P>
+<P><A NAME="Exemplars"><B>5. Exemplars</B></A></P>
+
+
+<!-- sh style -->
+<style type="text/css">
+  p.p1 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Courier; color: #961890}
+  p.p2 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Courier; min-height: 14.0px}
+  p.p3 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Courier}
+  p.p4 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Courier; color: #2d2cfa}
+  span.s1 {color: #000000}
+  span.s2 {color: #2d2cfa}
+  span.s3 {color: #000000}
+  span.s4 {color: #458111}
+</style>
+
+
+<!-- C++ .h style -->
+<style type="text/css">
+  p.p1 {margin: 0.0px 0.0px 0.0px 0.0px; font: 14.0px Courier; min-height: 17.0px}
+  p.p2 {margin: 0.0px 0.0px 0.0px 0.0px; font: 14.0px Courier; color: #802f90}
+  p.p3 {margin: 0.0px 0.0px 0.0px 0.0px; font: 14.0px Courier; color: #458111}
+  p.p4 {margin: 0.0px 0.0px 0.0px 0.0px; font: 14.0px Courier; color: #458111; min-height: 17.0px}
+  p.p5 {margin: 0.0px 0.0px 0.0px 0.0px; font: 14.0px Courier}
+  span.s1 {color: #802f90}
+  span.s2 {color: #7e2b14}
+  span.s3 {color: #000000}
+  span.s4 {color: #458111}
+</style>
+
+
+<P><A NAME="makeit"><B>5.1 </I></B></A><B><A NAME="makeit">makeit</A></B>:</P>
+<P></P>
+<p class="p1"><i><span class="s4">#!/bin/sh</span></i></p>
+<p class="p1"><i><span class="s4"># PURPOSE: makeit - Bourne Shell script to compile ExampleFLTK.</span></i></p>
+<p class="p1"><i><span class="s4"># NOTES:&nbsp;&nbsp;&nbsp;Usage: makeit [optimized]</span></i></p>
+<p class="p1"><i><span class="s4"># HISTORY: 2012-11-06 plessel.todd@epa.gov</span></i></p>
+<p class="p2"><br></p>
+<p class="p3"><span class="s3">PROGRAM=ExampleFLTK</p>
+<p class="p4"><span class="s3">SOURCE=</span><span class="s2">'Utilities.c Model.C Renderer.C View.C Controller.C main.C'</span></p>
+<p class="p4"><span class="s3">LIBS=</span><span class="s2">'-lFLTK'</span></p>
+<p class="p2"><br></p>
+<p class="p1"><i><span class="s4"># Determine the platform using uname:</span></i></p>
+<p class="p2"><br></p>
+<p class="p4"><span class="s3">UNAME_=</span><span class="s2">"`uname`"</span></p>
+<p class="p4"><span class="s3">UNAME_M=</span><span class="s2">"`uname -m`"</span></p>
+<p class="p2"><br></p>
+<p class="p4"><span class="s3"><b>if</b> [ </span><span class="s2">"$UNAME_"</span><span class="s3"> == </span><span class="s2">'Linux'</span><span class="s3"> ]</span></p>
+<p class="p3"><span class="s3"><b>then</b></p>
+<p class="p4"><span class="s3">&nbsp;&nbsp;PLATFORM=</span>"<span class="s2">$UNAME_.$UNAME_M"</span></p>
+<p class="p4"><span class="s3"><b>elif</b> [ </span><span class="s2">"$UNAME_"</span><span class="s3"> == </span><span class="s2">'CYGWIN_NT-5.1'</span><span class="s3"> ]</span></p>
+<p class="p3"><span class="s3"><b>then</b></p>
+<p class="p3">&nbsp;&nbsp;PLATFORM=<span class="s2"><span class="s2">'Win32'</span></span></p>
+<p class="p3"><span class="s3"><b>else</b></p>
+<p class="p3">&nbsp;&nbsp;PLATFORM=<span class="s2">"$UNAME_"</span></p>
+<p class="p3"><span class="s3"><b>fi</b></p>
+<p class="p2"><br></p>
+<p class="p3"><span class="s3"><b>for</b> repeat <b>in</b> {1..100} ; <b>do</b> echo ; <b>done</b> ; clear</p>
+<p class="p3"><span class="s3">echo ; echo </span>"Platform is $PLATFORM"<span class="s2"> ; echo</span></p>
+<p class="p2"><br></p>
+<p class="p1"><i><span class="s4"># Set Compiler flags:</span></i></p>
+<p class="p2"><br></p>
+<p class="p3"><span class="s3">LDD=ldd</span></p>
+<p class="p2"><br></p>
+<p class="p4"><span class="s3"><b>if</b> [ </span><span class="s2">"$PLATFORM"</span> == <span class="s2">'Darwin'</span> ]</p>
+<p class="p3"><span class="s3"><b>then</b></p>
+<p class="p4"><span class="s3">&nbsp;&nbsp;LDD=</span><span class="s2">'otool -L'</span></p>
+<p class="p4"><span class="s3">&nbsp;&nbsp;CFLAGS=</span><span class="s2">'-arch ppc -arch i686 -arch x86_64'</span></p>
+<p class="p4"><span class="s3">&nbsp;&nbsp;LFLAGS=</span><span class="s2">"-framework AGL -framework Cocoa -framework OpenGL \</span></p>
+<p class="p4"><span class="s2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-framework ApplicationServices -lpthread"</span></p>
+<p class="p4"><span class="s3"><b>elif</b> [ </span><span class="s2">"$PLATFORM"</span><span class="s3"> == </span><span class="s2">'Linux.x86_64'</span><span class="s3"> ]</span></p>
+<p class="p3"><span class="s3"><b>then</b></p>
+<p class="p4"><span class="s3">&nbsp;&nbsp;CFLAGS=</span><span class="s2">'-D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE'</span></p>
+<p class="p4"><span class="s3">&nbsp;&nbsp;LFLAGS=</span><span class="s2">'-L/usr/X11R6/lib -lXext -lX11 -lGLU -lGL -lpthread -ldl -lm'</span></p>
+<p class="p4"><span class="s3"><b>elif</b> [ </span><span class="s2">"$PLATFORM"</span><span class="s3"> == </span><span class="s2">'Linux.i686'</span><span class="s3"> ]</span></p>
+<p class="p3"><span class="s3"><b>then</b></p>
+<p class="p4"><span class="s3">&nbsp;&nbsp;CFLAGS=</span><span class="s2">'-D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE'</span></p>
+<p class="p4"><span class="s3">&nbsp;&nbsp;LFLAGS=</span><span class="s2">'-L/usr/X11R6/lib -lXext -lX11 -lGLU -lGL -lpthread -ldl -lm'</span></p>
+<p class="p4"><span class="s3"><b>elif</b> [ </span><span class="s2">"$PLATFORM"</span><span class="s3"> == </span>'Win32'<span class="s3"> ]</span></p>
+<p class="p3"><span class="s3"><b>then</b></p>
+<p class="p3"><span class="s3">&nbsp;&nbsp;LDD=ls</span></p>
+<p class="p4"><span class="s3">&nbsp;&nbsp;CFLAGS=</span><span class="s2">'-mwindows -DUSE_OPENGL32'</span></p>
+<p class="p4"><span class="s3">&nbsp;&nbsp;LFLAGS=</span><span class="s2">'-lglu32 -lopengl32 -lpthread -ldl -lole32 -luuid -lcomctl32'</span></p>
+<p class="p3"><span class="s3"><b>else</b></p>
+<p class="p4"><span class="s3">&nbsp;&nbsp;echo </span><span class="s2">"Unsupported platform: $PLATFORM"</span></p>
+<p class="p3"><span class="s3">&nbsp;&nbsp;<b>exit </b></span><span class="s2">1</span></p>
+<p class="p3"><span class="s3"><b>fi</b></p>
+<p class="p2"><br></p>
+<p class="p4"><span class="s3">IFLAGS=</span><span class="s2">"-Iinclude -I."</span></p>
+<p class="p4"><span class="s3">LIB_DIR=</span><span class="s2">"lib/$PLATFORM"</span></p>
+<p class="p4"><span class="s3">BIN_DIR=</span><span class="s2">"bin/$PLATFORM"</span></p>
+<p class="p4"><span class="s3">EXECUTABLE=</span><span class="s2">"$BIN_DIR/$PROGRAM"</span></p>
+<p class="p2"><br></p>
+<p class="p4"><span class="s3"><b>if</b> [ </span><span class="s2">"$PLATFORM"</span><span class="s3"> == </span><span class="s2">'Win32'</span><span class="s3"> ]</span></p>
+<p class="p3"><span class="s3"><b>then</b></p>
+<p class="p4"><span class="s3">&nbsp;&nbsp;EXECUTABLE=</span><span class="s2">"$EXECUTABLE.exe"</span></p>
+<p class="p3"><span class="s3"><b>fi</b></p>
+<p class="p2"><br></p>
+<p class="p4"><span class="s3"><b>if</b> [ </span><span class="s2">"$1"</span><span class="s3"> == </span><span class="s2">"optimized"</span><span class="s3"> ]</span></p>
+<p class="p3"><span class="s3"><b>then</b></p>
+<p class="p4"><span class="s3">&nbsp;&nbsp;CFLAGS=</span><span class="s2">"-O -DNO_ASSERTIONS $CFLAGS"</span></p>
+<p class="p3"><span class="s3"><b>else</b></p>
+<p class="p4"><span class="s3">&nbsp;&nbsp;CFLAGS=</span><span class="s2">"-Wall -g $CFLAGS"</span></p>
+<p class="p3"><span class="s3"><b>fi</b></p>
+<p class="p2"><br></p>
+<p class="p1"><i><span class="s4"># Compile:</span></i></p>
+<p class="p2"><br></p>
+<p class="p3"><span class="s3">touch $EXECUTABLE ; \rm $EXECUTABLE</span></p>
+<p class="p2"><br></p>
+<p class="p3"><span class="s3">echo \</span></p>
+<p class="p4"><span class="s2">"g++ $CFLAGS $IFLAGS -o $EXECUTABLE $SOURCE -L$LIB_DIR $LIBS $LFLAGS"</span></p>
+<p class="p3"><span class="s3">&nbsp;g++ $CFLAGS $IFLAGS -o $EXECUTABLE $SOURCE -L$LIB_DIR $LIBS $LFLAGS</span></p>
+<p class="p2"><br></p>
+<p class="p4"><span class="s3"><b>if</b> [ </span><span class="s2">"$1"</span><span class="s3"> == </span><span class="s2">"optimized"</span><span class="s3"> ]</span></p>
+<p class="p3"><span class="s3"><b>then</b></p>
+<p class="p3"><span class="s3">&nbsp;&nbsp;strip $EXECUTABLE</span></p>
+<p class="p3"><span class="s3"><b>fi</b></p>
+<p class="p2"><br></p>
+<p class="p3"><span class="s3">echo ; ls -l $EXECUTABLE ; echo ; file $EXECUTABLE ; echo ; $LDD $EXECUTABLE</span></p>
+<p class="p3"><span class="s3">echo</span></p>
+<p class="p2"><br></p>
+<P>___________________________________________________________________________</P>
+
+<P><A NAME="header"><B>5.2 </I></B></A><B><A NAME="header">Controller.h</A></B>:</P>
+<p class="p1"><br></p>
+<p class="p2">#ifndef CONTROLLER_H</p>
+<p class="p2">#define CONTROLLER_H</p>
+<p class="p1"><br></p>
+<p class="p3"><i>/******************************************************************************</i></p>
+<p class="p3"><i>PURPOSE: Controller.h - Controls (via a GUI) updates to a Model and its View.</i></p>
+<p class="p4"><i></i><br></p>
+<p class="p3"><i>NOTES: &nbsp;&nbsp;Model-View_Controller Design Pattern. Implemented using FLTK GUI API.</i></p>
+<p class="p4"><i></i><br></p>
+<p class="p3"><i>HISTORY: 2012-11-06 plessel.todd@epa.gov</i></p>
+<p class="p3"><i>STATUS:&nbsp;&nbsp;reviewed tested</i></p>
+<p class="p3"><i>******************************************************************************/</i></p>
+<p class="p1"><br></p>
+<p class="p3"><i>//================================ INCLUDES ===================================</i></p>
+<p class="p1"><br></p>
+<p class="p3"><span class="s1">#include </span><span class="s2">&lt;new&gt;</span><span class="s1"> </span><i>// For std::bad_alloc.</i></p>
+<p class="p1"><br></p>
+<p class="p3"><i>// To add a new widget search for STEP in this file then Controller.C.</i></p>
+<p class="p1"><br></p>
+<p class="p5"><b>class</b> Fl_Widget;</p>
+<p class="p5"><b>class</b> Fl_Button;</p>
+<p class="p5"><b>class</b> Fl_Check_Button;</p>
+<p class="p5"><b>class</b> Fl_Slider;</p>
+<p class="p1"><br></p>
+<p class="p3"><i>// Add new widget STEP 1:</i></p>
+<p class="p3"><i>// If the type of the widget is not already listed above,</i></p>
+<p class="p3"><i>// add its forward declaration:</i></p>
+<p class="p3"><i>// class Fl_something;</i></p>
+<p class="p1"><br></p>
+<p class="p3"><span class="s1">#include </span><span class="s2">&lt;FL/Fl_Window.H&gt;</span><span class="s1"> </span><i>// For Fl_Window.</i></p>
+<p class="p1"><br></p>
+<p class="p3"><span class="s1">#include </span><span class="s2">&lt;Model.h&gt;</span><span class="s1"> </span><i>// For Model.</i></p>
+<p class="p3"><span class="s1">#include </span><span class="s2">&lt;View.h&gt;</span><span class="s1">&nbsp;&nbsp;</span><i>// For View.</i></p>
+<p class="p1"><br></p>
+<p class="p3"><i>//================================== TYPES ====================================</i></p>
+<p class="p1"><br></p>
+<p class="p5"><b>class</b> Controller : <b>public</b> Fl_Window {</p>
+<p class="p5"><b>private</b>:</p>
+<p class="p1"><br></p>
+<p class="p3"><span class="s3">&nbsp;&nbsp;</span><i>// Attributes:</i></p>
+<p class="p1"><br></p>
+<p class="p5">&nbsp;&nbsp;Model&amp; model;</p>
+<p class="p5">&nbsp;&nbsp;View&amp; view;</p>
+<p class="p3"><span class="s3">&nbsp;&nbsp;Fl_Check_Button* showButton; </span><i>// Button to cause object to be drawn.</i></p>
+<p class="p3"><span class="s3">&nbsp;&nbsp;Fl_Slider* animationSlider;&nbsp;&nbsp;</span><i>// User-controllable animation slider.</i></p>
+<p class="p3"><span class="s3">&nbsp;&nbsp;Fl_Button* playStopButton; &nbsp;&nbsp;</span><i>// Button to turn on/off automatic animation.</i></p>
+<p class="p5">&nbsp;&nbsp;Fl_Button* quitButton; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="s4"><i>// Button to quit application.</i></span></p>
+<p class="p1"><br></p>
+<p class="p3"><span class="s3">&nbsp;&nbsp;</span><i>// STEP 2: add new widget pointer attribute above.</i></p>
+<p class="p1"><br></p>
+<p class="p3"><span class="s3">&nbsp;&nbsp;</span><i>// Helpers:</i></p>
+<p class="p1"><br></p>
+<p class="p5">&nbsp;&nbsp;Controller( <b>const</b> Controller&amp; ); <span class="s4"><i>// Not allowed.</i></span></p>
+<p class="p5">&nbsp;&nbsp;Controller&amp; <b>operator</b>=( <b>const</b> Controller&amp; ); <span class="s4"><i>// Not allowed.</i></span></p>
+<p class="p1"><br></p>
+<p class="p3"><span class="s3">&nbsp;&nbsp;</span><i>// Non-menu widgets have this static forwarding callback (called by FLTK):</i></p>
+<p class="p1"><br></p>
+<p class="p5">&nbsp;&nbsp;<b>static</b> <b>void</b> callback( Fl_Widget* widget, <b>void</b>* data );</p>
+<p class="p1"><br></p>
+<p class="p3"><span class="s3">&nbsp;&nbsp;</span><i>// Which forwards to this dispatcher, which calls a handler:</i></p>
+<p class="p1"><br></p>
+<p class="p5">&nbsp;&nbsp;<b>void</b> dispatcher( Fl_Widget* widget );</p>
+<p class="p1"><br></p>
+<p class="p3"><span class="s3">&nbsp;&nbsp;</span><i>// Handler routines (called by the above dispatcher()):</i></p>
+<p class="p1"><br></p>
+<p class="p5">&nbsp;&nbsp;<b>void</b> showHandler( Fl_Widget* widget );&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="s4"><i>// If show button is pressed.</i></span></p>
+<p class="p5">&nbsp;&nbsp;<b>void</b> animationHandler( Fl_Widget* widget ); <span class="s4"><i>// If animate slider.</i></span></p>
+<p class="p5">&nbsp;&nbsp;<b>void</b> playStopHandler( Fl_Widget* widget );&nbsp;&nbsp;<span class="s4"><i>// Auto-animate.</i></span></p>
+<p class="p5">&nbsp;&nbsp;<b>void</b> quitHandler( Fl_Widget* widget );&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="s4"><i>// Quit button pressed.</i></span></p>
+<p class="p1"><br></p>
+<p class="p3"><span class="s3">&nbsp;&nbsp;</span><i>// STEP 3: Add declaration of handler for new widget above.</i></p>
+<p class="p1"><br></p>
+<p class="p5"><b>public</b>:</p>
+<p class="p1"><br></p>
+<p class="p3"><span class="s3">&nbsp;&nbsp;</span><i>// Commands:</i></p>
+<p class="p1"><br></p>
+<p class="p5">&nbsp;&nbsp;<b>virtual</b> ~Controller();</p>
+<p class="p5">&nbsp;&nbsp;Controller( Model&amp; model, View&amp; view );</p>
+<p class="p5">&nbsp;&nbsp;<b>int</b> run();</p>
+<p class="p1"><br></p>
+<p class="p3"><span class="s3">&nbsp;&nbsp;</span><i>// Queries:</i></p>
+<p class="p1"><br></p>
+<p class="p5">&nbsp;&nbsp;<b>virtual</b> <b>bool</b> invariant() <b>const</b></p>
+<p class="p5">};</p>
+<p class="p1"><br></p>
+<p class="p3"><span class="s1">#endif </span><i>/* CONTROLLER_H */</i></p>
+<p class="p1"><br></p>
+<p class="p1"><br></p>
+<p class="p1"><br></p>
+
+
+
+<P>___________________________________________________________________________</P>
+
+
+
+
+<P><A NAME="source"><B>5.3 </I></B></A><B><A NAME="source">Controller.C</A></B>:</P>
+<p class="p1"><br></p>
+<p class="p1"><br></p>
+<p class="p3"><i>/******************************************************************************</i></p>
+<p class="p3"><i>PURPOSE: Controller.C - Implements GUI Controller for a Model.</i></p>
+<p class="p4"><i></i><br></p>
+<p class="p3"><i>NOTES: &nbsp;&nbsp;Uses FLTK.</i></p>
+<p class="p4"><i></i><br></p>
+<p class="p3"><i>HISTORY: 2012-11-06 plessel.todd@epa.gov</i></p>
+<p class="p3"><i>******************************************************************************/</i></p>
+<p class="p1"><br></p>
+<p class="p3"><i>//================================ INCLUDES ===================================</i></p>
+<p class="p1"><br></p>
+<p class="p3"><span class="s1">#include </span><span class="s2">&lt;stdlib.h&gt;</span><span class="s1"> </span><i>// For snprintf().</i></p>
+<p class="p3"><span class="s1">#include </span><span class="s2">&lt;string.h&gt;</span><span class="s1"> </span><i>// For strcmp(), memset(), memcpy().</i></p>
+<p class="p3"><span class="s1">#include </span><span class="s2">&lt;unistd.h&gt;</span><span class="s1"> </span><i>// For usleep().</i></p>
+<p class="p1"><br></p>
+<p class="p3"><span class="s1">#include </span><span class="s2">&lt;new&gt;</span><span class="s1"> </span><i>// For std::bad_alloc.</i></p>
+<p class="p1"><br></p>
+<p class="p3"><span class="s1">#include </span><span class="s2">&lt;FL/Fl.H&gt;</span><span class="s1">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><i>// For FL_KEYDOWN, Fl::run().</i></p>
+<p class="p3"><span class="s1">#include </span><span class="s2">&lt;FL/Fl_Window.H&gt;</span><span class="s1"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><i>// For Fl_Window.</i></p>
+<p class="p3"><span class="s1">#include </span><span class="s2">&lt;FL/Fl_Gl_Window.H&gt;</span><span class="s1">&nbsp;&nbsp;&nbsp;&nbsp;</span><i>// For Fl_Gl_Window.</i></p>
+<p class="p3"><span class="s1">#include </span><span class="s2">&lt;FL/Fl_Button.H&gt;</span><span class="s1"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><i>// For Fl_Button.</i></p>
+<p class="p3"><span class="s1">#include </span><span class="s2">&lt;FL/Fl_Check_Button.H&gt;</span><span class="s1"> </span><i>// For Fl_Check_Button.</i></p>
+<p class="p3"><span class="s1">#include </span><span class="s2">&lt;FL/Fl_Slider.H&gt;</span><span class="s1"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><i>// For Fl_Slider.</i></p>
+<p class="p1"><br></p>
+<p class="p3"><span class="s1">#include </span><span class="s2">&lt;Assertions.h&gt;</span><span class="s1"> </span><i>// For PRE(), POST(), CHECK().</i></p>
+<p class="p3"><span class="s1">#include </span><span class="s2">&lt;Utilities.h&gt;</span><span class="s1"> </span><i>&nbsp;// For Color.</i></p>
+<p></p>
+<p class="p2">#include <span class="s2">&lt;Model.h&gt;</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="s4"><i>// For Model.</i></span></p>
+<p class="p2">#include <span class="s2">&lt;View.h&gt;</span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="s4"><i>// For View.</i></span></p>
+<p class="p3"><span class="s1">#include </span><span class="s2">&lt;Controller.h&gt;</span><span class="s1"> </span><i>// For Controller.</i></p>
+<p class="p1"><br></p>
+<p class="p3"><i>//============================= PUBLIC FUNCTIONS ==============================</i></p>
+<p class="p1"><br></p>
+<p class="p1"><br></p>
+<p class="p1"><br></p>
+<p class="p3"><i>/******************************************************************************</i></p>
+<p class="p3"><i>PURPOSE: ~Controller - Destructor.</i></p>
+<p class="p3"><i>******************************************************************************/</i></p>
+<p class="p1"><br></p>
+<p class="p5">Controller::~Controller() {</p>
+<p class="p5">&nbsp;&nbsp;PRE( <b>true</b> );</p>
+<p class="p5">&nbsp;&nbsp;showButton = <span class="s5">0</span>;</p>
+<p class="p5">&nbsp;&nbsp;animationSlider = <span class="s5">0</span>;</p>
+<p class="p5">&nbsp;&nbsp;playStopButton = <span class="s5">0</span>;</p>
+<p class="p5">&nbsp;&nbsp;quitButton = <span class="s5">0</span>;</p>
+<p class="p5">}</p>
+<p class="p1"><br></p>
+<p class="p1"><br></p>
+<p class="p1"><br></p>
+<p class="p3"><i>/******************************************************************************</i></p>
+<p class="p3"><i>PURPOSE: Controller - Constructor.</i></p>
+<p class="p3"><i>INPUTS:&nbsp;&nbsp;Model&amp; model&nbsp;&nbsp;The Model to update.</i></p>
+<p class="p3"><i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;View&amp; view&nbsp;&nbsp;&nbsp;&nbsp;The View to update.</i></p>
+<p class="p3"><i>******************************************************************************/</i></p>
+<p class="p1"><br></p>
+<p class="p5">Controller::Controller( Model&amp; model, View&amp; view )</p>
+<p class="p5">&nbsp;&nbsp;: Fl_Window( <span class="s5">5</span>, <span class="s5">30</span>, <span class="s5">230</span>, <span class="s5">130</span>, <span class="s2">"Example Controller"</span> ),</p>
+<p class="p5">&nbsp;&nbsp;model( model), view( view ) {</p>
+<p class="p5">&nbsp;&nbsp;PRE02( model.invariant(), view.invariant() );</p>
+<p class="p1"><br></p>
+<p class="p5">&nbsp;&nbsp;<b>int</b> widgetX = <span class="s5">10</span>;</p>
+<p class="p5">&nbsp;&nbsp;<b>int</b> widgetY = <span class="s5">10</span>;</p>
+<p class="p5">&nbsp;&nbsp;<b>const</b> <b>int</b> widgetWidth = <span class="s5">200</span>;</p>
+<p class="p5">&nbsp;&nbsp;<b>const</b> <b>int</b> widgetHeight = <span class="s5">25</span>;</p>
+<p class="p1"><br></p>
+<p class="p3"><span class="s3">&nbsp;&nbsp;</span><i>// Show button:</i></p>
+<p class="p1"><br></p>
+<p class="p5">&nbsp;&nbsp;showButton =</p>
+<p class="p5">&nbsp;&nbsp;&nbsp;&nbsp;<b>new</b> Fl_Check_Button( widgetX, widgetY, widgetWidth, widgetHeight, <span class="s2">"Show"</span> );</p>
+<p class="p5">&nbsp;&nbsp;showButton-&gt;callback( Controller::callback, (<b>void</b>*) <b>this</b> );</p>
+<p class="p5"><span class="s3">&nbsp;&nbsp;showButton-&gt;tooltip( </span>"Create the 4 million vertex polyline display list"<span class="s3"> );</span></p>
+<p class="p1"><br></p>
+<p class="p3"><span class="s3">&nbsp;&nbsp;</span><i>// Animation slider:</i></p>
+<p class="p1"><br></p>
+<p class="p5">&nbsp;&nbsp;widgetY += widgetHeight;</p>
+<p class="p5">&nbsp;&nbsp;animationSlider =</p>
+<p class="p5">&nbsp;&nbsp;&nbsp;&nbsp;<b>new</b> Fl_Slider( widgetX, widgetY, widgetWidth, widgetHeight, <span class="s2">"Animate"</span> );</p>
+<p class="p5">&nbsp;&nbsp;animationSlider-&gt;callback( Controller::callback, (<b>void</b>*) <b>this</b> );</p>
+<p class="p5">&nbsp;&nbsp;animationSlider-&gt;type( FL_HORIZONTAL );</p>
+<p class="p5">&nbsp;&nbsp;animationSlider-&gt;value( <span class="s5">0</span> );</p>
+<p class="p5">&nbsp;&nbsp;animationSlider-&gt;bounds( <span class="s5">0</span>, <span class="s5">100</span> );</p>
+<p class="p1"><br></p>
+<p class="p3"><span class="s3">&nbsp;&nbsp;</span><i>// Play/Stop button:</i></p>
+<p class="p1"><br></p>
+<p class="p5">&nbsp;&nbsp;widgetY += widgetHeight;</p>
+<p class="p5">&nbsp;&nbsp;playStopButton =</p>
+<p class="p5">&nbsp;&nbsp;&nbsp;&nbsp;<b>new</b> Fl_Button( widgetX, widgetY, widgetWidth, widgetHeight, <span class="s2">"&amp;Play"</span> );</p>
+<p class="p5">&nbsp;&nbsp;playStopButton-&gt;callback( Controller::callback, (<b>void</b>*) <b>this</b> );</p>
+<p class="p1"><br></p>
+<p class="p3"><span class="s3">&nbsp;&nbsp;</span><i>// Quit button:</i></p>
+<p class="p1"><br></p>
+<p class="p5">&nbsp;&nbsp;widgetY += widgetHeight;</p>
+<p class="p5">&nbsp;&nbsp;quitButton =</p>
+<p class="p5">&nbsp;&nbsp;&nbsp;&nbsp;<b>new</b> Fl_Button( widgetX, widgetY, widgetWidth, widgetHeight, <span class="s2">"&amp;Quit"</span> );</p>
+<p class="p5">&nbsp;&nbsp;quitButton-&gt;callback( Controller::callback, (<b>void</b>*) <b>this</b> );</p>
+<p class="p1"><br></p>
+<p class="p3"><span class="s3">&nbsp;&nbsp;</span><i>// STEP 4: Add code to create new widget above.</i></p>
+<p class="p1"><br></p>
+<p class="p3"><span class="s3">&nbsp;&nbsp;end(); </span><i>// Note parent window deletes child widgets created above when closed.</i></p>
+<p class="p5">&nbsp;&nbsp;show();</p>
+<p class="p5">&nbsp;&nbsp;POST( <b>true</b> );</p>
+<p class="p5">}</p>
+<p class="p1"><br></p>
+<p class="p1"><br></p>
+<p class="p1"><br></p>
+<p class="p3"><i>/******************************************************************************</i></p>
+<p class="p3"><i>PURPOSE: run - Start the event loop.</i></p>
+<p class="p3"><i>RETURNS: int Exit status of process.</i></p>
+<p class="p3"><i>NOTES: &nbsp;&nbsp;This routine blocks until all windows have been closed.</i></p>
+<p class="p3"><i>******************************************************************************/</i></p>
+<p class="p1"><br></p>
+<p class="p5"><b>int</b> Controller::run() {</p>
+<p class="p5">&nbsp;&nbsp;PRE( <b>true</b> );</p>
+<p class="p5">&nbsp;&nbsp;<b>const</b> <b>int</b> result = Fl::run();</p>
+<p class="p5">&nbsp;&nbsp;<b>return</b> result;</p>
+<p class="p5">}</p>
+<p class="p1"><br></p>
+<p class="p1"><br></p>
+<p class="p1"><br></p>
+<p class="p3"><i>/******************************************************************************</i></p>
+<p class="p3"><i>PURPOSE: invariant - Is object in a valid state?</i></p>
+<p class="p3"><i>RETURNS: bool true or else there is a defect in the program.</i></p>
+<p class="p3"><i>NOTES: Called implicitly by PRE() and POST() unless compiled with</i></p>
+<p class="p3"><i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-DNO_ASSERTIONS.</i></p>
+<p class="p3"><i>******************************************************************************/</i></p>
+<p class="p1"><br></p>
+<p class="p5"><b>bool</b> Controller::invariant() <b>const</b> {</p>
+<p class="p5">&nbsp;&nbsp;<b>const</b> <b>int</b> result =</p>
+<p class="p5">&nbsp;&nbsp;&nbsp;&nbsp;AND6( model.invariant(),</p>
+<p class="p5">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;view.invariant(),</p>
+<p class="p5">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;showButton,</p>
+<p class="p5">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;animationSlider,</p>
+<p class="p5">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;playStopButton,</p>
+<p class="p5">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;quitButton );</p>
+<p class="p5">&nbsp;&nbsp;<b>return</b> result;</p>
+<p class="p5">}</p>
+<p class="p1"><br></p>
+<p class="p1"><br></p>
+<p class="p1"><br></p>
+<p class="p3"><i>//============================ PRIVATE FUNCTIONS ==============================</i></p>
+<p class="p1"><br></p>
+<p class="p1"><br></p>
+<p class="p1"><br></p>
+<p class="p3"><i>/******************************************************************************</i></p>
+<p class="p3"><i>PURPOSE: callback - FLTK callback invoked whenever a widget is used.</i></p>
+<p class="p3"><i>RETURNS: Fl_Widget* widget&nbsp;&nbsp;Widget used.</i></p>
+<p class="p3"><i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;void* data &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Pointer to this.</i></p>
+<p class="p3"><i>NOTES: &nbsp;&nbsp;This routine is called from the FLTK event loop.</i></p>
+<p class="p3"><i>******************************************************************************/</i></p>
+<p class="p1"><br></p>
+<p class="p5"><b>void</b> Controller::callback( Fl_Widget* widget, <b>void</b>* data ) {</p>
+<p class="p5">&nbsp;&nbsp;PRE02( widget, data );</p>
+<p class="p5">&nbsp;&nbsp;Controller* <b>const</b> controller = (Controller*) data;</p>
+<p class="p5">&nbsp;&nbsp;controller-&gt;dispatcher( widget ); <span class="s4"><i>// Calls routine below.</i></span></p>
+<p class="p5">}</p>
+<p class="p1"><br></p>
+<p class="p1"><br></p>
+<p class="p1"><br></p>
+<p class="p3"><i>/******************************************************************************</i></p>
+<p class="p3"><i>PURPOSE: callback - FLTK callback invoked whenever a widget is used.</i></p>
+<p class="p3"><i>RETURNS: Fl_Widget* widget&nbsp;&nbsp;Widget used.</i></p>
+<p class="p3"><i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;void* data &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Pointer to this.</i></p>
+<p class="p3"><i>NOTES: &nbsp;&nbsp;This routine is called from the FLTK event loop.</i></p>
+<p class="p3"><i>******************************************************************************/</i></p>
+<p class="p1"><br></p>
+<p class="p5"><b>void</b> Controller::dispatcher (Fl_Widget* widget) {</p>
+<p class="p5">&nbsp;&nbsp;PRE( widget );</p>
+<p class="p5">&nbsp;&nbsp;<b>typedef</b> <b>void</b> (Controller::* Handler)( Fl_Widget* );</p>
+<p class="p5">&nbsp;&nbsp;<b>struct</b> Entry {</p>
+<p class="p5">&nbsp;&nbsp;&nbsp;&nbsp;Fl_Widget* <b>const</b> widget; <span class="s4"><i>// Non-menu widget.</i></span></p>
+<p class="p3"><span class="s3">&nbsp;&nbsp;&nbsp;&nbsp;Handler handler; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><i>// Handler routine for widget.</i></p>
+<p class="p5">&nbsp;&nbsp;};</p>
+<p class="p5">&nbsp;&nbsp;<b>static</b> <b>const</b> Entry table[] = {</p>
+<p class="p5">&nbsp;&nbsp;&nbsp;&nbsp;{ (Fl_Widget*) showButton,&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&amp;Controller::showHandler },</p>
+<p class="p5">&nbsp;&nbsp;&nbsp;&nbsp;{ (Fl_Widget*) animationSlider, &amp;Controller::animationHandler },</p>
+<p class="p5">&nbsp;&nbsp;&nbsp;&nbsp;{ (Fl_Widget*) playStopButton,&nbsp;&nbsp;&amp;Controller::playStopHandler },</p>
+<p class="p5">&nbsp;&nbsp;&nbsp;&nbsp;{ (Fl_Widget*) quitButton,&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&amp;Controller::quitHandler },</p>
+<p class="p3"><span class="s3">&nbsp;&nbsp;&nbsp;&nbsp;{ </span><span class="s5">0</span><span class="s3">, </span><span class="s5">0</span><span class="s3"> } </span><i>// End of table. STEP 5: Add table entry above for new widget.</i></p>
+<p class="p5">&nbsp;&nbsp;};</p>
+<p class="p5">&nbsp;&nbsp;<b>const</b> <b>int</b> count = <b>sizeof</b> table / <b>sizeof</b> *table;</p>
+<p class="p5">&nbsp;&nbsp;<b>int</b> index = <span class="s5">0</span>;</p>
+<p class="p1"><br></p>
+<p class="p5">&nbsp;&nbsp;<b>for</b> ( index = <span class="s5">0</span>; index &lt; count; ++index ) {</p>
+<p class="p5">&nbsp;&nbsp;&nbsp;&nbsp;<b>const</b> Entry&amp; entry = table[ index ];</p>
+<p class="p1"><br></p>
+<p class="p5">&nbsp;&nbsp;&nbsp;&nbsp;<b>if</b> ( entry.widget == widget ) {</p>
+<p class="p5">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Handler handler = entry.handler;</p>
+<p class="p5">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<b>this</b>-&gt;*handler)( widget );</p>
+<p class="p5">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;index = count; <span class="s4"><i>// Stop looping.</i></span></p>
+<p class="p5">&nbsp;&nbsp;&nbsp;&nbsp;}</p>
+<p class="p5">&nbsp;&nbsp;}</p>
+<p class="p1"><br></p>
+<p class="p5">&nbsp;&nbsp;POST( <b>true</b> );</p>
+<p class="p5">}</p>
+<p class="p1"><br></p>
+<p class="p1"><br></p>
+<p class="p1"><br></p>
+<p class="p3"><i>/******************************************************************************</i></p>
+<p class="p3"><i>PURPOSE: showHandler - Called when show button is pressed.</i></p>
+<p class="p3"><i>RETURNS: Fl_Widget* widget&nbsp;&nbsp;Show button.</i></p>
+<p class="p3"><i>NOTES: &nbsp;&nbsp;This routine is called from dispatch() above.</i></p>
+<p class="p3"><i>******************************************************************************/</i></p>
+<p class="p1"><br></p>
+<p class="p5"><b>void</b> Controller::showHandler( Fl_Widget* widget ) {</p>
+<p class="p5">&nbsp;&nbsp;PRE2( widget, widget == showButton );</p>
+<p class="p5">&nbsp;&nbsp;<b>const</b> <b>bool</b> value = showButton-&gt;value() != <span class="s5">0</span>;</p>
+<p class="p5">&nbsp;&nbsp;model.show( value );</p>
+<p class="p5">&nbsp;&nbsp;view.redraw();</p>
+<p class="p5">&nbsp;&nbsp;POST( <b>true</b> );</p>
+<p class="p5">}</p>
+<p class="p1"><br></p>
+<p class="p1"><br></p>
+<p class="p1"><br></p>
+<p class="p3"><i>/******************************************************************************</i></p>
+<p class="p3"><i>PURPOSE: animationHandler - Called when animationSlider is changed.</i></p>
+<p class="p3"><i>RETURNS: Fl_Widget* widget&nbsp;&nbsp;animationSlider.</i></p>
+<p class="p3"><i>NOTES: &nbsp;&nbsp;This routine is called from dispatch() above.</i></p>
+<p class="p3"><i>******************************************************************************/</i></p>
+<p class="p1"><br></p>
+<p class="p5"><b>void</b> Controller::animationHandler( Fl_Widget* widget ) {</p>
+<p class="p5">&nbsp;&nbsp;PRE2( widget, widget == animationSlider );</p>
+<p class="p5">&nbsp;&nbsp;<b>static</b> <b>const</b> Color colors[] = {</p>
+<p class="p5">&nbsp;&nbsp;&nbsp;&nbsp;{ <span class="s5">0.0</span>, <span class="s5">0.0</span>, <span class="s5">1.0</span> },</p>
+<p class="p5">&nbsp;&nbsp;&nbsp;&nbsp;{ <span class="s5">0.0</span>, <span class="s5">1.0</span>, <span class="s5">1.0</span> },</p>
+<p class="p5">&nbsp;&nbsp;&nbsp;&nbsp;{ <span class="s5">0.0</span>, <span class="s5">1.0</span>, <span class="s5">0.0</span> },</p>
+<p class="p5">&nbsp;&nbsp;&nbsp;&nbsp;{ <span class="s5">1.0</span>, <span class="s5">1.0</span>, <span class="s5">0.0</span> },</p>
+<p class="p5">&nbsp;&nbsp;&nbsp;&nbsp;{ <span class="s5">1.0</span>, <span class="s5">0.0</span>, <span class="s5">0.0</span> },</p>
+<p class="p5">&nbsp;&nbsp;&nbsp;&nbsp;{ <span class="s5">1.0</span>, <span class="s5">0.0</span>, <span class="s5">1.0</span> },</p>
+<p class="p5">&nbsp;&nbsp;&nbsp;&nbsp;{ <span class="s5">1.0</span>, <span class="s5">1.0</span>, <span class="s5">1.0</span> }</p>
+<p class="p5">&nbsp;&nbsp;};</p>
+<p class="p5">&nbsp;&nbsp;<b>const</b> <b>int</b> value = (<b>int</b>) animationSlider-&gt;value();</p>
+<p class="p5">&nbsp;&nbsp;<b>const</b> <b>int</b> index = value % ( <b>sizeof</b> colors / <b>sizeof</b> *colors );</p>
+<p class="p5">&nbsp;&nbsp;CHECK( IN_RANGE( index, <span class="s5">0</span>, (<b>int</b>) ( <b>sizeof</b> colors / <b>sizeof</b> *colors ) - <span class="s5">1</span> ) );</p>
+<p class="p5">&nbsp;&nbsp;<b>const</b> Color&amp; color = colors[ index ];</p>
+<p class="p5">&nbsp;&nbsp;CHECK( isValidColor( color ) );</p>
+<p class="p5">&nbsp;&nbsp;model.color( color );</p>
+<p class="p5">&nbsp;&nbsp;view.redraw();</p>
+<p class="p5">&nbsp;&nbsp;POST( <b>true</b> );</p>
+<p class="p5">}</p>
+<p class="p1"><br></p>
+<p class="p1"><br></p>
+<p class="p1"><br></p>
+<p class="p3"><i>/******************************************************************************</i></p>
+<p class="p3"><i>PURPOSE: playStopHandler - Called when playStopButton is pressed.</i></p>
+<p class="p3"><i>RETURNS: Fl_Widget* widget&nbsp;&nbsp;playStopButton.</i></p>
+<p class="p3"><i>NOTES: &nbsp;&nbsp;This routine is called from dispatch() above.</i></p>
+<p class="p3"><i>******************************************************************************/</i></p>
+<p class="p1"><br></p>
+<p class="p5"><b>void</b> Controller::playStopHandler( Fl_Widget* widget ) {</p>
+<p class="p5">&nbsp;&nbsp;PRE2( widget, widget == playStopButton );</p>
+<p class="p1"><br></p>
+<p class="p5">&nbsp;&nbsp;<b>if</b> ( ! strcmp( playStopButton-&gt;label(), <span class="s2">"&amp;Play"</span> ) ) { <span class="s4"><i>// Start animation.</i></span></p>
+<p class="p5">&nbsp;&nbsp;&nbsp;&nbsp;playStopButton-&gt;label( <span class="s2">"&amp;Stop"</span> );</p>
+<p class="p5">&nbsp;&nbsp;&nbsp;&nbsp;playStopButton-&gt;redraw();</p>
+<p class="p1"><br></p>
+<p class="p5">&nbsp;&nbsp;&nbsp;&nbsp;<b>while</b> ( ! strcmp( playStopButton-&gt;label(), <span class="s2">"&amp;Stop"</span> ) ) {</p>
+<p class="p5">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>const</b> <b>int</b> minimum = (<b>int</b>) animationSlider-&gt;minimum();</p>
+<p class="p5">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>const</b> <b>int</b> maximum = (<b>int</b>) animationSlider-&gt;maximum();</p>
+<p class="p5">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>int</b> value = (<b>int</b>) animationSlider-&gt;value();</p>
+<p class="p5">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;++value;</p>
+<p class="p1"><br></p>
+<p class="p5">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>if</b> ( value &gt; maximum ) {</p>
+<p class="p5">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;value = minimum;</p>
+<p class="p5">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}</p>
+<p class="p1"><br></p>
+<p class="p5">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;animationSlider-&gt;value( value );</p>
+<p class="p5">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;animationSlider-&gt;do_callback( animationSlider, (<b>void</b>*) <b>this</b> );</p>
+<p class="p3"><span class="s3">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Fl::check(); </span><i>// Once through the FLTK event loop.</i></p>
+<p class="p2">#ifdef __linux__</p>
+<p class="p5">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>const</b> <b>int</b> millisecondDelay = <span class="s5">50</span>; <span class="s4"><i>// HACK: Must slow down on Linux. BUG!</i></span></p>
+<p class="p2">#else</p>
+<p class="p5">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>const</b> <b>int</b> millisecondDelay = <span class="s5">0</span>;</p>
+<p class="p2">#endif</p>
+<p class="p1"><br></p>
+<p class="p5">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>if</b> ( millisecondDelay ) {</p>
+<p class="p5">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;usleep( millisecondDelay * <span class="s5">1000</span> );</p>
+<p class="p5">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}</p>
+<p class="p5">&nbsp;&nbsp;&nbsp;&nbsp;}</p>
+<p class="p1"><br></p>
+<p class="p3"><span class="s3">&nbsp;&nbsp;} <b>else</b> { </span><i>// Stop animation.</i></p>
+<p class="p5">&nbsp;&nbsp;&nbsp;&nbsp;playStopButton-&gt;label( <span class="s2">"&amp;Play"</span> );</p>
+<p class="p5">&nbsp;&nbsp;&nbsp;&nbsp;playStopButton-&gt;redraw();</p>
+<p class="p5">&nbsp;&nbsp;}</p>
+<p class="p5">}</p>
+<p class="p1"><br></p>
+<p class="p1"><br></p>
+<p class="p1"><br></p>
+<p class="p3"><i>/******************************************************************************</i></p>
+<p class="p3"><i>PURPOSE: quitHandler - Called when quitButton is pressed.</i></p>
+<p class="p3"><i>RETURNS: Fl_Widget* widget&nbsp;&nbsp;quitButton.</i></p>
+<p class="p3"><i>NOTES: &nbsp;&nbsp;This routine is called from dispatch() above.</i></p>
+<p class="p3"><i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;It closes all windows which causes the FLTK event loop to exit and</i></p>
+<p class="p3"><i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Fl_run() to return an exit status code (0 means normal).</i></p>
+<p class="p3"><i>******************************************************************************/</i></p>
+<p class="p1"><br></p>
+<p class="p5"><b>void</b> Controller::quitHandler( Fl_Widget* widget ) {</p>
+<p class="p5">&nbsp;&nbsp;PRE2( widget, widget == quitButton );</p>
+<p class="p5">&nbsp;&nbsp;playStopButton-&gt;label( <span class="s2">"&amp;Play"</span> ); <span class="s4"><i>// Stop animation.</i></span></p>
+<p class="p1"><br></p>
+<p class="p5">&nbsp;&nbsp;<b>while</b> ( Fl::first_window() ) {</p>
+<p class="p3"><span class="s3">&nbsp;&nbsp;&nbsp;&nbsp;Fl::first_window()-&gt;hide(); </span><i>// Hide causes child widgets to be deleted.</i></p>
+<p class="p5">&nbsp;&nbsp;}</p>
+<p class="p5">}</p>
+<p class="p1"><br></p>
+<p class="p1"><br></p>
+<p class="p1"><br></p>
+<p class="p3"><i>// STEP 6: Add handler for new widget above.</i></p>
+<p class="p1"><br></p>
+<p class="p1"><br></p>
+<p class="p1"><br></p>
+<P>___________________________________________________________________________</P>
+
+
+
+
+<P>
+Note:</P>
+<P>
+1. Header files are protected from multiple #includes by 
+(FILE_NAME_IN_ALL_CAPS_H):</P>
+<PRE>
+#ifndef CONTROLLER_H
+#define CONTROLLER_H
+#endif /* CONTROLLER_H */
+</PRE>
+<P>
+2. C header files must contain <b>extern "C" {</b> to prevent name-mangling if included by C++ compilers:</P>
+<PRE>
+#ifdef __cplusplus
+extern &quot;C&quot; {
+#endif
+
+#ifdef __cplusplus
+}
+#endif
+</PRE>
+
+<P>
+3. Header files have an ordered sequence of sections delineated by comments:</P>
+<PRE>
+
+/*================================ INCLUDES =================================*/
+/*================================= MACROS ==================================*/
+/*================================== TYPES ==================================*/
+/*================================ FUNCTIONS ================================*/
+
+</PRE>
+In C++ these one-line comments are of the form:
+<PRE>
+//================================ INCLUDES ===================================
+</PRE>
+
+<P>
+Maintaining this consistent formatting is important since <b>makedoc</b> 
+relies on it to automatically produce code documentation! Maintaining 
+format consistency is easiest when new files are created from copies of 
+existing ones.</P>
+<P>
+
+<P>
+7. Structure definitions (contents) are not provided in the header. 
+Instead pointers are used to dynamically allocated objects. This 
+preserves encapsulation, minimizes the need for recompilation and 
+facilitates inter-language object-based programming.</P>
+<PRE>
+/* Except for the implementation, File is just an opaque structure: */
+
+typedef struct File File;
+</PRE>
+<P>
+8. The<I> <A
+ HREF="qualityassuranceplan.html#Command-QuerySeparationPrinciple"
+ TARGET="_blank">Command-Query Separation Principle</A></I> is employed 
+to delineate the various kinds of operations:</P>
+<PRE>
+/* Destructor: */
+/* Constructors: */
+/* Commands: */
+/* Queries: */
+</PRE>
+
+<P>
+9. When #ifdef is used for platform-specific code inclusion, it is 
+based on platform-standard definitions (__linux__ not some home-grown 
+COMPLING_ON_LINUX):</P>
+<PRE>
+#ifdef __linux__
+</PRE>
+<P>
+10. Most platform-specific modifications are considered HACKS and are 
+tagged as such for easier location and possible removal in the future:</P>
+<PRE>
+      const int millisecondDelay = 50; // HACK: Must slow down on Linux. BUG!
+</PRE>
+<P>
+11. To prevent accidental name clashes, headers are included in the order from
+most standard to least standard:
+Standard C (stdlib.h), POSIX (unistd.h), Standard C++ (new),
+semi-standard C and C++ (FL/gl.h), external (FL/FL.H), internal (Assertions.h),
+local (Controller.h).
+The #include statements from each group are separated from the other groups by
+a blank line.</P>
+<P>
+12. All private (file-local) routines are declared <b>static</b>
+(thus not polluting the global namespace)
+and are declared fully  prototyped before used.</P>
+<PRE>
+/*========================== FORWARD DECLARATIONS ===========================*/
+
+static void deallocate( File* file );
+
+static const char* typeName( const File* file );
+
+CHECKING( static Integer isReadMode( const File* file ); )
+</PRE>
+<P>
+13. Private routines that are only used for the debug version of the 
+library are wrapped with the CHECKING() macro.</P>
+<P>
+14. The purpose of the test program is to perform unit-level testing of 
+the library implementation. This will be done with instrumented code 
+(e.g., gcov, Purify and Insure++) to detect any dynamic faults in the code and to 
+record statement coverage. The resulting reports (e.g., purify.out and 
+insure.out) should indicate no faults and 100% statement (node) 
+coverage. It is usually necessary to step through the code using a 
+debugger (e.g., dbx) to force execution of failure-handling code to 
+achieve this 100% coverage level. Other testing techniques such as 
+branch coverage, short-tour, modal, vertex/boundary values can be 
+applied. Efficiency testing may be done also (gprof, pixie, prof) to 
+assess and record the statement execution profile and times.</P>
+
+<P>See Tips.pdf, pp 53-58</P>
+
+
+
+<P>
+<A NAME="testit">Exemplar <b>testit</b></A> script that unit tests an application:
+<PRE>
+#!/bin/csh -f
+#testit - Test this application
+
+set here = `pwd`
+set PROGRAM = "$here:t"
+set BIN_DIR = '../../../bin'
+
+# Determine the platform using uname:
+
+set uname_ = "`uname`"
+set uname_m = "`uname -m`"
+
+if ( "$uname_" == "Linux" ) then
+  set platform = "$uname_.$uname_m"
+else
+  set platform = "$uname_"
+endif
+
+set PROGRAM = $BIN_DIR/$platform/$PROGRAM
+set unbin   = $BIN_DIR/$platform/unbin
+set shpdump = $BIN_DIR/$platform/shpdump
+set dbfdump = $BIN_DIR/$platform/dbfdump
+
+echo
+echo 'Run once without arguments to print instructions.......................'
+echo
+
+echo
+echo "$PROGRAM"
+$PROGRAM
+if ( $status == 0 ) exit 1
+
+set inputs = ( \
+  test/temperature_gulf \
+  test/precipitation_gulf \
+  test/wetlands_gulf \
+  test/population_a1_2010_gulf \
+  test/soil_gulf \
+)
+
+echo
+echo 'Running specific tests that should succeed.............................'
+echo
+sleep 2
+
+# Test subset:
+
+foreach input ( $inputs )
+  set output = `echo $input:t | sed 's/_.*//g'`
+  echo
+
+  if ( "$input" == "test/soil_gulf" ) then
+    set subset = '-90 30 -89 31'
+  else
+    set subset = '-90 30 -89.9 30.1'
+  endif
+
+  echo "$PROGRAM -input $input -subset $subset -mindist 0 -output $output > junk.bin"
+  $PROGRAM -input $input -subset $subset -mindist 0 -output $output > junk.bin
+  if ( $status != 0 ) exit 1
+  head -1 junk.bin
+  $unbin junk.bin
+  if ( $status != 0 ) exit 2
+  $shpdump $output.shp | head; echo '...'; $shpdump -validate $output.shp |tail
+  if ( $status != 0 ) exit 3
+  $dbfdump $output.dbf | head ; echo '...' ; $dbfdump $output.dbf | tail
+  if ( $status != 0 ) exit 4
+  \rm $output.???
+end
+
+# Test mindist:
+
+foreach input ( $inputs )
+  set output = `echo $input:t | sed 's/_.*//g'`
+  echo
+  echo "$PROGRAM -input $input -subset -90 30 -85 35 -mindist 0.007 -output $output > junk.bin"
+  $PROGRAM -input $input -subset -90 30 -85 35 -mindist 0.007 -output $output > junk.bin
+  if ( $status != 0 ) exit 1
+  head -1 junk.bin
+  $unbin junk.bin
+  if ( $status != 0 ) exit 2
+  $shpdump $output.shp | head; echo '...'; $shpdump -validate $output.shp |tail
+  if ( $status != 0 ) exit 3
+  $dbfdump $output.dbf | head ; echo '...' ; $dbfdump $output.dbf | tail
+  if ( $status != 0 ) exit 4
+  \rm $output.???
+end
+
+# Test -dbf_only:
+
+set input = 'test/sediment_nca_gulf'
+set output = `echo $input:t | sed 's/_.*//g'`
+echo
+echo "$PROGRAM -input $input -subset -90 30 -85 35 -dbf_only -output $output > junk.bin"
+$PROGRAM -input $input -subset -90 30 -85 35 -dbf_only -output $output > junk.bin
+if ( $status != 0 ) exit 1
+head -1 junk.bin
+$unbin junk.bin
+if ( $status != 0 ) exit 2
+$dbfdump $output.dbf | head ; echo '...' ; $dbfdump $output.dbf | tail
+if ( $status != 0 ) exit 4
+\rm $output.???
+
+set input = 'test/sediment_extracted_gulf'
+set output = `echo $input:t | sed 's/_.*//g'`
+echo
+echo "$PROGRAM -input $input -subset -90 30 -85 35 -dbf_only -output $output > junk.bin"
+$PROGRAM -input $input -subset -90 30 -85 35 -dbf_only -output $output > junk.bin
+if ( $status != 0 ) exit 1
+head -1 junk.bin
+$unbin junk.bin
+if ( $status != 0 ) exit 2
+$dbfdump $output.dbf | head ; echo '...' ; $dbfdump $output.dbf | tail
+if ( $status != 0 ) exit 4
+\rm $output.???
+
+# Test multi-input file subset:
+
+echo
+set output = "junk"
+echo "$PROGRAM -input $inputs[1] $inputs[1] -subset -90 30 -89.9 30.1 -mindist 0 -output $output > junk.bin"
+$PROGRAM -input $inputs[1] $inputs[1] -subset -90 30 -89.9 30.1 -mindist 0 -output $output > junk.bin
+if ( $status != 0 ) exit 1
+head -1 junk.bin
+$unbin junk.bin
+if ( $status != 0 ) exit 2
+$shpdump $output.shp | head; echo '...'; $shpdump -validate $output.shp | tail
+if ( $status != 0 ) exit 3
+$dbfdump $output.dbf | head ; echo '...' ; $dbfdump $output.dbf | tail
+if ( $status != 0 ) exit 4
+\rm *.shx *.shp *.dbf junk.bin
+
+
+echo
+echo 'Running many enumerated tests..........................................'
+echo
+sleep 2
+
+@ counter = 0
+@ input_count = $#inputs
+
+foreach increment ( 0.01 1 10 )
+  foreach lonmin ( -95 -90 -85 )
+    set lonmax = `echo $lonmin $increment | awk '{ printf "%f", $1 + $2 }'`
+    foreach latmin ( 30 32 )
+      set latmax = `echo $latmin $increment | awk '{ printf "%f", $1 + $2 }'`
+      @ counter += 1
+      @ i = $counter % $input_count + 1
+      set input = $inputs[$i]
+      set output = `echo $input:t | sed 's/_.*//g'`
+
+      set mindist = `echo $increment | awk '{ print ( $1 < 1.0 ? $1 : $1 > 1.0 ? 1.0 / $1 : 0.001 ) }'`
+
+      echo
+      echo '----------------------------------------------------'
+      echo
+      echo "$PROGRAM -input $input -subset $lonmin $latmin $lonmax $latmax -mindist $mindist -output $output"
+      $PROGRAM -input $input -subset $lonmin $latmin $lonmax $latmax -mindist $mindist -output $output > junk.bin
+      set the_status = $status
+
+      if ( $the_status == 0 ) then
+        head -1 junk.bin
+        $unbin junk.bin
+        if ( $status != 0 ) exit 2
+        $shpdump $output.shp | head; echo '...'; $shpdump -validate $output.shp |tail
+        if ( $status != 0 ) exit 3
+        $dbfdump $output.dbf | head ; echo '...' ; $dbfdump $output.dbf | tail
+        if ( $status != 0 ) exit 4
+        \rm junk.bin *.shx *.shp *.dbf
+      else if ( $the_status != 1 ) then
+        exit $the_status
+      endif
+    end
+  end
+end
+
+echo
+echo 'Running failure/coverage tests.........................................'
+echo
+sleep 2
+
+
+$PROGRAM "" "" -subset -90 30 -89 31 -mindist 0 > junk.bin
+$PROGRAM -input "" -subset -90 30 -89 31 -mindist 0 > junk.bin
+$PROGRAM -input $inputs[1] "" -90 30 -89 31 -mindist 0 > junk.bin
+$PROGRAM -input $inputs[1] -subset -90 30 -89 31 "" 0 > junk.bin
+$PROGRAM -input $inputs[1] -wrong -90 30 -89 31 -mindist 0 > junk.bin
+$PROGRAM -input $inputs[1] -subset -900 30 -89 31 -mindist 0 > junk.bin
+$PROGRAM -input /no/such/file -subset -90 30 -89 31 -mindist 0 > junk.bin
+$PROGRAM -input $inputs[1] -subset -90 30 -89 31 -mindist -1 > junk.bin
+$PROGRAM -input $inputs[1] -subset -90 30 -89 31 -mindist 2 > junk.bin
+$PROGRAM -input $inputs[1] -subset -90 30 -89 31 -mindist 0 > /no/such/directory
+\rm junk.bin
+echo "Finished."
+
+
+</PRE>
+</P>
+
+
+
+<P>
+<B>Interface documentation</B> <i>generated</i> by <b>makedoc</b> utility (excerpt from C Library <A NAME="Doc">File_API.txt</A>):</P>
+<PRE>
+ 
+ 
+LIBRARY NAME: File
+PRODUCTS:     File.h libFile.a
+USES LIBS:    -lMemory.debug -lFailure.debug  
+ 
+
+PURPOSE: File.h - Declare functions for reading and writing to ASCII and
+         portable binary (XDR/MSB/IEEE/64-bit) files, pipes and sockets.
+NOTES:   MSB (most significant byte first) IEEE 32 and 64-bit floating-point
+         binary data I/O is implemented using XDR (xdr_float and xdr_double).
+         MSB 8, 16, 32, and 64-bit integer binary data I/O is
+         implemented using custom routines calling fread()/fwrite() (since
+         XDR only supports 32-bit integers).
+MACROS:
+
+/* Macro version of destructor zeros pointer to avoid dangling references: */
+
+#define fileClose( p ) ( (p) ? fileClose_( p ) : (void) 0 ), (p) = 0
+
+TYPES:
+
+/* Except for the implementation, File is just an opaque structure: */
+
+typedef struct File_ File;
+
+FUNCTIONS:
+
+/* Constructors: */
+
+extern File* fileOpen(       const char* fileName, const char* mode );
+extern File* fileOpenPipe(   const char* command,  const char* mode );
+extern File* fileOpenSocket( Integer port, const char* host );
+
+/* Destructor: */
+
+extern void fileClose_( File* file ); /* Used via fileClose() macro. */
+
+/* Queries: */
+
+extern Integer     fileIsValid(       const File* file ); /* Invariant. */
+extern Integer     fileIsReadable(    const File* file );
+extern Integer     fileIsWritable(    const File* file );
+extern Integer     fileIsSeekable(    const File* file );
+extern Integer     fileIsNonBlocking( const File* file );
+extern Integer     fileIsAtEnd(       const File* file ); /* Not thread-safe */
+
+extern Integer     fileOffset(        const File* file ); /* Not thread-safe */
+extern const char* fileName(          const File* file );
+extern Integer     fileSize(          const File* file );
+extern FILE*       filePointer(       const File* file ); /* HACK: Demeter! */
+extern Integer     fileNumber(        const File* file ); /* HACK: Demeter! */
+extern Integer     fileOk(            const File* file ); /*Last command work?*/
+
+/* Commands: */
+
+extern void fileFlush(              File* file );
+extern void fileSeek(               File* file, Integer offset, Integer whence);
+
+extern void fileReadString(         File* file, char*    s, Integer n );
+extern void fileReadByte(           File* file, void*    x );
+
+extern void fileRead8BitInteger(    File* file, Integer* x );
+extern void fileRead16BitInteger(   File* file, Integer* x );
+extern void fileRead32BitInteger(   File* file, Integer* x );
+extern void fileRead64BitInteger(   File* file, Integer* x );
+
+extern void fileRead32BitReal(      File* file, Real*    x );
+extern void fileRead64BitReal(      File* file, Real*    x );
+
+extern void fileReadBytes(          File* file, void*    a, Integer n );
+
+extern void fileReadSomeBytes(      File* file, void*    a, Integer n,
+                                    Integer* actualCount );
+
+extern void fileRead8BitIntegers(   File* file, Integer* a, Integer n );
+extern void fileRead16BitIntegers(  File* file, Integer* a, Integer n );
+extern void fileRead32BitIntegers(  File* file, Integer* a, Integer n );
+extern void fileRead64BitIntegers(  File* file, Integer* a, Integer n );
+
+extern void fileRead32BitReals(     File* file, Real*    a, Integer n );
+extern void fileRead64BitReals(     File* file, Real*    a, Integer n );
+
+
+extern void fileWriteString(        File* file, const char* s, ... );
+extern void fileWriteByte(          File* file, unsigned char x );
+
+extern void fileWrite8BitInteger(   File* file, Integer x );
+extern void fileWrite16BitInteger(  File* file, Integer x );
+extern void fileWrite32BitInteger(  File* file, Integer x );
+extern void fileWrite64BitInteger(  File* file, Integer x );
+
+extern void fileWrite32BitReal(     File* file, Real    x );
+extern void fileWrite64BitReal(     File* file, Real    x );
+
+extern void fileWriteBytes(         File* file, const void*    a, Integer n );
+
+extern void fileWrite8BitIntegers(  File* file, const Integer* a, Integer n );
+extern void fileWrite16BitIntegers( File* file, const Integer* a, Integer n );
+extern void fileWrite32BitIntegers( File* file, const Integer* a, Integer n );
+extern void fileWrite64BitIntegers( File* file, const Integer* a, Integer n );
+
+extern void fileWrite32BitReals(    File* file, const Real*    a, Integer n );
+extern void fileWrite64BitReals(    File* file, const Real*    a, Integer n );
+
+
+#ifdef __cplusplus
+}
+#endif
+
+
+PURPOSE: File.c - Define functions for reading and writing to ASCII and
+         portable binary (XDR/MSB/IEEE/64-bit) files, pipes and sockets.
+NOTES:   MSB (most significant byte first) IEEE 32 and 64-bit floating-point
+         binary data I/O is implemented using XDR (xdr_float and xdr_double).
+         MSB 8, 16, 32, and 64-bit integer binary data I/O is
+         implemented using custom routines calling fread()/fwrite() (since
+         XDR only supports 32-bit integers).
+
+         Examples:
+
+         cc -xansi -fullwarn -g -n32 -mips3 \
+            -I. -I/usr/include -I/usr/include/sys -I/usr/include/rpc \
+            -I/usr/include/netinet -I../../../include -I. \
+            -o test_pipe test_pipe.c \
+            -L/usr/lib32 -L../../../lib/IRIX \
+            -lFile -lMemory -lFailure -lmalloc -lc
+         test_pipe
+
+         #include &lt;File.h&gt;
+
+         int main( void ) {
+           int ok = 0;
+           File* file = fileOpenPipe( &quot;rsh cws@sequoia ls&quot;, &quot;r&quot; );
+
+           if ( file ) {
+
+             while ( fileOk( file ) &amp;&amp; ! fileIsAtEnd( file ) ) {
+               char s[ 10 ];
+               fileReadString( file, s, 10 );
+
+               if ( s ) {
+                 printf( &quot;%s\n&quot;, s );
+               }
+             }
+
+             ok = fileOk( file );
+             fileClose( file );
+           }
+
+           return ! ok;
+         }
+
+
+
+PURPOSE: fileIsValid - Checks if a File structure is valid.
+INPUTS:  const File* file  The file to check.
+RETURNS: Integer 1 if valid, else 0.
+INTERFACE:
+Integer fileIsValid( const File* file )
+
+
+PURPOSE: fileIsReadable - Checks if a File's mode permits reading.
+INPUTS:  const File* file  The file to check.
+RETURNS: Integer 1 if valid, else 0.
+INTERFACE:
+Integer fileIsReadable( const File* file )
+PRE( fileIsValid( file ) );
+
+
+PURPOSE: fileOk - Determine if the last command succeeded.
+INPUTS:  const File* file  The file to examine.
+RETURNS: Integer 1 if the last command was successful, else 0.
+NOTES:   This status is set to 1 at the beginning of every command.
+INTERFACE:
+Integer fileOk( const File* file )
+PRE( fileIsValid( file ) );
+
+
+PURPOSE: fileOpenPipe - Open a pipe for reading or writing.
+INPUTS:  const char* command   The command used to open a pipe.
+         const char* mode      &quot;r&quot; or &quot;w&quot;.
+RETURNS: File*                 Initialized file structure, or 0 if failed.
+NOTES:   If unsuccessful then failure() is called and 0 is returned.
+INTERFACE:
+File* fileOpenPipe( const char* command, const char* mode )
+PRE5( command, *command, mode, IN3( *mode, 'r', 'w' ), mode[ 1 ] == '\0' );
+POST( IMPLIES( file, AND2( fileOk( file ), ! fileIsNonBlocking( file ) ) ) );
+
+
+PURPOSE: fileRead64BitInteger - Read a big-endian 64-bit integer.
+INPUTS:  File* file   The file to read from.
+OUTPUTS: Integer* x   The value read.
+         File*  file  Updated file structure.
+NOTES:   If unsuccessful then failure() is called.
+INTERFACE:
+void fileRead64BitInteger( File* file, Integer* x )
+PRE2( fileIsReadable( file ), x );
+POST( isReadMode( file ) );
+
+
+...
+
+</PRE>
+<P>
+Note the following:</P>
+<P>
+1. The source code is parsed by 'makedoc'
+to obtain the library name, its products (used by clients) and 
+dependencies (additional libraries that a client must also link in 
+after this linking in this library).</P>
+<PRE>
+LIBRARY NAME: File
+PRODUCTS:     File.h libFile.a
+USES LIBS:    -lMemory -lFailure
+
+</PRE>
+<P>
+2. The file and routine block comments are extracted from the code.</P>
+<PRE>
+PURPOSE: fileOpenPipe - Open a pipe for reading or writing.
+INPUTS:  const char* command   The command used to open a pipe.
+         const char* mode      &quot;r&quot; or &quot;w&quot;.
+RETURNS: File*                 Initialized file structure, or 0 if failed.
+NOTES:   If unsuccessful then failure() is called and 0 is returned.
+</PRE>
+<P>
+3. Routine interface (signature and pre/post-conditions) is also 
+extracted from the source code since these are both crucial for 
+understanding how to use the routine:</P>
+<PRE>
+INTERFACE:
+File* fileOpenPipe( const char* command, const char* mode )
+PRE5( command, *command, mode, IN3( *mode, 'r', 'w' ), mode[ 1 ] == '\0' );
+POST( IMPLIES( file, AND2( fileOk( file ), ! fileIsNonBlocking( file ) ) ) );
+</PRE>
+<P>
+The command 'make lint' generates the file 'test/lint.out' which contains 
+the results of Flexelint program checker:</P>
+<P>
+<I>Flexelint</I> - A commercial lint utility from Gimple Software <A
+ HREF="http://www.gimpel.com" TARGET="_blank">http://www.gimpel.com</A>.</P>
+<P>
+Here are excerpts from the <B>lint output</B> for the File Library (<A
+ NAME="lint.out">lint.out</A>):</P>
+<PRE>
+FlexeLint for C/C++ (U32) Ver. 7.50j, Copyright Gimpel Software 1985-1998
+--- Module:   File.c 
+
+--- Module:   File.c 
+             _
+#if _CRAY || __alpha
+File.c  72  Warning 553: Undefined preprocessor variable _CRAY, assumed 0
+File.c  72  Warning 553: Undefined preprocessor variable __alpha, assumed 0
+            _
+...
+File.c  212  Warning 529: pre_ (line 209) not subsequently referenced
+_
+...
+File.c  414  Warning 578: Declaration of 'fileName' hides 'fileName(const
+    struct File_ *)' (line 314)
+  file-&gt;ok = OR2( FSEEK_FTELL_ARE_64_BITS, isSignedLong( offset ) );
+...
+File.c  688  Warning 506: Constant value Boolean
+
+...
+    file-&gt;ok = fgets( s, n, file-&gt;file ) != 0;
+File.c  732  Info 712: Loss of precision (arg. no. 2) (__int64 to int)
+...
+    if ( IS_LITTLE_ENDIAN ) {
+      *x = swapped8Bytes( *x );
+    }
+File.c  965  Warning 506: Constant value Boolean
+File.c  965  Info 774: Boolean within 'if' always evaluates to False
+...
+</PRE>
+<P>
+Note the following:</P>
+<P>
+1. The lint results should be carefully examined by the developer of 
+the library and all 'actual' defects fixed before testing. Lint should 
+be considered as a final pass of compilation. Also, lint output may be 
+checked during review so any remaining warnings must be (at least verbally) justifiable.</P>
+
+<P>
+Sample <B>Profile File</B> <A NAME="prof.out">test/prof.out</A>:</P>
+<P>
+-------------------------------------------------------------------------</P>
+<PRE>
+SpeedShop profile listing generated Mon Mar  8 12:23:24 1999
+   prof -pixie pixie./M3GridSample pixie./M3GridSample.Counts
+            M3GridSample (o32): Target program
+                  pixie-counts: Experiment name
+                  pixie-counts: Marching orders
+               R10000 / R10010: CPU / FPU
+                             4: Number of CPUs
+                           195: Clock frequency (MHz.)
+-------------------------------------------------------------------------
+Summary of ideal time data (pixie-counts)--
+                    3170282751: Total number of instructions executed
+                    3670212064: Total computed cycles
+                        18.822: Total computed execution time (secs.)
+                         1.158: Average cycles / instruction
+-------------------------------------------------------------------------
+Function list, in descending order by exclusive ideal time
+-------------------------------------------------------------------------
+ [index]   excl.secs   excl.%     cum.%        cycles  instructions    calls  function  (dso: file, line)
+
+     [1]       3.972    21.1%     21.1%     774618232     737896520   338604  isValidIOAPI_Cdesc3 (M3GridSample: DataImport.c, 594)
+     [2]       3.320    17.6%     38.7%     647334576     517394631   338608  isValidIOAPI_Bdesc3 (M3GridSample: DataImport.c, 534)
+     [3]       3.265    17.3%     56.1%     636725589     672097880 35370961  strncmp (libc.so.1: strncmp.c, 26)
+     [4]       2.812    14.9%     71.0%     548335067     492995593   764560  compressString (M3GridSample: DataImport.c, 1546)
+     [5]       0.908     4.8%     75.9%     177060390      83082183  1362003  isValidTimestepSize (M3GridSample: DataImport.c, 1524)
+     [6]       0.491     2.6%     78.5%      95755016      49486836   201166  nextime_ (M3GridSample: nextime.f, 2)
+     [7]       0.288     1.5%     80.0%      56123528      26411072   825346  isValidTime (M3GridSample: DataImport.c, 1508)
+     [8]       0.270     1.4%     81.4%      52642927      60430574   357875  memset (libc.so.1: bzero.s, 98)
+     [9]       0.251     1.3%     82.8%      49012101      24336532   198049  getM3IODateTime (M3GridSample: DataImport.c, 1402)
+    [10]       0.246     1.3%     84.1%      47911880      37599968    90640  S_ComputeGridLocation (M3GridSample: M3GridSample.c, 2554)
+    [11]       0.237     1.3%     85.3%      46219376      18982958   825346  isValidDate (M3GridSample: DataImport.c, 1493)
+    [12]       0.220     1.2%     86.5%      42940872       9083646   275262  time2secc (M3GridSample: time2secc.c, 22)
+    [13]       0.217     1.2%     87.7%      42328880       7613760    90640  secsdiffc (M3GridSample: secsdiffc.c, 26)
+    [14]       0.190     1.0%     88.7%      36989694      27819924    41040  S_GridRegionRead (M3GridSample: M3GridSample.c, 2750)
+    [15]       0.132     0.7%     89.4%      25741257      25466761    74167  numberOfM3IOVariable (M3GridSample: DataImport.c, 1337)
+    [16]       0.116     0.6%     90.0%      22547730      20393485     4120  S_
+
+</PRE>
+<P>
+<A NAME="SampleMetricsFile"><B>Sample Metrics File</B></A></P>
+<P>
+The command 'makeit metrics' causes the file 'test/metrics.out' to be 
+generated for the source code. This is a report of various software 
+metrics that are indicators of 'software quality'. Examples are size 
+and complexity. This report is examined during development (after 
+linting) and recommended changes are made to eliminate violations of 
+'standards'. This report is also examined during peer inspections and 
+any remaining violations must be justifiable.</P>
+<P>
+The '<I>metrics</I>' program is a UNIX C Shell script that invokes 
+various other public-domain utilities and collects their results into a 
+formatted report. Here is a description of the 'metrics' utility and 
+the metrics is reports:</P>
+<PRE>
+metrics - Computes and reports the following software metrics
+for each C and C++ source file or function:
+
+ 1. LOC - Lines Of Code (including the following classifications):
+ a. Pure Code
+ b. Pure Comment
+ c. Both Code &amp; Comment
+ d. Blank Lines
+ e. Total Code
+ f. Total Comment
+ g. Total Lines
+ h. Pages
+
+ 2. Halstead's Metrics:
+
+ Halstead provides various indicators of the module's complexity.
+ The module is examined to determine the following:
+
+ n1 == number of unique operators
+ n2 == number of unique operands
+ N1 == number of total operators
+ N2 == number of total operands
+
+ The program writes these output fields:
+
+     File Name
+     Program Length          (N  = N1 + N2)
+     Program Volume          (V  = N log&lt;base2&gt; (n1 + n2))
+     Program Level           (L  = (2/n1) * (n2/N2))
+     Mental Discriminations  (E^ = V / L)
+
+     The program volume (aka ``Halstead Volume) is probably most
+     useful and seems to be reasonably well correlated with defect
+     counts for modules.
+
+  3. McCabe's Metrics:
+     a. Cyclomatic Complexity - This is the number of paths through
+        the function. This correlates with difficulty in testing.
+        Standard value: 10
+        A value of 1 means the code has no branching.
+        A function's cyclomatic complexity should not exceed 10.
+
+  4. Fan-out - The number of functions called by a given function.
+        Standard value: 10
+        A value of 0 means the function does not call any others.
+        A function's fan-out should not exceed 10.
+
+Usage: metrics *.[hcC]
+
+This C-Shell program uses the following public-domain scripts and C programs:
+  c_halsfilt, cyclo, fcall, halstead, lc, mcstrip, stripcom, stripstr
+
+For assistance contact Todd Plessel, plessel.todd@epa.gov.
+
+</PRE>
+<P>
+Here is a sample <A NAME="metrics.out"><B>metrics.out</B></A> file for 
+the File Library:</P>
+<PRE>
+ 
+===============================================================================
+                            Software Metrics Report
+===============================================================================
+ 
+Lines of source code:
+---------------------
+ 
+                Pure    Pure    Both            Total   Total   Total
+                Code    Comment Cod&amp;Com Blank   Code    Comment Lines   Pages
+
+File.h          53      22      9       38      62      31      122     3
+File.c          1193    657     62      572     1255    719     2484    45
+FileTest.c      488     84      25      140     513     109     737     14
+
+ALL:            1734    763     96      750     1830    859     3343    62
+ 
+Halstead Metrics:
+-----------------
+ 
+FileName                              Length     Volume      Level     Discr.
+-----------------------------------------------------------------------------
+File.h                                   655       4293   0.024910     172352
+File.c                                  7480      63579   0.004017   15826304
+FileTest.c                              4071      31292   0.005106    6128090
+ 
+Per-function NCSLOC, Cyclomatic Complexity and Fan-out (function calls):
+------------------------------------------------------------------------
+ 
+File: Functions                                           NCSLOC Cyclo Fan-out
+------------------------------------------------------------------------------
+File.h:
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Totals:                   0      0      0
+File.c:
+    createClientSocket                                     30      4      9
+    createServerSocket                                     36      7      7
+    deallocate                                              9      1      4
+    enablePortReusability                                  34      6      2
+    ensureReadMode                                         12      2      5
+    ensureWriteMode                                        12      2      5
+    fileClose_                                             22      4      7
+    fileFlush                                               7      2      4
+    fileIsAtEnd                                             8      1      3
+    fileIsNonBlocking                                       5      1      1
+    fileIsReadable                                          4      1      1
+    fileIsSeekable                                          8      1      1
+    fileIsValid                                            18      1      1
+    fileIsWritable                                          6      1      1
+    fileName                                                5      1      1
+    fileOfSocket                                            9      2      3
+    fileOffset                                              8      1      3
+    fileOk                                                  5      1      1
+    fileOpen                                               40      8      9
+    fileOpenPipe                                           34      5     10
+    fileOpenSocket                                         45      9     15
+    filePointer                                             5      1      1
+    fileRead16BitInteger                                   25      2      6
+    fileRead16BitIntegers                                  27      4      4
+    fileRead32BitInteger                                   28      2      6
+    fileRead32BitIntegers                                  33      4      4
+    fileRead32BitReal                                      14      2      4
+    fileRead32BitReals                                     29      5      6
+    fileRead64BitInteger                                   19      3      7
+    fileRead64BitIntegers                                  14      3      5
+    fileRead64BitReal                                      14      2      4
+    fileRead64BitReals                                     22      3      6
+    fileRead8BitInteger                                    16      2      5
+    fileRead8BitIntegers                                   21      4      4
+    fileReadByte                                           12      2      5
+    fileReadBytes                                          13      2      4
+    fileReadSomeBytes                                      32      3      5
+    fileReadString                                         52      8      7
+    fileSeek                                               14      2      4
+    fileSize                                               24      3      3
+    fileWrite16BitInteger                                  18      2      6
+    fileWrite16BitIntegers                                 27      4      7
+    fileWrite32BitInteger                                  19      2      5
+    fileWrite32BitIntegers                                 29      4      7
+    fileWrite32BitReal                                     13      2      5
+    fileWrite32BitReals                                    30      5      8
+    fileWrite64BitInteger                                  14      3      6
+    fileWrite64BitIntegers                                 14      4      6
+    fileWrite64BitReal                                     22      3      7
+    fileWrite64BitReals                                    22      3      7
+    fileWrite8BitInteger                                   13      2      5
+    fileWrite8BitIntegers                                  21      4      7
+    fileWriteByte                                          11      2      5
+    fileWriteBytes                                         12      2      5
+    fileWriteString                                        15      2      7
+    readArrayBuffered                                      39      4      7
+    requiresBuffering                                       5      1      2
+    sizeOfSocketReadBuffer                                 40      7      3
+    sizeof                                                  2      1      0
+    swap8Bytes                                              5      2      2
+    swapped8Bytes                                          13      1      1
+    typeName                                               11      1      2
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Totals:                1166    179    291
+FileTest.c:
+    isEqual                                                 2      1      1
+    main                                                   89     13     19
+    miscTests                                              84     13     12
+    testForSuccessfulReads                                121      3     23
+    testForSuccessfulWrites                                57      3     22
+    testForUnsuccessfulReads                               39      1     22
+    testForUnsuccessfulWrites                              38      1     23
+    testQueries                                            30      3     11
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Totals:                 460     38    121
+ 
+    ALL:                                                 1626    217    412
+ 
+
+</PRE>
+<P>
+Another script '<A NAME="summetrics"><I>summetrics</I></A>' can be run 
+to produce a summary of all library and application metrics reports.</P>
+<P>
+Here is a sample run from the src directory:</P>
+<P>
+<A NAME="summetrics.out">summetrics.out</A>:</P>
+<PRE>
+ 
+===============================================================================
+                      Software Metrics Summary Report
+===============================================================================
+ 
+                        TEXT    LOC
+                        ----    ---
+  0 Applications:       0       0
+ 8 Libraries:           8456    4650
+    Library Test Code:  2699    1683
+--------------------------------------
+Total:                  11155   6333
+ 
+ 
+Halstead:          Length     Volume  Level     Discr. Defect
+-------------------------------------------------------------
+                    79701     664011  0.654  243095099    221
+ 
+(The following results exclude test code:)
+ 
+ 22 Source files
+ 145 Routines
+ 100% Reusability Ratio
+ 45% Comment Ratio
+ 
+<A NAME="exceedances">Per Routine</A>:            Mean    Max     No. and % &gt; 50,10,10
+                        ----    ---     --------------------
+Non-comment Source LOC:  17.8   73      4       2.8%
+Cyclomatic Complexity:   2.5    9       0       0.0%
+Fan-out:                 4.8    19      12      8.3%
+ 
+Recommend reducing the size of the following routines:
+    resize_                                                73      6     10
+    hostDialogOkCB                                         65      7     19
+    fileSelectorCreate                                     57      8     17
+    remoteDirSearch                                        55      9     12
+Recommend reducing the fan-out of the following routines:
+    hostDialogOkCB                                         65      7     19
+    fileSelectorCreate                                     57      8     17
+    fileOpenSocket                                         44      9     15
+    unmigrateFile                                          45      4     14
+    busyCursor                                             41      1     13
+    typeinDialogCreate                                     39      8     12
+    remoteDirSearch                                        55      9     12
+    fileWrite32BitReals                                    49      7     12
+    failure                                                32      5     12
+    fileWrite8BitIntegers                                  32      4     11
+    fileWrite32BitIntegers                                 38      4     11
+    fileWrite16BitIntegers                                 36      4     11
+
+</PRE>
+<P>
+Note:</P>
+<P>
+1. The directory consists of a eight libraries and no applications. 
+With applications, the 'Reusability Ratio' will be more meaningful.</P>
+<P>
+2. There are no routines that exceed the complexity threashold - the 
+most serious indicator.</P>
+<P>
+3. Size violations (routine over 50 LOC) are the most pervasive problem 
+- about 18% of the routines. This threshold is about the maximum 
+(considering uncounted blank lines) that can be viewed in a window 
+(without scrolling) or printed on a single page.</P>
+</BODY>
+</HTML>

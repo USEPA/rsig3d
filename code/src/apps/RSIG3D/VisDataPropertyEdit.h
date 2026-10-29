@@ -20,6 +20,7 @@ public:
 
 public Q_SLOTS:
   virtual void onParentObjectRemoved(QObject*);
+  void addObjectEMVL(QObject* myObj);
 
 protected Q_SLOTS:
   virtual void showContextMenu(const QPoint&);

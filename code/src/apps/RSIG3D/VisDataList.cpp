@@ -147,8 +147,9 @@ void VisDataList::erase(VisDataObject* obj) {
 
 
 void VisDataList::onObjectRemoved(QObject * _obj) {
-  VisDataObject *obj = qobject_cast<VisDataObject*>(_obj);
 
+  VisDataObject *obj = qobject_cast<VisDataObject*>(_obj);
+  
   if ( obj ) {
     const int indexVal = mObjects.indexOf(obj);
 
@@ -316,6 +317,7 @@ void VisDataList::renderGeometryObjects( QPainter *painter,
     "omi"         ,
     "cmaq"        ,
     "daily_mean_cmaq", 
+    "nesdis_pm25sat",
     "regridded"   ,
     "modis"       ,
     "viirs"       ,
@@ -323,32 +325,37 @@ void VisDataList::renderGeometryObjects( QPainter *painter,
     "tropomi"     ,
     "gasp"        ,
     "goes"        ,
-    "satellitepm" ,
-    "geoschem"    ,
     "hms"         ,
+    "hrrr"        ,
     "airnow"      ,
     "airnow2"     ,
     "daily_mean_airnow",
+    "daily_max_airnow",
     "aqs"         ,
     "daily_mean_aqs",
+    "daily_max_aqs",
+    "openaq"      ,
+    "castnet"     ,
     "purpleair"   ,
     "daily_mean_purpleair",
+    "daily_max_purpleair",
     "metar"       ,
     "surfmet"     ,
     "acam"        ,
     "hsrl"        ,
     "mozaic"      ,
     "tad"         ,
+    "egrid"       ,
     "faqsd"       ,
     "neubrew"     ,
     "pandora"     ,
     "hourly_pandora",
     "ceilometer"  ,
     "uvnet"       ,
-    "nesdis"      ,
+    "nesdis"      , // UGLY: call out nesdis vars explicitly, otherwise 'nesdis' will match 'nesdis_pm25sat' above
     "goesbb"      ,
     "calipso"     ,
-    "hrrr"        ,
+    "compare"     ,
     "null"        , // placeholder for maplines, not needed for 2D rendering (taken care of in RSIGScene)
     "null"        , // 2D plot is rendered using renderPopupNeubrew()
     "null"          // 2D plot is rendered using renderPopupCeilometer()
@@ -358,19 +365,25 @@ void VisDataList::renderGeometryObjects( QPainter *painter,
     "airnow"        ,
     "airnow2"       ,
     "daily_mean_airnow",
+    "daily_max_airnow",
     "aqs"           ,
     "daily_mean_aqs",
+    "daily_max_aqs",
+    "openaq"        ,
+    "castnet"       ,
     "purpleair"     ,
     "daily_mean_purpleair",
+    "daily_max_purpleair",
     "metar"         ,
     "surfmet"       ,
     "hms"           ,
+    "hrrr"          ,
     "neubrew"       ,
     "pandora"       ,
     "hourly_pandora",
     "ceilometer"    ,
     "uvnet"         ,
-    "nesdis"        ,
+    "nesdis",
     "goesbb"        ,
     "modis"         ,
     "viirs"         ,
@@ -378,8 +391,7 @@ void VisDataList::renderGeometryObjects( QPainter *painter,
     "tropomi"       ,
     "gasp"          ,
     "goes"          ,
-    "satellitepm"   ,
-    "geoschem"      ,
+    "egrid"         ,
     "faqsd"         ,
     "acam"          ,
     "hsrl"          ,
@@ -391,9 +403,10 @@ void VisDataList::renderGeometryObjects( QPainter *painter,
     "omi"           ,
     "cmaq"          ,
     "daily_mean_cmaq", 
+    "nesdis_pm25sat",
     "regridded"     ,
     "calipso"       ,
-    "hrrr"          ,
+    "compare"       ,
     "maplines"      ,
     "neubrewPopup"  ,   
     "ceilometerPopup" 
@@ -473,7 +486,13 @@ void VisDataList::renderGeometryObjects( QPainter *painter,
 
           if ( visDataObject->objectName().toLower().startsWith( thisRenderName ) ) {
 
-            //qDebug() << "rendering " << visDataObject->objectName();
+            // UGLY: make sure 'nesdis' doesn't match 'nesdis_pm25sat'
+            if (thisRenderName.startsWith("nesdis") && (visDataObject->objectName().toLower().contains("pm25sat") && ! thisRenderName.endsWith("pm25sat"))) {
+              //qDebug() << "break";
+              break;
+            }
+            
+            //qDebug() << "rendering " << visDataObject->objectName() << "because type is" << thisRenderName;
 
             // render in 2D mode (only need to do pass 0)
 

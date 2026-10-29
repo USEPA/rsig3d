@@ -12,6 +12,8 @@ HISTORY: 2012-11-12 zhang.nan@epa.gov
 STATUS:  unreviewed untested
 ******************************************************************************/
 
+#include <vector>
+
 #include <QWidget>       //QWidget desclare
 #include <QDomElement>
 #include <QScopedPointer>
@@ -83,12 +85,12 @@ public:
   QString getResourceDirectory();
   void drawMapOverlay();
 
-  float * getProbeLocation();
+  void getProbeLocation(double& probeLon, double& probeLat);
   void drawTimeseries();
   void drawPanelTimeseries(QPainter *painter);
-  int* panelPlot1Init(QPainter *painter, int nPlots, int maxPlots, QString probeTitle, QString targetTitle, int x0, int y0, int width, int height, double xmin, double xmax, double ymin, double ymax);
+  void panelPlot1Init(QPainter *painter, QString probeTitle, QString targetTitle, int x0, int y0, int width, int height, double xmin, double xmax, double ymin, double ymax, std::vector<int>& output);
   void panelPlot2Init(QPainter *painter, QString title, int x0, int y0, int width, int height);
-  double* panelPlot3Init(QPainter *painter, QString title, QString probeUnits, int x0, int y0, int width, int height, double xmin, double xmax, double ymin, double ymax);
+  void panelPlot3Init(QPainter *painter, QString title, QString probeUnits, int x0, int y0, int width, int height, double xmin, double xmax, double ymin, double ymax, double output[]);
 
   QPoint panelPlot1DatatoScreen(QPointF dataPoint, int xOrigin, int yOrigin, int axisWidth, int axisHeight, double xmin, double xmax, double ymin, double ymax);
 

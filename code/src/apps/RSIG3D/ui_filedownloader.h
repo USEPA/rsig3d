@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'filedownloader.ui'
 **
-** Created: Thu Jun 12 13:29:43 2025
+** Created: Thu Jul 23 13:53:07 2026
 **      by: Qt User Interface Compiler version 4.8.3
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -15,6 +15,7 @@
 #include <QtGui/QApplication>
 #include <QtGui/QButtonGroup>
 #include <QtGui/QDialog>
+#include <QtGui/QGridLayout>
 #include <QtGui/QGroupBox>
 #include <QtGui/QHBoxLayout>
 #include <QtGui/QHeaderView>
@@ -35,13 +36,14 @@ class Ui_FileOrientedDownloader
 public:
     QVBoxLayout *verticalLayout;
     QGroupBox *groupBox;
+    QGridLayout *gridLayout;
+    QLabel *label;
     QToolButton *fileDownloaderDirButton;
     QLineEdit *fileDownloaderDirLineEdit;
-    QLabel *label;
-    QLabel *label_2;
-    QLCDNumber *fileDownloaderAvailableSpace;
     QLabel *label_4;
     QLCDNumber *fileDownloaderRequiredSpace;
+    QLabel *label_2;
+    QLCDNumber *fileDownloaderAvailableSpace;
     QGroupBox *groupBox_2;
     QVBoxLayout *verticalLayout_2;
     QLabel *label_3;
@@ -71,46 +73,67 @@ public:
         sizePolicy.setVerticalStretch(0);
         sizePolicy.setHeightForWidth(groupBox->sizePolicy().hasHeightForWidth());
         groupBox->setSizePolicy(sizePolicy);
-        groupBox->setMinimumSize(QSize(0, 105));
-        fileDownloaderDirButton = new QToolButton(groupBox);
-        fileDownloaderDirButton->setObjectName(QString::fromUtf8("fileDownloaderDirButton"));
-        fileDownloaderDirButton->setGeometry(QRect(10, 30, 72, 22));
-        fileDownloaderDirButton->setMinimumSize(QSize(72, 22));
-        fileDownloaderDirButton->setMaximumSize(QSize(72, 20));
-        fileDownloaderDirLineEdit = new QLineEdit(groupBox);
-        fileDownloaderDirLineEdit->setObjectName(QString::fromUtf8("fileDownloaderDirLineEdit"));
-        fileDownloaderDirLineEdit->setGeometry(QRect(90, 30, 441, 22));
-        QSizePolicy sizePolicy1(QSizePolicy::Expanding, QSizePolicy::Fixed);
-        sizePolicy1.setHorizontalStretch(0);
-        sizePolicy1.setVerticalStretch(0);
-        sizePolicy1.setHeightForWidth(fileDownloaderDirLineEdit->sizePolicy().hasHeightForWidth());
-        fileDownloaderDirLineEdit->setSizePolicy(sizePolicy1);
-        fileDownloaderDirLineEdit->setMinimumSize(QSize(300, 22));
-        fileDownloaderDirLineEdit->setMaximumSize(QSize(1024, 22));
+        groupBox->setMinimumSize(QSize(0, 160));
+        gridLayout = new QGridLayout(groupBox);
+        gridLayout->setObjectName(QString::fromUtf8("gridLayout"));
         label = new QLabel(groupBox);
         label->setObjectName(QString::fromUtf8("label"));
-        label->setGeometry(QRect(10, 10, 371, 16));
-        label_2 = new QLabel(groupBox);
-        label_2->setObjectName(QString::fromUtf8("label_2"));
-        label_2->setGeometry(QRect(10, 60, 171, 21));
-        fileDownloaderAvailableSpace = new QLCDNumber(groupBox);
-        fileDownloaderAvailableSpace->setObjectName(QString::fromUtf8("fileDownloaderAvailableSpace"));
-        fileDownloaderAvailableSpace->setGeometry(QRect(160, 56, 64, 24));
-        fileDownloaderAvailableSpace->setFrameShape(QFrame::NoFrame);
-        fileDownloaderAvailableSpace->setFrameShadow(QFrame::Plain);
-        fileDownloaderAvailableSpace->setNumDigits(4);
-        fileDownloaderAvailableSpace->setSegmentStyle(QLCDNumber::Flat);
+
+        gridLayout->addWidget(label, 0, 0, 1, 3);
+
+        fileDownloaderDirButton = new QToolButton(groupBox);
+        fileDownloaderDirButton->setObjectName(QString::fromUtf8("fileDownloaderDirButton"));
+        QSizePolicy sizePolicy1(QSizePolicy::Preferred, QSizePolicy::Preferred);
+        sizePolicy1.setHorizontalStretch(0);
+        sizePolicy1.setVerticalStretch(0);
+        sizePolicy1.setHeightForWidth(fileDownloaderDirButton->sizePolicy().hasHeightForWidth());
+        fileDownloaderDirButton->setSizePolicy(sizePolicy1);
+        fileDownloaderDirButton->setMinimumSize(QSize(72, 22));
+        fileDownloaderDirButton->setMaximumSize(QSize(72, 20));
+
+        gridLayout->addWidget(fileDownloaderDirButton, 1, 0, 1, 1);
+
+        fileDownloaderDirLineEdit = new QLineEdit(groupBox);
+        fileDownloaderDirLineEdit->setObjectName(QString::fromUtf8("fileDownloaderDirLineEdit"));
+        QSizePolicy sizePolicy2(QSizePolicy::Expanding, QSizePolicy::Fixed);
+        sizePolicy2.setHorizontalStretch(0);
+        sizePolicy2.setVerticalStretch(0);
+        sizePolicy2.setHeightForWidth(fileDownloaderDirLineEdit->sizePolicy().hasHeightForWidth());
+        fileDownloaderDirLineEdit->setSizePolicy(sizePolicy2);
+        fileDownloaderDirLineEdit->setMinimumSize(QSize(300, 22));
+        fileDownloaderDirLineEdit->setMaximumSize(QSize(1024, 22));
+
+        gridLayout->addWidget(fileDownloaderDirLineEdit, 1, 1, 1, 2);
+
         label_4 = new QLabel(groupBox);
         label_4->setObjectName(QString::fromUtf8("label_4"));
-        label_4->setGeometry(QRect(10, 80, 171, 21));
+
+        gridLayout->addWidget(label_4, 4, 0, 1, 2);
+
         fileDownloaderRequiredSpace = new QLCDNumber(groupBox);
         fileDownloaderRequiredSpace->setObjectName(QString::fromUtf8("fileDownloaderRequiredSpace"));
-        fileDownloaderRequiredSpace->setGeometry(QRect(160, 80, 64, 24));
         fileDownloaderRequiredSpace->setFrameShape(QFrame::NoFrame);
         fileDownloaderRequiredSpace->setFrameShadow(QFrame::Plain);
         fileDownloaderRequiredSpace->setSmallDecimalPoint(false);
         fileDownloaderRequiredSpace->setNumDigits(4);
         fileDownloaderRequiredSpace->setSegmentStyle(QLCDNumber::Flat);
+
+        gridLayout->addWidget(fileDownloaderRequiredSpace, 4, 2, 1, 1);
+
+        label_2 = new QLabel(groupBox);
+        label_2->setObjectName(QString::fromUtf8("label_2"));
+
+        gridLayout->addWidget(label_2, 3, 0, 1, 2);
+
+        fileDownloaderAvailableSpace = new QLCDNumber(groupBox);
+        fileDownloaderAvailableSpace->setObjectName(QString::fromUtf8("fileDownloaderAvailableSpace"));
+        fileDownloaderAvailableSpace->setFrameShape(QFrame::NoFrame);
+        fileDownloaderAvailableSpace->setFrameShadow(QFrame::Plain);
+        fileDownloaderAvailableSpace->setNumDigits(4);
+        fileDownloaderAvailableSpace->setSegmentStyle(QLCDNumber::Flat);
+
+        gridLayout->addWidget(fileDownloaderAvailableSpace, 3, 2, 1, 1);
+
 
         verticalLayout->addWidget(groupBox);
 
@@ -125,11 +148,11 @@ public:
 
         fileDownloaderListWidget = new QListWidget(groupBox_2);
         fileDownloaderListWidget->setObjectName(QString::fromUtf8("fileDownloaderListWidget"));
-        QSizePolicy sizePolicy2(QSizePolicy::Expanding, QSizePolicy::Expanding);
-        sizePolicy2.setHorizontalStretch(0);
-        sizePolicy2.setVerticalStretch(0);
-        sizePolicy2.setHeightForWidth(fileDownloaderListWidget->sizePolicy().hasHeightForWidth());
-        fileDownloaderListWidget->setSizePolicy(sizePolicy2);
+        QSizePolicy sizePolicy3(QSizePolicy::Expanding, QSizePolicy::Expanding);
+        sizePolicy3.setHorizontalStretch(0);
+        sizePolicy3.setVerticalStretch(0);
+        sizePolicy3.setHeightForWidth(fileDownloaderListWidget->sizePolicy().hasHeightForWidth());
+        fileDownloaderListWidget->setSizePolicy(sizePolicy3);
 
         verticalLayout_2->addWidget(fileDownloaderListWidget);
 
@@ -171,6 +194,8 @@ public:
 
         fileDownloaderDownloadButton = new QPushButton(groupBox_3);
         fileDownloaderDownloadButton->setObjectName(QString::fromUtf8("fileDownloaderDownloadButton"));
+        sizePolicy.setHeightForWidth(fileDownloaderDownloadButton->sizePolicy().hasHeightForWidth());
+        fileDownloaderDownloadButton->setSizePolicy(sizePolicy);
         fileDownloaderDownloadButton->setMaximumSize(QSize(100, 16777215));
 
         horizontalLayout->addWidget(fileDownloaderDownloadButton);
@@ -198,10 +223,10 @@ public:
     {
         FileOrientedDownloader->setWindowTitle(QApplication::translate("FileOrientedDownloader", "RSIG3D File Oriented Downloader", 0, QApplication::UnicodeUTF8));
         groupBox->setTitle(QString());
-        fileDownloaderDirButton->setText(QApplication::translate("FileOrientedDownloader", "Directory:", 0, QApplication::UnicodeUTF8));
         label->setText(QApplication::translate("FileOrientedDownloader", "<b>Files will be downloaded to</b>", 0, QApplication::UnicodeUTF8));
-        label_2->setText(QApplication::translate("FileOrientedDownloader", "Available disk space (GB):", 0, QApplication::UnicodeUTF8));
+        fileDownloaderDirButton->setText(QApplication::translate("FileOrientedDownloader", "Directory:", 0, QApplication::UnicodeUTF8));
         label_4->setText(QApplication::translate("FileOrientedDownloader", "Required disk space (GB):", 0, QApplication::UnicodeUTF8));
+        label_2->setText(QApplication::translate("FileOrientedDownloader", "Available disk space (GB):", 0, QApplication::UnicodeUTF8));
         groupBox_2->setTitle(QString());
         label_3->setText(QApplication::translate("FileOrientedDownloader", "<b>Available data products:</b>", 0, QApplication::UnicodeUTF8));
         groupBox_4->setTitle(QString());

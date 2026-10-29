@@ -88,7 +88,7 @@ bool haveCeilometerNonMixingLayerHeightDataset( size_t& index ) {
     if ( profileDataset ) {
       const std::string& datasetName = dataset.name();
 
-      if ( datasetName.find( "ceilomenter" ) == 0 ) {
+      if ( datasetName.find( "ceilometer" ) == 0 ) {
         const std::string& variableName( dataset.variableName() );
 
         if ( variableName != "mixing_layer_height" ) {
@@ -449,49 +449,51 @@ bool createMLA( const emvl::Timestamp& startTime,
   try {
     const emvl::ProfileDataset* const profileDataset =
       dynamic_cast<const emvl::ProfileDataset*>( &dataset );
-    CHECK( profileDataset );
 
-    // (Re)allocate and/or initialize arrays to zero:
+    if ( profileDataset ) {
 
-    const size_t sumPoints = sumProfilePoints( profileDataset, ceilometerName );
-    MLA_times.clear();      // Set size to 0 and keep capacity
-    MLA_elevations.clear(); // (does not deallocate).
-    MLA_times.reserve( sumPoints ); //x      Reallocate only if larger.
-    MLA_elevations.reserve( sumPoints ); //x than current capacity.
+      // (Re)allocate and/or initialize arrays to zero:
 
-    int secondsPerBin = 0;
-    int metersPerBin = 0;
-    initializeTicks( secondsPerBin, metersPerBin );
+      const size_t sumPoints = sumProfilePoints( profileDataset, ceilometerName );
+      MLA_times.clear();      // Set size to 0 and keep capacity
+      MLA_elevations.clear(); // (does not deallocate).
+      MLA_times.reserve( sumPoints ); //x      Reallocate only if larger.
+      MLA_elevations.reserve( sumPoints ); //x than current capacity.
 
-    const std::vector<emvl::Dataset::SubsetPointers> subsets(
-      dataset.subset( startTime, endTime ) );
-    const size_t profiles = subsets.size();
+      int secondsPerBin = 0;
+      int metersPerBin = 0;
+      initializeTicks( secondsPerBin, metersPerBin );
 
-    for ( size_t profile = 0; profile < profiles; ++profile ) {
-      const emvl::Dataset::SubsetPointers& subsetPointers = subsets[ profile ];
-      const size_t subsetPoints = subsetPointers.dataCount;
-      CHECK2( subsetPoints, subsetPointers.notesCount == 1 );
-      const std::string& thisProfileName = subsetPointers.notes[ 0 ];
+      const std::vector<emvl::Dataset::SubsetPointers> subsets(
+        dataset.subset( startTime, endTime ) );
+      const size_t profiles = subsets.size();
 
-      if ( thisProfileName == ceilometerName ) {
+      for ( size_t profile = 0; profile < profiles; ++profile ) {
+        const emvl::Dataset::SubsetPointers& subsetPointers = subsets[ profile ];
+        const size_t subsetPoints = subsetPointers.dataCount;
+        CHECK2( subsetPoints, subsetPointers.notesCount == 1 );
+        const std::string& thisProfileName = subsetPointers.notes[ 0 ];
 
-        // Copy seconds offset and elevation from profile into MLA arrays:
+        if ( thisProfileName == ceilometerName ) {
 
-        const long long startTimeSeconds = startTime.seconds();
-        const size_t skipPoints = skipSubsetPoints( subsets, profile );
-        const emvl::Point* coordinate = subsetPointers.coordinates;
+          // Copy seconds offset and elevation from profile into MLA arrays:
 
-        for ( size_t point = 0; point < subsetPoints; ++point, ++coordinate ) {
-          MLA_elevations.push_back( coordinate->elevation );
-          const size_t timestampIndex = skipPoints + point;
-          const emvl::Timestamp
-            timestamp( profileDataset->timestamp( timestampIndex ) );
-          const long long timestampSeconds = timestamp.seconds();
-          const long long relativeSeconds = timestampSeconds - startTimeSeconds;
-          MLA_times.push_back( relativeSeconds );
+          const long long startTimeSeconds = startTime.seconds();
+          const size_t skipPoints = skipSubsetPoints( subsets, profile );
+          const emvl::Point* coordinate = subsetPointers.coordinates;
+
+          for ( size_t point = 0; point < subsetPoints; ++point, ++coordinate ) {
+            MLA_elevations.push_back( coordinate->elevation );
+            const size_t timestampIndex = skipPoints + point;
+            const emvl::Timestamp
+              timestamp( profileDataset->timestamp( timestampIndex ) );
+            const long long timestampSeconds = timestamp.seconds();
+            const long long relativeSeconds = timestampSeconds - startTimeSeconds;
+            MLA_times.push_back( relativeSeconds );
+          }
+
+          result = true;
         }
-
-        result = true;
       }
     }
   } catch ( std::exception& e ) {

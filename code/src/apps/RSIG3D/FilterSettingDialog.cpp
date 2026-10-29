@@ -67,6 +67,8 @@ static void setUiValues(Ui_FilterSettingDialog *ui, const FilterSettingData& dat
 
   ui->mincadSpinBox->setValue(g.CADmin);
 
+  ui->HRRRStrideSpinBox->setValue(g.HRRRStride);
+
   ui->minTropomiQualitySpinBox->setValue(g.TropomiQuality);
   ui->maxTropomiCloudFractionSpinBox->setValue(g.TropomiMaxCloudFraction);
   ui->TropomiGroundPixelMinimumSpinBox->setValue(g.TropomiGroundPixelMinimum);
@@ -125,6 +127,20 @@ static void setUiValues(Ui_FilterSettingDialog *ui, const FilterSettingData& dat
   int indexL2 = ui->calipsoVersionL2Combobox->findText(g.CALIPSOL2DataVersion);
   ui->calipsoVersionL1Combobox->setCurrentIndex( indexL1 >= 0 ? indexL1 : 0 );
   ui->calipsoVersionL2Combobox->setCurrentIndex( indexL2 >= 0 ? indexL2 : 0 );
+
+
+  ui->groupBox_filterGasp->setStyleSheet("QGroupBox {border:0;}");
+  ui->groupBox_filterCalipso->setStyleSheet("QGroupBox {border:0;}");
+  ui->groupBox_filterOmi->setStyleSheet("QGroupBox {border:0;}");
+  ui->groupBox_filterTropomi->setStyleSheet("QGroupBox {border:0;}");
+  ui->groupBox_filterViirs->setStyleSheet("QGroupBox {border:0;}");
+  ui->groupBox_filterPandora->setStyleSheet("QGroupBox {border:0;}");
+  ui->groupBox_filterPurpleair->setStyleSheet("QGroupBox {border:0;}");
+  ui->groupBox_filterTempo->setStyleSheet("QGroupBox {border:0;}");
+  ui->groupBox_filterOaqps->setStyleSheet("QGroupBox {border:0;}");
+  ui->groupBox_filterHrrr->setStyleSheet("QGroupBox {border:0;}");
+
+  
 }
 
 
@@ -154,6 +170,8 @@ static void getUiValues(const Ui_FilterSettingDialog *ui, FilterSettingData& g) 
     *(array[i].value) = array[i].widget->value();
   
   g.CADmin = ui->mincadSpinBox->value();
+
+  g.HRRRStride = ui->HRRRStrideSpinBox->value();
 
   g.TropomiQuality = ui->minTropomiQualitySpinBox->value();
   g.TropomiMaxCloudFraction = ui->maxTropomiCloudFractionSpinBox->value();
@@ -220,6 +238,7 @@ FilterSettingDialog::FilterSettingDialog(QWidget *parent)
   ui = new Ui_FilterSettingDialog;
   ui->setupUi(this);
   ui->tabWidget->setCurrentIndex(0);
+  //ui->tabWidget->setWidgetResizable(true);
 
 #ifdef __APPLE__
     // On Macs default tabs must be size-adjusted to fit:
@@ -248,6 +267,8 @@ FilterSettingDialog::FilterSettingDialog(QWidget *parent)
 
   ui->calipsoVersionL1Combobox->setToolTip("Desired version of all L1 data products. If 'Latest' is selected, the most recent version will be used.");
   ui->calipsoVersionL2Combobox->setToolTip("Desired version of all L2 data products. If 'Latest' is selected, the most recent version will be used.");
+
+  ui->HRRRStrideSpinBox->setToolTip("Row/column stride [1-100]. Default value is 1.");
 
   ui->minTropomiQualitySpinBox->setToolTip("Higher values indicate better data quality, but may also reduce or entirely eliminate the amount of data retrieved. Default value is 75.");
   ui->maxTropomiCloudFractionSpinBox->setToolTip("Lower values will filter out the estimated influence of clouds. Default value is 1.0 (no filtering)");

@@ -27,8 +27,22 @@ set DEBUG = "-g"
 set OPTIMIZED = "-O -DNDEBUG"
 set IFLAGS = "-I../../../include -I."
 
-if ( "$platform" == "Linux.x86_64" ) then
-  set CC = 'gcc -m64 -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE'
+if ( "$platform" == "IRIX64" ) then
+##set CC = 'cc -64 -mips4 -xansi -fullwarn'
+  set CC = 'cc -64 -mips4 -xansi -fullwarn -mp'
+else if ( "$platform" == "SunOS" ) then
+##set CC = 'cc -xarch=v9'
+  set CC = 'gcc -m64'
+else if ( "$platform" == "AIX" ) then
+  set CC = 'xlc -q64 -qlanglvl=ansi -qfloat=nomaf -U__STR__'
+  set AR = 'ar -X64 -rv'
+  set RANLIB = 'ar -X64 -t'
+else if ( "$platform" == "Linux.i686" ) then
+  set CC = 'gcc -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE'
+else if ( "$platform" == "Linux.x86_64" ) then
+  set CC = 'gcc -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE'
+else if ( "$platform" == "Linux.ia64" ) then
+  set CC = 'icc -mp -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -openmp'
 else if ( "$platform" == "Darwin.x86_64" ||  "$platform" == "Darwin.arm64" ) then
 ##set CC  = '/usr/bin/gcc -m64 -fopenmp'
   set CC  = '/usr/bin/gcc -m64'

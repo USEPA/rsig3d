@@ -9,7 +9,9 @@ HISTORY: 2012/11/12, zhang.nan@epa.gov, Created.
 #include <iostream>
 #include <string>
 
-#include <QApplication>        //qApp, slot closeAllWindows() 
+#include <QApplication>        //qApp, slot closeAllWindows()
+#include <QDesktopWidget>
+#include <QMainWindow>
 #include <QDesktopServices>      //QDesktopServices::openUrl(QUrl);
 #include <QString>          //QString
 #include <QStringList>     
@@ -27,6 +29,7 @@ HISTORY: 2012/11/12, zhang.nan@epa.gov, Created.
 #include <QSettings>
 #include <QVariant>
 #include <QMap>
+#include <QUuid>
 
 #include <Timestamp.h> // For emvl::Timestamp.
 
@@ -48,6 +51,7 @@ HISTORY: 2012/11/12, zhang.nan@epa.gov, Created.
 #include "ui_controldockwidget.h"   //UI form
 #include "VisOptions.h"
 #include "DataPreferences.h"
+#include "VisDataPropertyDelegate.h"
 
 static QStringList gSourceList;
 static QStringList gAttribeList; 
@@ -458,9 +462,9 @@ void ControlDockWidget::addVariablesHelper2(const QString rsigVariablesFilename)
                                            );
   
   // set font pixel size
-  QFont twFont = tw->font();
-  twFont.setPixelSize(12);
-  tw->setFont(twFont);
+  //QFont twFont = tw->font();
+  //twFont.setPixelSize(12);
+  //tw->setFont(twFont);
   
   // Ensure that a horizontal scrollbar is used rather than an ellipsis
   (*tw).header()->setResizeMode(0, QHeaderView::ResizeToContents);
@@ -526,6 +530,48 @@ void ControlDockWidget::setVariablesToComboBox2(QComboBox *w, int index) {
 
 
 void ControlDockWidget::initTab0ClientData() {
+  // for the Map tab
+  
+  // actual screen size
+  QDesktopWidget desktop;
+  int screenWidth  = desktop.screenGeometry().width();
+  int screenHeight = desktop.screenGeometry().height();
+  qDebug() << "screen dimensions:" << screenWidth << screenHeight;
+
+  int extraHeight = 85;
+  int extraWidth  = 1000;
+  if (screenHeight > 2000) {
+    // add height where needed
+    ui->tabWidget->setMinimumHeight(ui->tabWidget->height()     + extraHeight*4);
+    ui->mapTab->setMinimumHeight(ui->tabWidget->height()     + extraHeight*4);
+    ui->groupBox_mapprojbound->setMinimumHeight(ui->groupBox_mapprojbound->height() + extraHeight);
+    ui->groupBox_mapoptions->setMinimumHeight(ui->groupBox_mapoptions->height() + extraHeight);
+    ui->groupBox_mapother->setMinimumHeight(ui->groupBox_mapother->height() + extraHeight);
+
+    ui->groupBox_mapother->setMinimumWidth(ui->groupBox_mapother->width() + extraWidth);
+    ui->groupBox_mapoptions->setMinimumWidth(ui->groupBox_mapoptions->width() + extraWidth);
+    ui->groupBox_mapprojbound->setMinimumWidth(ui->groupBox_mapprojbound->width() + extraWidth);
+
+    // reposition widgets as needed
+    ui->groupBox_mapoptions->setGeometry(ui->groupBox_mapoptions->x(),
+                                 ui->groupBox_mapprojbound->y() + ui->groupBox_mapprojbound->height() + 2,
+                                 ui->groupBox_mapoptions->width(),
+                                 ui->groupBox_mapoptions->height());
+    ui->groupBox_mapother->setGeometry(ui->groupBox_mapother->x(),
+                                 ui->groupBox_mapoptions->y() + ui->groupBox_mapoptions->height() + 2,
+                                 ui->groupBox_mapother->width(),
+                                 ui->groupBox_mapother->height());
+    
+  }
+  
+  this->onViewAutozoomPressed();
+  
+  VisOptions* vOptions = VisOptionsSingleton::getInstance();
+  
+  // uniqueID for this session
+  QString uniqueID = QUuid::createUuid().toString().remove("{").remove("}").remove("-");
+  vOptions->setUniqueId(uniqueID);
+
   // detect when tab is canged
   connect(ui->tabWidget, SIGNAL(currentChanged(int)), this, SLOT(onTabWidgetIndexChanged(int)));
 
@@ -559,9 +605,6 @@ void ControlDockWidget::initTab0ClientData() {
   connect(ui->chk_mapDoubleClickOption1, SIGNAL(stateChanged(int)), this, SLOT(onSetMapDoubleClickOption1(int)));  
   connect(ui->chk_mapDoubleClickOption2, SIGNAL(stateChanged(int)), this, SLOT(onSetMapDoubleClickOption2(int)));  
   
-  QFont font = qApp->font();
-  ui->guiFontsizeSpinbox->setValue(font.pointSize());
-   
   connect(ui->maplineNone, SIGNAL(clicked(bool)), this, SLOT(onMaplinesChanged()));
   connect(ui->maplineNations, SIGNAL(clicked(bool)), this, SLOT(onMaplinesChanged()));
   connect(ui->maplineStates, SIGNAL(clicked(bool)), this, SLOT(onMaplinesChanged()));
@@ -580,7 +623,69 @@ void ControlDockWidget::initTab0ClientData() {
 int srcDefaults[] = {1, 2, 63, 95, 97};
 int varDefaults[] = {1, 9,  0,  6,  0};
 void ControlDockWidget::initTab1ClientData() {
+  // for the Data tab
 
+  // add height where needed
+  // actual screen size
+  QDesktopWidget desktop;
+  //int screenWidth  = desktop.screenGeometry().width();
+  int screenHeight = desktop.screenGeometry().height();
+  int extraHeight = 50;
+  int extraWidth  = 1000;
+  if (screenHeight > 2000) {
+    ui->groupBox_datatab->setMinimumHeight(ui->groupBox_datatab->height() + extraHeight*5);
+    ui->groupBox_vartree->setMinimumHeight(ui->groupBox_vartree->height() + extraHeight*4);
+    ui->groupBox_dataselections->setMinimumHeight(ui->groupBox_dataselections->height() + extraHeight*2);
+    ui->groupBox_datetime->setMinimumHeight(ui->groupBox_datetime->height()             + extraHeight);
+    //ui->groupBox_getdata->setMinimumHeight(ui->groupBox_getdata->height()               + extraHeight);
+
+    ui->groupBox_datatab->setMinimumWidth(ui->groupBox_datatab->width()               + extraWidth);
+    ui->groupBox_scenario->setMinimumWidth(ui->groupBox_scenario->width()             + extraWidth);
+    ui->groupBox_vartree->setMinimumWidth(ui->groupBox_vartree->width()               + extraWidth);
+    ui->groupBox_dataselections->setMinimumWidth(ui->groupBox_dataselections->width() + extraWidth);
+    ui->groupBox_datetime->setMinimumWidth(ui->groupBox_datetime->width()             + extraWidth*1.25);
+    ui->groupBox_getdata->setMinimumWidth(ui->groupBox_getdata->width()               + extraWidth);
+
+    // reposition widgets as needed
+    int vertSpacing = 5;
+    ui->groupBox_vartree->setGeometry(ui->groupBox_vartree->x(),
+                                      ui->groupBox_scenario->y() + ui->groupBox_scenario->height() + vertSpacing,
+                                      ui->groupBox_vartree->width(),
+                                      ui->groupBox_vartree->height());
+    ui->groupBox_dataselections->setGeometry(ui->groupBox_dataselections->x(),
+                                      ui->groupBox_vartree->y() + ui->groupBox_vartree->height() + vertSpacing,
+                                      ui->groupBox_dataselections->width(),
+                                      ui->groupBox_dataselections->height());
+    ui->groupBox_datetime->setGeometry(ui->groupBox_datetime->x(),
+                                       ui->groupBox_dataselections->y() + ui->groupBox_dataselections->height() + vertSpacing,
+                                       ui->groupBox_datetime->width(),
+                                       ui->groupBox_datetime->height());
+    ui->groupBox_getdata->setGeometry(ui->groupBox_getdata->x(),
+                                      ui->groupBox_datetime->y() + ui->groupBox_datetime->height() + vertSpacing,
+                                      ui->groupBox_getdata->width(),
+                                      ui->groupBox_getdata->height());
+
+    
+  }
+
+  
+  // add styling to certain groupboxes
+  ui->groupBox_vartree->setStyleSheet("QGroupBox {border:1px solid gray;}");
+  ui->groupBox_dataselections->setStyleSheet("QGroupBox {border:1px solid gray;}");
+  ui->dateGroupBox->setStyleSheet("QGroupBox {border:1px solid gray;}");
+  ui->boundingGroupBox->setStyleSheet("QGroupBox {border:1px solid gray;}");
+  ui->groupBox_getdata->setStyleSheet("QGroupBox {border:1px solid gray;}");
+
+  
+  ui->groupBox_scenario->setStyleSheet("QGroupBox {border:0;}");
+  ui->groupBox_vartree->setStyleSheet("QGroupBox {border:0;}");
+  ui->groupBox_dataselections->setStyleSheet("QGroupBox {border:0;}");
+  ui->groupBox_datetime->setStyleSheet("QGroupBox {border:0;}");
+  ui->groupBox_getdata->setStyleSheet("QGroupBox {border:0;}");
+  ui->groupBox_west->setStyleSheet("QGroupBox {border:0;}");
+
+
+  
   // adjust font for aggregate menu
 #ifdef _WIN32
   QFont font = ui->aggregate1->font();
@@ -625,11 +730,11 @@ void ControlDockWidget::initTab1ClientData() {
   ui->aggregate3->addItem(menuC);
   ui->aggregate4->addItem(menuC);
   ui->aggregate5->addItem(menuC);
-  ui->selectedData1->setFixedWidth(selectedDataLongWidth);
-  ui->selectedData2->setFixedWidth(selectedDataLongWidth);
-  ui->selectedData3->setFixedWidth(selectedDataLongWidth);
-  ui->selectedData4->setFixedWidth(selectedDataLongWidth);
-  ui->selectedData5->setFixedWidth(selectedDataLongWidth);
+  //ui->selectedData1->setFixedWidth(selectedDataLongWidth);
+  //ui->selectedData2->setFixedWidth(selectedDataLongWidth);
+  //ui->selectedData3->setFixedWidth(selectedDataLongWidth);
+  //ui->selectedData4->setFixedWidth(selectedDataLongWidth);
+  //ui->selectedData5->setFixedWidth(selectedDataLongWidth);
   ui->aggregate1->hide();
   ui->aggregate2->hide();
   ui->aggregate3->hide();
@@ -642,7 +747,9 @@ void ControlDockWidget::initTab1ClientData() {
   ui->trueColorComboBox->addItem("None");
   ui->trueColorComboBox->addItem("MODIS-AQUA");
   ui->trueColorComboBox->addItem("MODIS-TERRA");
-  ui->trueColorComboBox->addItem("VIIRS");
+  ui->trueColorComboBox->addItem("VIIRS-SNPP");
+  ui->trueColorComboBox->addItem("VIIRS-NOAA20");
+  ui->trueColorComboBox->addItem("VIIRS-NOAA21");
 
   // set default bbox
   VisOptions *vOptions = VisOptionsSingleton::getInstance();
@@ -664,9 +771,9 @@ void ControlDockWidget::initTab1ClientData() {
   set_currentGuiBbox_maxLon(maxLon);
 
   // set font pixel size for timestep label
-  QFont labFont = ui->label_timestep->font();
-  labFont.setPixelSize(14);
-  ui->label_timestep->setFont(labFont);
+  //QFont labFont = ui->label_timestep->font();
+  //labFont.setPixelSize(14);
+  //ui->label_timestep->setFont(labFont);
 
   connect(tw, SIGNAL(itemChanged(QTreeWidgetItem *, int)), this, SLOT(onTreeWidgetItemChanged(QTreeWidgetItem *)));
 
@@ -724,32 +831,83 @@ GeoDataPropertyEdit * createObjectBrowser(QWidget *parent) {
 
 //helper class
 VisDataPropertyEdit* createVisObjectBrowser(QWidget *parent) {
+
+  
   const bool useClassName = false;
   const int useClassDepth = 20;   //a large number, sufficient enough include all derived classes
+  const int Col0Size = 250;
   VisDataPropertyEdit *pe = new VisDataPropertyEdit(parent, useClassName, useClassDepth);
-  pe->setHeader0Name("Rendering Object");  
-  pe->setColumnWidth(0, 120);  
-  pe->setColumnWidth(1, pe->width()-120-10);  
+
+  // do this to increase the vertical spacing via the sizeHint.
+  pe->setItemDelegate(new VisDataPropertyDelegate());
+    
+  pe->setHeader0Name("Rendering Object");
+
+  pe->setIndentation(20);
+  pe->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::MinimumExpanding);
+  pe->setToolTip("Double click to open and modify visualization object properties.");
+  pe->setUniformRowHeights(true);
+
+  
+  pe->setColumnWidth(0, Col0Size);  
+  pe->setColumnWidth(1, pe->width()-Col0Size-10);  
   pe->resetProperties();
   pe->expandToDepth(0);
-  pe->collapseAll();
+  //pe->collapseAll();
+  pe->expandAll();
   const int dockWidth = 1374;
   pe->setMinimumWidth(150);
   pe->setMaximumWidth(dockWidth-100);
   pe->resize(dockWidth, 200);
+
+  // actual screen size
+  QDesktopWidget desktop;
+  //int screenWidth  = desktop.screenGeometry().width();
+  int screenHeight = desktop.screenGeometry().height();
+  if (screenHeight < 2000) {
+    pe->setMinimumHeight(600);
+  } else {
+    pe->setMinimumHeight(1800);
+  }
+
   return pe;
 }
 
 
 
 void ControlDockWidget::initTab2ClientData() {
-  // For the Info tab
+  // For the View and Info tabs
 
+  // actual screen size
+  QDesktopWidget desktop;
+  //int screenWidth  = desktop.screenGeometry().width();
+  int screenHeight = desktop.screenGeometry().height();
+
+  
   m_viewSplitter = new QSplitter(Qt::Vertical, this->ui->viewTab);
-  GeoDataPropertyEdit* objPE = createObjectBrowser(m_viewSplitter);
+  QSplitter* m_viewSplitterJunk = new QSplitter(); //unseen... this effectively gets rid of the splitter in the info tab
+
+  m_viewSplitter->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::MinimumExpanding);
+  //m_viewSplitter->setMinimumHeight(600);
+  //int h;
+  //if (screenHeight > 2000) {
+  //  h = 950;
+  //  m_viewSplitter->setMinimumHeight(h*2 + 10);
+  //} else {
+  //  h = 300;
+  //  m_viewSplitter->setMinimumHeight(h*2 + 10);
+  //}
+  m_viewSplitter->resize( m_viewSplitter->width(), ui->mainVerticalLayout->parentWidget()->size().height()-2);
+  //m_viewSplitter->resize( m_viewSplitter->width(), ui->tabWidget->height()-2);
+
+  
+  GeoDataPropertyEdit* objPE = createObjectBrowser(m_viewSplitterJunk);
   VisDataPropertyEdit* visobjPE = createVisObjectBrowser(m_viewSplitter);
-  const int h = objPE->height();
-  visobjPE->move(0, h+4);
+
+  objPE->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::MinimumExpanding);
+  visobjPE->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::MinimumExpanding);
+  
+  //visobjPE->move(0, h+4);
   m_objectPropEdit = objPE;
   m_visPropEdit = visobjPE;
   connect(objPE, SIGNAL(propertyChanged()), this, SIGNAL(requestRedraw()));
@@ -770,9 +928,13 @@ void ControlDockWidget::initTab2ClientData() {
   //create visualization nodes, such as LUT & point renderer
   VisDataList* vislist = VisDataListSingleton::getInstance();
 
+  
   if (m_visPropEdit) {
     PropertyEditor::PropertyEdit *w = m_visPropEdit;
-    connect(vislist, SIGNAL(objectAdded(QObject*)), w, SLOT(addObject(QObject*)));
+    m_visPropEdit->resize( m_visPropEdit->width(), ui->mainVerticalLayout->parentWidget()->size().height()-5);
+
+    //connect(vislist, SIGNAL(objectAdded(QObject*)), w, SLOT(addObject(QObject*)));
+    connect(vislist, SIGNAL(objectAdded(QObject*)), w, SLOT(addObjectEMVL(QObject*)));
     connect(w, SIGNAL(objectDeleted(QObject *)), datalist, SLOT(onChildObjectRemoved(QObject*)));
     connect(w, SIGNAL(objectDeleted(QObject *)), vislist, SLOT(onObjectRemoved(QObject*)));
 
@@ -785,9 +947,116 @@ void ControlDockWidget::initTab2ClientData() {
     }
   }
   
-  m_viewSplitter->addWidget(m_objectPropEdit);
+  m_viewSplitterJunk->addWidget(m_objectPropEdit);
   m_viewSplitter->addWidget(m_visPropEdit);
 
+
+  int extraHeight = 45;
+  int extraWidth  = 1000;
+  if (screenHeight > 2000) {
+    // add height where needed
+    //m_objectPropEdit->setMinimumHeight(m_objectPropEdit->height() + extraHeight);
+    //m_visPropEdit->setMinimumHeight(m_visPropEdit->height()       + extraHeight);
+    //m_viewSplitter->setMinimumHeight(m_viewSplitter->height()       + extraHeight);
+
+    
+    ui->groupBox_mode->setMinimumHeight(ui->groupBox_mode->height()                       + extraHeight);
+    ui->groupBox_visibility->setMinimumHeight(ui->groupBox_visibility->height()           + extraHeight);
+    ui->groupBox_opacity->setMinimumHeight(ui->groupBox_opacity->height()                 + extraHeight);
+    ui->groupBox_minmax->setMinimumHeight(ui->groupBox_minmax->height()                   + extraHeight);
+    ui->groupBox_threshold->setMinimumHeight(ui->groupBox_threshold->height()             + extraHeight);
+    ui->groupBox_colormap->setMinimumHeight(ui->groupBox_colormap->height()               + extraHeight);
+    ui->groupBox_scalefactor->setMinimumHeight(ui->groupBox_scalefactor->height()         + extraHeight);
+    ui->groupBox_ruler->setMinimumHeight(ui->groupBox_ruler->height()                     + extraHeight);
+    ui->groupBox_windcontrols->setMinimumHeight(ui->groupBox_windcontrols->height()       + extraHeight);
+    ui->groupBox_specialcontrols->setMinimumHeight(ui->groupBox_specialcontrols->height() + extraHeight*10);
+    ui->specialControlsStackedWidget->setMinimumHeight(ui->specialControlsStackedWidget->height() + extraHeight*10);
+
+    ui->pageBLANK->setMinimumHeight(ui->pageBLANK->height()                     + extraHeight*10);
+    ui->pageCMAQ->setMinimumHeight(ui->pageCMAQ->height()                       + extraHeight*10);
+    ui->pageCEILOMETER->setMinimumHeight(ui->pageCEILOMETER->height()           + extraHeight*10);
+    ui->pageNEUBREW->setMinimumHeight(ui->pageNEUBREW->height()                 + extraHeight*10);
+    ui->pageBEHR->setMinimumHeight(ui->pageBEHR->height()                       + extraHeight*10);
+    ui->pageMODIS->setMinimumHeight(ui->pageMODIS->height()                     + extraHeight*10);
+    ui->pageVIIRS->setMinimumHeight(ui->pageVIIRS->height()                     + extraHeight*10);
+    ui->pageTROPOMI->setMinimumHeight(ui->pageTROPOMI->height()                 + extraHeight*10);
+    ui->pageHMS->setMinimumHeight(ui->pageHMS->height()                         + extraHeight*10);
+    ui->pagePanel->setMinimumHeight(ui->pagePanel->height()                     + extraHeight*10);
+    ui->pagePandora->setMinimumHeight(ui->pagePandora->height()                 + extraHeight*10);
+    ui->pageTEMPO->setMinimumHeight(ui->pageTEMPO->height()                     + extraHeight*10);
+    
+    ui->groupBox_cmaq->setMinimumHeight(ui->groupBox_cmaq->height()                       + extraHeight*10);
+    ui->groupBox_ceilometer->setMinimumHeight(ui->groupBox_ceilometer->height()           + extraHeight*10);
+    ui->groupBox_neubrew->setMinimumHeight(ui->groupBox_neubrew->height()                 + extraHeight*10);
+    ui->groupBox_behr->setMinimumHeight(ui->groupBox_behr->height()                       + extraHeight*10);
+    ui->groupBox_modis->setMinimumHeight(ui->groupBox_modis->height()                     + extraHeight*10);
+    ui->groupBox_viirs->setMinimumHeight(ui->groupBox_viirs->height()                     + extraHeight*10);
+    ui->groupBox_tropomi->setMinimumHeight(ui->groupBox_tropomi->height()                 + extraHeight*10);
+    ui->groupBox_hms->setMinimumHeight(ui->groupBox_hms->height()                         + extraHeight*10);
+    ui->groupBox_panel->setMinimumHeight(ui->groupBox_panel->height()                     + extraHeight*10);
+    ui->groupBox_pandora->setMinimumHeight(ui->groupBox_pandora->height()                 + extraHeight*10);
+    ui->groupBox_tempo->setMinimumHeight(ui->groupBox_tempo->height()                     + extraHeight*10);
+
+    
+    ui->groupBox_minmax->setMinimumWidth(ui->groupBox_minmax->width() + extraWidth);
+
+    
+    //reposish as needed
+    m_visPropEdit->setGeometry(m_visPropEdit->x(),
+                               m_objectPropEdit->y() + m_objectPropEdit->height() + 2,
+                               m_visPropEdit->width(),
+                               m_visPropEdit->height());
+    
+    ui->groupBox_visibility->setGeometry(ui->groupBox_visibility->x(),
+                                         ui->groupBox_mode->y() + ui->groupBox_mode->height() + 2,
+                                         ui->groupBox_visibility->width(),
+                                         ui->groupBox_visibility->height());
+    ui->groupBox_opacity->setGeometry(ui->groupBox_opacity->x(),
+                                      ui->groupBox_visibility->y() + ui->groupBox_visibility->height() + 2,
+                                      ui->groupBox_opacity->width(),
+                                      ui->groupBox_opacity->height());
+    ui->groupBox_minmax->setGeometry(ui->groupBox_minmax->x(),
+                                     ui->groupBox_opacity->y() + ui->groupBox_opacity->height() + 2,
+                                     ui->groupBox_minmax->width(),
+                                     ui->groupBox_minmax->height());
+    ui->groupBox_threshold->setGeometry(ui->groupBox_threshold->x(),
+                                        ui->groupBox_minmax->y() + ui->groupBox_minmax->height() + 2,
+                                        ui->groupBox_threshold->width(),
+                                        ui->groupBox_threshold->height());
+    ui->groupBox_colormap->setGeometry(ui->groupBox_colormap->x(),
+                                       ui->groupBox_threshold->y() + ui->groupBox_threshold->height() + 2,
+                                       ui->groupBox_colormap->width(),
+                                       ui->groupBox_colormap->height());
+    ui->groupBox_scalefactor->setGeometry(ui->groupBox_scalefactor->x(),
+                                          ui->groupBox_colormap->y() + ui->groupBox_colormap->height() + 2,
+                                          ui->groupBox_scalefactor->width(),
+                                          ui->groupBox_scalefactor->height());
+    ui->groupBox_ruler->setGeometry(ui->groupBox_ruler->x(),
+                                    ui->groupBox_scalefactor->y() + ui->groupBox_scalefactor->height() + 2,
+                                    ui->groupBox_ruler->width(),
+                                    ui->groupBox_ruler->height());
+    ui->groupBox_windcontrols->setGeometry(ui->groupBox_windcontrols->x(),
+                                           ui->groupBox_ruler->y() + ui->groupBox_ruler->height() + 2,
+                                           ui->groupBox_windcontrols->width(),
+                                           ui->groupBox_windcontrols->height());
+    ui->groupBox_specialcontrols->setGeometry(ui->groupBox_specialcontrols->x(),
+                                           ui->groupBox_windcontrols->y() + ui->groupBox_windcontrols->height() + 2,
+                                           ui->groupBox_specialcontrols->width(),
+                                           ui->groupBox_specialcontrols->height());
+
+    ui->label_mode->setGeometry(0, ui->groupBox_mode->y(), ui->label_mode->width(), ui->label_mode->height());
+    //ui->label_visibility->setGeometry(0, ui->groupBox_visibility->y(), ui->label_visibility->width(), ui->label_visibility->height());
+    ui->label_opacity->setGeometry(0, ui->groupBox_opacity->y(), ui->label_opacity->width(), ui->label_opacity->height());
+    ui->label_minmax->setGeometry(0, ui->groupBox_minmax->y(), ui->label_minmax->width(), ui->label_minmax->height());
+    ui->label_threshold->setGeometry(0, ui->groupBox_threshold->y(), ui->label_threshold->width(), ui->label_threshold->height());
+    ui->label_colormap->setGeometry(0, ui->groupBox_colormap->y(), ui->label_colormap->width(), ui->label_colormap->height());
+    ui->label_scalefactor->setGeometry(0, ui->groupBox_scalefactor->y(), ui->label_scalefactor->width(), ui->label_scalefactor->height());
+    ui->label_ruler->setGeometry(0, ui->groupBox_ruler->y(), ui->label_ruler->width(), ui->label_ruler->height());
+    ui->WindLabel->setGeometry(0, ui->groupBox_windcontrols->y(), ui->WindLabel->width(), ui->WindLabel->height());
+    ui->SpecialControlLabel->setGeometry(0, ui->groupBox_specialcontrols->y(), ui->SpecialControlLabel->width(), ui->SpecialControlLabel->height());
+
+  }
+    
   connect(ui->vizOpacitySlider, SIGNAL(valueChanged(int)), this, SLOT(onOpacitySliderChanged(int)) );
   connect(ui->ThresholdSlider, SIGNAL(valueChanged(int)), this, SLOT(onThresholdSliderChanged(int)) );
   connect(ui->ShowCMAQRow, SIGNAL(stateChanged(int)), this, SLOT(onShowCMAQRowChanged(int)) );
@@ -820,21 +1089,41 @@ void ControlDockWidget::initTab2ClientData() {
   // turn off CMAQ row/colum since we are starting in 2D mode
   ui->ShowCMAQRow->setEnabled(false);
   ui->ShowCMAQCol->setEnabled(false);
+  ui->groupBox_minmax->setStyleSheet("QGroupBox {border:0;}");
+  //ui->groupBox_minmax->setStyleSheet("QGroupBox {border:1px solid gray;}");
+  ui->groupBox_mode->setStyleSheet("QGroupBox {border:0;}");
+  ui->groupBox_visibility->setStyleSheet("QGroupBox {border:0;}");
+  ui->groupBox_scalefactor->setStyleSheet("QGroupBox {border:0;}");
+  ui->groupBox_opacity->setStyleSheet("QGroupBox {border:0;}");
+  ui->groupBox_colormap->setStyleSheet("QGroupBox {border:0;}");
+  ui->groupBox_specialcontrols->setStyleSheet("QGroupBox {border:0;}");
+  ui->groupBox_threshold->setStyleSheet("QGroupBox {border:0;}");
+  //ui->groupBox_threshold->setStyleSheet("QGroupBox {border:1px solid gray;}");
+  ui->groupBox_ruler->setStyleSheet("QGroupBox {border:0;}");
+  ui->groupBox_windcontrols->setStyleSheet("QGroupBox {border:0;}");
+  ui->groupBox_mapprojbound->setStyleSheet("QGroupBox {border:0;}");
+  ui->groupBox_mapserver->setStyleSheet("QGroupBox {border:0;}");
+  ui->groupBox_mapoptions->setStyleSheet("QGroupBox {border:0;}");
+  ui->groupBox_mapother->setStyleSheet("QGroupBox {border:0;}");
+  ui->groupBox_timestep->setStyleSheet("QGroupBox {border:0;}");
+  // and add a border around others
+  ui->projectionsGroupBox->setStyleSheet("QGroupBox {border:1px solid gray;}");
+  ui->boundariesGroupBox->setStyleSheet("QGroupBox {border:1px solid gray;}");
+  ui->miscGroupBox->setStyleSheet("QGroupBox {border:1px solid gray;}");
+  ui->groupBox_20->setStyleSheet("QGroupBox {border:1px solid gray;}");
+  ui->groupBox_21->setStyleSheet("QGroupBox {border:1px solid gray;}");
+
+
+  //ui->groupBox_cmaq->setStyleSheet("QGroupBox {border:1px solid gray;}");
+  //ui->groupBox_specialcontrols->setStyleSheet("QGroupBox {border:1px solid red;}");
+  //ui->pageCMAQ->setStyleSheet("QGroupBox {border:1px solid green;}");
+  ui->groupBox_cmaq->setStyleSheet("QGroupBox {border:0;}");
+  ui->groupBox_specialcontrols->setStyleSheet("QGroupBox {border:0;}");
+  ui->pageCMAQ->setStyleSheet("QGroupBox {border:0;}");
+
+
   
-  // make groupboxes invisible
-  ui->groupBox_4->setStyleSheet("QGroupBox {border:0;}");
-  ui->groupBox_6->setStyleSheet("QGroupBox {border:0;}");
-  ui->groupBox_7->setStyleSheet("QGroupBox {border:0;}");
-  ui->groupBox_8->setStyleSheet("QGroupBox {border:0;}");
-  ui->groupBox_9->setStyleSheet("QGroupBox {border:0;}");
-  ui->groupBox_10->setStyleSheet("QGroupBox {border:0;}");
-  ui->groupBox_11->setStyleSheet("QGroupBox {border:0;}");
-  ui->groupBox_12->setStyleSheet("QGroupBox {border:0;}");
-  ui->groupBox_13->setStyleSheet("QGroupBox {border:0;}");
-  ui->groupBox_14->setStyleSheet("QGroupBox {border:0;}");
-  
-  ui->boundingGroupBox->setStyleSheet("QGroupBox {border:0;}");
-  ui->dateGroupBox->setStyleSheet("QGroupBox {border:0;}");
+  ui->mainVerticalLayout->setAlignment(Qt::AlignTop);
   
   addColormapHelper();
   ui->scenarioComboBox->setCurrentIndex(0);
@@ -902,6 +1191,21 @@ void ControlDockWidget::initTab2ClientData() {
 
 
 void ControlDockWidget::initTab3ClientData() {
+  // for the Save tab
+
+  // actual screen size
+  QDesktopWidget desktop;
+  //int screenWidth  = desktop.screenGeometry().width();
+  int screenHeight = desktop.screenGeometry().height();
+
+  int extraHeight = 85;
+  //int extraWidth  = 1000;
+  if (screenHeight > 2000) {
+    // add height where needed
+    ui->groupBox_savetab->setMinimumHeight(ui->groupBox_savetab->height()     + extraHeight*4);
+
+  }
+  
   QFont viewTabFont = ui->viewTab->font();
   viewTabFont.setPixelSize(11);
   ui->viewTab->setFont(viewTabFont);
@@ -961,6 +1265,20 @@ void ControlDockWidget::initTab3ClientData() {
 
 
 void ControlDockWidget::initTab4ClientData() {
+
+
+  QDesktopWidget desktop;
+  //int screenWidth  = desktop.screenGeometry().width();
+  int screenHeight = desktop.screenGeometry().height();
+  
+  int extraHeight = 85;
+  //int extraWidth  = 1000;
+  if (screenHeight > 2000) {
+    // add height where needed
+    ui->groupBox_rsigweb->setMinimumHeight(ui->groupBox_rsigweb->height()     + extraHeight*4);
+  }
+
+
   ui->timestepSlider->setMaximum(23); //default, until data is read
   ui->timestepSlider->setMinimum(0); 
   connect(ui->timestepSlider, SIGNAL(valueChanged(int)), this, SLOT(ontimestepSliderChanged(int)) );
@@ -985,6 +1303,18 @@ void ControlDockWidget::initTab4ClientData() {
   connect(ui->emailPushButton, SIGNAL(clicked()), this, SLOT(onEmailClicked()));
   connect(ui->exitPushButton, SIGNAL(clicked()), this, SLOT(onExitClicked()));
   connect(ui->checknowPushButton, SIGNAL(clicked()), this, SLOT(onCheckUpdateClicked()));
+
+
+  QFont font = qApp->font();
+  ui->guiFontsizeSpinbox->setValue(font.pointSize());
+  #ifdef __APPLE__
+    const int guiFontSize = 11;
+  #else
+    const int guiFontSize = 8;
+  #endif
+  ui->guiFontsizeSpinbox->setValue(guiFontSize);
+  this->onGuiFontsizeChanged(guiFontSize);
+  
 }
 
 

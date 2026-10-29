@@ -82,6 +82,7 @@ HISTORY: 2012-11-12 zhang.nan@epa.gov
 #include "LoadMapFile.h"
 #include "VisDataObject.h" // For setPointSpriteTexture().
 #include "RGBColormap.h"
+#include <QDesktopWidget>
 
 #include "CeilometerCurtainArray.h"
 
@@ -275,6 +276,7 @@ RSIGScene::RSIGScene()
   }
 
   lastInstanceSceneHACK = this;
+
 }
 
 
@@ -1079,26 +1081,60 @@ void RSIGScene::drawGraphTitle(QPainter *painter) {
       h_offset = 220;
     }
   }
-  
-  QRect box1(w-210, h-h_offset, 200, 30);     // for timestep
-  QRect box1a(0, h-h_offset-30, w-20, 30);    // for swath persist
-  QRect box2(w-410, h-h_offset, 200, 30);     // for scale factor
-  QRect box3(0, h-h_offset, w, 30);           // for background
-  QRect box3a(0, h-h_offset-30, w, 30);       // for swath persist background
-  QRect box4(0, 5, w, 30);                    // text rect for top data use annotations
-  QRect box4fill(0, 0, w, 30);                // fill rect for top data use annotations
-  QRect box5(vOptions->getWindVectorLength()-20, h-h_offset, 80, 30);         // for wind vector glyph factor
 
+  // actual screen size
+  QDesktopWidget desktop;
+  int screenHeight = desktop.screenGeometry().height();
+  
+  float boxHScalefactor = qApp->font().pointSizeF() / 8.0;
+  //qDebug() <<  "bhs" << boxHScalefactor;
+  QRect box1;
+  QRect box1a;
+  QRect box2;
+  QRect box3;
+  QRect box3a;
+  QRect box4;
+  QRect box4fill;
+  QRect box5;
+  if (screenHeight > 2000) {
+    box1     = QRect(w-560, h-h_offset, 550, 40);     // for timestep
+    box1a    = QRect(0, h-h_offset-30, w-20, 40);     // for swath persist
+    box2     = QRect(w/2-250, h-h_offset, 500, 50);   // for scale factor
+    box3     = QRect(0, h-h_offset, w, 40);           // for background
+    box3a    = QRect(0, h-h_offset-30, w, 40);        // for swath persist background
+    box4     = QRect(0, 5, w, 40);                    // text rect for top data use annotations
+    box4fill = QRect(0, 0, w, 40);                    // fill rect for top data use annotations
+    box5     = QRect(vOptions->getWindVectorLength()-20, h-h_offset, 180, 40);         // for wind vector glyph factor
+  } else {
+    box1     = QRect(w-360, h-h_offset, 350, 30);     // for timestep
+    box1a    = QRect(0, h-h_offset-30, w-20, 30);     // for swath persist
+    box2     = QRect(w/2-150, h-h_offset, 300, 30);   // for scale factor
+    box3     = QRect(0, h-h_offset, w, 30);           // for background
+    box3a    = QRect(0, h-h_offset-30, w, 30);        // for swath persist background
+    box4     = QRect(0, 5, w, 30);                    // text rect for top data use annotations
+    box4fill = QRect(0, 0, w, 30);                    // fill rect for top data use annotations
+    box5     = QRect(vOptions->getWindVectorLength()-20, h-h_offset, 120, 30);         // for wind vector glyph factor
+  }
 
   // get original font
   const QFont origFont = painter->font();
 
   // set up default font
-  QFont font("Helvetica", 8, QFont::Normal);
-  const int pointsize_small  = 12;
-  const int pointsize_medium = 14;
-  const int pointsize_large  = 16;
+  QFont guiFont = qApp->font();
+  QFont font("Helvetica", guiFont.pointSizeF(), QFont::Normal);
+  
+  int pointsize_small  = guiFont.pointSizeF() + 4;
+  int pointsize_medium = guiFont.pointSizeF() + 8;
+  int pointsize_large  = guiFont.pointSizeF() + 12;
 
+  if (screenHeight > 2000) {
+    pointsize_small  *= 2.0;
+    pointsize_medium *= 2.0;
+    pointsize_large  *= 2.0;
+  }
+
+
+  
   // special fonts
   QFont timeFont = font;
   QFont scaleFont = font;
@@ -1154,12 +1190,18 @@ void RSIGScene::drawGraphTitle(QPainter *painter) {
   }
 
   // draw data use annotation
-  #ifdef __APPLE__
-  #define annotHeight 16
-  #else
-  #define annotHeight 20
-  #endif
-
+  int annotHeight;
+  if (screenHeight > 2000) {
+    annotHeight = 40;
+  } else {
+    #ifdef __APPLE__
+      annotHeight = 16;
+    #else
+      annotHeight = 20;
+    #endif
+  }
+  //qDebug() << "annot height" << annotHeight;
+  
   QString strDataAnnot = getDataAnnotationString();
 
   if (strDataAnnot.length() > 0) {
@@ -1169,8 +1211,8 @@ void RSIGScene::drawGraphTitle(QPainter *painter) {
       numLines = 1;
     }
 
-    box4.setHeight(numLines*annotHeight);
-    box4fill.setHeight(numLines*annotHeight);
+    box4.setHeight(    numLines*annotHeight * (boxHScalefactor > 1 ? boxHScalefactor*0.8 : 1.0));
+    box4fill.setHeight(numLines*annotHeight * (boxHScalefactor > 1 ? boxHScalefactor*0.8 : 1.0));
     painter->setFont(dataUseFont);
     painter->fillRect(box4fill, brush2);
     painter->drawText(box4, Qt::AlignLeft, strDataAnnot);
@@ -1190,10 +1232,11 @@ void RSIGScene::drawGraphTitle(QPainter *painter) {
     pen.setStyle(Qt::SolidLine);    //Qt::DashLine causes stall in Win32 env.
     pen.setColor(QColor(0, 0, 0, 255));
     painter->setPen(pen);
-    const QFont font("Courier", 8, QFont::Normal);
+    //const QFont font("Courier", 8, QFont::Normal);
+    const QFont font("Courier", guiFont.pointSizeF(), QFont::Normal);
     painter->setFont(font);  
-    QRect brushBox(0, box4.height(), w, (list_size+1) * annotHeight);                    // text rect for top data use annotations
-    QRect probeBox(15, box4.height(), w, (list_size+1) * annotHeight);                    // text rect for top data use annotations
+    QRect brushBox(0, box4fill.height(), w, (list_size+1) * annotHeight);                    // text rect for top data use annotations
+    QRect probeBox(15, box4fill.height(), w, (list_size+1) * annotHeight);                    // text rect for top data use annotations
     QBrush brush(QColor(bg2color_r, bg2color_g, bg2color_b, bg2alpha) );
     painter->fillRect(brushBox, brush);
     painter->drawText(probeBox, Qt::AlignLeft, probeMsg2);
@@ -1495,15 +1538,15 @@ float lonlat_to_cartZ(float radius, float lat) {
 
 
 
-float * RSIGScene::getProbeLocation() {
+void RSIGScene::getProbeLocation(double& probeLon, double& probeLat) {
   VisOptions* const vOptions = VisOptionsSingleton::getInstance();
   //const bool mode2d = vOptions->getMode2D();
   const int displayMode = vOptions->getDisplayMode();
-  float probeLat = 0.0, probeLon = 0.0;
+  probeLon = probeLat = 0.0;
 
   //if ( mode2d ) {
   if ( displayMode == 0 ) { // 2D
-    //find location        
+    //find location
     const QPointF currentScreenPos = curScenePos;
     const QPointF currentGeoPos = this->toGeoPointF(currentScreenPos);
     probeLon = currentGeoPos.x();
@@ -1515,16 +1558,16 @@ float * RSIGScene::getProbeLocation() {
     GLint viewport[4];
     GLdouble modelview[16];
     GLdouble projection[16];
-    glGetIntegerv(GL_VIEWPORT, viewport);   
+    glGetIntegerv(GL_VIEWPORT, viewport);
     glGetDoublev(GL_MODELVIEW_MATRIX, modelview);
     glGetDoublev(GL_PROJECTION_MATRIX, projection);
-    
+
     // Unproject at normalized near and far points to find possible ray:
 
     const float xLoc = (float) curScenePos.x();
     const float yLoc = sceneHeight - (float) curScenePos.y();
-    const int result1 = gluUnProject(xLoc, yLoc, 0.0, modelview, projection, viewport, &rLonNear, &rLatNear, &rZNear); 
-    const int result2 = gluUnProject(xLoc, yLoc, 1.0, modelview, projection, viewport, &rLonFar,  &rLatFar,  &rZFar); 
+    const int result1 = gluUnProject(xLoc, yLoc, 0.0, modelview, projection, viewport, &rLonNear, &rLatNear, &rZNear);
+    const int result2 = gluUnProject(xLoc, yLoc, 1.0, modelview, projection, viewport, &rLonFar,  &rLatFar,  &rZFar);
 
     // Determine where ray intersects map plane:
 
@@ -1534,11 +1577,6 @@ float * RSIGScene::getProbeLocation() {
       probeLon = rLonNear + dist_percent*(rLonFar - rLonNear);
     }
   }
-
-  static float location[2];
-  location[0] = probeLat;
-  location[1] = probeLon;
-  return location;
 }
 
 
@@ -1591,26 +1629,25 @@ RSIGScene::getVisDataObjectForDataset(const emvl::Dataset* const dataset) const 
 
 
 void  RSIGScene::updateProbe() {
-  VisOptions* const vOptions = VisOptionsSingleton::getInstance();
-
-  float* probeLoc = getProbeLocation();
-  float probeLon = probeLoc[1];
-  float probeLat = probeLoc[0];
+  double probeLon = 0.0;
+  double probeLat = 0.0;
+  getProbeLocation(probeLon, probeLat);
 
   // probeMsg is for displaying in the status bar
-  QString probeMsg  = formatLonLat(probeLon, probeLat);
+  QString probeMsg = formatLonLat(probeLon, probeLat);
 
   // probeMsg2 is for displaying in the heads-up display
-  probeMsg2.sprintf("Lon: %f\nLat: %f\n", probeLon, probeLat);
-  
+  probeMsg2.sprintf("Lon: %f    Lat: %f\n", probeLon, probeLat);
+
   // Probe on the datasets only if the probe point is within the BBOX:
   // Why? Because it is slow on Windows platform.
 
+  VisOptions* const vOptions = VisOptionsSingleton::getInstance();
   const double minlon = vOptions->getBboxMinLon();
   const double maxlon = vOptions->getBboxMaxLon();
   const double minlat = vOptions->getBboxMinLat();
   const double maxlat = vOptions->getBboxMaxLat();
-  
+
   const bool probeFlag =
     probeLon >= minlon &&
     probeLon <= maxlon &&
@@ -1721,20 +1758,18 @@ void  RSIGScene::updateProbe() {
 
 void RSIGScene::drawTimeseries() {
 
-  VisOptions* const vOptions = VisOptionsSingleton::getInstance();
-
-  float * probeLoc = getProbeLocation();
-  float probeLat = probeLoc[0];
-  float probeLon = probeLoc[1];
-
   // Probe on the datasets only if the probe point is within the BBOX:
   // Why? Because it is slow on Windows platform.
 
+  VisOptions* const vOptions = VisOptionsSingleton::getInstance();
   const double minlon = vOptions->getBboxMinLon();
   const double maxlon = vOptions->getBboxMaxLon();
   const double minlat = vOptions->getBboxMinLat();
   const double maxlat = vOptions->getBboxMaxLat();
-  
+
+  double probeLon = 0.0;
+  double probeLat = 0.0;
+  getProbeLocation(probeLon, probeLat);
   const bool probeFlag =
     probeLon >= minlon &&
     probeLon <= maxlon &&
@@ -1814,7 +1849,6 @@ void RSIGScene::drawPanelTimeseries(QPainter *painter) {
   //    | plot3              |
   //    ----------------------
 
-
   // set up plot areas
   int marginX      = 10;
   int marginY      = 10;
@@ -1869,7 +1903,6 @@ void RSIGScene::drawPanelTimeseries(QPainter *painter) {
     }
   }
 
-
   const unsigned int nDays = RSIGStateSingleton::getInstance()->mDuration;
   // get beginning and ending timestamps
   // TBD. Need full range for selected time period independent of the datasets
@@ -1891,7 +1924,7 @@ void RSIGScene::drawPanelTimeseries(QPainter *painter) {
   bool isProbeProfile = false; // default
   if (probeSourceName != "" && probeBaseName.startsWith(probeSourceName)) {
     VisDataObject* visObj = vislist->getObjectByName(QString(probeBaseName).append(".point"));
-    if (visObj) {
+    if (visObj && probeObj) {
       probeTitle = probeBaseName;
       probeUnits = probeObj->units();
       probeData  = probeObj->model();
@@ -1901,14 +1934,13 @@ void RSIGScene::drawPanelTimeseries(QPainter *painter) {
       if (probeSourceName.contains("ceilometer") || probeSourceName.contains("pandora")) {
         isProbeProfile = true;
       }
-      
     }
   }
 
   // get target data
   if (targetSourceName != "" && targetBaseName.startsWith(targetSourceName)) {
     VisDataObject* visObj = vislist->getObjectByName(QString(targetBaseName).append(".polygon"));
-    if (visObj) {
+    if (visObj && targetObj) {
       targetTitle = targetBaseName + " " + targetObj->units();
       targetData  = targetObj->model();
       targetMin   = visObj->minval();
@@ -1920,7 +1952,6 @@ void RSIGScene::drawPanelTimeseries(QPainter *painter) {
 
   // processing for plot1
   static const int maxPlots = 9;
-  int* plot1Origin = 0;
 
   if (probeData && targetData && probeSourceName != "" && targetSourceName != "") {
 
@@ -1936,8 +1967,13 @@ void RSIGScene::drawPanelTimeseries(QPainter *painter) {
     } 
 
     // initialize a subplot
-    plot1Origin = panelPlot1Init(painter, nPlots, maxPlots, probeTitle, targetTitle, plot1_x0, plot1_y0, plot1_width, plot1_height, probeMin, probeMax, targetMin, targetMax);
-    //qDebug() << "origin" << plot1Origin[0] << plot1Origin[1];
+    static const int plotComponents = 3;
+    std::vector<int> plot1Origin( nPlots * plotComponents ); //x
+
+    if ( nPlots > 0 ) {
+      panelPlot1Init(painter, probeTitle, targetTitle, plot1_x0, plot1_y0, plot1_width, plot1_height, probeMin, probeMax, targetMin, targetMax, plot1Origin);
+      //qDebug() << "origin" << plot1Origin[0] << plot1Origin[1];
+    }
 
     const std::vector<emvl::Dataset::SubsetPointers> targetSubsets = targetData->subset( probeData->startingTimestamp(), probeData->endingTimestamp() );
     // subsetPointers are only used for airnow, purpleair, etc
@@ -2017,10 +2053,17 @@ void RSIGScene::drawPanelTimeseries(QPainter *painter) {
         if (! memo.count( probeNoteUnique.toStdString() ) && probeList.contains(probeNoteUnique) ) {
           memo.insert( probeNoteUnique.toStdString() ); // Remember to avoid re-probing later.
           
-          int thisOriginX = plot1Origin[plotNum*3 + 0];
-          int thisOriginY = plot1Origin[plotNum*3 + 1];
-          int thisPlotDim = plot1Origin[plotNum*3 + 2];
-              
+          int thisOriginX = 0;
+          int thisOriginY = 0;
+          int thisPlotDim = 0;
+
+          if ( plotNum < nPlots ) {
+            const int plotNum3 = plotNum * 3;
+            thisOriginX = plot1Origin[plotNum3   ];
+            thisOriginY = plot1Origin[plotNum3 + 1];
+            thisPlotDim = plot1Origin[plotNum3 + 2];
+         }
+
           // get the probe timeseries
           const double probeLongitude =
             isProbeProfile ? profileDatasetLongitudes[ probeIndCoord ]
@@ -2077,10 +2120,11 @@ void RSIGScene::drawPanelTimeseries(QPainter *painter) {
     // initialize plot areas
 
     // conversion from data space (probe) to screen space:
-    double* plot3ProbeConversion = panelPlot3Init(painter, probeTitle, probeUnits, plot3_x0, plot3_y0, plot3_width, plot3_height, 0, nDays*24, probeMin, probeMax);
+    double plot3ProbeConversion[ 4 ] = { 0.0, 0.0, 0.0, 0.0 };
+    panelPlot3Init(painter, probeTitle, probeUnits, plot3_x0, plot3_y0, plot3_width, plot3_height, 0, nDays*24, probeMin, probeMax, plot3ProbeConversion);
 
     // conversion from data space (target) to screen space:
-    //double* plot3TargetConversion = panelPlot3Init(painter, targetTitle, targetUnits, plot3_x0, plot3_y0, plot3_width, plot3_height, 0, nDays*24, targetMin, targetMax);
+    //panelPlot3Init(painter, targetTitle, targetUnits, plot3_x0, plot3_y0, plot3_width, plot3_height, 0, nDays*24, targetMin, targetMax, plot3ProbeConversion);
 
     if (isProbeProfile) {
       // processing for ceilometer/pandora
@@ -2124,10 +2168,8 @@ void RSIGScene::drawPanelTimeseries(QPainter *painter) {
           panelPlot3AddTimeseries(painter, thisProfileName, plotIndex, plot3ProbeConversion, probeTimeseries, 0, nDays*24, probeMin, probeMax);
           //panelPlot3AddTimeseries(painter, thisProfileName, plotIndex, plot3TargetConversion, targetTimeseries, 0, nDays*24, targetMin, targetMax);
           plotIndex += 1;
-                  
-        } 
+        }
       }
-      
     } else if ( probeData->cellType() == emvl::Dataset::POINT &&
                 ! probeData->isVector() ) {
       const int probeSiteCount = probeList.length();
@@ -2184,23 +2226,27 @@ QPoint RSIGScene::panelPlot1DatatoScreen(QPointF dataPoint, int xOrigin, int yOr
 }
 
 
-int * RSIGScene::panelPlot1Init(QPainter *painter, int nPlots, int maxPlots, QString probeTitle, QString targetTitle, int x0, int y0, int panelWidth, int panelHeight, double xmin, double xmax, double ymin, double ymax) {
+void RSIGScene::panelPlot1Init(QPainter *painter, QString probeTitle, QString targetTitle, int x0, int y0, int panelWidth, int panelHeight, double xmin, double xmax, double ymin, double ymax, std::vector<int>& output) {
+  const int nPlots = (int) output.size() / 3;
 
-  
+  if ( nPlots < 1 ) {
+    return;
+  }
+
   // set up subplots (all will be square)
-  int plotMarginX = 50;
-  int plotMarginY = 50;
-  int centerX     = x0 + panelWidth/2.0;
-  int centerY     = y0 + panelHeight/2.0;
-  int workingSize;
-  
-  int originX[nPlots];
-  int originY[nPlots];
-  int plotDim[nPlots];
-  static int origin[36]; // return value: [x1, y1, plotDim, ... , x9, y9, plotDim]
+  const int plotMarginX = 50;
+  const int plotMarginY = 50;
+  const int centerX     = x0 + panelWidth/2.0;
+  const int centerY     = y0 + panelHeight/2.0;
+  int workingSize = 0;
+
+  std::vector<int> originX( nPlots ); //x
+  std::vector<int> originY( nPlots ); //x
+  std::vector<int> plotDim( nPlots ); //x
 
   // set up the subplot axes
   int thisPlotDim = 0; // the size of each plot (assumed square)
+
   if (nPlots == 1) {
     workingSize = panelWidth < panelHeight ? panelWidth : panelHeight;
     //if (panelWidth < panelHeight) { workingSize = panelWidth; }
@@ -2218,7 +2264,7 @@ int * RSIGScene::panelPlot1Init(QPainter *painter, int nPlots, int maxPlots, QSt
 
     plotDim[1] = thisPlotDim;
     originX[1] = originX[0] + plotDim[0] + plotMarginX;
-    originY[1] = originY[0];   
+    originY[1] = originY[0];
   } else if (nPlots == 3 || nPlots == 4) {
     workingSize = panelWidth < panelHeight ? panelWidth : panelHeight;
     thisPlotDim = (workingSize - (3*plotMarginX) ) / 2.0;
@@ -2238,10 +2284,11 @@ int * RSIGScene::panelPlot1Init(QPainter *painter, int nPlots, int maxPlots, QSt
     originX[2]  = originX[0];
     originY[2]  = centerY + yOffset;
 
-    plotDim[3]  = thisPlotDim;
-    originX[3]  = originX[1];
-    originY[3]  = centerY + yOffset;
-    
+    if ( nPlots > 3 ) {
+      plotDim[3]  = thisPlotDim;
+      originX[3]  = originX[1];
+      originY[3]  = centerY + yOffset;
+    }
   } else if (nPlots == 5 || nPlots == 6) {
     workingSize = panelWidth < panelHeight ? panelWidth : panelHeight;
     thisPlotDim = (workingSize - (3*plotMarginX) ) / 3.0;
@@ -2266,11 +2313,12 @@ int * RSIGScene::panelPlot1Init(QPainter *painter, int nPlots, int maxPlots, QSt
     originX[4]  = originX[1];
     originY[4]  = centerY + yOffset;
 
-    plotDim[5]  = thisPlotDim;
-    originX[5]  = originX[2];
-    originY[5]  = centerY + yOffset;
-    
-  } else if (nPlots <= 9) {
+    if ( nPlots > 5 ) {
+      plotDim[5]  = thisPlotDim;
+      originX[5]  = originX[2];
+      originY[5]  = centerY + yOffset;
+    }
+  } else if (nPlots >= 7 && nPlots <= 9) {
     workingSize = panelWidth < panelHeight ? panelWidth : panelHeight;
     thisPlotDim = (workingSize - (3*plotMarginX) ) / 3.0 - 5;
 
@@ -2281,7 +2329,7 @@ int * RSIGScene::panelPlot1Init(QPainter *painter, int nPlots, int maxPlots, QSt
     plotDim[1]  = thisPlotDim;
     originX[1]  = originX[0] + thisPlotDim + plotMarginX/2 + 5;
     originY[1]  = originY[0];
-    
+
     plotDim[2]  = thisPlotDim;
     originX[2]  = originX[1] + thisPlotDim + plotMarginX/2 + 5;
     originY[2]  = originY[0];
@@ -2302,14 +2350,17 @@ int * RSIGScene::panelPlot1Init(QPainter *painter, int nPlots, int maxPlots, QSt
     originX[6]  = originX[0];
     originY[6]  = originY[3] + thisPlotDim + plotMarginY;
 
-    plotDim[7]  = thisPlotDim;
-    originX[7]  = originX[1];
-    originY[7]  = originY[6];
+    if ( nPlots > 7 ) {
+      plotDim[7]  = thisPlotDim;
+      originX[7]  = originX[1];
+      originY[7]  = originY[6];
+    }
 
-    plotDim[8]  = thisPlotDim;
-    originX[8]  = originX[2];
-    originY[8]  = originY[6];
-    
+    if ( nPlots > 8 ) {
+      plotDim[8]  = thisPlotDim;
+      originX[8]  = originX[2];
+      originY[8]  = originY[6];
+    }
   }
 
   // order of magnitude of x and y data (to simplify annotations)
@@ -2325,39 +2376,37 @@ int * RSIGScene::panelPlot1Init(QPainter *painter, int nPlots, int maxPlots, QSt
     orderOfMagnitudeY = QString::number(ymax, 'e', 1).right(2).toInt();
     //qDebug() << "orderOfMagnitudeY" << orderOfMagnitudeY;
   }
-  
+
   // draw main plot area
   QRect plotRect = QRect(x0, y0, panelWidth, panelHeight);
   painter->drawRect(plotRect);
   //painter->drawText(plotRect, Qt::AlignHCenter, title);
 
-  if (nPlots > 0 && nPlots <= maxPlots) {
-    // x label for overall plot
-    QRect titleRectX = QRect(x0, originY[nPlots-1] + plotDim[nPlots-1] + plotMarginY/2, panelWidth, 100);
-    if (orderOfMagnitudeX > 0) {
-      probeTitle = probeTitle.append(" x 10^" + QString::number(orderOfMagnitudeX));
-    }
-    
-    painter->drawText(titleRectX, Qt::AlignHCenter, probeTitle);
-    
-    // y label for overall plot
-    QRect titleRectY2 = QRect(0, 0, panelHeight-plotMarginY, plotMarginX*.45);
-    if (orderOfMagnitudeY > 0) {
-      targetTitle = targetTitle.append(" x 10^" + QString::number(orderOfMagnitudeY));
-    }
-    //painter->fillRect(titleRectY2, Qt::red);
-    int xTranslate = originX[0] - plotMarginX;
-    painter->translate(xTranslate, panelHeight);
-    //painter->fillRect(titleRectY2, Qt::blue);
-    painter->rotate(-90);
-    //painter->fillRect(titleRectY2, Qt::green);
-    painter->drawText(titleRectY2, Qt::AlignHCenter | Qt::AlignVCenter, targetTitle);
-    painter->rotate(90);
-    painter->translate(-xTranslate, -panelHeight);
+  // x label for overall plot
+  QRect titleRectX = QRect(x0, originY[nPlots-1] + plotDim[nPlots-1] + plotMarginY/2, panelWidth, 100);
+  if (orderOfMagnitudeX > 0) {
+    probeTitle = probeTitle.append(" x 10^" + QString::number(orderOfMagnitudeX));
   }
-  
+
+  painter->drawText(titleRectX, Qt::AlignHCenter, probeTitle);
+
+  // y label for overall plot
+  QRect titleRectY2 = QRect(0, 0, panelHeight-plotMarginY, plotMarginX*.45);
+  if (orderOfMagnitudeY > 0) {
+    targetTitle = targetTitle.append(" x 10^" + QString::number(orderOfMagnitudeY));
+  }
+  //painter->fillRect(titleRectY2, Qt::red);
+  int xTranslate = originX[0] - plotMarginX;
+  painter->translate(xTranslate, panelHeight);
+  //painter->fillRect(titleRectY2, Qt::blue);
+  painter->rotate(-90);
+  //painter->fillRect(titleRectY2, Qt::green);
+  painter->drawText(titleRectY2, Qt::AlignHCenter | Qt::AlignVCenter, targetTitle);
+  painter->rotate(90);
+  painter->translate(-xTranslate, -panelHeight);
+
   // tick parameters
-  const unsigned int nDays = RSIGStateSingleton::getInstance()->mDuration; 
+  const unsigned int nDays = RSIGStateSingleton::getInstance()->mDuration;
   int nXticks     = 5;
   int nYticks     = 5;
   int tickLen     = 5;
@@ -2371,14 +2420,13 @@ int * RSIGScene::panelPlot1Init(QPainter *painter, int nPlots, int maxPlots, QSt
   else if (nDays == 6) { xTickSkip = 4; }
   else if (nDays == 7) { xTickSkip = 6; }
 
-  for (int plotInd=0; plotInd<nPlots; plotInd++) {
-    int thisOriginX = originX[plotInd];
-    int thisOriginY = originY[plotInd];
-    origin[plotInd*3 +0] = thisOriginX;
-    origin[plotInd*3 +1] = thisOriginY;
-    origin[plotInd*3 +2] = thisPlotDim;
+  for (int plotInd = 0, plotIndex3 = 0; plotInd < nPlots; ++plotInd, plotIndex3 += 3) {
+    const int thisOriginX = originX[plotInd];
+    const int thisOriginY = originY[plotInd];
+    output[plotIndex3    ] = thisOriginX;
+    output[plotIndex3 + 1] = thisOriginY;
+    output[plotIndex3 + 2] = thisPlotDim;
 
-    
     // axis limits
     const int yStart = thisOriginY + thisPlotDim;
 
@@ -2386,12 +2434,12 @@ int * RSIGScene::panelPlot1Init(QPainter *painter, int nPlots, int maxPlots, QSt
     painter->drawRect(thisOriginX, thisOriginY, thisPlotDim, thisPlotDim);
 
     // draw plot title
-    
+
     // draw x ticks
     for (int tickInd=0; tickInd<nXticks; tickInd++) {
       int xTickPos = thisOriginX + tickInd*xTickSize;
       painter->drawLine(xTickPos, thisOriginY+thisPlotDim, xTickPos, thisOriginY+thisPlotDim-tickLen);
-      
+
       // tick annotations
       double thisTickValue = (xmin + (double(tickInd)*(xmax-xmin)/double(nXticks))) / pow(10, orderOfMagnitudeX);
       if (tickInd % xTickSkip == 0) {
@@ -2403,17 +2451,14 @@ int * RSIGScene::panelPlot1Init(QPainter *painter, int nPlots, int maxPlots, QSt
     for (int tickInd=0; tickInd<=nYticks; tickInd++) {
       int yTickPos = thisOriginY + thisPlotDim - tickInd*yTickSize;
       painter->drawLine(thisOriginX, yTickPos, thisOriginX+tickLen, yTickPos);
-      
+
       // tick annotations
       double thisTickValue = (ymin + (double(tickInd)*(ymax-ymin)/double(nYticks)) ) / pow(10, orderOfMagnitudeY);
       painter->drawText(QPoint(thisOriginX-20, yTickPos), QString::number(thisTickValue, 'g', 2));
-    }    
-    
+    }
   }
-
-  //qDebug() << "here" << origin[0] << origin[1];
-  return origin;
 }
+
 
 void RSIGScene::panelPlot2Init(QPainter *painter, QString title, int x0, int y0, int width, int height) {
   
@@ -2422,20 +2467,17 @@ void RSIGScene::panelPlot2Init(QPainter *painter, QString title, int x0, int y0,
 
   //QPoint textPos = QPoint(x0+40, y0+20);
   painter->drawText(plotRect, Qt::AlignHCenter, title);
-
   painter->drawText(plotRect, Qt::AlignCenter, "(Currently unimplemented)");
-
-
 }
 
-double * RSIGScene::panelPlot3Init(QPainter *painter, QString title, QString probeUnits, int x0, int y0, int width, int height, double xmin, double xmax, double ymin, double ymax) {
+
+void RSIGScene::panelPlot3Init(QPainter *painter, QString title, QString probeUnits, int x0, int y0, int width, int height, double xmin, double xmax, double ymin, double ymax, double output[] ) {
   //qDebug() << "in panelPlot3Init";
-  
+
   QRect plotRect = QRect(x0, y0, width, height);
   painter->drawRect(plotRect);
   painter->drawText(plotRect, Qt::AlignHCenter, title);
 
-  
   // offset from plot area box
   int paddingX = 50;
   int paddingY = 40;
@@ -2451,7 +2493,6 @@ double * RSIGScene::panelPlot3Init(QPainter *painter, QString title, QString pro
   double xIntercept = xStart - (xSlope*xmin);
   double ySlope     = double(yEnd - yStart) / (ymax - ymin);
   double yIntercept = yStart - (ySlope*ymin);
-
 
   // order of magnitude of y data (to simplify annotations)
   int orderOfMagnitudeY = 0;
@@ -2477,7 +2518,7 @@ double * RSIGScene::panelPlot3Init(QPainter *painter, QString title, QString pro
   else if (nDays == 6) { xTickSkip = 4; }
   else if (nDays == 7) { xTickSkip = 6; }
   else                 { xTickSkip = 24;}
-  
+
   // draw X-axis
   painter->drawLine(xStart, yStart, xEnd, yStart);
   // X axis title
@@ -2487,7 +2528,7 @@ double * RSIGScene::panelPlot3Init(QPainter *painter, QString title, QString pro
   } else {
     painter->drawText(titleRectX, Qt::AlignHCenter, "Day number");
   }
-  
+
   // draw Y-axis
   QString yAxisTitle = probeUnits;
   painter->drawLine(xStart, yStart, xStart, yEnd);
@@ -2495,7 +2536,7 @@ double * RSIGScene::panelPlot3Init(QPainter *painter, QString title, QString pro
   if (orderOfMagnitudeY > 0) {
     yAxisTitle = yAxisTitle.append(" x 10^" + QString::number(orderOfMagnitudeY));
   }
-  QRect titleRectY2 = QRect(0, 0, height, 50);  
+  QRect titleRectY2 = QRect(0, 0, height, 50);
   painter->translate(20, yStart + paddingY);
   painter->rotate(-90);
   //painter->fillRect(titleRectY2, Qt::green);
@@ -2503,7 +2544,6 @@ double * RSIGScene::panelPlot3Init(QPainter *painter, QString title, QString pro
   painter->rotate(90);
   painter->translate(-20, -(yStart + paddingY));
 
-  
   // draw X axis ticks
   for (int tickInd=0; tickInd<nXticks; tickInd++) {
     int xTickPos = xStart + tickInd*xTickSize;
@@ -2531,7 +2571,7 @@ double * RSIGScene::panelPlot3Init(QPainter *painter, QString title, QString pro
       painter->fillRect(QRect(xTickPos-5, yStart, 10, yEnd-yStart), Qt::yellow);
     }
   }
-  
+
   // draw Y axis ticks
   for (int tickInd=0; tickInd<=nYticks; tickInd++) {
     int yTickPos = yStart + tickInd*yTickSize;
@@ -2543,17 +2583,13 @@ double * RSIGScene::panelPlot3Init(QPainter *painter, QString title, QString pro
     painter->drawText(QPoint(xStart-20, yTickPos), QString::number(thisTickValue, 'g', 2));
   }
 
-  
-  static double conversion[4];
-  conversion[0] = xSlope;
-  conversion[1] = xIntercept;
-  conversion[2] = ySlope;
-  conversion[3] = yIntercept;
-
-  //qDebug() << "out panelPlot3Init";
-
-  return conversion;
+  output[0] = xSlope;
+  output[1] = xIntercept;
+  output[2] = ySlope;
+  output[3] = yIntercept;
 }
+
+
 
 void RSIGScene::panelPlot1AddPoint(QPainter *painter, int, QPoint screenPoint, bool highlightFlag) {
 
@@ -3365,11 +3401,18 @@ void RSIGScene::reloadModisTrueColor(int dayNum) {
     QString curTrueColor = vOptions->getTrueColorType();
 
     //qDebug() << curProjection;
+
+    QString uniqueID = vOptions->getUniqueId();
+    QString bboxString =
+      QString::number(vOptions->getBboxMinLon()) + "_" +
+      QString::number(vOptions->getBboxMinLat()) + "_" +
+      QString::number(vOptions->getBboxMinLon()) + "_" +
+      QString::number(vOptions->getBboxMinLat());
     
     if (curProjection.compare("Longitude/Latitude") == 0 && curTrueColor != "None") {
-      fn = QDir::homePath() + "/.rsig/trueColor_" + curTrueColor + "_" + QString::number(dayNum) + "_4326.png";
+      fn = QDir::homePath() + "/.rsig/trueColor_" + curTrueColor + "_" + QString::number(dayNum) + "_4326_" + bboxString + ".png";
     } else if (curProjection.compare("Mercator") == 0 && curTrueColor != "None") {
-      fn = QDir::homePath() + "/.rsig/trueColor_" + curTrueColor + "_" + QString::number(dayNum) + "_3857.png";
+      fn = QDir::homePath() + "/.rsig/trueColor_" + curTrueColor + "_" + QString::number(dayNum) + "_3857_" + bboxString + ".png";
     } else {
       modisTrueColorIsValid = false;
       delete modisTrueColorPixmap;
@@ -3458,7 +3501,6 @@ void RSIGScene::drawDisplayPanelSceneEMVL(QPainter *painter) {
     //painter->drawRect(50, 50, 200, 200);
   }
 
-  
   CHECK_GL_ERRORS2;
   painter->endNativePainting();
 }
@@ -3804,6 +3846,7 @@ void RSIGScene::draw3DScene(QPainter* painter) {
       GLfloat midp[2];
       GLfloat screen_middle[2];
       m_mapControl->getWorldCoordinateToScreenParameters(screen_middle, midp, numberOfTiles, mytilesize);
+      //qDebug() << "numberOfTiles=" <<  numberOfTiles << "mytilesize=" << mytilesize << "screen_middle=" << screen_middle[0] << screen_middle[1] << "midp=" << midp[0] << midp[1];
       qmapMercatorProjectionRC.bind();
       qmapMercatorProjectionRC.setParameters(lut0->texureID(), screenrect.height(), numberOfTiles, mytilesize, midp, screen_middle, myValues, myPaletteR, myPaletteG, myPaletteB);
       context = &qmapMercatorProjectionRC;
@@ -3916,9 +3959,10 @@ void RSIGScene::mouseDoubleClickEvent ( QGraphicsSceneMouseEvent * event ) {
 
     if (gState->mShowGooglemapUrl) {
       controlDockWidget->postMessage(myURL, RSIGState::NORMAL_TEXT);
-    }
-    if (gState->mOpenGooglemapUrl) {
+    } else if (gState->mOpenGooglemapUrl) {
       QDesktopServices::openUrl(myURL);
+    } else {
+      this->centerAt(currentGeoPos);
     }
     
   }
@@ -4320,6 +4364,7 @@ void RSIGScene::resizeEvent(QResizeEvent *event)  {
   const QSize wsize = event->size();
   const int w = wsize.width();
   const int h = wsize.height();
+  //qDebug() << w << h << w*h;
 
   const int OFFSET = -20000;
 
@@ -4657,7 +4702,7 @@ void RSIGScene::setBackgroundColor() {
  "earth/srtm/srtm.dgml". 
  */
 void RSIGScene::setMapServer(const char *theme) {
- 
+  
   // get the current geo center
   const QPointF geocenter = this->screenGeoCenterF();
 
@@ -4726,7 +4771,7 @@ void RSIGScene::setMapServer(const char *theme) {
       } else {
         m_marbleWidget->move(OFFSET, OFFSET);
         m_mapControl->move(0, 0);              
-        
+
         if (theme[0]=='G' && theme[1]=='M') {
           m_googleMapLayer->setVisible(true);
         } else if (theme[0]=='G' && theme[1]=='T') {
@@ -4764,8 +4809,22 @@ void RSIGScene::setMapServer(const char *theme) {
     }
 
     lastMapTheme = theme;
+
+    // determine graphics card info
+    GLint maxTex, maxRend;
+    glGetIntegerv(GL_MAX_TEXTURE_SIZE, &maxTex);
+    glGetIntegerv(GL_MAX_RENDERBUFFER_SIZE, &maxRend);
+    const GLubyte* vendor   = glGetString(GL_VENDOR);
+    const GLubyte* renderer = glGetString(GL_RENDERER);
+    const GLubyte* version  = glGetString(GL_VERSION);
+    qDebug() << "GL_MAX_TEXTURE_SIZE" << maxTex;
+    qDebug() << "GL_MAX_RENDERBUFFER_SIZE" << maxRend;  qDebug() << "GL_VENDOR:" << (vendor ? reinterpret_cast<const char*>(vendor) : "NULL");
+    qDebug() << "GL_RENDERER:" << (renderer ? reinterpret_cast<const char*>(renderer) : "NULL");
+    qDebug() << "GL_VERSION:" << (version ? reinterpret_cast<const char*>(version) : "NULL");
+  
   }
 
+  
   update();
 }
 

@@ -1,24 +1,15 @@
 #!/bin/sh
-# lintit - Run static analysis utility on source code to find defects.
+# lintit - Run static analysis utilities on source code to find defects.
 
 # Determine the platform using uname:
 
 UNAME_="`uname`"
 UNAME_M="`uname -m`"
-
-if [ "$UNAME_" == 'Linux' ]
-then
-  PLATFORM="$UNAME_.$UNAME_M"
-elif [ "$UNAME_" == 'CYGWIN_NT-5.1' ]
-then
-  PLATFORM='Win32'
-else
-  PLATFORM="$UNAME_"
-fi
+PLATFORM="$UNAME_.$UNAME_M"
 
 # Editable variables:
 
-BASE="$HOME/projects/rsig/dev/RSIG3D"
+BASE="$HOME/projects/rsig/RSIG3D"
 CC="/usr/bin/g++"
 INFER="$HOME/bin/$PLATFORM/infer"
 SCAN_BUILD="$HOME/bin/$PLATFORM/scan-build"
@@ -28,7 +19,7 @@ CFLAGS="-O"
 
 # Derived variables:
 
-QT_INCLUDE="$BASE/package/QT/$PLATFORM/4.8.6static/include"
+QT_INCLUDE="$BASE/code/package/QT/$PLATFORM/4.8.6static/include"
 QT_IFLAGS="-I$QT_INCLUDE -I$QT_INCLUDE/QtOpenGL -I$QT_INCLUDE/QtGui -I$QT_INCLUDE/QtXml -I$QT_INCLUDE/QtNetwork -I$QT_INCLUDE/QtCore"
 GLEW_IFLAGS="-I$BASE/code/src/libs/glew-1.8.0/include"
 MARBLE_BASE="$BASE/code/src/libs/marble"

@@ -708,7 +708,7 @@ void PointDataset::readXDRHeader( FILE* stream ) {
   or, with elevations and id variable and notes-per-point:
 
   Point 1.0
-   https://api.purpleair.com,PurpleAirSubset
+  https://api.purpleair.com,PurpleAirSubset
   2020-12-20T00:00:00-0000 2020-12-20T23:59:59-0000
   # Dimensions: variables points
   6 459
@@ -722,7 +722,7 @@ void PointDataset::readXDRHeader( FILE* stream ) {
   or, like above but with counts:
 
   Point 1.0
-   https://api.purpleair.com,PurpleAirSubset
+  https://api.purpleair.com,PurpleAirSubset
   2020-12-20T00:00:00-0000 2020-12-20T23:59:59-0000
   # Dimensions: variables points
   7 459
@@ -1195,7 +1195,18 @@ void PointDataset::writeASCII( FILE* stream ) const {
             const size_t index = variable * points + point;
             CHECK( index < data_.size() );
             const double value = data_[ index ];
-            ok = fprintf( stream, "\t%11.5e", value ) > 0;
+            const char* const variableName = variableNames_[ variable ].c_str();
+
+            if ( OR6( ! strcmp( variableName, "id" ),
+                      strstr( variableName, "_id" ),
+                      ! strcmp( variableName, "ID" ),
+                      ! strcmp( variableName, "SITE" ),
+                      ! strcmp( variableName, "STATION" ),
+                      ! strcmp( variableName, "count" ) ) ) {
+              ok = fprintf( stream, "\t%11.0f", value ) > 0;
+            } else {
+              ok = fprintf( stream, "\t%11.5e", value ) > 0;
+            }
           }
 
           if ( ok ) {

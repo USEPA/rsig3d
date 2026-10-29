@@ -516,6 +516,7 @@ void CMAQDataset::cellVertices( const size_t cell, Point points[] ) const {
 
   double elevationBottom = elevation1_;
   double elevationTop    = elevation1_ + 0.1;
+  const int vgtyp = gridParameters_.vgtyp();
 
   if ( elevations_.size() ) {
     const size_t cellLayer = cell / layerSize;
@@ -525,6 +526,11 @@ void CMAQDataset::cellVertices( const size_t cell, Point points[] ) const {
             indexTop    < elevations_.size() );
     elevationBottom = elevations_[ indexBottom ];
     elevationTop    = elevations_[ indexTop ];
+  } else if ( IN3( vgtyp,
+                   CMAQGridParameters::VGZVAL3, CMAQGridParameters::VGHVAL3)) {
+    const double* const vglvls = gridParameters_.vglvls();
+    elevationBottom = vglvls[ 0 ];
+    elevationTop    = vglvls[ 1 ];
   }
 
   CHECK( elevationTop > elevationBottom );
@@ -1310,6 +1316,7 @@ void CMAQDataset::readXDRHeader( FILE* stream, bool& readAndSkipLonLats ) {
   setDatasetNameFromDescriptionAndVariable(); // in:isVector_,out:timestepSize_
   setEndingTimestamp(); // Reads timestepSize_.
   readProjectionAndGrid( stream, mapProjection_, gridParameters_ ); //x
+
   const int match = //x
     readAndMatchLine2( stream,
                       "# IEEE-754 32-bit reals "
@@ -1675,7 +1682,7 @@ void CMAQDataset::readXDRData( FILE* stream, const bool readAndSkipLonLats ) {
     AND4( ! fileName_.empty(),
           timesteps_ > BUFFERED_DATA_TIMESTEPS,
           timesteps_ % BUFFERED_DATA_TIMESTEPS == 0,
-          dataSize > PAGE_THREHOLD_GB );
+          dataSize > PAGE_THREHOLD_BYTES );
   const size_t count =
     useBuffering ? variables_ * BUFFERED_DATA_TIMESTEPS * cells : count0;
   data_.resize( count ); //x
@@ -2176,7 +2183,7 @@ void CMAQDataset::writeXDR( FILE* stream ) const {
     if ( ok ) { // Write variable units:
       const char* const format3 =
         is64bit_ ? "\n# Variable units:\n"
-        : "\n# Variable units:\ndeg deg m";
+        : "\n# Variable units:\ndeg deg m ";
       ok = fprintf( stream, format3 ) == (int) strlen( format3 );
 
       for ( int variable = firstVariable; AND2( ok, variable < variables_ );

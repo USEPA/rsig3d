@@ -53,6 +53,7 @@ void FilterSettingData::initFilterSettingData() {
   CADmin = 20;
   UncertaintyMax = 99.0;
 
+  HRRRStride = 1;
   TropomiQuality = 75;
   TropomiMaxCloudFraction = 1.0;
   TropomiGroundPixelMinimum = 0;

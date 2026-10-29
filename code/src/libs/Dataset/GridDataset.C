@@ -1218,7 +1218,7 @@ void GridDataset::readXDRData( FILE* stream ) {
         AND4( ! fileName_.empty(),
               timesteps_ > BUFFERED_DATA_TIMESTEPS,
               timesteps_ % BUFFERED_DATA_TIMESTEPS == 0,
-              dataSize > PAGE_THREHOLD_GB );
+              dataSize > PAGE_THREHOLD_BYTES );
       const size_t count =
         useBuffering ? variables_ * BUFFERED_DATA_TIMESTEPS * points : count0;
       data_.resize( count ); //x

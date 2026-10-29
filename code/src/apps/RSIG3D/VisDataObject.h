@@ -28,27 +28,29 @@ class VisDataObject: public QObject {
 
 public:
 
-  Q_PROPERTY(bool showObject READ showObject WRITE setShowObject DESIGNABLE true USER true)
+  // commenting out the Q_PROPERTYs below prevents them from being exposed in the property editor (Info tab)
+  
+  //Q_PROPERTY(bool showObject READ showObject WRITE setShowObject DESIGNABLE true USER true)
   bool showObject() const;
   void setShowObject(bool flag);
     
-  Q_PROPERTY(qreal opacity READ alpha WRITE setAlpha DESIGNABLE true USER true)
+  //Q_PROPERTY(qreal opacity READ alpha WRITE setAlpha DESIGNABLE true USER true)
   qreal alpha() const;
   void setAlpha(qreal alpha);
     
-  Q_PROPERTY(bool showCellBoundary READ showCellBoundary WRITE setShowCellBoundary DESIGNABLE true USER true)
+  //Q_PROPERTY(bool showCellBoundary READ showCellBoundary WRITE setShowCellBoundary DESIGNABLE true USER true)
   bool showCellBoundary() const;
   void setShowCellBoundary(bool flag);
 
-  Q_PROPERTY(qreal threshold READ threshold WRITE setThreshold DESIGNABLE true USER true)
+  //Q_PROPERTY(qreal threshold READ threshold WRITE setThreshold DESIGNABLE true USER true)
   qreal threshold() const;
   void setThreshold(qreal threshold);
 
-  Q_PROPERTY(qreal thresholdSliderValue READ thresholdSliderValue WRITE setThresholdSliderValue DESIGNABLE true USER true)
+  //Q_PROPERTY(qreal thresholdSliderValue READ thresholdSliderValue WRITE setThresholdSliderValue DESIGNABLE true USER true)
   int thresholdSliderValue() const;
   void setThresholdSliderValue(int thresholdSliderValue);
 
-  Q_PROPERTY(QString dataMenuName READ getDataMenuName WRITE setDataMenuName DESIGNABLE true USER true)
+  //Q_PROPERTY(QString dataMenuName READ getDataMenuName WRITE setDataMenuName DESIGNABLE true USER true)
   QString getDataMenuName() const;
   void setDataMenuName(QString name);
 

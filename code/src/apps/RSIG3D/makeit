@@ -5,9 +5,7 @@
 # 2024-10-21 plessel.todd@epa.gov
 #############################################################################
 
-MY_HOME=$HOME
-
-for repeat in {1..100} ; do echo ; done
+for repeat in {1..100}; do echo; done
 clear
 echo "Using PATH:"
 echo $PATH
@@ -22,24 +20,22 @@ MY_UNAME="`uname`"
 MY_UNAME_M="`uname -m`"
 MY_PLATFORM="${MY_UNAME}.$MY_UNAME_M"
 
-echo ; echo "Platform is $MY_PLATFORM" ; echo
+echo; echo "Platform is $MY_PLATFORM"; echo
 
 #############################################################################
-# Here is where RSIG3D code is installed for this platform:
+# Here is where RSIG3D code is installed:
 
-#MY_RSIG3D_DIR="$MY_HOME/projects/rsig/dev/RSIG3D"
-MY_RSIG3D_DIR="/home/mfreem02/github/rsig3d"
+#MY_RSIG3D_DIR="/home/mfreem02/github/rsig3d"
+MY_RSIG3D_DIR="$HOME/projects/rsig/RSIG3D"
 
 #############################################################################
 # Here is where QT is installed for this platform:
 
 if [ "$MY_PLATFORM" == 'Darwin.x86_64' ]
 then
-  #MY_QT_DIR="$MY_RSIG3D_DIR/package/QT/Darwin.x86_64/4.8.6static"
   MY_QT_DIR="$MY_RSIG3D_DIR/code/package/QT/Darwin.x86_64/4.8.6static"
 elif [ "$MY_PLATFORM" == 'Linux.x86_64' ]
 then
-  #MY_QT_DIR="$MY_RSIG3D_DIR/package/QT/Linux.x86_64/4.8.3static"
   MY_QT_DIR="$MY_RSIG3D_DIR/code/package/QT/Linux.x86_64/4.8.3static"
 else
   echo 'Unsupported platform.'
@@ -136,6 +132,7 @@ MY_MARBLE_IFLAGS=\
 ""
 
 MY_INCLUDE_DIR="$MY_RSIG3D_DIR/code/include"
+MY_INCLUDE_DIR2="$MY_RSIG3D_DIR/code/include/PropertyEditor"
 MY_LIB_DIR="$MY_RSIG3D_DIR/code/lib/$MY_PLATFORM"
 
 # Available libraries: Dataset Utilities Shapefile GPC netcdf hdf hdf_hl QMapControl PropertyEditor marble glew freeglut PNG Z m
@@ -159,11 +156,16 @@ MY_LIB_LFLAGS=\
 #" -lhdf5_hl "\
 #" -lhdf5 "\
 
-
 #############################################################################
 # Files for this application:
 
 MY_BIN_DIR="$MY_RSIG3D_DIR/code/bin/$MY_PLATFORM"
+
+if [ "$MY_PLATFORM" == 'Darwin.x86_64' ]
+then
+  MY_BIN_DIR="$MY_BIN_DIR/RSIG3D.app/Contents/MacOS"
+fi
+
 MY_EXECUTABLE="$MY_BIN_DIR/RSIG3D"
 MY_BUILD_DIR=junk_build_dir
 
@@ -219,6 +221,7 @@ MY_MOC_HEADER_FILES=\
 " VisDataList.h "\
 " VisDataObject.h "\
 " VisDataObjectProperties.h "\
+" VisDataPropertyDelegate.h "\
 " VisDataPropertyEdit.h "\
 " VisOptions.h "\
 ""
@@ -299,7 +302,7 @@ MY_DFLAGS=\
 " -DNO_ASSERTIONS "\
 ""
 
-MY_IFLAGS="-I. -I$MY_BUILD_DIR $MY_QT_IFLAGS $MY_MARBLE_IFLAGS -I$MY_INCLUDE_DIR"
+MY_IFLAGS="-I. -I$MY_BUILD_DIR $MY_QT_IFLAGS $MY_MARBLE_IFLAGS -I$MY_INCLUDE_DIR -I$MY_INCLUDE_DIR2"
 
 if [ "$MY_PLATFORM" == 'Darwin.x86_64' ]
 then
@@ -386,7 +389,7 @@ do
   $MY_QT_RCC -name $MY_QRC_NAME -o $MY_QRC_SOURCE_FILE $MY_QRC_FILE &
 done
 
-for pid in `jobs -p`; do wait $pid || exit 1 ; done # Stop if any failure.
+for pid in `jobs -p`; do wait $pid || exit 1; done # Stop if any failure.
 
 #############################################################################
 # Compiling qrc_*.cxx files:
@@ -407,7 +410,7 @@ do
   g++ $MY_CFLAGS $MY_DFLAGS $MY_IFLAGS -c $MY_QRC_SOURCE_FILE -o $MY_QRC_OBJECT_FILE &
 done
 
-for pid in `jobs -p`; do wait $pid || exit 1 ; done # Stop if any failure.
+for pid in `jobs -p`; do wait $pid || exit 1; done # Stop if any failure.
 
 #############################################################################
 # Run uic on *.ui files to generate ui_*.h header files:
@@ -428,7 +431,7 @@ do
   $MY_QT_UIC $MY_UI_FILE -o $MY_UI_HEADER_FILE &
 done
 
-for pid in `jobs -p`; do wait $pid || exit 1 ; done # Stop if any failure.
+for pid in `jobs -p`; do wait $pid || exit 1; done # Stop if any failure.
 
 #############################################################################
 # Run moc on *.h files to generate moc_*.cxx source files:
@@ -451,7 +454,7 @@ do
   $MY_QT_MOC $MY_DFLAGS $MY_IFLAGS $MY_MOC_HEADER_FILE -o $MY_MOC_SOURCE_FILE &
 done
 
-for pid in `jobs -p`; do wait $pid || exit 1 ; done # Stop if any failure.
+for pid in `jobs -p`; do wait $pid || exit 1; done # Stop if any failure.
 
 #############################################################################
 # Compile moc_*.cxx files to moc_*.o files:
@@ -474,7 +477,7 @@ do
   g++ $MY_CFLAGS $MY_DFLAGS $MY_IFLAGS -c $MY_MOC_SOURCE_FILE -o $MY_MOC_OBJECT_FILE &
 done
 
-for pid in `jobs -p`; do wait $pid || exit 1 ; done # Stop if any failure.
+for pid in `jobs -p`; do wait $pid || exit 1; done # Stop if any failure.
 
 #############################################################################
 # Compile non-moc .cpp files:
@@ -492,7 +495,7 @@ do
   g++ $MY_CFLAGS $MY_DFLAGS $MY_IFLAGS -c $MY_SOURCE_FILE -o $MY_OBJECT_FILE &
 done
 
-for pid in `jobs -p`; do wait $pid || exit 1 ; done # Stop if any failure.
+for pid in `jobs -p`; do wait $pid || exit 1; done # Stop if any failure.
 
 #############################################################################
 # Link all .o files with library static *.a files and system libraries:
@@ -511,23 +514,40 @@ echo "g++ $MY_LINK_FLAGS -o $MY_EXECUTABLE $MY_OBJECT_FILES $MY_LFLAGS"
 
 g++ $MY_LINK_FLAGS -o $MY_EXECUTABLE $MY_OBJECT_FILES $MY_LFLAGS
 
-if [ $? != 0 ] ; then exit $? ; fi
+if [ $? != 0 ]; then exit $?; fi
 
+rm -rf  $MY_BUILD_DIR
 echo
-
 strip   $MY_EXECUTABLE
-
-if [ ! -d $MY_HOME/RSIG3D ]
-then
-  cp -pr $MY_BIN_DIR $MY_HOME/RSIG3D
-else
-  cp -p $MY_EXECUTABLE $MY_HOME/RSIG3D/
-fi
-
 $MY_LDD $MY_EXECUTABLE
 ls -l   $MY_EXECUTABLE
 file    $MY_EXECUTABLE
-ls -Flast  $MY_HOME/RSIG3D
+
+# Also copy to $HOME/RSIG3D:
+
+if [ "$MY_PLATFORM" == 'Darwin.x86_64' ]
+then
+
+  if [ ! -d $HOME/RSIG3D.app ]
+  then
+    cp -pr $MY_RSIG3D_DIR/code/bin/$MY_PLATFORM/RSIG3D.app $HOME/
+  else
+    cp -p $MY_EXECUTABLE $HOME/RSIG3D.app/Contents/MacOS/
+  fi
+
+  ls -Flast $HOME/RSIG3D.app/Contents/MacOS/RSIG3D
+  xattr -cr $HOME/RSIG3D.app
+else
+
+  if [ ! -d $HOME/RSIG3D ]
+  then
+    cp -pr $MY_BIN_DIR $HOME/RSIG3D
+  else
+    cp -p $MY_EXECUTABLE $HOME/RSIG3D/
+  fi
+
+  ls -Flast  $HOME/RSIG3D
+fi
 
 echo Done
 

@@ -7,16 +7,24 @@ HISTORY: 2009/05/26 plessel.todd@epa.gov Created.
 /*================================ INCLUDES =================================*/
 
 #include <stdio.h>     /* For FILE, fopen(), fread(), snprintf(). fprintf(). */
-#include <string.h>    /* For strcmp(), strncpy(), strncat(). */
+#include <string.h>    /* For strcmp(), strncpy(), strncat(), memset(). */
 #include <stdlib.h>    /* For malloc(), free(), strtod(). */
 #include <ctype.h>     /* For isspace(), isprint(). */
 #include <math.h>      /* For sqrt(). */
 #include <limits.h>    /* For ULONG_MAX. */
-#include <unistd.h>    /* For unlink(). */
+#include <unistd.h>    /* For unlink(), gethostname(). */
 #include <time.h>      /* For struct tm, struct timespec, localtime(). */
 #include <dirent.h>    /* For DIR, struct dirent, opendir(), readdir(), etc.*/
 #include <sys/types.h> /* For struct stat. */
 #include <sys/stat.h>  /* For stat(). */
+
+#if defined(_Win32) || defined(_WIN64)
+#include <winsock2.h> /* For WSAStartup(). */
+#include <ws2tcpip.h> /* For struct hostent, gethostbyname(), inet_ntoa(). */
+#else
+#include <netdb.h>     /* For struct hostent, gethostbyname(). */
+#include <arpa/inet.h> /* For inet_ntoa(). */
+#endif
 
 #include <Assertions.h> /* For PRE*(), POST*(), CHECK*(), AND*(). */
 #include <Utilities.h>  /* For public interface. */
@@ -1336,6 +1344,176 @@ const char* homeDirectory( void ) {
 }
 
 
+
+/******************************************************************************
+PURPOSE: getIPAddress - Get IP address of localhost.
+INPUTS:  char address[] Storage for IP address.
+         const size_t sizeof_address  sizeof address.
+OUTPUTS: char address[] IP address.
+NOTES:   Example usage
+
+         char address[ 80 ] = "";
+         memset( address, 0, sizeof address );
+         getIPAddress( address, sizeof address );
+
+         if ( address[ 0 ] ) {
+           printf( "%s\n", address );
+         }
+
+******************************************************************************/
+
+void getIPAddress( char address[], const size_t sizeof_address ) {
+
+  if ( AND2( address, sizeof_address ) ) {
+    char buffer[ 256 ] = "";
+    memset( buffer, 0, sizeof buffer );
+    memset( address, 0, sizeof_address );
+
+#if defined(_WIN32) || defined(_WIN64)
+    {
+      WSADATA wsaData;
+      const int status = WSAStartup( MAKEWORD( 2, 2 ), &wsaData );
+
+      if ( status != 0 ) {
+        return;
+      }
+    }
+#endif
+
+    {
+      const int status = gethostname( buffer, sizeof buffer - 1 );
+
+      if ( status == 0 ) {
+        const struct hostent* const host_entry = gethostbyname( buffer );
+
+        if ( host_entry ) {
+          const char* const tempAddress =
+            inet_ntoa( *((struct in_addr*) host_entry->h_addr_list[ 0 ] ) );
+
+          if ( tempAddress ) {
+            strncpy( address, tempAddress, sizeof_address / sizeof (char) - 1 );
+          }
+        }
+      }
+    }
+  }
+
+#if defined(_WIN32) || defined(_WIN64)
+  WSACleanup();
+#endif
+
+  CHECK( address[ sizeof_address - 1 ] == '\0' );
+
+  if ( *address ) {
+    const size_t count = strlen( address );
+    size_t index = 0;
+
+    /* Change any problematic characters to dash: */
+
+    for ( ; index < count; ++index ) {
+      const char c = address[ index ];
+      const int ok =
+        OR4( IN_RANGE( c, '0', '9' ),
+             IN_RANGE( c, 'A', 'Z' ),
+             IN_RANGE( c, 'a', 'z' ),
+             IN5( c, '.', ':', '-', '_' ) );
+
+      if ( ! ok ) {
+
+        if ( c == '\r' ) {
+          address[ index ] = '\0';
+        } else if ( c == '\n' ) {
+          address[ index ] = '\0';
+        } else {
+          address[ index ] = '-';
+        }
+      }
+    }
+
+    address[ sizeof_address - 1 ] = '\0';
+  }
+}
+
+
+
+/******************************************************************************
+PURPOSE: getSerialNumber - Get copmuter serial number (letters, digits, -).
+INPUTS:  char serial[] Storage for serial number.
+         const size_t sizeof_serial  sizeof serial.
+OUTPUTS: char serial[] Serial number.
+NOTES:   On Linux it is not possible for non-root to get the computer serial
+         number (weak) so hostname-pid is used.
+         Example usage
+
+         char serial[ 80 ] = "";
+         memset( serial, 0, sizeof serial );
+         getSerialNumber( serial, sizeof serial );
+
+         if ( serial[ 0 ] ) {
+           printf( "%s\n", serial );
+         }
+
+******************************************************************************/
+
+void getSerialNumber( char serial[], const size_t sizeof_serial ) {
+
+  if ( AND3( serial, sizeof_serial, memset( serial, 0, sizeof_serial ) ) ) {
+
+#if defined(_WIN32) || defined(_WIN64)
+    const char* const mode = "rb";
+    const char* const command =
+      "powershell \"(Get-CimInstance -ClassName "
+      "Win32_ComputerSystemProduct).UUID\"";
+#elif defined(__APPLE__)
+    const char* const mode = "r";
+    const char* const command =
+      "ioreg -l | grep IOPlatformSerialNumber | awk '{ print $NF }' "
+      "| tr -c -d '[:alnum:]'";
+#elif defined(__linux__)
+    const long pid = getpid();
+    char buffer[ 80 ] = "";
+    memset( buffer, 0, sizeof buffer );
+    snprintf( buffer, sizeof buffer / sizeof *buffer - 1, "-%ld", pid );
+    gethostname( serial, sizeof_serial - 1 );
+    strncat( serial, buffer, sizeof_serial - strlen( serial ) - 1 );
+    CHECK( serial[ sizeof_serial - 1 ] == '\0' );
+#endif
+
+#ifndef __linux__
+    FILE* stream = popen( command, mode );
+
+    if ( stream ) {
+      const size_t bytesRead = fread( serial, 1, sizeof_serial - 1, stream );
+      size_t index = 0;
+
+      /* Change any problematic characters to dash: */
+
+      for ( ; index < bytesRead; ++index ) {
+        const char c = serial[ index ];
+        const int ok =
+          OR4( IN_RANGE( c, '0', '9' ),
+               IN_RANGE( c, 'A', 'Z' ),
+               IN_RANGE( c, 'a', 'z' ),
+               IN5( c, '.', ':', '-', '_' ) );
+
+        if ( ! ok ) {
+
+          if ( c == '\r' ) {
+            serial[ index ] = '\0';
+          } else if ( c == '\n' ) {
+            serial[ index ] = '\0';
+          } else {
+            serial[ index ] = '-';
+          }
+        }
+      }
+
+      serial[ sizeof_serial - 1 ] = '\0';
+      pclose( stream ), stream = 0;
+    }
+#endif
+  }
+}
 
 /*============================ PRIVATE FUNCTIONS ============================*/
 

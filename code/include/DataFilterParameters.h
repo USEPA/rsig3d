@@ -61,6 +61,7 @@ private:
   double PurpleAirMaximumRatio_; // [0, 1]. Default 0.7.
   double PurpleAirMinimumAggregationCountPercentage_; // [0, 100]. Default 75.
   double PurpleAirDefaultHumidity_; // [0, 100]. Default MISSING.
+  int HRRRStride_; // [1, 100]. Default 1.
   std::string dataVersion_; // E.g., '4.00' for CALIPSO. Default '' unspecified
 
 public:
@@ -106,6 +107,7 @@ public:
     const double PurpleAirMaximumRatio,
     const double PurpleAirMinimumAggregationCountPercentage_,
     const double PurpleAirDefaultHumidity,
+    const int HRRRStride,
     const std::string& dataVersion );
 
   // Commands:
@@ -153,6 +155,7 @@ public:
                         const double PurpleAirMaximumRatio,
                         const double PurpleAirMinimumAggregationCountPercentage,
                         const double PurpleAirDefaultHumidity,
+                        const int HRRRStride,
                         const std::string& dataVersion );
 
   DataFilterParameters( const DataFilterParameters& other );
@@ -188,6 +191,7 @@ public:
   void PurpleAirMaximumRatio( const double value );
   void PurpleAirMinimumAggregationCountPercentage( const double value );
   void PurpleAirDefaultHumidity( const double value );
+  void HRRRStride( const int value );
   void dataVersion( const std::string& value );
 
   // Queries:
@@ -235,6 +239,7 @@ public:
   double PurpleAirMaximumRatio() const;
   double PurpleAirMinimumAggregationCountPercentage() const;
   double PurpleAirDefaultHumidity() const;
+  int HRRRStride() const;
   const std::string& dataVersion() const;
 };
 

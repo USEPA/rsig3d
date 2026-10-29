@@ -160,9 +160,13 @@ void LibCurlDataGet::start() {
                                                 (double)regridData->T0,
                                                 (double)regridData->P0);
 
+
+  VisOptions* const vOptions = VisOptionsSingleton::getInstance();
+
   if ( ! ok ) {
     controlDockWidget->postMessage( "Invalid CMAQ Grid Parameters.",
                                     RSIGState::NORMAL_TEXT );
+    vOptions->setDownloadsOutstanding(vOptions->getDownloadsOutstanding() - 1);
     Q_EMIT finished(0); // kills the download popup
   } else {
 
@@ -245,11 +249,13 @@ void LibCurlDataGet::start() {
            filterData->PurpleAirAcceptableChannelAgreement / 100.0,
            filterData->PurpleAirMinAggregationCountPercentage,
            replacementHumidity,
+           filterData->HRRRStride,
            dataVersion );
 
     if ( ! ok ) {
       controlDockWidget->postMessage( "Invalid Data Filter Parameters.",
                                       RSIGState::WARNING_TEXT );
+      vOptions->setDownloadsOutstanding(vOptions->getDownloadsOutstanding() - 1);
       Q_EMIT finished(0); // kills the download popup
       
     } else if ( QString(this->mDataName).contains("purpleair") &&
@@ -258,13 +264,8 @@ void LibCurlDataGet::start() {
       controlDockWidget->postMessage( "PurpleAir data requires a valid API READ key.\nTo obtain one, email contact@purpleair.com.\nOnce you have a key, you can enter it in the Data->Filter_parameters->PurpleAir_Filter dialog.",
                                       RSIGState::WARNING_TEXT );
 
-      VisOptions* const vOptions = VisOptionsSingleton::getInstance();
       vOptions->setDownloadsOutstanding(vOptions->getDownloadsOutstanding() - 1);
 
-      if (vOptions->getDownloadsOutstanding() == 0) {
-        controlDockWidget->enableGetDataButton();
-      }
-      
       Q_EMIT finished(0); // kills the download popup
 
     } else {
@@ -336,6 +337,7 @@ void LibCurlDataGet::start() {
                          filterData->PurpleAirAcceptableChannelAgreement / 100.0,
                          filterData->PurpleAirMinAggregationCountPercentage,
                          replacementHumidity,
+                         filterData->HRRRStride,
                          dataVersion );
 
       try {
@@ -399,6 +401,11 @@ void LibCurlDataGet::start() {
     }
   }
 
+  //qDebug() << "outstanding loads=" << vOptions->getDownloadsOutstanding();
+  if (vOptions->getDownloadsOutstanding() <= 0) {
+    controlDockWidget->enableGetDataButton();
+  }
+    
   this->thread()->quit();
 }
 

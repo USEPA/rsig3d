@@ -27,6 +27,8 @@ STATUS:  unreviewed tested
 #include <QRegExpValidator>
 #include <QPushButton>
 #include <QMessageBox>
+#include <QDesktopWidget>
+#include <QDebug>
 
 #include <Assertions.h> // For PRE(), POST(), CHECK(), DEBUG().
 #include <DataUtilities.h>  // For emvl::isDirectory().
@@ -55,7 +57,7 @@ CMAQFileReaderDialog::CMAQFileReaderDialog( CMAQFileReaderModel& theModel ) :
 
   ui = new Ui_CMAQFileReader;
   ui->setupUi( this ); // What does this do?
-  ui->dataDirectoryGroupbox->setStyleSheet("QGroupBox {border:0;}");
+  ui->dataDirectoryGroupbox->setStyleSheet("QGroupBox {border:0}");
   ui->dataFileGroupbox->setStyleSheet("QGroupBox {border:0;}");
   ui->dataVariableGroupbox->setStyleSheet("QGroupBox {border:0;}");
   ui->htDirectoryGroupbox->setStyleSheet("QGroupBox {border:0;}");
@@ -68,11 +70,66 @@ CMAQFileReaderDialog::CMAQFileReaderDialog( CMAQFileReaderModel& theModel ) :
 
   // Finish setting up ui widgets:
 
+  // actual screen size
+  QDesktopWidget desktop;
+  int screenWidth  = desktop.screenGeometry().width();
+  int screenHeight = desktop.screenGeometry().height();
+  //qDebug() << "screen dimensions:" << screenWidth << screenHeight;
+  
   const int windowX = 100;
   const int windowY = 30;
-  const int windowWidth = 750; // No reason to make it smaller or larger.
-  const int minimumWindowHeight = 730; // Max height that fits a 1024x768 laptop
-  const int maximumWindowHeight = 1050; // No reason to make it any taller.
+  //const int windowWidth = 750; // No reason to make it smaller or larger.
+  //const int minimumWindowHeight = 730; // Max height that fits a 1024x768 laptop
+  //const int maximumWindowHeight = 1050; // No reason to make it any taller.
+  const int windowWidth = 0.65 * screenWidth;
+  const int minimumWindowHeight = 0.85 * screenHeight;
+  const int maximumWindowHeight = 0.95 * screenHeight;
+
+  float topMarginMultiplier = 1.0;
+  if (screenHeight > 2000) {
+    ui->groupBox->setMinimumHeight(2 * ui->groupBox->height());
+    ui->groupBox_localremote->setMinimumHeight(2 * ui->groupBox_localremote->height());
+    ui->groupBox_localremote->setMinimumWidth(4 * ui->groupBox_localremote->width());
+
+    ui->dataDirectoryGroupbox->setMinimumHeight(2 * ui->dataDirectoryGroupbox->height());
+    ui->dataFileGroupbox->setMinimumHeight(1.5 * ui->dataFileGroupbox->height());
+    ui->dataVariableGroupbox->setMinimumHeight(1.5 * ui->dataVariableGroupbox->height());
+
+    ui->htDirectoryGroupbox->setMinimumHeight(2 * ui->htDirectoryGroupbox->height());
+    ui->htDirectoryListingGroupbox->setMinimumHeight(1.5 * ui->htDirectoryListingGroupbox->height());
+
+    ui->zfDirectoryGroupbox->setMinimumHeight(2 * ui->zfDirectoryGroupbox->height());
+    ui->zfDirectoryListingGroupbox->setMinimumHeight(1.5 * ui->zfDirectoryListingGroupbox->height());
+
+    ui->wwindDirectoryGroupbox->setMinimumHeight(2 * ui->wwindDirectoryGroupbox->height());
+    ui->wwindDirectoryListingGroupbox->setMinimumHeight(1.5 * ui->wwindDirectoryListingGroupbox->height());
+    topMarginMultiplier = 2.5;
+  }
+
+  int fontsize = qApp->font().pointSize();
+  int minFontSize = 8;
+  int maxFontSize = 18;
+  int minTopMargin = 12 * topMarginMultiplier;
+  int maxTopMargin = 40 * topMarginMultiplier;
+  float m = float(maxTopMargin - minTopMargin) / (maxFontSize - minFontSize);
+  float b = maxTopMargin - (m * maxFontSize);
+  int topMargin = int(m * fontsize + b);
+  qDebug() << "fontsize:" << fontsize << topMargin;
+  ui->verticalLayout_3->layout()->setContentsMargins(9, topMargin, 9, 0); // left, top, right, bottom
+  ui->verticalLayout_5->layout()->setContentsMargins(9, topMargin, 9, 0);
+  ui->verticalLayout_6->layout()->setContentsMargins(9, topMargin, 9, 0);
+  ui->verticalLayout_7->layout()->setContentsMargins(9, topMargin, 9, 0);
+  ui->verticalLayout_8->layout()->setContentsMargins(9, topMargin, 9, 0);
+  ui->verticalLayout_9->layout()->setContentsMargins(9, topMargin, 9, 0);
+  ui->verticalLayout_10->layout()->setContentsMargins(9, topMargin, 9, 0);
+  ui->verticalLayout_11->layout()->setContentsMargins(9, topMargin, 9, 0);
+  ui->verticalLayout_12->layout()->setContentsMargins(9, topMargin, 9, 0);
+
+  ui->dataDirectoryGroupbox->setMinimumHeight(ui->dataDirectoryGroupbox->height() + fontsize);
+  ui->htDirectoryGroupbox->setMinimumHeight(ui->htDirectoryGroupbox->height() + fontsize);
+  ui->zfDirectoryGroupbox->setMinimumHeight(ui->zfDirectoryGroupbox->height() + fontsize);
+  ui->wwindDirectoryGroupbox->setMinimumHeight(ui->wwindDirectoryGroupbox->height() + fontsize);
+    
   const char* const regex    = "[\\w-\\.]*";
   const char* const regexDir = "[\\w-\\\\./: ]*";
   const char* const name = "CMAQ File Reader Dialog";
@@ -309,6 +366,9 @@ CMAQFileReaderDialog::CMAQFileReaderDialog( CMAQFileReaderModel& theModel ) :
     onConnect(); // Connect automatically if host is specified in the model.
   }
 
+
+  this->updateGeometry();
+  
   // Note parent window deletes child widgets created above when destructed.
 
   POST( true );

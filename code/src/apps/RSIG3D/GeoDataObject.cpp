@@ -438,7 +438,7 @@ VisDataObject* GeoDataObject::createDefaultVisualizationObject() {
 
       // NOTE: some graphics cards (Jim's, Luke's) do not support sprites.
       // So make everything shape 0. MJF - 6-19-2018
-
+      //qDebug() << basename;
       if (basename == "AIRNOW") {
         pntRender->setPointShape(0);
       } else if (basename=="AQS") {

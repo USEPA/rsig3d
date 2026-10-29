@@ -1395,7 +1395,7 @@ void removeAllFiles( const char* const directoryName,
       if ( AND3( entry, entry->d_name, entry->d_name[ 0 ] != '.' ) ) {
         const char* const dot = strrchr( entry->d_name, '.' );
         const char* const extension = dot ? dot + 1 : "";
-        enum { LENGTH = 255 };
+        enum { LENGTH = 1023 };
         char pathedName[ LENGTH + 1 ] = "";
         memset( pathedName, 0, sizeof pathedName );
         snprintf( pathedName, sizeof pathedName / sizeof *pathedName,
@@ -1857,7 +1857,7 @@ void directoryListing( const char* directory, const char* extensions,
                   const int hh = fileTimeInfo->tm_hour;
                   const int mm = fileTimeInfo->tm_min;
                   const size_t fileSize = info.st_size;
-                  enum { LINE_LENGTH = 255 };
+                  enum { LINE_LENGTH = 511  };
                   char line[ LINE_LENGTH + 1 ] = "";
                   size_t lineLength = 0;
                   memset( line, 0, sizeof line );

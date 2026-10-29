@@ -191,6 +191,10 @@ extern void directoryListing( const char* directory, const char* extensions,
 
 extern const char* homeDirectory( void );
 
+extern void getIPAddress( char address[], const size_t sizeof_address );
+
+extern void getSerialNumber( char serial[], const size_t sizeof_serial );
+
 #ifdef __cplusplus
 }
 #endif

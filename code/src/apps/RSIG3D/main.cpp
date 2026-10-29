@@ -106,11 +106,18 @@ int main(int argc, char** argv) {
   const std::string rsigOutputDirectory( ".rsig" );
   emvl::DatasetManager::setRemoteSubsetterDirectory( rsigOutputDirectory );
 
+  //QGLFormat fmt = QGLFormat::defaultFormat();
+  //fmt.setVersion(3, 2);                // request a modern context; adjust if driver doesn't support it
+  //fmt.setProfile(QGLFormat::CoreProfile); // if available in your Qt4 build
+  //fmt.setDoubleBuffer(true);
+  //QGLFormat::setDefaultFormat(fmt);    // must be before creating any widgets
+ 
+  
 #ifdef _WIN32
 //LoadLibraryA("backtrace.dll"); // To enable stacktrace if compiled with -g.
 #endif
 
-  try {
+  try {    
     qDebug() << "Available styles" << QStyleFactory::keys().join(" ");
 #ifdef _WIN32
     QApplication::setStyle("Cleanlooks");
@@ -121,6 +128,7 @@ int main(int argc, char** argv) {
 #ifdef _WIN32
     QStyle *style = new CustomStyle(application.style());
     application.setStyle(style);
+
 #endif
     
     RSIGScene model; // Model of MVC Design Pattern.
@@ -153,7 +161,7 @@ int main(int argc, char** argv) {
   } catch (...) {
     fprintf( stderr, "\nmain.cpp: Failure due to unknown exception.\n" );
   }
-
+  
   return 1;
 }
 

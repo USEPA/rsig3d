@@ -230,10 +230,9 @@ MainWin::MainWin(QWidget *parent, QGraphicsScene * scene):
 
   QObject::connect(&mTimer, SIGNAL(timeout()), this, SLOT(onTimeOut()));
   const int version = executableVersion();
-  const QString msg = "RSIG3D version " + QString::number( version );
-  m_controlWidget->postMessage(msg, RSIGState::NORMAL_TEXT);
+  const QString message = "RSIG3D version " + QString::number( version );
   const QString server = RSIGServerHost();
-  m_controlWidget->postMessage(QString("Data server: ")+server, RSIGState::NORMAL_TEXT);
+  m_controlWidget->postMessage(message + QString(", Data server: ")+server, RSIGState::NORMAL_TEXT);
   singleton = this;
 }
 
@@ -624,16 +623,15 @@ void MainWin::centerAndResize() {
   QSize availableSize = qApp->desktop()->availableGeometry().size();
   int width  = availableSize.width();
   int height = availableSize.height();
-  width  *= 0.8;   // 90% of the screen size
+  width  *= 0.9;   // 90% of the screen size
 
-  if (width>1024) {
-    width = 1024;
+  if (width>1280) {
+    //width = 1280;
   }
+  height *= 0.9; // Fraction of the screen size
 
-  height *= 0.8; // Fraction of the screen size
-
-  if (height>768) {
-    height = 768;
+  if (height>720) {
+    //height = 720;
   }
 
   QSize newSize( width, height );
@@ -704,8 +702,10 @@ void MainWin::saveSnapshot(bool automatic, bool overwrite) {
 
     m_pGLUIWin->update();
     m_pGLUIWin->getQGLlWidget()->updateGL();
-
-    glscreen = m_pGLUIWin->getQGLlWidget()->grabFrameBuffer(true);
+ 
+    //glscreen = m_pGLUIWin->getQGLlWidget()->grabFrameBuffer(true); // true causes sporadic color rendering problems!
+    glscreen = m_pGLUIWin->getQGLlWidget()->grabFrameBuffer(false);
+    
     int mywidth  = glscreen.width();
     int myheight = glscreen.height();
     mywidth  -= (mywidth  % 2);  // ensure width  is even to keep ffmpeg happy

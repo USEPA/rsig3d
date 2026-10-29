@@ -22,6 +22,7 @@ HISTORY: 2012/11/11, zhang.nan@epa.gov, Created.
 
 #include <QPainter>
 #include <QDebug>
+#include <QDesktopWidget>
 
 #include <Dataset.h>
 
@@ -52,10 +53,17 @@ void drawHorizontalLookupTable( QPainter* painter,
     topmargin+=26;
   }
 
+  // actual screen size
+  QDesktopWidget desktop;
+  int screenHeight = desktop.screenGeometry().height();
+  
   const int x0 = rect.x() + leftmargin;
   // Leave space for title at top
   int yOffset = -48;
   int titlespace = 20;
+  if (screenHeight > 2000) {
+    titlespace = 30;
+  }
   const int y0 = rect.y() + topmargin + titlespace +yOffset;
   const int x1 = rect.x() + rect.width() - rightmargin;
   const int y1 = y0 + barheight;
@@ -77,13 +85,19 @@ void drawHorizontalLookupTable( QPainter* painter,
     posbuffer[i]=bposx; //store position for drawing text
     t0 = t1;
   }
-
+  
   // set up default font
   QFont font("Helvetica", 8, QFont::Normal);
   int  pointsize_tiny   = 9;
   int  pointsize_small  = 10;
   int  pointsize_large  = 16;
 
+  if (screenHeight > 2000) {
+    pointsize_tiny  *= 2.25;
+    pointsize_small *= 2.25;
+    pointsize_large *= 2.25;
+  }
+  
   //draw a framebox for the color bars
   QPen whitepen(QColor(0, 0, 0, 250));
   painter->setPen(whitepen);

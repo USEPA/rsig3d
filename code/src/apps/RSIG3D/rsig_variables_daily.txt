@@ -2278,70 +2278,6 @@ Model.cmaq.equates.conus.dep.TOTDEP_N                                           
 Model.cmaq.equates.conus.dep.DRYDEP_S                                                                                             (kgS_ha-1)          Dry Deposition of Sulfur
 Model.cmaq.equates.conus.dep.WETDEP_S                                                                                             (kgS_ha-1)          Wet Deposition of Sulfur
 Model.cmaq.equates.conus.dep.TOTDEP_S                                                                                             (kgS_ha-1)          Total (Dry + Wet) Deposition of Sulfur
-#Model.cmaq.equates.conus.emis.ACET                                                                                                (moles/s)           Model species ACET
-#Model.cmaq.equates.conus.emis.ACROLEIN                                                                                            (moles/s)           Model species ACROLEIN
-#Model.cmaq.equates.conus.emis.ALD2                                                                                                (moles/s)           Model species ALD2
-#Model.cmaq.equates.conus.emis.ALD2_PRIMARY                                                                                        (moles/s)           Model species ALD2_PRIMARY
-#Model.cmaq.equates.conus.emis.ALDX                                                                                                (moles/s)           Model species ALDX
-#Model.cmaq.equates.conus.emis.BENZ                                                                                                (moles/s)           Model species BENZ
-#Model.cmaq.equates.conus.emis.BUTADIENE13                                                                                         (moles/s)           Model species BUTADIENE13
-#Model.cmaq.equates.conus.emis.CH4                                                                                                 (moles/s)           Model species CH4
-#Model.cmaq.equates.conus.emis.CH4_INV                                                                                             (g/s)               Model species CH4_INV
-#Model.cmaq.equates.conus.emis.CL2                                                                                                 (moles/s)           Model species CL2
-#Model.cmaq.equates.conus.emis.CO                                                                                                  (moles/s)           Model species CO
-#Model.cmaq.equates.conus.emis.CO2_INV                                                                                             (g/s)               Model species CO2_INV
-#Model.cmaq.equates.conus.emis.ETH                                                                                                 (moles/s)           Model species ETH
-#Model.cmaq.equates.conus.emis.ETHA                                                                                                (moles/s)           Model species ETHA
-#Model.cmaq.equates.conus.emis.ETHY                                                                                                (moles/s)           Model species ETHY
-#Model.cmaq.equates.conus.emis.ETOH                                                                                                (moles/s)           Model species ETOH
-#Model.cmaq.equates.conus.emis.FORM                                                                                                (moles/s)           Model species FORM
-#Model.cmaq.equates.conus.emis.FORM_PRIMARY                                                                                        (moles/s)           Model species FORM_PRIMARY
-#Model.cmaq.equates.conus.emis.HCL                                                                                                 (moles/s)           Model species HCL
-#Model.cmaq.equates.conus.emis.HONO                                                                                                (moles/s)           Model species HONO
-#Model.cmaq.equates.conus.emis.IOLE                                                                                                (moles/s)           Model species IOLE
-#Model.cmaq.equates.conus.emis.ISOP                                                                                                (moles/s)           Model species ISOP
-#Model.cmaq.equates.conus.emis.IVOC                                                                                                (moles/s)           Model species IVOC
-#Model.cmaq.equates.conus.emis.KET                                                                                                 (moles/s)           Model species KET
-#Model.cmaq.equates.conus.emis.MEOH                                                                                                (moles/s)           Model species MEOH
-#Model.cmaq.equates.conus.emis.N2O_INV                                                                                             (g/s)               Model species N2O_INV
-#Model.cmaq.equates.conus.emis.NAPH                                                                                                (moles/s)           Model species NAPH
-#Model.cmaq.equates.conus.emis.NH3                                                                                                 (moles/s)           Model species NH3
-#Model.cmaq.equates.conus.emis.NH3_FERT                                                                                            (moles/s)           Model species NH3_FERT
-#Model.cmaq.equates.conus.emis.NO                                                                                                  (moles/s)           Model species NO
-#Model.cmaq.equates.conus.emis.NO2                                                                                                 (moles/s)           Model species NO2
-#Model.cmaq.equates.conus.emis.NVOL                                                                                                (moles/s)           Model species NVOL
-#Model.cmaq.equates.conus.emis.OLE                                                                                                 (moles/s)           Model species OLE
-#Model.cmaq.equates.conus.emis.PAL                                                                                                 (g/s)               Model species PAL
-#Model.cmaq.equates.conus.emis.PAR                                                                                                 (moles/s)           Model species PAR
-#Model.cmaq.equates.conus.emis.PCA                                                                                                 (g/s)               Model species PCA
-#Model.cmaq.equates.conus.emis.PCL                                                                                                 (g/s)               Model species PCL
-#Model.cmaq.equates.conus.emis.PEC                                                                                                 (g/s)               Model species PEC
-#Model.cmaq.equates.conus.emis.PFE                                                                                                 (g/s)               Model species PFE
-#Model.cmaq.equates.conus.emis.PH2O                                                                                                (g/s)               Model species PH2O
-#Model.cmaq.equates.conus.emis.PK                                                                                                  (g/s)               Model species PK
-#Model.cmaq.equates.conus.emis.PMC                                                                                                 (g/s)               Model species PMC
-#Model.cmaq.equates.conus.emis.PMG                                                                                                 (g/s)               Model species PMG
-#Model.cmaq.equates.conus.emis.PMN                                                                                                 (g/s)               Model species PMN
-#Model.cmaq.equates.conus.emis.PMOTHR                                                                                              (g/s)               Model species PMOTHR
-#Model.cmaq.equates.conus.emis.PNA                                                                                                 (g/s)               Model species PNA
-#Model.cmaq.equates.conus.emis.PNCOM                                                                                               (g/s)               Model species PNCOM
-#Model.cmaq.equates.conus.emis.PNH4                                                                                                (g/s)               Model species PNH4
-#Model.cmaq.equates.conus.emis.PNO3                                                                                                (g/s)               Model species PNO3
-#Model.cmaq.equates.conus.emis.POC                                                                                                 (g/s)               Model species POC
-#Model.cmaq.equates.conus.emis.PRPA                                                                                                (moles/s)           Model species PRPA
-#Model.cmaq.equates.conus.emis.PSI                                                                                                 (g/s)               Model species PSI
-#Model.cmaq.equates.conus.emis.PSO4                                                                                                (g/s)               Model species PSO4
-#Model.cmaq.equates.conus.emis.PTI                                                                                                 (g/s)               Model species PTI
-#Model.cmaq.equates.conus.emis.SO2                                                                                                 (moles/s)           Model species SO2
-#Model.cmaq.equates.conus.emis.SOAALK                                                                                              (moles/s)           Model species SOAALK
-#Model.cmaq.equates.conus.emis.SULF                                                                                                (moles/s)           Model species SULF
-#Model.cmaq.equates.conus.emis.TERP                                                                                                (moles/s)           Model species TERP
-#Model.cmaq.equates.conus.emis.TOG_INV                                                                                             (g/s)               Model species TOG_INV
-#Model.cmaq.equates.conus.emis.TOL                                                                                                 (moles/s)           Model species TOL
-#Model.cmaq.equates.conus.emis.UNK                                                                                                 (moles/s)           Model species UNK
-#Model.cmaq.equates.conus.emis.UNR                                                                                                 (moles/s)           Model species UNR
-#Model.cmaq.equates.conus.emis.VOC_INV                                                                                             (g/s)               Model species VOC_INV
-#Model.cmaq.equates.conus.emis.XYLMN                                                                                               (moles/s)           Model species XYLMN
 Model.cmaq.equates.conus.integrated.NO2_COLUMN                                                                                    (petamolec_cm-2)    NO2_COLUMN[1]
 Model.cmaq.equates.conus.integrated.CO_COLUMN                                                                                     (petamolec_cm-2)    CO_COLUMN[1]
 Model.cmaq.equates.conus.integrated.SO2_COLUMN                                                                                    (petamolec_cm-2)    SO2_COLUMN[1]
@@ -2513,70 +2449,6 @@ Model.cmaq.equates.hemi.dep.TOTDEP_N                                            
 Model.cmaq.equates.hemi.dep.DRYDEP_S                                                                                             (kgS_ha-1)          Dry Deposition of Sulfur
 Model.cmaq.equates.hemi.dep.WETDEP_S                                                                                             (kgS_ha-1)          Wet Deposition of Sulfur
 Model.cmaq.equates.hemi.dep.TOTDEP_S                                                                                             (kgS_ha-1)          Total (Dry + Wet) Deposition of Sulfur
-#Model.cmaq.equates.hemi.emis.ACET                                                                                                (moles/s)           Model species ACET
-#Model.cmaq.equates.hemi.emis.ACROLEIN                                                                                            (moles/s)           Model species ACROLEIN
-#Model.cmaq.equates.hemi.emis.ALD2                                                                                                (moles/s)           Model species ALD2
-#Model.cmaq.equates.hemi.emis.ALD2_PRIMARY                                                                                        (moles/s)           Model species ALD2_PRIMARY
-#Model.cmaq.equates.hemi.emis.ALDX                                                                                                (moles/s)           Model species ALDX
-#Model.cmaq.equates.hemi.emis.BENZ                                                                                                (moles/s)           Model species BENZ
-#Model.cmaq.equates.hemi.emis.BUTADIENE13                                                                                         (moles/s)           Model species BUTADIENE13
-#Model.cmaq.equates.hemi.emis.CH4                                                                                                 (moles/s)           Model species CH4
-#Model.cmaq.equates.hemi.emis.CH4_INV                                                                                             (g/s)               Model species CH4_INV
-#Model.cmaq.equates.hemi.emis.CL2                                                                                                 (moles/s)           Model species CL2
-#Model.cmaq.equates.hemi.emis.CO                                                                                                  (moles/s)           Model species CO
-#Model.cmaq.equates.hemi.emis.CO2_INV                                                                                             (g/s)               Model species CO2_INV
-#Model.cmaq.equates.hemi.emis.ETH                                                                                                 (moles/s)           Model species ETH
-#Model.cmaq.equates.hemi.emis.ETHA                                                                                                (moles/s)           Model species ETHA
-#Model.cmaq.equates.hemi.emis.ETHY                                                                                                (moles/s)           Model species ETHY
-#Model.cmaq.equates.hemi.emis.ETOH                                                                                                (moles/s)           Model species ETOH
-#Model.cmaq.equates.hemi.emis.FORM                                                                                                (moles/s)           Model species FORM
-#Model.cmaq.equates.hemi.emis.FORM_PRIMARY                                                                                        (moles/s)           Model species FORM_PRIMARY
-#Model.cmaq.equates.hemi.emis.HCL                                                                                                 (moles/s)           Model species HCL
-#Model.cmaq.equates.hemi.emis.HONO                                                                                                (moles/s)           Model species HONO
-#Model.cmaq.equates.hemi.emis.IOLE                                                                                                (moles/s)           Model species IOLE
-#Model.cmaq.equates.hemi.emis.ISOP                                                                                                (moles/s)           Model species ISOP
-#Model.cmaq.equates.hemi.emis.IVOC                                                                                                (moles/s)           Model species IVOC
-#Model.cmaq.equates.hemi.emis.KET                                                                                                 (moles/s)           Model species KET
-#Model.cmaq.equates.hemi.emis.MEOH                                                                                                (moles/s)           Model species MEOH
-#Model.cmaq.equates.hemi.emis.N2O_INV                                                                                             (g/s)               Model species N2O_INV
-#Model.cmaq.equates.hemi.emis.NAPH                                                                                                (moles/s)           Model species NAPH
-#Model.cmaq.equates.hemi.emis.NH3                                                                                                 (moles/s)           Model species NH3
-#Model.cmaq.equates.hemi.emis.NH3_FERT                                                                                            (moles/s)           Model species NH3_FERT
-#Model.cmaq.equates.hemi.emis.NO                                                                                                  (moles/s)           Model species NO
-#Model.cmaq.equates.hemi.emis.NO2                                                                                                 (moles/s)           Model species NO2
-#Model.cmaq.equates.hemi.emis.NVOL                                                                                                (moles/s)           Model species NVOL
-#Model.cmaq.equates.hemi.emis.OLE                                                                                                 (moles/s)           Model species OLE
-#Model.cmaq.equates.hemi.emis.PAL                                                                                                 (g/s)               Model species PAL
-#Model.cmaq.equates.hemi.emis.PAR                                                                                                 (moles/s)           Model species PAR
-#Model.cmaq.equates.hemi.emis.PCA                                                                                                 (g/s)               Model species PCA
-#Model.cmaq.equates.hemi.emis.PCL                                                                                                 (g/s)               Model species PCL
-#Model.cmaq.equates.hemi.emis.PEC                                                                                                 (g/s)               Model species PEC
-#Model.cmaq.equates.hemi.emis.PFE                                                                                                 (g/s)               Model species PFE
-#Model.cmaq.equates.hemi.emis.PH2O                                                                                                (g/s)               Model species PH2O
-#Model.cmaq.equates.hemi.emis.PK                                                                                                  (g/s)               Model species PK
-#Model.cmaq.equates.hemi.emis.PMC                                                                                                 (g/s)               Model species PMC
-#Model.cmaq.equates.hemi.emis.PMG                                                                                                 (g/s)               Model species PMG
-#Model.cmaq.equates.hemi.emis.PMN                                                                                                 (g/s)               Model species PMN
-#Model.cmaq.equates.hemi.emis.PMOTHR                                                                                              (g/s)               Model species PMOTHR
-#Model.cmaq.equates.hemi.emis.PNA                                                                                                 (g/s)               Model species PNA
-#Model.cmaq.equates.hemi.emis.PNCOM                                                                                               (g/s)               Model species PNCOM
-#Model.cmaq.equates.hemi.emis.PNH4                                                                                                (g/s)               Model species PNH4
-#Model.cmaq.equates.hemi.emis.PNO3                                                                                                (g/s)               Model species PNO3
-#Model.cmaq.equates.hemi.emis.POC                                                                                                 (g/s)               Model species POC
-#Model.cmaq.equates.hemi.emis.PRPA                                                                                                (moles/s)           Model species PRPA
-#Model.cmaq.equates.hemi.emis.PSI                                                                                                 (g/s)               Model species PSI
-#Model.cmaq.equates.hemi.emis.PSO4                                                                                                (g/s)               Model species PSO4
-#Model.cmaq.equates.hemi.emis.PTI                                                                                                 (g/s)               Model species PTI
-#Model.cmaq.equates.hemi.emis.SO2                                                                                                 (moles/s)           Model species SO2
-#Model.cmaq.equates.hemi.emis.SOAALK                                                                                              (moles/s)           Model species SOAALK
-#Model.cmaq.equates.hemi.emis.SULF                                                                                                (moles/s)           Model species SULF
-#Model.cmaq.equates.hemi.emis.TERP                                                                                                (moles/s)           Model species TERP
-#Model.cmaq.equates.hemi.emis.TOG_INV                                                                                             (g/s)               Model species TOG_INV
-#Model.cmaq.equates.hemi.emis.TOL                                                                                                 (moles/s)           Model species TOL
-#Model.cmaq.equates.hemi.emis.UNK                                                                                                 (moles/s)           Model species UNK
-#Model.cmaq.equates.hemi.emis.UNR                                                                                                 (moles/s)           Model species UNR
-#Model.cmaq.equates.hemi.emis.VOC_INV                                                                                             (g/s)               Model species VOC_INV
-#Model.cmaq.equates.hemi.emis.XYLMN                                                                                               (moles/s)           Model species XYLMN
 Model.cmaq.equates.hemi.integrated.NO2_COLUMN                                                                                    (petamolec_cm-2)    NO2_COLUMN[1]
 Model.cmaq.equates.hemi.integrated.CO_COLUMN                                                                                     (petamolec_cm-2)    CO_COLUMN[1]
 Model.cmaq.equates.hemi.integrated.SO2_COLUMN                                                                                    (petamolec_cm-2)    SO2_COLUMN[1]
@@ -3002,9 +2874,7 @@ Model.cmaq.read.file2                                                           
 Model.cmaq.read.file3                                                                                                                     (-)                 Read a CMAQ file on local or remote host.
 Model.cmaq.read.file4                                                                                                                     (-)                 Read a CMAQ file on local or remote host.
 Model.cmaq.read.file5                                                                                                                     (-)                 Read a CMAQ file on local or remote host.
-AirQuality.purpleair.pm25_corrected_daily                                                                                             (ug/m3)            Daily average scaled humidity-corrected particulate matter not more than 2.5 microns in diameter.
-#Other.faqsd.ozone_daily_8hour_maximum                                                                                              (ppb)            Fused 12km CMAQ / census track point UTC daily maximum of 8 hour means surface ozone concentration in part-per-billion.
-#Other.faqsd.ozone_daily_8hour_maximum_std                                                                                          (ppb)            Fused 12km CMAQ / census track point standard deviation of UTC daily maximum of 8 hour means measured ozone concentration in part-per-billion.
-#Other.faqsd.pm25_daily_average                                                                                                   (ug/m3)            Fused 12km CMAQ / census track point UTC daily mean surface particulate matter (aerosols) 2.5 microns or smaller in diameter in micrograms per cubic meter.
-#Other.faqsd.pm25_daily_average_std                                                                                               (ug/m3)            Fused 12km CMAQ / census track point standard deviation of UTC daily mean surface particulate matter (aerosols) 2.5 microns or smaller in diameter in micrograms per cubic meter.
+AirQuality.purpleair.humidity_daily                                                                                                       (%)            Pre-computed (with default filtering) daily average sensor measured relative humidity inside the sensor housing (on average 4% lower than ambient conditions).
+AirQuality.purpleair.pm25_corrected_daily                                                                                             (ug/m3)            Pre-computed (with default filtering) daily average scaled humidity-corrected particulate matter not more than 2.5 microns in diameter.
+AirQuality.purpleair.temperature_daily                                                                                                    (C)            Pre-computed (with default filtering) daily average temperature inside of the sensor housing. On average, this is 4C higher than ambient conditions.
 Other.pandora.ozone                                                                                                      (molecules/cm3)            Ground-based Pandora Spectrometer instrument measured ozone.

@@ -1,0 +1,1517 @@
+platform is Darwin
+ 
+===============================================================================
+                            Software Metrics Report
+===============================================================================
+ 
+Lines of source code:
+---------------------
+ 
+		Pure	Pure	Both		Total	Total	Total
+		Code	Comment	Cod&Com	Blank	Code	Comment	Lines	Pages
+
+CMAQFileReaderDialog.h	68	9	1	35	69	10	113	3
+CMAQFileReaderModel.h	96	8	1	37	97	9	142	3
+CeilometerCurtainArray.h	65	9	1	21	66	10	96	2
+ControlDockWidget.h	322	10	0	58	322	10	390	7
+DataPreferences.h	27	0	0	13	27	0	40	1
+DataUsePolicy.h	26	8	0	19	26	8	53	1
+DomUtils.h	171	7	0	43	171	7	221	4
+FileOrientedDownloader.h	38	0	0	25	38	0	63	2
+FileOrientedDownloaderWorker.h	19	0	1	4	20	1	24	1
+FilterSettingData.h	57	8	0	23	57	8	88	2
+FilterSettingDialog.h	27	8	0	12	27	8	47	1
+GLProxyGraphicsItem.h	16	8	0	11	16	8	35	1
+GLProxyGraphicsWidget.h	19	8	0	11	19	8	38	1
+GLSLProgramObject.h	68	7	0	35	68	7	110	2
+GeoDataList.h	38	7	0	17	38	7	62	2
+GeoDataObject.h	91	9	0	46	91	9	146	3
+GeoDataPropertyEdit.h	17	7	0	12	17	7	36	1
+GetData.h	44	5	1	21	45	6	71	2
+GraphicsView.h	32	7	0	17	32	7	56	1
+HttpDownloadDialog.h	97	8	0	31	97	8	136	3
+LoadMapFile.h	4	5	1	7	5	6	17	1
+LonlatBoundingBoxWidget.h	23	8	0	10	23	8	41	1
+LookupTable.h	63	7	0	30	63	7	100	2
+LookupTableWidget.h	54	7	0	27	54	7	88	2
+MainWin.h	82	9	1	35	83	10	127	3
+ModisTrueColor.h	28	0	1	10	29	1	39	1
+OpenGLScene.h	39	8	0	22	39	8	69	2
+PointRenderer.h	56	8	0	26	56	8	90	2
+PolygonRenderer.h	52	8	0	24	52	8	84	2
+RGBColormap.h	33	4	0	23	33	4	60	2
+RSIG3DHelp.h	31	8	0	18	31	8	57	2
+RSIGGlobal.h	114	18	0	44	114	18	176	4
+RSIGScene.h	165	10	1	55	166	11	231	5
+RegridParmsData.h	59	8	0	15	59	8	82	2
+RegridParmsDialog.h	24	8	0	17	24	8	49	1
+RenderingContext.h	55	7	0	22	55	7	84	2
+RenderingContextRSIG.h	155	8	0	43	155	8	206	4
+RenderingContextRSIGBase.h	20	7	0	4	20	7	31	1
+ShadersManagement.h	38	7	0	12	38	7	57	2
+SlantLookupTableWidget.h	19	7	0	10	19	7	36	1
+VectorRenderer.h	40	8	1	16	41	9	65	2
+VisDataList.h	48	7	0	18	48	7	73	2
+VisDataObject.h	133	7	1	30	134	8	171	4
+VisDataObjectProperties.h	103	9	0	28	103	9	140	3
+VisDataPropertyEdit.h	19	7	0	11	19	7	37	1
+VisOptions.h	226	0	0	83	226	0	309	6
+base_object.h	215	15	1	33	216	16	264	5
+loadPNG.h	12	14	3	11	15	17	40	1
+ui_boundingbox.h	98	7	0	12	98	7	117	3
+ui_cmaqfilereader.h	343	7	0	82	343	7	432	8
+ui_controldockwidget.h	1878	7	0	72	1878	7	1957	35
+ui_datausepolicy.h	77	7	0	22	77	7	106	2
+ui_downloaddialog.h	145	7	0	32	145	7	184	4
+ui_filedownloader.h	178	7	0	36	178	7	221	4
+ui_filtersetting.h	798	7	0	14	798	7	819	15
+ui_regridparms.h	542	7	0	12	542	7	561	11
+ui_rsig3dhelp.h	87	7	0	28	87	7	122	3
+loadPNG.c	163	47	10	66	173	57	286	6
+CMAQFileReaderDialog.cpp	603	125	0	225	603	125	953	18
+CMAQFileReaderModel.cpp	523	208	0	238	523	208	969	18
+CeilometerCurtainArray.cpp	378	86	0	137	378	86	601	11
+ControlDockWidget.cpp	1705	61	0	361	1705	61	2127	38
+ControlDockWidget_init.cpp	784	7	0	214	784	7	1005	18
+ControlDockWidget_slots.cpp	3546	253	0	1112	3546	253	4911	88
+DataPreferences.cpp	90	0	0	28	90	0	118	3
+DataUsePolicy.cpp	63	12	0	42	63	12	117	3
+FileOrientedDownloader.cpp	217	8	0	93	217	8	318	6
+FileOrientedDownloaderWorker.cpp	98	8	0	38	98	8	144	3
+FilterSettingData.cpp	100	7	0	31	100	7	138	3
+FilterSettingDialog.cpp	327	12	0	107	327	12	446	8
+GLProxyGraphicsItem.cpp	49	33	0	24	49	33	106	2
+GLProxyGraphicsWidget.cpp	30	33	0	16	30	33	79	2
+GLSLProgramObject.cpp	232	12	0	102	232	12	346	7
+GeoDataList.cpp	95	17	0	58	95	17	170	4
+GeoDataObject.cpp	365	9	0	171	365	9	545	10
+GeoDataPropertyEdit.cpp	63	11	0	20	63	11	94	2
+GetData.cpp	487	50	0	143	487	50	680	13
+GraphicsView.cpp	113	96	0	55	113	96	264	5
+HttpDownloadDialog.cpp	561	7	0	168	561	7	736	14
+LoadMapFile.cpp	108	39	0	45	108	39	192	4
+LonlatBoundingBoxWidget.cpp	57	18	0	24	57	18	99	2
+LookupTable.cpp	425	7	0	175	425	7	607	11
+LookupTableWidget.cpp	223	12	1	114	224	13	350	7
+MainWin.cpp	594	21	0	223	594	21	838	15
+ModisTrueColor.cpp	146	0	0	68	146	0	214	4
+OpenGLScene.cpp	148	101	0	73	148	101	322	6
+PointRenderer.cpp	1458	30	34	422	1492	64	1944	35
+PolygonRenderer.cpp	1143	92	17	304	1160	109	1556	28
+RGBColormap.cpp	360	19	0	97	360	19	476	9
+RSIG3DHelp.cpp	68	12	0	47	68	12	127	3
+RSIGGlobal.cpp	162	14	4	48	166	18	228	5
+RSIGScene.cpp	3783	300	11	1074	3794	311	5168	93
+RegridParmsData.cpp	520	7	0	122	520	7	649	12
+RegridParmsDialog.cpp	338	7	0	94	338	7	439	8
+RenderingContext.cpp	92	18	0	37	92	18	147	3
+RenderingContextRSIG.cpp	866	200	11	299	877	211	1376	25
+RenderingContextRSIGBase.cpp	54	7	1	31	55	8	93	2
+ShadersManagement.cpp	293	7	0	101	293	7	401	8
+SlantLookupTableWidget.cpp	49	12	0	24	49	12	85	2
+VectorRenderer.cpp	381	35	5	129	386	40	550	10
+VisDataList.cpp	201	9	0	103	201	9	313	6
+VisDataObject.cpp	493	30	3	264	496	33	790	15
+VisDataObjectProperties.cpp	267	27	0	205	267	27	499	9
+VisDataPropertyEdit.cpp	67	21	0	35	67	21	123	3
+VisOptions.cpp	503	0	0	148	503	0	651	12
+main.cpp	117	8	1	35	118	9	161	3
+
+ALL:		30902	2570	113	9275	31015	2683	42860	816
+ 
+Fan-out: 44 Bounds CMAQGridParameters DataFilterParameters DataUtilities Dataset DatasetManager QColor> QDate> QDateTime> QDialog> QDir> QDockWidget> QDomDocument> QDomElement> QFile> QFileInfo> QGLWidget> QGraphicsRectItem> QGraphicsScene> QGraphicsView> QList> QListWidget> QMainWindow> QMap> QNetworkReply> QObject> QProcess> QRect> QRectF> QScopedPointer> QSplitter> QSslError> QStandardItem> QString> QStringList> QThread> QTimer> QTreeWidget> QUrl> QVector2D> QWidget> QtGlobal> Timestamp Utilities
+ 
+Halstead Metrics:
+-----------------
+ 
+FileName                            Length     Volume  Level     Discr. Defect
+------------------------------------------------------------------------------
+CMAQFileReaderDialog.h                 418       2818  0.049      57800      1
+CMAQFileReaderModel.h                  957       7244  0.028     255191      2
+CeilometerCurtainArray.h               564       4098  0.035     118036      1
+ControlDockWidget.h                   1713      15288  0.035     430874      5
+DataPreferences.h                       81        419  0.079       5330      0
+DataUsePolicy.h                         96        533  0.084       6374      0
+DomUtils.h                            1321       9348  0.013     746130      3
+FileOrientedDownloader.h               127        747  0.088       8532      0
+FileOrientedDownloaderWorker.h          79        412  0.135       3043      0
+FilterSettingData.h                    128        787  0.100       7907      0
+FilterSettingDialog.h                   93        514  0.078       6575      0
+GLProxyGraphicsItem.h                   86        490  0.121       4044      0
+GLProxyGraphicsWidget.h                125        726  0.088       8275      0
+GLSLProgramObject.h                    418       2753  0.030      91242      1
+GeoDataList.h                          223       1468  0.062      23721      0
+GeoDataObject.h                        578       4013  0.028     141489      1
+GeoDataPropertyEdit.h                   71        390  0.082       4735      0
+GetData.h                              317       2087  0.053      39742      1
+GraphicsView.h                         125        729  0.067      10954      0
+HttpDownloadDialog.h                   379       2640  0.044      59705      1
+LoadMapFile.h                           50        204  0.136       1499      0
+LonlatBoundingBoxWidget.h               74        383  0.079       4869      0
+LookupTable.h                          455       3267  0.041      80349      1
+LookupTableWidget.h                    297       1947  0.054      36339      1
+MainWin.h                              396       2798  0.049      57436      1
+ModisTrueColor.h                       108        586  0.095       6144      0
+OpenGLScene.h                          232       1535  0.058      26242      1
+PointRenderer.h                        360       2325  0.035      65701      1
+PolygonRenderer.h                      372       2551  0.034      74766      1
+RGBColormap.h                          360       2432  0.055      44314      1
+RSIG3DHelp.h                           119        678  0.088       7747      0
+RSIGGlobal.h                           571       4331  0.035     124671      1
+RSIGScene.h                           1063       8783  0.038     229775      3
+RegridParmsData.h                      170       1045  0.104      10076      0
+RegridParmsDialog.h                     80        431  0.081       5309      0
+RenderingContext.h                     257       1722  0.043      40180      1
+RenderingContextRSIG.h                 877       5707  0.013     434043      2
+RenderingContextRSIGBase.h             119        672  0.064      10553      0
+ShadersManagement.h                    298       1873  0.037      50802      1
+SlantLookupTableWidget.h                79        431  0.070       6121      0
+VectorRenderer.h                       229       1413  0.050      28444      0
+VisDataList.h                          231       1401  0.051      27476      0
+VisDataObject.h                        748       5728  0.035     164874      2
+VisDataObjectProperties.h              461       3277  0.061      53551      1
+VisDataPropertyEdit.h                   80        444  0.077       5792      0
+VisOptions.h                          1029       8306  0.051     163326      3
+base_object.h                         1235       8963  0.010     925257      3
+loadPNG.h                               49        240  0.100       2404      0
+ui_boundingbox.h                       727       4809  0.030     162799      2
+ui_cmaqfilereader.h                   2537      18754  0.016    1209159      6
+ui_controldockwidget.h               15896     150465  0.010   14409497     50
+ui_datausepolicy.h                     482       3097  0.041      75255      1
+ui_downloaddialog.h                   1083       7617  0.030     255603      3
+ui_filedownloader.h                   1296       9279  0.027     341445      3
+ui_filtersetting.h                    6931      58017  0.010    5972707     19
+ui_regridparms.h                      4897      38389  0.010    3980587     13
+ui_rsig3dhelp.h                        559       3746  0.040      94320      1
+loadPNG.c                             1106       8037  0.012     660961      3
+CMAQFileReaderDialog.cpp              3951      34237  0.017    2058922     11
+CMAQFileReaderModel.cpp               3806      29616  0.007    4257122     10
+CeilometerCurtainArray.cpp            3010      24981  0.010    2603434      8
+ControlDockWidget.cpp                13130     133449  0.008   16896867     44
+ControlDockWidget_init.cpp            7710      75452  0.012    6299625     25
+ControlDockWidget_slots.cpp          26500     290784  0.006   51803795     97
+DataPreferences.cpp                    565       3949  0.026     154115      1
+DataUsePolicy.cpp                      301       1832  0.042      43536      1
+FileOrientedDownloader.cpp            1355      10832  0.018     591084      4
+FileOrientedDownloaderWorker.cpp       607       4376  0.028     155205      1
+FilterSettingData.cpp                  539       3848  0.047      82502      1
+FilterSettingDialog.cpp               2503      20524  0.011    1869765      7
+GLProxyGraphicsItem.cpp                304       2011  0.050      39873      1
+GLProxyGraphicsWidget.cpp              141        840  0.090       9378      0
+GLSLProgramObject.cpp                 1121       8146  0.013     637310      3
+GeoDataList.cpp                        555       3806  0.019     201217      1
+GeoDataObject.cpp                     1984      16307  0.014    1138110      5
+GeoDataPropertyEdit.cpp                322       1967  0.040      48595      1
+GetData.cpp                           2896      25176  0.014    1835456      8
+GraphicsView.cpp                       561       3840  0.025     150788      1
+HttpDownloadDialog.cpp                3252      29119  0.014    2125948     10
+LoadMapFile.cpp                        869       6012  0.017     350211      2
+LonlatBoundingBoxWidget.cpp            392       2411  0.024     101074      1
+LookupTable.cpp                       3747      31682  0.008    3973164     11
+LookupTableWidget.cpp                 1366      10920  0.018     623413      4
+MainWin.cpp                           3770      33941  0.011    3185264     11
+ModisTrueColor.cpp                     835       6592  0.028     238235      2
+OpenGLScene.cpp                        683       4988  0.018     271830      2
+PointRenderer.cpp                     9617      94130  0.007   13738997     31
+PolygonRenderer.cpp                   8461      81489  0.007   11988948     27
+RGBColormap.cpp                       4496      38732  0.008    4782100     13
+RSIG3DHelp.cpp                         402       2659  0.039      68499      1
+RSIGGlobal.cpp                         893       6554  0.015     450218      2
+RSIGScene.cpp                        27971     307125  0.005   62649679    102
+RegridParmsData.cpp                   2431      19207  0.012    1636491      6
+RegridParmsDialog.cpp                 2259      17666  0.013    1400150      6
+RenderingContext.cpp                   366       2314  0.032      73291      1
+RenderingContextRSIG.cpp              8613      76920  0.006   13818208     26
+RenderingContextRSIGBase.cpp           389       2452  0.022     111875      1
+ShadersManagement.cpp                 1829      14653  0.012    1244419      5
+SlantLookupTableWidget.cpp             294       1879  0.033      57790      1
+VectorRenderer.cpp                    2502      21489  0.013    1681685      7
+VisDataList.cpp                       2091      16911  0.013    1262056      6
+VisDataObject.cpp                     2428      20579  0.012    1697708      7
+VisDataObjectProperties.cpp            941       6766  0.023     297935      2
+VisDataPropertyEdit.cpp                344       2193  0.035      63049      1
+VisOptions.cpp                        1691      13585  0.032     418801      5
+main.cpp                               875       6744  0.031     218934      2
+
+ALL                                 219480    2008872  4.165  251286763    670
+ 
+Per-function    LOC, Cyclomatic Complexity and Fan-out (function calls):
+------------------------------------------------------------------------
+ 
+File: Functions                                           LOC    Cyclo Fan-out
+------------------------------------------------------------------------------
+CMAQFileReaderDialog.h:
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Totals:                   0      0      0
+CMAQFileReaderModel.h:
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Totals:                   0      0      0
+CeilometerCurtainArray.h:
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Totals:                   0      0      0
+ControlDockWidget.h:
+    ControlDockWidget::loadGeoDataObject                    4      1      1
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Totals:                   4      1      0
+DataPreferences.h:
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Totals:                   0      0      0
+DataUsePolicy.h:
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Totals:                   0      0      0
+DomUtils.h:
+    DomUtils::DateDaysElement                               7      1      2
+    DomUtils::DateDaysFromDom                               9      1      5
+    DomUtils::QColorDomElement                              9      1      2
+    DomUtils::QColorFromDom                                10      2      2
+    DomUtils::QMapDomElement                                7      1      2
+    DomUtils::QMapFromDom                                   6      1      2
+    DomUtils::QPointFDomElement                             7      1      2
+    DomUtils::QPointFFromDom                                7      1      2
+    DomUtils::QRectFDomElement                              9      1      2
+    DomUtils::QRectFFromDom                                 9      1      2
+    DomUtils::boolFromDom                                  18      4      2
+    DomUtils::doubleFromDom                                16      3      3
+    DomUtils::floatDomElement                               6      1      2
+    DomUtils::floatFromDom                                 16      3      3
+    DomUtils::intFromDom                                   17      3      3
+    DomUtils::stringFromDom                                 9      2      2
+    DomUtils::warning                                       4      1      1
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Totals:                 166     28     34
+FileOrientedDownloader.h:
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Totals:                   0      0      0
+FileOrientedDownloaderWorker.h:
+    FileOrientedDownloaderWorker::FileOrientedDownloaderWorker      2      1      0
+    FileOrientedDownloaderWorker::~FileOrientedDownloaderWorker      2      1      0
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Totals:                   4      2      0
+FilterSettingData.h:
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Totals:                   0      0      0
+FilterSettingDialog.h:
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Totals:                   0      0      0
+GLProxyGraphicsItem.h:
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Totals:                   0      0      0
+GLProxyGraphicsWidget.h:
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Totals:                   0      0      0
+GLSLProgramObject.h:
+    GLSLProgramObject::bindTexture1D                        4      1      1
+    GLSLProgramObject::bindTexture2D                        4      1      1
+    GLSLProgramObject::bindTexture2DArray                   6      1      1
+    GLSLProgramObject::bindTexture3D                        4      1      1
+    GLSLProgramObject::bindTextureRECT                      4      1      1
+    GLSLProgramObject::getProgId                            2      1      0
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Totals:                  24      6      5
+GeoDataList.h:
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Totals:                   0      0      0
+GeoDataObject.h:
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Totals:                   0      0      0
+GeoDataPropertyEdit.h:
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Totals:                   0      0      0
+GetData.h:
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Totals:                   0      0      0
+GraphicsView.h:
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Totals:                   0      0      0
+HttpDownloadDialog.h:
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Totals:                   0      0      0
+LoadMapFile.h:
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Totals:                   0      0      0
+LonlatBoundingBoxWidget.h:
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Totals:                   0      0      0
+LookupTable.h:
+    LookupTable::getColormapIndex                           2      1      0
+    LookupTable::texureID                                   2      1      0
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Totals:                   4      2      0
+LookupTableWidget.h:
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Totals:                   0      0      0
+MainWin.h:
+    MainWin::controlWidget                                  2      1      0
+    MainWin::getInstance                                    2      1      0
+    MainWin::graphicsView                                   2      1      0
+    MainWin::setSnapshotCounter                             2      1      0
+    MainWin::setSnapshotFileName                            2      1      0
+    MainWin::setSnapshotFormat                              2      1      0
+    MainWin::setStateFileName                               2      1      0
+    MainWin::snapshotCounter                                2      1      0
+    MainWin::snapshotFileName                               2      1      0
+    MainWin::snapshotFormat                                 2      1      0
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Totals:                  20     10      0
+ModisTrueColor.h:
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Totals:                   0      0      0
+OpenGLScene.h:
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Totals:                   0      0      0
+PointRenderer.h:
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Totals:                   0      0      0
+PolygonRenderer.h:
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Totals:                   0      0      0
+RGBColormap.h:
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Totals:                   0      0      0
+RSIG3DHelp.h:
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Totals:                   0      0      0
+RSIGGlobal.h:
+    RSIGState::getEndingTimestamp                           2      1      0
+    RSIGState::getStartingTimestamp                         2      1      0
+    RSIGState::mCounter                                     3      1      0
+    RSIGState::setDate                                      7      1      4
+    RSIGState::setDuration                                  5      1      1
+    RSIGState::setTimebaseType                              5      1      1
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Totals:                  24      6      6
+RSIGScene.h:
+    RSIGScene::getBoundingGeoBox                            2      1      1
+    RSIGScene::getInstance                                  2      1      0
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Totals:                   4      2      1
+RegridParmsData.h:
+    RegridParmsData::RegridParmsData                        4      1      1
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Totals:                   4      1      0
+RegridParmsDialog.h:
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Totals:                   0      0      0
+RenderingContext.h:
+    RenderingContext::getFboID                              4      1      0
+    RenderingContext::getMRTBufferNum                       4      1      0
+    RenderingContext::getProgramObject                      4      1      0
+    RenderingContext::getTextureID                          4      1      0
+    RenderingContext::getTextureIDs                         4      1      0
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Totals:                  20      5      0
+RenderingContextRSIG.h:
+    LambertConformalConicProjectionRC::bind                 2      1      0
+    LambertConformalConicProjectionRC::initRenderTarget      2      1      0
+    MarbleMercatorProjectionRC::bind                        2      1      0
+    MarbleMercatorProjectionRC::initRenderTarget            2      1      0
+    MarbleSphericalProjectionRC::bind                       2      1      0
+    MarbleSphericalProjectionRC::initRenderTarget           2      1      0
+    MarbleUVProjectionRC::bind                              2      1      0
+    MarbleUVProjectionRC::initRenderTarget                  2      1      0
+    QMapMercatorProjectionRC::bind                          2      1      0
+    QMapMercatorProjectionRC::initRenderTarget              2      1      0
+    StereographicProjectionRC::bind                         2      1      0
+    StereographicProjectionRC::initRenderTarget             2      1      0
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Totals:                  24     12      0
+RenderingContextRSIGBase.h:
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Totals:                   0      0      0
+ShadersManagement.h:
+    checkGLError                                            7      2      1
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Totals:                   7      2      0
+SlantLookupTableWidget.h:
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Totals:                   0      0      0
+VectorRenderer.h:
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Totals:                   0      0      0
+VisDataList.h:
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Totals:                   0      0      0
+VisDataObject.h:
+    VisDataObject::render2DCalipsoCurtain                   2      1      0
+    VisDataObject::renderEMVL                               2      1      0
+    VisDataObject::renderPopupCeilometer                    2      1      0
+    VisDataObject::renderPopupNeubrew                       2      1      0
+    VisDataObject::renderPopupPandora                       2      1      0
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Totals:                  10      5      0
+VisDataObjectProperties.h:
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Totals:                   0      0      0
+VisDataPropertyEdit.h:
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Totals:                   0      0      0
+VisOptions.h:
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Totals:                   0      0      0
+base_object.h:
+    CObjectBase::CObjectBase                                4      1      0
+    CObjectBase::CompareObjectName                          9      2      2
+    CObjectBase::GetObjectName                              4      1      0
+    CObjectBase::Name                                       4      1      1
+    CObjectBase::SetObjectName                              9      3      1
+    CObjectBase::className                                  4      1      1
+    CObjectBase::create                                     5      2      2
+    CObjectBase::createInstance                             5      2      2
+    CObjectBase::decodeClassName                           55     18      5
+    CObjectBase::decodeTemplateName                        58     19      5
+    CObjectBase::getClassName                               4      1      1
+    CObjectBase::getTemplateName                            4      1      1
+    CObjectBase::~CObjectBase                               4      1      0
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Totals:                 169     53     20
+loadPNG.h:
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Totals:                   0      0      0
+ui_boundingbox.h:
+    Ui_BoundingBox::retranslateUi                           9      1      3
+    Ui_BoundingBox::setupUi                                59      2     15
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Totals:                  68      3     15
+ui_cmaqfilereader.h:
+    Ui_CMAQFileReader::retranslateUi                       25      1      3
+    Ui_CMAQFileReader::setupUi                            237      2     33
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Totals:                 262      3     33
+ui_controldockwidget.h:
+    Ui_ControlUIForm::retranslateUi                       201      1     11
+    Ui_ControlUIForm::setupUi                            1348      2    112
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Totals:                1549      3    112
+ui_datausepolicy.h:
+    Ui_DataUsePolicy::retranslateUi                         8      1      3
+    Ui_DataUsePolicy::setupUi                              39      2     20
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Totals:                  47      3     20
+ui_downloaddialog.h:
+    Ui_DownloadDialog::retranslateUi                       15      1      4
+    Ui_DownloadDialog::setupUi                             83      2     30
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Totals:                  98      3     30
+ui_filedownloader.h:
+    Ui_FileOrientedDownloader::retranslateUi               16      1      3
+    Ui_FileOrientedDownloader::setupUi                    110      2     34
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Totals:                 126      3     34
+ui_filtersetting.h:
+    Ui_FilterSettingDialog::retranslateUi                 110      1      6
+    Ui_FilterSettingDialog::setupUi                       555      2     43
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Totals:                 665      3     43
+ui_regridparms.h:
+    Ui_RegridParmsDialog::retranslateUi                    52      1      2
+    Ui_RegridParmsDialog::setupUi                         390      2     25
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Totals:                 442      3     25
+ui_rsig3dhelp.h:
+    Ui_RSIG3DHelp::retranslateUi                            7      1      3
+    Ui_RSIG3DHelp::setupUi                                 45      2     25
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Totals:                  52      3     25
+loadPNG.c:
+    allocate                                               13      2      4
+    loadPNG                                                22      8      7
+    makeTexture                                            19      1      8
+    readPNGFile                                            99     28     15
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Totals:                 153     39     26
+CMAQFileReaderDialog.cpp:
+    CMAQFileReaderDialog::disableWhileConnecting           14      1      2
+    CMAQFileReaderDialog::enableAfterConnect               14      1      2
+    CMAQFileReaderDialog::invariant                        25      1      1
+    CMAQFileReaderDialog::onCancel                          5      1      2
+    CMAQFileReaderDialog::onConnect                        25      4      9
+    CMAQFileReaderDialog::onLocal                          10      1      3
+    CMAQFileReaderDialog::onReadVariable                   22      3      6
+    CMAQFileReaderDialog::onRemote                         10      1      3
+    CMAQFileReaderDialog::onSelectedDataDirectoryListingItem     12      1      1
+    CMAQFileReaderDialog::onSelectedDataVariable            9      3      2
+    CMAQFileReaderDialog::onSelectedHTDirectoryListingItem     12      1      1
+    CMAQFileReaderDialog::onSelectedWWINDDirectoryListingItem     12      1      1
+    CMAQFileReaderDialog::onSelectedZFDirectoryListingItem     12      1      1
+    CMAQFileReaderDialog::onSetDataDirectory                7      1      1
+    CMAQFileReaderDialog::onSetHTDirectory                  7      1      1
+    CMAQFileReaderDialog::onSetUser                         4      1      1
+    CMAQFileReaderDialog::onSetWWINDDirectory               7      1      1
+    CMAQFileReaderDialog::onSetZFDirectory                  7      1      1
+    CMAQFileReaderDialog::updateDirectory                  20      3      9
+    CMAQFileReaderDialog::updateFromModel                  64      8     13
+    CMAQFileReaderDialog::updateListing                    10      1      6
+    CMAQFileReaderDialog::updateListing                    47     10     13
+    model                                                 183      3     42
+    ~CMAQFileReaderDialog                                   4      1      0
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Totals:                 542     51    120
+CMAQFileReaderModel.cpp:
+    CMAQFileReaderModel::CMAQFileReaderModel               36      1      4
+    CMAQFileReaderModel::clearInputFiles                   16      1      3
+    CMAQFileReaderModel::clearOutputFile                    6      1      3
+    CMAQFileReaderModel::getDataDirectory                   9      1      2
+    CMAQFileReaderModel::getDataDirectoryListing            9      1      2
+    CMAQFileReaderModel::getDataFile                        9      1      2
+    CMAQFileReaderModel::getDataVariable                    6      1      1
+    CMAQFileReaderModel::getDataVariableListing             6      1      1
+    CMAQFileReaderModel::getHTDirectory                     9      1      2
+    CMAQFileReaderModel::getHTDirectoryListing              9      1      2
+    CMAQFileReaderModel::getHTFile                          9      1      2
+    CMAQFileReaderModel::getHost                            5      1      1
+    CMAQFileReaderModel::getMode                            7      1      2
+    CMAQFileReaderModel::getOutputDirectory                 7      1      2
+    CMAQFileReaderModel::getOutputFile                      7      1      2
+    CMAQFileReaderModel::getUser                            5      1      1
+    CMAQFileReaderModel::getWWINDDirectory                  9      1      2
+    CMAQFileReaderModel::getWWINDDirectoryListing           9      1      2
+    CMAQFileReaderModel::getWWINDFile                       9      1      2
+    CMAQFileReaderModel::getZFDirectory                     9      1      2
+    CMAQFileReaderModel::getZFDirectoryListing              9      1      2
+    CMAQFileReaderModel::getZFFile                          9      1      2
+    CMAQFileReaderModel::invariant                         33      1      1
+    CMAQFileReaderModel::isDataFile                         7      1      1
+    CMAQFileReaderModel::isHTFile                           7      1      1
+    CMAQFileReaderModel::isWWINDFile                        7      1      1
+    CMAQFileReaderModel::isZFFile                           7      1      1
+    CMAQFileReaderModel::readCMAQFile                      36      4      6
+    CMAQFileReaderModel::setDataDirectory                  34      6      4
+    CMAQFileReaderModel::setDataFile                       19      3      5
+    CMAQFileReaderModel::setDataVariable                    6      1      2
+    CMAQFileReaderModel::setHTDirectory                    18      3      4
+    CMAQFileReaderModel::setHTFile                          8      2      2
+    CMAQFileReaderModel::setHost                           55      6     10
+    CMAQFileReaderModel::setMode                            8      2      2
+    CMAQFileReaderModel::setOutputDirectory                 6      1      2
+    CMAQFileReaderModel::setSubset                         19      1      2
+    CMAQFileReaderModel::setUser                            6      1      2
+    CMAQFileReaderModel::setWWINDDirectory                 20      3      4
+    CMAQFileReaderModel::setWWINDFile                       8      2      2
+    CMAQFileReaderModel::setZFDirectory                    19      3      4
+    CMAQFileReaderModel::setZFFile                          8      2      2
+    ~CMAQFileReaderModel                                    6      1      0
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Totals:                 546     68    101
+CeilometerCurtainArray.cpp:
+    createCCA                                              68      7     16
+    createMLA                                              49      4     16
+    getCeilometerInfo                                      63      8     15
+    haveCeilometerMixingLayerHeightDataset                 24      4      5
+    haveCeilometerNonMixingLayerHeightDataset              27      5      6
+    initializeTicks                                        24      3      3
+    loadCeilometerMixingLayerHeightDataset                 44      2     16
+    skipSubsetPoints                                        9      2      1
+    sumProfilePoints                                       13      3      4
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Totals:                 321     38     78
+ControlDockWidget.cpp:
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Totals:                   0      0      0
+ControlDockWidget_init.cpp:
+    ControlDockWidget::addVariablesHelper2                 29      2     18
+    ControlDockWidget::get_variableDescription             15      4      0
+    ControlDockWidget::initTab0ClientData                  40      1     14
+    ControlDockWidget::initTab1ClientData                  96      1     28
+    ControlDockWidget::initTab2ClientData                 121      5     18
+    ControlDockWidget::initTab3ClientData                  47      1     13
+    ControlDockWidget::initTab4ClientData                  25      1      5
+    ControlDockWidget::readDataAvailability                21      4      8
+    ControlDockWidget::readDataPrefs                        6      1      3
+    ControlDockWidget::readSourceTree                     121     35     20
+    ControlDockWidget::setVariablesToComboBox2             37     11      6
+    addChild                                               18      5      4
+    createObjectBrowser                                    17      1      9
+    createVisObjectBrowser                                 17      1      9
+    readResourceHelper                                     73     18     13
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Totals:                 683     91    165
+ControlDockWidget_slots.cpp:
+    ControlDockWidget::addMapServersHelper                 11      3      3
+    ControlDockWidget::checkAndStartLoadingDataset         14      4      3
+    ControlDockWidget::checkAndStartSavingOriginalDataset     17      6      2
+    ControlDockWidget::check_sources                       97     35     10
+    ControlDockWidget::currentMapProjection                19      3      1
+    ControlDockWidget::currentMapServer                     4      1      1
+    ControlDockWidget::deleteAllDataObjects                13      2      7
+    ControlDockWidget::doResize                             8      1      3
+    ControlDockWidget::downloadImage                       84      6     28
+    ControlDockWidget::downloadImageError                   4      1      1
+    ControlDockWidget::downloadImageMessage                 4      1      1
+    ControlDockWidget::enableGetDataButton                  4      1      1
+    ControlDockWidget::enableModisTrueColorOptions         10      1      1
+    ControlDockWidget::generateDefaultPngFilename          31      5     13
+    ControlDockWidget::getAggregateIndex                   11      5      1
+    ControlDockWidget::getDisplayPanelProbelist            11      3      2
+    ControlDockWidget::getOutage                           27      3      8
+    ControlDockWidget::getPanelDisplaySource1Selection      4      1      0
+    ControlDockWidget::getPanelDisplaySource2Selection      4      1      0
+    ControlDockWidget::get_animationSpeed                   7      1      2
+    ControlDockWidget::get_currentGuiBbox_maxLat            4      1      0
+    ControlDockWidget::get_currentGuiBbox_maxLon            4      1      0
+    ControlDockWidget::get_currentGuiBbox_minLat            4      1      0
+    ControlDockWidget::get_currentGuiBbox_minLon            4      1      0
+    ControlDockWidget::handleUpdate                        66      5     21
+    ControlDockWidget::initRSIG3DHelp                      15      3     10
+    ControlDockWidget::onAnimationSpeedChanged              4      1      1
+    ControlDockWidget::onBackButton24Clicked               15      3      4
+    ControlDockWidget::onBackButtonClicked                 15      3      3
+    ControlDockWidget::onBoundingGeoBoxChanged             21      3      7
+    ControlDockWidget::onBoundingGeoBoxChanged             35      5     10
+    ControlDockWidget::onCMAQColSliderChanged              10      2      5
+    ControlDockWidget::onCMAQLayerSliderChanged            10      2      5
+    ControlDockWidget::onCMAQRowSliderChanged              10      2      5
+    ControlDockWidget::onCalipsoScaleFactorChanged          6      1      3
+    ControlDockWidget::onCeilometerMaximumAltitudeChanged      6      1      3
+    ControlDockWidget::onCeilometerMinimumAltitudeChanged      6      1      3
+    ControlDockWidget::onCeilometerPlotScrollerChanged      6      1      3
+    ControlDockWidget::onCeilometerShowLocationsToggled      6      1      3
+    ControlDockWidget::onCeilometerShowMixingLayerToggled      6      1      3
+    ControlDockWidget::onCeilometerSizeChanged              6      1      3
+    ControlDockWidget::onCheckDataUsePolicyAccepted        19      3      6
+    ControlDockWidget::onCheckServersClicked               39      7     12
+    ControlDockWidget::onCheckUpdateClicked                 4      1      1
+    ControlDockWidget::onCheckboxFlattenCMAQChanged        10      2      3
+    ControlDockWidget::onCheckboxPersistBEHRChanged        12      2      4
+    ControlDockWidget::onCheckboxPersistHMSChanged         12      2      4
+    ControlDockWidget::onCheckboxPersistMODISChanged       12      2      4
+    ControlDockWidget::onCheckboxPersistTEMPOChanged       12      2      4
+    ControlDockWidget::onCheckboxPersistTROPOMIChanged     12      2      4
+    ControlDockWidget::onCheckboxPersistVIIRSChanged       12      2      4
+    ControlDockWidget::onClearLog                           4      1      1
+    ControlDockWidget::onColormapIndexChanged              59     33     22
+    ControlDockWidget::onDataClearClicked                  16      3      4
+    ControlDockWidget::onDataDefaultChanged                27      3      9
+    ControlDockWidget::onDateChanged                        7      1      4
+    ControlDockWidget::onDownloadWorkFinished             223     43     79
+    ControlDockWidget::onDurationChanged                   60     25     12
+    ControlDockWidget::onEmailClicked                       5      1      2
+    ControlDockWidget::onExitClicked                        4      1      1
+    ControlDockWidget::onFFMPEGError                       30      7      3
+    ControlDockWidget::onFFMPEGFinished                     9      2      4
+    ControlDockWidget::onFileOrientedDownloaderClicked      6      1      3
+    ControlDockWidget::onFilterParametersClicked            5      1      1
+    ControlDockWidget::onForwardButton24Clicked            11      2      6
+    ControlDockWidget::onForwardButtonClicked              11      2      5
+    ControlDockWidget::onGetdataClicked                   143     31     53
+    ControlDockWidget::onGuiFontsizeChanged                12      1      7
+    ControlDockWidget::onLonlatLabelOrientationChanged      6      1      3
+    ControlDockWidget::onMapProjectionChanged              36      8      8
+    ControlDockWidget::onMapServerIndexChanged             29      5      7
+    ControlDockWidget::onMaplineColorIndexChanged          11      2      5
+    ControlDockWidget::onMaplinesChanged                   16      6      3
+    ControlDockWidget::onMaxSpinboxChanged                 23      4     11
+    ControlDockWidget::onMinSpinboxChanged                 23      4     11
+    ControlDockWidget::onNeubrewMaximumAltitudeChanged      6      1      3
+    ControlDockWidget::onNeubrewMinimumAltitudeChanged      6      1      3
+    ControlDockWidget::onNeubrewPlotScrollerChanged         6      1      3
+    ControlDockWidget::onNeubrewShowLocationsToggled        6      1      3
+    ControlDockWidget::onNeubrewSizeChanged                 6      1      3
+    ControlDockWidget::onOpacitySliderChanged              17      3      8
+    ControlDockWidget::onOpenWebClicked                     5      1      2
+    ControlDockWidget::onPandoraMaximumAltitudeChanged      6      1      3
+    ControlDockWidget::onPandoraMinimumAltitudeChanged      6      1      3
+    ControlDockWidget::onPandoraPlotScrollerChanged         6      1      3
+    ControlDockWidget::onPandoraShowLocationsToggled        6      1      3
+    ControlDockWidget::onPandoraSizeChanged                 6      1      3
+    ControlDockWidget::onPanelDisplayListWidgetClicked      4      1      1
+    ControlDockWidget::onPanelDisplaySource1Changed        59     11     20
+    ControlDockWidget::onPanelDisplaySource2Changed         8      2      4
+    ControlDockWidget::onPersistBEHRHoursChanged            6      1      3
+    ControlDockWidget::onPersistHMSHoursChanged             6      1      3
+    ControlDockWidget::onPersistMODISHoursChanged           6      1      3
+    ControlDockWidget::onPersistTEMPOHoursChanged           6      1      3
+    ControlDockWidget::onPersistTROPOMIHoursChanged         6      1      3
+    ControlDockWidget::onPersistVIIRSHoursChanged           6      1      3
+    ControlDockWidget::onPlayButtonClicked                  6      1      3
+    ControlDockWidget::onRadioButton2DToggled              33      4     12
+    ControlDockWidget::onRadioButton3DToggled              38      4     12
+    ControlDockWidget::onRadioButtonPanelDisplayToggled     16      2      6
+    ControlDockWidget::onRegridParametersClicked            5      1      1
+    ControlDockWidget::onRulerCheckboxChanged              10      2      3
+    ControlDockWidget::onRulerLatSpinBoxChanged             6      1      3
+    ControlDockWidget::onRulerLonSpinBoxChanged             6      1      3
+    ControlDockWidget::onSaveFileClicked                  190     29     59
+    ControlDockWidget::onSaveFilenameChanged               16      6      4
+    ControlDockWidget::onSaveTypeClicked                   49      9      9
+    ControlDockWidget::onSaveVideoToggled                  79      8     28
+    ControlDockWidget::onSelectedLayer1Changed              3      1      0
+    ControlDockWidget::onSelectedLayer2Changed              3      1      0
+    ControlDockWidget::onSelectedLayer3Changed              3      1      0
+    ControlDockWidget::onSelectedLayer4Changed              3      1      0
+    ControlDockWidget::onSelectedLayer5Changed              3      1      0
+    ControlDockWidget::onSetMapDoubleClickOption1           6      1      3
+    ControlDockWidget::onSetMapDoubleClickOption2           6      1      3
+    ControlDockWidget::onShowCMAQColChanged                19      3      6
+    ControlDockWidget::onShowCMAQLayerChanged              19      3      6
+    ControlDockWidget::onShowCMAQRowChanged                19      3      6
+    ControlDockWidget::onShowCellBoundaryChanged            9      2      4
+    ControlDockWidget::onShowDataProbeChanged               6      1      3
+    ControlDockWidget::onShowDataUsePolicy                 37      5     16
+    ControlDockWidget::onShowLUTsChanged                    6      1      3
+    ControlDockWidget::onShowLonlatLinesChanged             6      1      3
+    ControlDockWidget::onShowNavigatorChanged               6      1      3
+    ControlDockWidget::onShowScaleChanged                   6      1      3
+    ControlDockWidget::onStateTimeOut                      14      4      1
+    ControlDockWidget::onTest                               4      1      1
+    ControlDockWidget::onThresholdCheckboxChanged          16      4      6
+    ControlDockWidget::onThresholdSliderChanged            18      4      9
+    ControlDockWidget::onTreeWidgetItemChanged             94     11     16
+    ControlDockWidget::onUpdateRsigError                   29      7      3
+    ControlDockWidget::onUpdateRsigFinished                20      2     14
+    ControlDockWidget::onViewAutozoomPressed                6      1      3
+    ControlDockWidget::onViewResetPressed                  10      1      6
+    ControlDockWidget::onVisibilityChanged                 15      3      7
+    ControlDockWidget::onVizVarIndexChanged                18      3      8
+    ControlDockWidget::onWindVectorAutosparseChanged       14      2      5
+    ControlDockWidget::onWindVectorScaleFactorChanged       6      1      3
+    ControlDockWidget::onWindVectorSparsenessChanged        7      1      4
+    ControlDockWidget::onWindVectorTipSizeChanged           6      1      3
+    ControlDockWidget::onWriteToFileClicked                10      2      2
+    ControlDockWidget::ontimestepSliderChanged             17      4      6
+    ControlDockWidget::pack_selectedData                   17     11      2
+    ControlDockWidget::postMessage                         25      6      1
+    ControlDockWidget::regionOfInterest                     9      1      2
+    ControlDockWidget::resizeEvent                          6      1      3
+    ControlDockWidget::run_downloader                      44      4     27
+    ControlDockWidget::saveAsOriginalCMAQFile              15      2      8
+    ControlDockWidget::saveDatasets                        29      6     10
+    ControlDockWidget::setCurrentMapProjection             12      3      2
+    ControlDockWidget::setCurrentMapServer                 10      3      1
+    ControlDockWidget::setPanelDisplaySource1Selection      4      1      0
+    ControlDockWidget::setPanelDisplaySource2Selection      4      1      0
+    ControlDockWidget::setRegionOfInterest                 18      1     11
+    ControlDockWidget::setVisWidgetState                  152     16     22
+    ControlDockWidget::set_currentGuiBbox_maxLat            4      1      0
+    ControlDockWidget::set_currentGuiBbox_maxLon            4      1      0
+    ControlDockWidget::set_currentGuiBbox_minLat            4      1      0
+    ControlDockWidget::set_currentGuiBbox_minLon            4      1      0
+    ControlDockWidget::switchSpecialControlsWidget         43     12      3
+    ControlDockWidget::update_playButtonText                4      1      1
+    ControlDockWidget::update_timestepSlider               30      7      3
+    ControlDockWidget::useCMAQFileReaderDialog             43      4     23
+    getCoverage                                            12      5      3
+    getCoverageProperties                                  41      1      4
+    swap_compare_operator                                  18      5      2
+    void::ControlDockWidget::onTabWidgetIndexChanged       12      5      5
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Totals:                3234    619    926
+DataPreferences.cpp:
+    DataPreferences::DataPreferences                        5      1      1
+    DataPreferences::getDataPrefsLookupTable                4      1      0
+    DataPreferences::readDataPrefs                         68     10     18
+    ~DataPreferences                                        3      1      0
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Totals:                  80     13     19
+DataUsePolicy.cpp:
+    DataUsePolicy::DataUsePolicy                           10      1      3
+    DataUsePolicy::getButtonPress                           4      1      0
+    DataUsePolicy::onAccept                                 5      1      2
+    DataUsePolicy::onCancel                                 5      1      2
+    DataUsePolicy::onOk                                     5      1      2
+    DataUsePolicy::setButtonPress                           4      1      0
+    DataUsePolicy::setText                                  4      1      1
+    DataUsePolicy::toggleAcceptButton                       8      2      2
+    DataUsePolicy::toggleCancelButton                       8      2      2
+    DataUsePolicy::toggleOkButton                           8      2      2
+    ~DataUsePolicy                                          5      1      0
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Totals:                  66     14     14
+FileOrientedDownloader.cpp:
+    FileOrientedDownloader::beginDownload                  27      3     16
+    FileOrientedDownloader::onCancelClicked                 9      1      5
+    FileOrientedDownloader::onDirButtonClicked             10      2      2
+    FileOrientedDownloader::onDownloadClicked               5      1      2
+    FileOrientedDownloader::onDownloadFinished             13      2      8
+    FileOrientedDownloader::onFileDownloaded               12      3      2
+    FileOrientedDownloader::onListWidgetClicked             4      1      1
+    FileOrientedDownloader::onNumFilesChanged               4      1      0
+    FileOrientedDownloader::setEnableProductList            4      1      1
+    FileOrientedDownloader::updateRequestedGB              24      4      8
+    GetFreeTotalSpace                                      22      4      6
+    QDialog                                                44      2     27
+    ~FileOrientedDownloader                                 5      1      0
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Totals:                 183     26     78
+FileOrientedDownloaderWorker.cpp:
+    FileOrientedDownloaderWorker::run                      70     15     23
+    FileOrientedDownloaderWorker::setAbortFlag              4      1      0
+    FileOrientedDownloaderWorker::setBaseDir                4      1      0
+    FileOrientedDownloaderWorker::setQListWidget            4      1      0
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Totals:                  82     18     23
+FilterSettingData.cpp:
+    FilterSettingData::FilterSettingData                    4      1      1
+    FilterSettingData::initFilterSettingData               85      7      9
+    ~FilterSettingData                                      3      1      0
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Totals:                  92      9      1
+FilterSettingDialog.cpp:
+    FilterSettingDialog::getFilterSetting                   4      1      0
+    FilterSettingDialog::onCancel                           4      1      1
+    FilterSettingDialog::onOK                              26      4      9
+    FilterSettingDialog::onReset                            5      1      2
+    FilterSettingDialog::validateOAQPSKey                  19      3      8
+    FilterSettingDialog::validatePurpleairKey              19      3      8
+    FilterSettingDialog::validateTEMPOKey                  19      3      8
+    FilterSettingDialog::writeOAQPSKeyFile                  9      2      4
+    FilterSettingDialog::writePurpleairApiKeyFile           9      2      4
+    FilterSettingDialog::writeTEMPOKeyFile                  9      2      4
+    getUiValues                                            58      4      5
+    setUiValues                                            77     12      6
+    ui                                                     39      1      7
+    ~FilterSettingDialog                                    4      1      0
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Totals:                 301     40     58
+GLProxyGraphicsItem.cpp:
+    GLProxyGraphicsItem::boundingRect                       9      2      3
+    QGraphicsRectItem                                      10      1      4
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Totals:                  19      3      4
+GLProxyGraphicsWidget.cpp:
+    GLProxyGraphicsWidget::paintEvent                       9      2      4
+    GLProxyGraphicsWidget::render                           6      2      1
+    mScenePtr                                               6      1      3
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Totals:                  21      5      7
+GLSLProgramObject.cpp:
+    GLSLProgramObject::attachFragmentShader                21      4      4
+    GLSLProgramObject::attachFragmentShaderString           9      2      2
+    GLSLProgramObject::attachGeometryShader                20      4      4
+    GLSLProgramObject::attachGeometryShaderString          10      2      2
+    GLSLProgramObject::attachVertexShader                  17      3      3
+    GLSLProgramObject::attachVertexShaderString            10      2      2
+    GLSLProgramObject::bind                                 4      1      1
+    GLSLProgramObject::bindFragDataLocation                 7      2      2
+    GLSLProgramObject::bindTexture                          7      1      3
+    GLSLProgramObject::destroy                             15      4      3
+    GLSLProgramObject::getFragDataLocation                  5      2      1
+    GLSLProgramObject::link                                23      6      5
+    GLSLProgramObject::setMacro                            18      4      1
+    GLSLProgramObject::setTextureUnit                      15      3      3
+    GLSLProgramObject::setUniform                          25      6      5
+    GLSLProgramObject::setUniform                          25      6      5
+    GLSLProgramObject::unbind                               4      1      1
+    _progId                                                 3      1      0
+    ~GLSLProgramObject                                      4      1      1
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Totals:                 242     55     47
+GeoDataList.cpp:
+    GeoDataList::GeoDataList                                3      1      0
+    GeoDataList::clear                                     15      4      4
+    GeoDataList::erase                                      9      3      2
+    GeoDataList::getObject                                 10      3      2
+    GeoDataList::markGeoDataObjectForDeletion              13      4      4
+    GeoDataList::onChildObjectRemoved                      13      5      2
+    GeoDataList::onObjectRemoved                           12      4      3
+    GeoDataList::onObjectRemoved                            7      2      3
+    GeoDataList::push_back                                  5      1      2
+    GeoDataList::size                                       5      1      2
+    ~GeoDataList                                            3      1      0
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Totals:                  95     29     22
+GeoDataObject.cpp:
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Totals:                   0      0      0
+GeoDataPropertyEdit.cpp:
+    GeoDataPropertyEdit::mousePressEvent                    4      1      1
+    GeoDataPropertyEdit::mouseReleaseEvent                  4      1      1
+    GeoDataPropertyEdit::showContextMenu                   40      6     18
+    PropertyEditor::PropertyEdit                            3      1      0
+    ~GeoDataPropertyEdit                                    3      1      0
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Totals:                  54     10     19
+GetData.cpp:
+    CALIPSOUncertaintyVariable                             84      3      4
+    RSIGServerHost                                          5      1      2
+    RSIGWebservice                                          5      1      2
+    checkAndLoadCeilometerMixingLayerHeightDataset         42      4     11
+    createKMLFileContent                                   14      2      6
+    downloadData                                          121     21     29
+    downloadFile                                           11      1      3
+    ensureDownloadDirectoryExists                           9      3      1
+    fileNamesOfLoadedDatasets                              14      3      5
+    finishKMLFile                                           8      2      2
+    getDatasetManager                                       6      1      1
+    regridFlagsOfLoadedDatasets                            14      4      6
+    reloadDatasets                                         34      5     17
+    saveData                                               39      6     13
+    setRSIGServerHost                                       5      1      2
+    urlCallback                                             8      1      5
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Totals:                 419     59     98
+GraphicsView.cpp:
+    GraphicsView::getQGLlWidget                             4      1      0
+    GraphicsView::keyPressEvent                            43     14      7
+    GraphicsView::marbleWidget                              9      2      2
+    GraphicsView::onBoundingGeoBoxChanged                   8      2      3
+    GraphicsView::onMapProjectionChanged                    8      2      3
+    GraphicsView::onMapServerChanged                        8      2      3
+    GraphicsView::resizeEvent                               9      2      4
+    GraphicsView::wheelEvent                                3      1      0
+    mGLWidget                                              17      2      9
+    ~GraphicsView                                           4      1      1
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Totals:                 113     29     32
+HttpDownloadDialog.cpp:
+    DataReader::setInput                                    4      1      0
+    DataReader::start                                       9      2      3
+    HttpDownloadDialog::onCancel                            8      3      3
+    HttpDownloadDialog::onDataReady                        13      3      6
+    HttpDownloadDialog::onDownloadProgress                  5      1      2
+    HttpDownloadDialog::onError                             7      1      3
+    HttpDownloadDialog::onHttpDownloadDialogFinished       37      7     18
+    HttpDownloadDialog::onOK                                4      1      1
+    HttpDownloadDialog::onShowlogClicked                   12      2      3
+    HttpDownloadDialog::onSslErrors                         7      2      2
+    HttpDownloadDialog::runLibCurlHttp                     53      1     11
+    HttpDownloadDialog::setAggregate                        4      1      0
+    HttpDownloadDialog::setCoverage                         5      1      1
+    HttpDownloadDialog::setDateAndDays                      5      1      0
+    HttpDownloadDialog::setLayer                            4      1      0
+    HttpDownloadDialog::setRegionOfInterest                 4      1      0
+    HttpDownloadDialog::setRegrid                           4      1      0
+    HttpDownloadDialog::setSaveMetadataFlag                 4      1      0
+    HttpDownloadDialog::setSource                           4      1      1
+    HttpDownloadDialog::show                                9      2      2
+    LibCurlDataGet::LibCurlDataGet                         11      1      1
+    LibCurlDataGet::start                                 260     12     40
+    mNetReply                                               3      1      0
+    mRegrid                                                16      1      8
+    zsleep2                                                 4      1      1
+    zsleep2                                                 4      1      1
+    ~DataReader                                             3      1      0
+    ~HttpDownloadDialog                                    18      5      3
+    ~LibCurlDataGet                                         3      1      0
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Totals:                 524     58    108
+LoadMapFile.cpp:
+    loadMapFile                                            24      4      8
+    makePolylinesDisplayList                               19      2      8
+    readMapFileData                                        25      4      6
+    readMapFileHeader                                      17      2      4
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Totals:                  85     12     18
+LonlatBoundingBoxWidget.cpp:
+    LonlatBoundingBoxWidget::onBoundingGeoBoxChanged       19      3      3
+    LonlatBoundingBoxWidget::onBoundingGeoBoxChanged       26      5      6
+    ui                                                      9      1      2
+    ~LonlatBoundingBoxWidget                                4      1      0
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Totals:                  58     10      8
+LookupTable.cpp:
+    LookupTable::LookupTable                                5      1      0
+    LookupTable::adjustRange                               36      7     10
+    LookupTable::adjustRangeNonlinear                      16      4      3
+    LookupTable::colorByParameter                          22      6      3
+    LookupTable::colorByValue                              21      7      3
+    LookupTable::colorPalette                               4      1      0
+    LookupTable::genTexture                                20      3      6
+    LookupTable::getNonlinearFlag                           4      1      0
+    LookupTable::getStrictFlag                              4      1      0
+    LookupTable::getValues                                  4      1      0
+    LookupTable::rebuildPalette                             9      2      2
+    LookupTable::setDefaultLookupTable                      7      1      2
+    LookupTable::setLinearLookupTable                      13      3      2
+    LookupTable::setMattLookupTable                       107     18     12
+    LookupTable::setNasaDepolarization                      9      1      2
+    LookupTable::setNonlinearFlag                           4      1      0
+    LookupTable::setNonlinearLookupTable                   14      3      2
+    LookupTable::setStrictFlag                              4      1      0
+    LookupTable::updateTexture                             12      2      4
+    buildDefaultColorTable                                 23      2      9
+    buildNonlinearPalette                                  13      3      3
+    buildPalette                                           14      3      4
+    interpolate_list                                       21      6      4
+    ~LookupTable                                            6      2      1
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Totals:                 392     80     60
+LookupTableWidget.cpp:
+    LookupTableWidget::description                          4      1      0
+    LookupTableWidget::interpolation                        4      1      0
+    LookupTableWidget::is3DObject                           4      1      0
+    LookupTableWidget::isLookupTableWidget                  4      1      0
+    LookupTableWidget::isWidgetOfType                       5      1      3
+    LookupTableWidget::orientation                          4      1      0
+    LookupTableWidget::paint                               12      3      2
+    LookupTableWidget::paintEvent                           3      1      0
+    LookupTableWidget::render                               4      1      1
+    LookupTableWidget::render2DCalipsoCurtain               3      1      0
+    LookupTableWidget::renderDisplayPanel                   4      1      1
+    LookupTableWidget::renderEMVL                           4      1      1
+    LookupTableWidget::renderPopupCeilometer                3      1      0
+    LookupTableWidget::renderPopupNeubrew                   3      1      0
+    LookupTableWidget::setInterpolation                     9      2      3
+    LookupTableWidget::setOrientation                       4      1      0
+    LookupTableWidget::setSlantText                         4      1      0
+    LookupTableWidget::setTickStep                          4      1      0
+    LookupTableWidget::setTitle                             4      1      0
+    LookupTableWidget::timestepString                      20      3      8
+    LookupTableWidget::title                                4      1      0
+    drawHorizontalLookupTable                              86     12     22
+    mInterpolation                                          3      1      0
+    ~LookupTableWidget                                      3      1      0
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Totals:                 202     40     41
+MainWin.cpp:
+    BugFixDockWidget::BugFixDockWidget                      5      1      1
+    BugFixDockWidget::getMainWidget                         4      1      0
+    BugFixDockWidget::resizeEvent                          11      3      3
+    BugFixDockWidget::setRealWidget                         4      1      0
+    MainWin::centerAndResize                               19      3      7
+    MainWin::closeEvent                                     6      1      3
+    MainWin::domElement                                    39      5      9
+    MainWin::initFromDOMElement                            44     10     17
+    MainWin::initializeSnapshotVariables                   19      3      4
+    MainWin::initializeSnapshotVariablesForVideo           19      3      4
+    MainWin::keyPressEvent                                 41     10     10
+    MainWin::onRequestInitSnapshot                          4      1      1
+    MainWin::onRequestInitSnapshotForVideo                  4      1      1
+    MainWin::onRequestSingleSnapshot                        6      1      3
+    MainWin::onRequestSnapshot                              6      1      3
+    MainWin::onTimeOut                                     12      2      6
+    MainWin::refreshGLWindow                                7      2      2
+    MainWin::resizeEvent                                    9      1      6
+    MainWin::restoreStateFromFile                          31      5     12
+    MainWin::saveImage                                     13      2     10
+    MainWin::saveSnapshot                                  58     11     23
+    MainWin::saveStateToFile                               37      8     12
+    MainWin::stateFileName                                  4      1      0
+    createControlDockWidget                                 8      1      4
+    displayProbe                                            4      1      1
+    displayProbe2                                           3      1      0
+    formatLonLat                                           11      2      3
+    fromQByteArrayToQString                                22      4      1
+    fromQStringToQByteArray                                30      7      4
+    mTimer                                                 40      1     22
+    zsleep                                                  4      1      1
+    zsleep                                                  4      1      1
+    ~MainWin                                               13      5      2
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Totals:                 541    101    170
+ModisTrueColor.cpp:
+    ModisTrueColor::ModisTrueColor                          6      1      0
+    ModisTrueColor::deleteLater                             3      1      0
+    ModisTrueColor::done                                    6      1      3
+    ModisTrueColor::downloadImage                          70      8     22
+    ModisTrueColor::setName                                 4      1      0
+    ModisTrueColor::setPathedFilename                       4      1      0
+    ModisTrueColor::setUrlString                            4      1      0
+    lat_to_EPSG3857                                         8      1      3
+    lon_to_EPSG3857                                         8      1      1
+    ~ModisTrueColor                                         3      1      0
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Totals:                 116     17     26
+OpenGLScene.cpp:
+    OpenGLScene::checkPaintEngine                          39      5      5
+    OpenGLScene::draw3DScene                                6      1      3
+    OpenGLScene::draw3DSceneEMVL                            6      1      3
+    OpenGLScene::drawBackground                            11      3      6
+    OpenGLScene::drawDisplayPanelSceneEMVL                  5      1      2
+    OpenGLScene::drawSphere                                 3      1      0
+    OpenGLScene::glSceneItem                                4      1      0
+    OpenGLScene::reservedMaxZDepth                          4      1      0
+    OpenGLScene::reservedMinZDepth                          4      1      0
+    OpenGLScene::resizeEvent                               14      3      6
+    OpenGLScene::storedSceneRect                            4      1      0
+    mRectf                                                 21      2     10
+    ~OpenGLScene                                           15      4      2
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Totals:                 136     25     32
+PointRenderer.cpp:
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Totals:                   0      0      0
+PolygonRenderer.cpp:
+    PolygonRenderer::description                            4      1      0
+    PolygonRenderer::drawCalipsoAxesOpengl                107     14     24
+    PolygonRenderer::drawQuadArray                         64     19     28
+    PolygonRenderer::initCalipsoCurtainPlotarea            18      1      3
+    PolygonRenderer::is3DObject                             4      1      0
+    PolygonRenderer::isLookupTableWidget                    4      1      0
+    PolygonRenderer::isWidgetOfType                         9      2      1
+    PolygonRenderer::lineColor                              4      1      0
+    PolygonRenderer::lineWidth                              4      1      0
+    PolygonRenderer::render                                15      5      5
+    PolygonRenderer::render2DCalipsoCurtain                17      4      8
+    PolygonRenderer::renderDisplayPanel                     4      1      1
+    PolygonRenderer::renderEMVL                            13      4      5
+    PolygonRenderer::renderPopupCeilometer                  3      1      0
+    PolygonRenderer::renderPopupNeubrew                     8      2      2
+    PolygonRenderer::setLineColor                           7      2      1
+    PolygonRenderer::setLineWidth                           8      2      1
+    PolygonRenderer::setShowNullSample                      7      2      1
+    PolygonRenderer::showNullSample                         4      1      0
+    clipEdgeCell                                           19      8      1
+    copyAndDrawQuads                                      197     34     43
+    drawOneGroup                                           61     10     11
+    mShowNullSample                                         7      2      1
+    pagedBufferDraw                                        46      7     11
+    postMessage                                             6      1      3
+    quadrilateralIntersectsViewBounds                      27      2      4
+    reduceVerticesToLowestLayer                            85     18      1
+    render3d                                              250     30     29
+    renderBitmapString2                                     7      2      2
+    ~PolygonRenderer                                        3      1      0
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Totals:                1012    180    186
+RGBColormap.cpp:
+    allBlackFunction                                        4      1      1
+    allWhiteFunction                                        4      1      1
+    aqiFunction                                             4      1      1
+    blueRampFunction                                        4      1      1
+    blueRampInvertedFunction                                4      1      1
+    blueRedFunction                                         4      1      1
+    calipsoBackscatterFunction                              4      1      1
+    calipsoDepolarizationFunction                           4      1      1
+    diffFunction                                            4      1      1
+    getEntry                                                5      1      1
+    getRGBColormap                                          4      1      1
+    getRGBColormapCount                                     4      1      0
+    getRGBColormapFunction                                  4      1      1
+    getRGBColormapIndex                                    13      3      3
+    getRGBColormapName                                      4      1      1
+    grayscaleFunction                                       4      1      1
+    greenRampFunction                                       4      1      1
+    greenRampInvertedFunction                               4      1      1
+    logBlueRampFunction                                     4      1      1
+    logBlueRampInvertedFunction                             4      1      1
+    logBlueRedFunction                                      4      1      1
+    logGrayscaleFunction                                    4      1      1
+    logGreenRampFunction                                    4      1      1
+    logGreenRampInvertedFunction                            4      1      1
+    logPurpleRedFunction                                    4      1      1
+    logRedRampFunction                                      4      1      1
+    logRedRampInvertedFunction                              4      1      1
+    logStdGammaFunction                                     4      1      1
+    logViridisFunction                                      4      1      1
+    logYellowRampFunction                                   4      1      1
+    logYellowRampInvertedFunction                           4      1      1
+    mapToColor                                             31      5      5
+    purpleRedFunction                                       4      1      1
+    redRampFunction                                         4      1      1
+    redRampInvertedFunction                                 4      1      1
+    smokePlumeFunction                                      4      1      1
+    stdGammaFunction                                        4      1      1
+    viridisFunction                                         4      1      1
+    yellowRampFunction                                      4      1      1
+    yellowRampInvertedFunction                              4      1      1
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Totals:                 197     46     42
+RSIG3DHelp.cpp:
+    RSIG3DHelp::RSIG3DHelp                                 16      2      7
+    RSIG3DHelp::cleanUp                                    12      2      5
+    RSIG3DHelp::getButtonPress                              4      1      0
+    RSIG3DHelp::getPreferenceFilename                       4      1      0
+    RSIG3DHelp::onDontShowAgainClicked                      4      1      0
+    RSIG3DHelp::onOk                                       12      2      5
+    RSIG3DHelp::setButtonPress                              4      1      0
+    RSIG3DHelp::setPreferenceFilename                       4      1      0
+    RSIG3DHelp::setText                                     4      1      1
+    ~RSIG3DHelp                                             4      1      0
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Totals:                  68     13     13
+RSIGGlobal.cpp:
+    RSIGState::getCurrentTimestamp                         21      5      3
+    RSIGState::getCurrentUTCString                         34      5      4
+    RSIGState::getEndRenderTimestamp                       13      4      4
+    RSIGState::getProgram                                   2      1      0
+    RSIGState::getProgramDirectory                          2      1      0
+    RSIGState::setLocation                                 23      8      1
+    RSIGState::updateEndingTimestamp                       22      5      4
+    checkRsig3dUpdate                                       7      1      2
+    downloadUpdate                                          9      1      3
+    executableVersion                                       5      1      1
+    platform                                               13      1      0
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Totals:                 151     33     18
+RSIGScene.cpp:
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Totals:                   0      0      0
+RegridParmsData.cpp:
+    RegridParmsData::init                                  31     19     18
+    RegridParmsData::init_2006CDC_CONUS_parameters         25      1      1
+    RegridParmsData::init_2006CDC_EAST_parameters          25      1      1
+    RegridParmsData::init_2008EQUATES_CONUS_1km_parameters     25      1      1
+    RegridParmsData::init_2008EQUATES_CONUS_parameters     25      1      1
+    RegridParmsData::init_36km_CONUS_parameters            25      1      1
+    RegridParmsData::init_3km_HRRRCONUS_parameters         25      1      1
+    RegridParmsData::init_aqmeii_eu_parameters             25      1      1
+    RegridParmsData::init_aqmeii_na_parameters             25      1      1
+    RegridParmsData::init_aqmeii_parameters                25      1      1
+    RegridParmsData::init_bbox_parameters                  27      1      7
+    RegridParmsData::init_custom_lambert_parameters        25      1      1
+    RegridParmsData::init_discover_conus_parameters        25      1      1
+    RegridParmsData::init_discover_east_parameters         25      1      1
+    RegridParmsData::init_discover_md_parameters           25      1      1
+    RegridParmsData::init_from_file                        44      3     30
+    RegridParmsData::init_hemisphere_parameters            25      1      1
+    RegridParmsData::init_listos1_parameters               25      1      1
+    RegridParmsData::init_lmos1_parameters                 25      1      1
+    RegridParmsData::init_lonlat_parameters                25      1      1
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Totals:                 527     40     42
+RegridParmsDialog.cpp:
+    QDialog                                                55      4      8
+    RegridParmsDialog::getRegridParmsData                   4      1      0
+    RegridParmsDialog::onCancel                             4      1      1
+    RegridParmsDialog::onCmaqGridIndexChanged              11      1      7
+    RegridParmsDialog::onCmaqGridTypeChanged                8      1      5
+    RegridParmsDialog::onOK                                 5      1      2
+    RegridParmsDialog::onReset                              8      1      5
+    RegridParmsDialog::onUserOverrideChanged                4      1      1
+    RegridParmsDialog::showRegridElements                  23      6      4
+    disableUiWidgets                                       87     27      3
+    getUiValues                                            29      1      4
+    setUiUnits                                             16      4      1
+    setUiValues                                            35      2      4
+    ~RegridParmsDialog                                      4      1      0
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Totals:                 293     52     45
+RenderingContext.cpp:
+    RenderingContext::check_GL_errors                       8      2      3
+    RenderingContext::deleteRenderTarget                   18      5      3
+    RenderingContext::destroyShaderProgram                  4      1      1
+    RenderingContext::setMacro                              4      1      1
+    mProgramObject                                         23      2      3
+    ~RenderingContext                                      13      1      3
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Totals:                  70     12     13
+RenderingContextRSIG.cpp:
+    LambertConformalConicProjectionRC::bind                 9      1      2
+    LambertConformalConicProjectionRC::initShaderProgram     73      2      4
+    LambertConformalConicProjectionRC::setMaplineFlag       5      1      1
+    LambertConformalConicProjectionRC::setParameters       22      1      3
+    LambertConformalConicProjectionRC::unbind               4      1      1
+    MarbleMercatorProjectionRC::bind                        9      1      2
+    MarbleMercatorProjectionRC::initShaderProgram          53      2      4
+    MarbleMercatorProjectionRC::setMaplineFlag              5      1      1
+    MarbleMercatorProjectionRC::setParameters              20      1      3
+    MarbleMercatorProjectionRC::unbind                      5      1      2
+    MarbleSphericalProjectionRC::bind                       9      1      4
+    MarbleSphericalProjectionRC::initShaderProgram         79      2      4
+    MarbleSphericalProjectionRC::setMaplineFlag             5      1      1
+    MarbleSphericalProjectionRC::setParameters             20      1      3
+    MarbleSphericalProjectionRC::unbind                     5      1      2
+    MarbleUVProjectionRC::MarbleUVProjectionRC              3      1      0
+    MarbleUVProjectionRC::bind                             10      1      2
+    MarbleUVProjectionRC::initShaderProgram                48      2      4
+    MarbleUVProjectionRC::setMaplineFlag                    5      1      1
+    MarbleUVProjectionRC::setParameters                    20      1      3
+    MarbleUVProjectionRC::unbind                            5      1      2
+    QMapMercatorProjectionRC::bind                          8      1      2
+    QMapMercatorProjectionRC::initShaderProgram            53      2      4
+    QMapMercatorProjectionRC::setMaplineFlag                5      1      1
+    QMapMercatorProjectionRC::setParameters                22      1      3
+    QMapMercatorProjectionRC::unbind                        4      1      1
+    RenderingContextRSIGBase                                3      1      0
+    RenderingContextRSIGBase                                3      1      0
+    RenderingContextRSIGBase                                3      1      0
+    RenderingContextRSIGBase                                3      1      0
+    RenderingContextRSIGBase                                3      1      0
+    StereographicProjectionRC::bind                         8      1      2
+    StereographicProjectionRC::initShaderProgram           68      3      4
+    StereographicProjectionRC::setMaplineFlag               5      1      1
+    StereographicProjectionRC::setParameters               20      1      3
+    StereographicProjectionRC::unbind                       4      1      1
+    getMaplineColorIndex                                   26     12      0
+    initRenderingContexts                                  19      1      2
+    ~LambertConformalConicProjectionRC                      3      1      0
+    ~MarbleMercatorProjectionRC                             3      1      0
+    ~MarbleSphericalProjectionRC                            3      1      0
+    ~MarbleUVProjectionRC                                   3      1      0
+    ~QMapMercatorProjectionRC                               3      1      0
+    ~StereographicProjectionRC                              3      1      0
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Totals:                 689     62     71
+RenderingContextRSIGBase.cpp:
+    RenderingContext                                        3      1      0
+    RenderingContextRSIGBase::setColorPaletteB              5      1      1
+    RenderingContextRSIGBase::setColorPaletteG              5      1      1
+    RenderingContextRSIGBase::setColorPaletteR              5      1      1
+    RenderingContextRSIGBase::setIsPointUniformParameter      5      1      1
+    RenderingContextRSIGBase::setLutMinMax                  5      1      1
+    RenderingContextRSIGBase::setLutToTextureChannel       10      3      2
+    RenderingContextRSIGBase::setLutToTextureChannel0       3      1      0
+    RenderingContextRSIGBase::setLutValues                  7      1      3
+    RenderingContextRSIGBase::setTextureWeight              5      1      1
+    ~RenderingContextRSIGBase                               3      1      0
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Totals:                  56     13     10
+ShadersManagement.cpp:
+    checkProgramInfos                                      11      2      2
+    createShader                                           10      2      2
+    createShaderFromString                                 38      8     10
+    createShaderProgram                                    44     12      5
+    defineMacro                                            16      3      6
+    linkShaderProgram                                       9      1      4
+    loadTextFile                                           18      3      2
+    manageIncludes                                         88     14     17
+    resetShadersGlobalMacros                                4      1      1
+    setShadersGlobalMacro                                   7      1      2
+    setShadersGlobalMacro                                   9      1      3
+    setShadersGlobalMacro                                   9      1      3
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Totals:                 263     49     40
+SlantLookupTableWidget.cpp:
+    SlantTextLookupTableWidget::paint                      12      3      2
+    SlantTextLookupTableWidget::setTextList                 4      1      0
+    SlantTextLookupTableWidget::setTextList                 7      2      2
+    mTextList                                               3      1      0
+    ~SlantTextLookupTableWidget                             3      1      0
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Totals:                  29      8      2
+VectorRenderer.cpp:
+    VectorRenderer::description                             4      1      0
+    VectorRenderer::drawVectors                           253     37     59
+    VectorRenderer::is3DObject                              4      1      0
+    VectorRenderer::isLookupTableWidget                     4      1      0
+    VectorRenderer::isWidgetOfType                          6      1      3
+    VectorRenderer::lineColor                               4      1      0
+    VectorRenderer::lineWidth                               4      1      0
+    VectorRenderer::render                                 14      5      5
+    VectorRenderer::renderDisplayPanel                      4      1      1
+    VectorRenderer::renderEMVL                             12      4      5
+    VectorRenderer::setLineColor                            7      2      1
+    VectorRenderer::setLineWidth                            8      2      1
+    VectorRenderer::setShowNullSample                       7      2      1
+    VectorRenderer::showNullSample                          4      1      0
+    mShowNullSample                                         5      1      0
+    ~VectorRenderer                                         3      1      0
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Totals:                 343     62     76
+VisDataList.cpp:
+    VisDataList::VisDataList                                3      1      0
+    VisDataList::erase                                      8      2      3
+    VisDataList::getCounterCeilometer                       4      1      0
+    VisDataList::getCounterNeubrew                          4      1      0
+    VisDataList::getLutByName                              10      3      2
+    VisDataList::getName                                    9      2      2
+    VisDataList::getObjectByIndex                           8      3      0
+    VisDataList::getObjectByName                           10      3      1
+    VisDataList::onObjectRemoved                           11      3      4
+    VisDataList::push_back                                  7      2      2
+    VisDataList::render2DCalipsoCurtain                    12      5      2
+    VisDataList::renderGeometryObjects                    177     28     15
+    VisDataList::renderLookupTables                        35      7     10
+    VisDataList::renderPopupCeilometer                     28     10      4
+    VisDataList::renderPopupNeubrew                        21      9      2
+    VisDataList::setCounterCeilometer                       4      1      0
+    VisDataList::setCounterNeubrew                          4      1      0
+    VisDataList::size                                       4      1      1
+    ~VisDataList                                            7      2      1
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Totals:                 366     85     34
+VisDataObject.cpp:
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Totals:                   0      0      0
+VisDataObjectProperties.cpp:
+    VisDataObjectProperties::CMAQCol                        4      1      0
+    VisDataObjectProperties::CMAQLayer                      4      1      0
+    VisDataObjectProperties::CMAQRow                        4      1      0
+    VisDataObjectProperties::MaxCMAQCol                     4      1      0
+    VisDataObjectProperties::MaxCMAQLayer                   4      1      0
+    VisDataObjectProperties::MaxCMAQRow                     4      1      0
+    VisDataObjectProperties::ShowCMAQCol                    4      1      0
+    VisDataObjectProperties::ShowCMAQLayer                  4      1      0
+    VisDataObjectProperties::ShowCMAQRow                    4      1      0
+    VisDataObjectProperties::ShowThreshold                  4      1      0
+    VisDataObjectProperties::alpha                          4      1      0
+    VisDataObjectProperties::curColormapIndex               4      1      0
+    VisDataObjectProperties::isDefaultRangeChecked          4      1      0
+    VisDataObjectProperties::isVisible                     13      3      2
+    VisDataObjectProperties::isWidgetOfType                 9      2      1
+    VisDataObjectProperties::lastMaxval                     4      1      0
+    VisDataObjectProperties::lastMinval                     4      1      0
+    VisDataObjectProperties::maxValChangedThisSession       4      1      0
+    VisDataObjectProperties::maxval                         4      1      0
+    VisDataObjectProperties::minValChangedThisSession       4      1      0
+    VisDataObjectProperties::minmaxData                     9      2      3
+    VisDataObjectProperties::minmaxVal                     11      2      2
+    VisDataObjectProperties::minval                         4      1      0
+    VisDataObjectProperties::name                           4      1      0
+    VisDataObjectProperties::setAlpha                      12      4      0
+    VisDataObjectProperties::setCMAQCol                     6      2      0
+    VisDataObjectProperties::setCMAQLayer                   6      2      0
+    VisDataObjectProperties::setCMAQRow                     6      2      0
+    VisDataObjectProperties::setCurColormapIndex            6      2      0
+    VisDataObjectProperties::setDefaultRangeChecked         6      2      0
+    VisDataObjectProperties::setLastMaxval                  6      2      0
+    VisDataObjectProperties::setLastMinval                  6      2      0
+    VisDataObjectProperties::setMaxCMAQCol                  6      2      0
+    VisDataObjectProperties::setMaxCMAQLayer                6      2      0
+    VisDataObjectProperties::setMaxCMAQRow                  6      2      0
+    VisDataObjectProperties::setMaxValChangedThisSession      4      1      0
+    VisDataObjectProperties::setMaxval                      6      2      0
+    VisDataObjectProperties::setMinValChangedThisSession      4      1      0
+    VisDataObjectProperties::setMinval                      6      2      0
+    VisDataObjectProperties::setName                        6      2      0
+    VisDataObjectProperties::setShowCMAQCol                 6      2      0
+    VisDataObjectProperties::setShowCMAQLayer               6      2      0
+    VisDataObjectProperties::setShowCMAQRow                 6      2      0
+    VisDataObjectProperties::setShowCellBoundary            6      2      0
+    VisDataObjectProperties::setShowObject                  6      2      0
+    VisDataObjectProperties::setShowThreshold               6      2      0
+    VisDataObjectProperties::setThreshold                   6      2      0
+    VisDataObjectProperties::setThresholdSliderValue        6      2      0
+    VisDataObjectProperties::showCellBoundary               4      1      0
+    VisDataObjectProperties::showObject                     4      1      0
+    VisDataObjectProperties::threshold                      4      1      0
+    VisDataObjectProperties::thresholdSliderValue           4      1      0
+    mMaxCMAQLayer                                           3      1      0
+    ~VisDataObjectProperties                                3      1      0
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Totals:                 290     83      8
+VisDataPropertyEdit.cpp:
+    PropertyEditor::PropertyEdit                            3      1      0
+    VisDataPropertyEdit::mousePressEvent                    4      1      1
+    VisDataPropertyEdit::mouseReleaseEvent                  4      1      1
+    VisDataPropertyEdit::onParentObjectRemoved             15      4      1
+    VisDataPropertyEdit::showContextMenu                   35      6     16
+    ~VisDataPropertyEdit                                    3      1      0
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Totals:                  64     14     18
+VisOptions.cpp:
+    QObject                                                72      1      2
+    VisOptions::getBboxMaxLat                               4      1      0
+    VisOptions::getBboxMaxLon                               4      1      0
+    VisOptions::getBboxMinLat                               4      1      0
+    VisOptions::getBboxMinLon                               4      1      0
+    VisOptions::getCalipsoScaleFactor                       4      1      0
+    VisOptions::getCeilometerMaxAltitude                    4      1      0
+    VisOptions::getCeilometerMinAltitude                    4      1      0
+    VisOptions::getCeilometerPlotScrollerValue              4      1      0
+    VisOptions::getCeilometerShowLocations                  4      1      0
+    VisOptions::getCeilometerShowMixingLayer                4      1      0
+    VisOptions::getCeilometerSize                           4      1      0
+    VisOptions::getCurProjection                            4      1      0
+    VisOptions::getCurrentDayNum                            4      1      0
+    VisOptions::getDataSourceList                           4      1      0
+    VisOptions::getDisplayMode                              4      1      0
+    VisOptions::getDownloadsOutstanding                     4      1      0
+    VisOptions::getDrawModisTrueColor                       4      1      0
+    VisOptions::getFilenamePng                              4      1      0
+    VisOptions::getFilenamePngDefault                       4      1      0
+    VisOptions::getFilenameScenario                         4      1      0
+    VisOptions::getFlattenCMAQ                              4      1      0
+    VisOptions::getIsBEHRPagedFromDisk                      4      1      0
+    VisOptions::getIsHMSPagedFromDisk                       4      1      0
+    VisOptions::getIsMODISPagedFromDisk                     4      1      0
+    VisOptions::getIsTEMPOPagedFromDisk                     4      1      0
+    VisOptions::getIsTROPOMIPagedFromDisk                   4      1      0
+    VisOptions::getIsVIIRSPagedFromDisk                     4      1      0
+    VisOptions::getLonlatLabelOrientation                   4      1      0
+    VisOptions::getMapOverlayFile                           4      1      0
+    VisOptions::getMaplineColor                             4      1      0
+    VisOptions::getMaplineColorIndex                        4      1      0
+    VisOptions::getNeubrewMaxAltitude                       4      1      0
+    VisOptions::getNeubrewMinAltitude                       4      1      0
+    VisOptions::getNeubrewPlotScrollerValue                 4      1      0
+    VisOptions::getNeubrewShowLocations                     4      1      0
+    VisOptions::getNeubrewSize                              4      1      0
+    VisOptions::getOpacityModisTrueColor                    4      1      0
+    VisOptions::getPandoraMaxAltitude                       4      1      0
+    VisOptions::getPandoraMinAltitude                       4      1      0
+    VisOptions::getPandoraPlotScrollerValue                 4      1      0
+    VisOptions::getPandoraShowLocations                     4      1      0
+    VisOptions::getPandoraSize                              4      1      0
+    VisOptions::getPersistBEHR                              4      1      0
+    VisOptions::getPersistBEHRHours                         4      1      0
+    VisOptions::getPersistHMS                               4      1      0
+    VisOptions::getPersistHMSHours                          4      1      0
+    VisOptions::getPersistMODIS                             4      1      0
+    VisOptions::getPersistMODISHours                        4      1      0
+    VisOptions::getPersistTEMPO                             4      1      0
+    VisOptions::getPersistTEMPOHours                        4      1      0
+    VisOptions::getPersistTROPOMI                           4      1      0
+    VisOptions::getPersistTROPOMIHours                      4      1      0
+    VisOptions::getPersistVIIRS                             4      1      0
+    VisOptions::getPersistVIIRSHours                        4      1      0
+    VisOptions::getRulerLat                                 4      1      0
+    VisOptions::getRulerLon                                 4      1      0
+    VisOptions::getSaveDir                                  4      1      0
+    VisOptions::getSaveFileFormatIndex                      4      1      0
+    VisOptions::getSaveMetadataFlag                         4      1      0
+    VisOptions::getShowRuler                                4      1      0
+    VisOptions::getTrueColorType                            4      1      0
+    VisOptions::getUniqueId                                 4      1      0
+    VisOptions::getViewResetFlag                            4      1      0
+    VisOptions::getWindVectorAutosparse                     4      1      0
+    VisOptions::getWindVectorLabel                          4      1      0
+    VisOptions::getWindVectorLength                         4      1      0
+    VisOptions::getWindVectorScaleFactor                    4      1      0
+    VisOptions::getWindVectorSparseness                     4      1      0
+    VisOptions::getWindVectorTipSize                        4      1      0
+    VisOptions::setBboxMaxLat                               4      1      0
+    VisOptions::setBboxMaxLon                               4      1      0
+    VisOptions::setBboxMinLat                               4      1      0
+    VisOptions::setBboxMinLon                               4      1      0
+    VisOptions::setCalipsoScaleFactor                       4      1      0
+    VisOptions::setCeilometerMaxAltitude                    4      1      0
+    VisOptions::setCeilometerMinAltitude                    4      1      0
+    VisOptions::setCeilometerPlotScrollerValue              4      1      0
+    VisOptions::setCeilometerShowLocations                  4      1      0
+    VisOptions::setCeilometerShowMixingLayer                4      1      0
+    VisOptions::setCeilometerSize                           4      1      0
+    VisOptions::setCurProjection                            4      1      0
+    VisOptions::setCurrentDayNum                            4      1      0
+    VisOptions::setDataSourceList                           4      1      0
+    VisOptions::setDisplayMode                              4      1      0
+    VisOptions::setDownloadsOutstanding                     4      1      0
+    VisOptions::setDrawModisTrueColor                       4      1      0
+    VisOptions::setFilenamePng                              4      1      0
+    VisOptions::setFilenamePngDefault                       4      1      0
+    VisOptions::setFilenameScenario                         4      1      0
+    VisOptions::setFlattenCMAQ                              4      1      0
+    VisOptions::setIsBEHRPagedFromDisk                      4      1      0
+    VisOptions::setIsHMSPagedFromDisk                       4      1      0
+    VisOptions::setIsMODISPagedFromDisk                     4      1      0
+    VisOptions::setIsTEMPOPagedFromDisk                     4      1      0
+    VisOptions::setIsTROPOMIPagedFromDisk                   4      1      0
+    VisOptions::setIsVIIRSPagedFromDisk                     4      1      0
+    VisOptions::setLonlatLabelOrientation                   4      1      0
+    VisOptions::setMapOverlayFile                           4      1      0
+    VisOptions::setMaplineColor                             4      1      0
+    VisOptions::setMaplineColorIndex                        4      1      0
+    VisOptions::setNeubrewMaxAltitude                       4      1      0
+    VisOptions::setNeubrewMinAltitude                       4      1      0
+    VisOptions::setNeubrewPlotScrollerValue                 4      1      0
+    VisOptions::setNeubrewShowLocations                     4      1      0
+    VisOptions::setNeubrewSize                              4      1      0
+    VisOptions::setOpacityModisTrueColor                    4      1      0
+    VisOptions::setPandoraMaxAltitude                       4      1      0
+    VisOptions::setPandoraMinAltitude                       4      1      0
+    VisOptions::setPandoraPlotScrollerValue                 4      1      0
+    VisOptions::setPandoraShowLocations                     4      1      0
+    VisOptions::setPandoraSize                              4      1      0
+    VisOptions::setPersistBEHR                              4      1      0
+    VisOptions::setPersistBEHRHours                         4      1      0
+    VisOptions::setPersistHMS                               4      1      0
+    VisOptions::setPersistHMSHours                          4      1      0
+    VisOptions::setPersistMODIS                             4      1      0
+    VisOptions::setPersistMODISHours                        4      1      0
+    VisOptions::setPersistTEMPO                             4      1      0
+    VisOptions::setPersistTEMPOHours                        4      1      0
+    VisOptions::setPersistTROPOMI                           4      1      0
+    VisOptions::setPersistTROPOMIHours                      4      1      0
+    VisOptions::setPersistVIIRS                             4      1      0
+    VisOptions::setPersistVIIRSHours                        4      1      0
+    VisOptions::setRulerLat                                 4      1      0
+    VisOptions::setRulerLon                                 4      1      0
+    VisOptions::setSaveDir                                  4      1      0
+    VisOptions::setSaveFileFormatIndex                      4      1      0
+    VisOptions::setSaveMetadataFlag                         4      1      0
+    VisOptions::setShowRuler                                4      1      0
+    VisOptions::setTrueColorType                            4      1      0
+    VisOptions::setUniqueId                                 4      1      0
+    VisOptions::setViewResetFlag                            4      1      0
+    VisOptions::setWindVectorAutosparse                     4      1      0
+    VisOptions::setWindVectorLabel                          4      1      0
+    VisOptions::setWindVectorLength                         4      1      0
+    VisOptions::setWindVectorScaleFactor                    4      1      0
+    VisOptions::setWindVectorSparseness                     4      1      0
+    VisOptions::setWindVectorTipSize                        4      1      0
+    ~VisOptions                                             3      1      0
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Totals:                 627    140      2
+main.cpp:
+    CustomStyle::CustomStyle                                2      1      0
+    CustomStyle::drawPrimitive                             29      7      9
+    main                                                   49      1     37
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Totals:                  80      9      9
+ 
+    ALL:                                                18218   2622   3333
+ 

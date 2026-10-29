@@ -16,6 +16,7 @@ HISTORY: 2012/11/12, zhang.nan@epa.gov, Created.
 
 #include <QApplication>      //qApp, slot closeAllWindows()
 #include <QDesktopServices>  //QDesktopServices::openUrl(QUrl);
+#include <QDesktopWidget>
 #include <QString>
 #include <QResizeEvent>
 #include <QDebug>
@@ -27,7 +28,6 @@ HISTORY: 2012/11/12, zhang.nan@epa.gov, Created.
 #include <QList>
 #include <QObjectList>
 #include <QFileDialog>
-#include <QUuid>
 #include <QScrollBar>
 
 #include <DatasetManager.h> // For class emvl::DatasetManager.
@@ -74,7 +74,7 @@ static int timebaseMaxHourly   = 7;  // days
 static int timebaseMaxDaily    = 365; //days
 static int timebaseMaxDailyLst = 365; //days
 static int timebaseMaxMonthly  = 24; //months
-const int TABWIDGET_HEIGHT_ROW5 = 560;
+//const int TABWIDGET_HEIGHT_ROW5 = 560;
 
 
 
@@ -104,8 +104,8 @@ ControlDockWidget::ControlDockWidget(QWidget *parent):
     ui->setupUi(this);
     ui->mainVerticalLayout->setContentsMargins(2, 2, 2, 2);
     ui->tabWidget->setCurrentIndex(0);
-    ui->tabWidget->setMinimumHeight(TABWIDGET_HEIGHT_ROW5);
-    ui->tabWidget->setMaximumHeight(TABWIDGET_HEIGHT_ROW5);
+    //ui->tabWidget->setMinimumHeight(TABWIDGET_HEIGHT_ROW5);
+    //ui->tabWidget->setMaximumHeight(TABWIDGET_HEIGHT_ROW5);
 
 #ifdef __APPLE__
     // On Macs default tabs must be size-adjusted to fit:
@@ -115,16 +115,29 @@ ControlDockWidget::ControlDockWidget(QWidget *parent):
     this->setWidget(ui->mainVerticalLayout->parentWidget());
     this->setWindowTitle("RSIG3D Controls");
 
-    const int dockWidth = 450;
+    // actual screen size
+    QDesktopWidget desktop;
+    //int screenWidth  = desktop.screenGeometry().width();
+    int screenHeight = desktop.screenGeometry().height();
+
     this->setFeatures(QDockWidget::NoDockWidgetFeatures);
     this->setAllowedAreas(Qt::LeftDockWidgetArea);
-    this->setMinimumWidth(dockWidth-60);
-    this->resize(dockWidth, 600);
     this->setFloating(false);
+    this->setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::Preferred);
+    
+    if (screenHeight > 2000) {
+      const int dockWidth = 2500;      
+      this->setMinimumWidth(dockWidth-1600);
+      this->resize(dockWidth, 1200);
+    } else {
+      const int dockWidth = 650;
+      this->setMinimumWidth(dockWidth-150);
+      this->resize(dockWidth, 600);
+    }
 
     this->initTab0ClientData(); //Map Tab
     this->initTab1ClientData(); //Data Tab
-    this->initTab2ClientData(); //View Tab
+    this->initTab2ClientData(); //View and Info Tabs
     this->initTab3ClientData(); //Save Tab
     this->initTab4ClientData(); //RSIG Web Tab
 
@@ -137,7 +150,7 @@ ControlDockWidget::ControlDockWidget(QWidget *parent):
 
     ui->textBrowser->setContextMenuPolicy(Qt::DefaultContextMenu);
     ui->textBrowser->setReadOnly(true);
-    ui->textBrowser->setStyleSheet("background-color: rgb(240,240,240);");
+    ui->textBrowser->setStyleSheet("border:1px solid gray;background-color: rgb(240,240,240);");
     ui->textBrowser->verticalScrollBar()->setStyleSheet(
                                                         "background-color: transparent;"
                                                         "alternate-background-color: transparent;"
@@ -189,8 +202,12 @@ ControlDockWidget::~ControlDockWidget() {
 
 void ControlDockWidget::deleteModisTrueColorImages() {
   // delete old MODIS True Color images
+
+  VisOptions* vOptions = VisOptionsSingleton::getInstance();
+  QString uniqueID = vOptions->getUniqueId();
+  
   QDir dir(QDir::homePath() + "/.rsig/");
-  dir.setNameFilters(QStringList() << "trueColor_*.png");
+  dir.setNameFilters(QStringList() << "trueColor_*" + uniqueID + ".png");
   dir.setFilter(QDir::Files);
 
   foreach(QString dirFile, dir.entryList()) {
@@ -325,6 +342,9 @@ void ControlDockWidget::onScenarioIndexChanged(int index) {
                                              QDir::currentPath(),
                                              filter);
         qDebug("restoring from file");
+        this->postMessage("Restoring from " + fname + "...", RSIGState::NORMAL_TEXT);
+        Q_EMIT requestRedraw();
+        qApp->processEvents();
         mainWin.restoreStateFromFile(fname);
       }
       break;
@@ -339,6 +359,9 @@ void ControlDockWidget::onScenarioIndexChanged(int index) {
         ui->vizVarCombobox->removeItem(0);
       }
 
+      this->postMessage("Restoring from " + mainWin.stateFileName() + "...", RSIGState::NORMAL_TEXT);
+      Q_EMIT requestRedraw();
+      qApp->processEvents();
       mainWin.restoreStateFromFile(mainWin.stateFileName());
       break;
     case 3: //Fire Event, 5 sources are open
@@ -458,11 +481,11 @@ void ControlDockWidget::setWidgetTooltips() {
     ui->filterToolButton->setToolTip("");
     ui->getdataPushButton->setToolTip("");
     ui->checkServersPushButton->setToolTip("");
-    ui->frame_2->setToolTip("");
+    //ui->frame_2->setToolTip("");
     ui->label_selectedData->setToolTip("");
 
     // VIEW tab
-    ui->label_10->setToolTip("");
+    ui->label_mode->setToolTip("");
     ui->radioButton2D->setToolTip("");
     ui->radioButton3D->setToolTip("");
     ui->radioButtonPanelDisplay->setToolTip("");
@@ -472,7 +495,7 @@ void ControlDockWidget::setWidgetTooltips() {
     ui->vizCheckBox->setToolTip("");
     ui->cellBoundaryCheckbox->setToolTip("");
     ui->vizOpacitySlider->setToolTip("");
-    ui->label_13->setToolTip("");
+    ui->label_minmax->setToolTip("");
     ui->vizMinSpinbox->setToolTip("");
     ui->vizMaxSpinbox->setToolTip("");
     ui->vizDataDefault->setToolTip("");
@@ -483,7 +506,7 @@ void ControlDockWidget::setWidgetTooltips() {
     ui->windVectorSparseness->setToolTip("");
     ui->windVectorTipSize->setToolTip("");
     ui->autoSparseCheckBox->setToolTip("");
-    ui->groupBox_13->setToolTip("");
+    ui->groupBox_ruler->setToolTip("");
     ui->persistMODIS->setToolTip("");
     ui->persistMODISHours->setToolTip("");
     ui->CMAQRowSlider->setToolTip("");
@@ -556,12 +579,14 @@ void ControlDockWidget::setWidgetTooltips() {
     ui->aggregate3->setToolTip(aggregateText);
     ui->aggregate4->setToolTip(aggregateText);
     ui->aggregate5->setToolTip(aggregateText);
-    ui->label_layer->setToolTip("Desired layer for multi-layer CMAQ variables<br><br>- Specify -1 for column integration of concentration variables<br>- Specify 0 to get all layers<br>- Specify 1 through LAYER_MAX for a specific layer");
-    ui->selectedLayer1->setToolTip("Desired layer for multi-layer CMAQ variables<br><br>- Specify -1 for column integration of concentration variables<br>- Specify 0 to get all layers<br>- Specify 1 through LAYER_MAX for a specific layer <br><br>Note: For CMAQ wind a specific layer must be specified.");
-    ui->selectedLayer2->setToolTip("Desired layer for multi-layer CMAQ variables<br><br>- Specify -1 for column integration of concentration variables<br>- Specify 0 to get all layers<br>- Specify 1 through LAYER_MAX for a specific layer <br><br>Note: For CMAQ wind a specific layer must be specified.");
-    ui->selectedLayer3->setToolTip("Desired layer for multi-layer CMAQ variables<br><br>- Specify -1 for column integration of concentration variables<br>- Specify 0 to get all layers<br>- Specify 1 through LAYER_MAX for a specific layer <br><br>Note: For CMAQ wind a specific layer must be specified.");
-    ui->selectedLayer4->setToolTip("Desired layer for multi-layer CMAQ variables<br><br>- Specify -1 for column integration of concentration variables<br>- Specify 0 to get all layers<br>- Specify 1 through LAYER_MAX for a specific layer <br><br>Note: For CMAQ wind a specific layer must be specified.");
-    ui->selectedLayer5->setToolTip("Desired layer for multi-layer CMAQ variables<br><br>- Specify -1 for column integration of concentration variables<br>- Specify 0 to get all layers<br>- Specify 1 through LAYER_MAX for a specific layer <br><br>Note: For CMAQ wind a specific layer must be specified.");
+
+    QString selectedLayerTooltip = "Desired layer for multi-layer variables<br><br><b>CMAQ</b><br>- Specify -1 for column integration of concentration variables<br>- Specify 0 to get all layers<br>- Specify 1 through LAYER_MAX for a specific layer<br><br><b>TEMPO O3PROF</b><br>- Specify 1 through LAYER_MAX for a specific layer.";
+    ui->label_layer->setToolTip(selectedLayerTooltip);
+    ui->selectedLayer1->setToolTip(selectedLayerTooltip);
+    ui->selectedLayer2->setToolTip(selectedLayerTooltip);
+    ui->selectedLayer3->setToolTip(selectedLayerTooltip);
+    ui->selectedLayer4->setToolTip(selectedLayerTooltip);
+    ui->selectedLayer5->setToolTip(selectedLayerTooltip);
     ui->label_regrid->setToolTip("Interpolate data to a specific CMAQ grid.<br><br>Use the \"Re-grid parameters\" button below to specify the grid.<br><br>Regridding happens on-the-fly when the data is requested.");
     ui->regridCheckbox1->setToolTip("Interpolate data to a specific CMAQ grid.<br><br>Use the \"Re-grid parameters\" button below to specify the grid.<br><br>Regridding happens on-the-fly when the data is requested.");
     ui->regridCheckbox2->setToolTip("Interpolate data to a specific CMAQ grid.<br><br>Use the \"Re-grid parameters\" button below to specify the grid.<br><br>Regridding happens on-the-fly when the data is requested.");
@@ -575,7 +600,7 @@ void ControlDockWidget::setWidgetTooltips() {
     ui->filterToolButton->setToolTip("Specify data filtering parameters for GASP and CALIPSO data. ");
     ui->getdataPushButton->setToolTip("Once all selections have been set, click here to begin the data retrieval");
     ui->checkServersPushButton->setToolTip("Display all servers in the RSIG system that were offline in the last 24 hours");
-    ui->frame_2->setToolTip("Animation controls");
+    //ui->frame_2->setToolTip("Animation controls");
     ui->label_selectedData->setToolTip("Select up to 5 variables from the menu tree above");
     ui->forwardButton->setToolTip("Increment time");
     ui->backButton->setToolTip("Decrement time");
@@ -589,7 +614,7 @@ void ControlDockWidget::setWidgetTooltips() {
 
     
     // VIEW tab
-    ui->label_10->setToolTip("Select 2D or 3D viewing mode");
+    ui->label_mode->setToolTip("Select 2D or 3D viewing mode");
     ui->radioButton2D->setToolTip("Select 2D viewing mode");
     ui->radioButton3D->setToolTip("Select 3D viewing mode");
     ui->radioButtonPanelDisplay->setToolTip("Select Panel Display mode");
@@ -599,7 +624,7 @@ void ControlDockWidget::setWidgetTooltips() {
     ui->vizCheckBox->setToolTip("Turn selected variable on or off");
     ui->cellBoundaryCheckbox->setToolTip("View cell boundaries (polygon data only)");
     ui->vizOpacitySlider->setToolTip("Make data partially transparent");
-    ui->label_13->setToolTip("Adjust data range of color map");
+    ui->label_minmax->setToolTip("Adjust data range of color map");
     ui->vizMinSpinbox->setToolTip("Adjust data range of color map");
     ui->vizMaxSpinbox->setToolTip("Adjust data range of color map");
     ui->vizDataDefault->setToolTip("Lock the color map range to the min/max present in the data");
@@ -610,7 +635,7 @@ void ControlDockWidget::setWidgetTooltips() {
     ui->windVectorTipSize->setToolTip("Adjust the size of the wind vector tips");
     ui->autoSparseCheckBox->setToolTip("Automatically adjust the density of displayed wind vectors or barbs (Gridded data only)");
     ui->windVectorSparseness->setToolTip("Manually adjust the density of displayed wind vectors or barbs (Gridded data only)");
-    ui->groupBox_13->setToolTip("Show a vertical scale at the specified location");
+    ui->groupBox_ruler->setToolTip("Show a vertical scale at the specified location");
     ui->persistMODIS->setToolTip("Allow swath-based satellite data to persist for specified number of hours");
     ui->persistMODISHours->setToolTip("Number of hours for swath-based satellite data to remain visible");
     ui->persistVIIRS->setToolTip("Allow swath-based satellite data to persist for specified number of hours");
@@ -683,8 +708,10 @@ QString ControlDockWidget::get_tooltip(QString var, QString units, QString descr
 
   if (thisSource.compare("MODIS") == 0) {
     thisSource = thisSource + " AQUA (MYD files) and TERRA (MOD files)";
-  } else if (thisSource.compare("VIIRSNOAA") == 0) {
+  } else if (thisSource.compare("VIIRS") == 0) {
     thisSource = thisSource + " S-NPP (npp files) and NOAA-20 (j01 files)";
+  } else if (thisSource.compare("TEMPOEPA") == 0) {
+    thisSource = "TEMPOEPA (EPA local copy of select TEMPO variables for faster access)";
   }
 
   return_tooltip = thisSource + ": " + description + " " + units + "\n" + "COVERAGE: " + coverage;
@@ -706,23 +733,35 @@ QString ControlDockWidget::get_variableCoverage(QString item) {
   QString prefix = "";
   QStringList months; months << "Jan" << "Feb" << "Mar" << "Apr" << "May" << "Jun" << "Jul" << "Aug" << "Sep" << "Oct" << "Nov" << "Dec";
 
+  // strip the data category (Satellite, Model, AirQuality, etc.) before matching with statsWith()
+  QStringList itemParse = item.split(".");
+  QList<QString> itemToMatchList = itemParse.mid(1, -1);
+  QStringList aha(itemToMatchList);
+  QString itemToMatch = aha.join(".");
+  //qDebug() << itemToMatch;
+  
   for (int i=0; i<availNamesSize; ++i) {
 
     if (availNames[i] != "") {
 
-      if (item.contains(availNames[i] + '.')) {
+      //qDebug() << "availName" << availNames[i];
+      
+      
+      if (itemToMatch.startsWith(availNames[i] + '.')) {
 
         // process special cases first
 
-        if (availNames[i].contains("acam")) {
+        if (availNames[i].startsWith("acam")) {
           return_string = "July 2011: 1, 2, 5, 10, 11, 14, 20, 21, 22, 26, 27, 29";
-        } else if (availNames[i].contains("hsrl")) {
+        } else if (availNames[i].startsWith("hsrl")) {
           return_string = "July 2011: 1, 2, 5, 10, 11, 14, 20, 21, 22, 26, 27, 29";
+        } else if (availNames[i].startsWith("nesdis.pm25sat")) {
+          return_string = "Aug 01, 2012 to Dec 05, 2022";
         } else {
 
-          if (availNames[i].contains("airnow2")) {
+          if (availNames[i].startsWith("airnow2")) {
             prefix = "www.airnowapi.org server: ";
-          } else if (availNames[i].contains("airnow")) {
+          } else if (availNames[i].startsWith("airnow")) {
             prefix = "csv.airnowgateway.org server: ";
           }
 
@@ -733,28 +772,37 @@ QString ControlDockWidget::get_variableCoverage(QString item) {
           QString minMonthName = months[minMonth.toInt()-1];
 
 
-          
-          if (availNames[i].contains("tempo") &&
-              ! availNames[i].contains("tempo2") &&
-              ! item.contains("proxy")) { // HACK for TEMPO:
+          if (availNames[i].startsWith("tempoepa")) {
             return_string =
-              "\n  Public access: Version 3 data (May 13, 2024 - present)"
-              "\n  Non-key public access: Unvalidated data for these dates: "
-              "Aug 2, 9, 16, 21, 22, 23, 25, 26, 2023 and Dec 17-30, 2023; "
-              "\n  TEMPO Science Team access: " +
-              minMonthName + " " + minDay + ", " + minYear + "  to  " ;
+              "\n  adp:\t(Aug 2023)"
+              "\n  aodalh:\t(Aug 2023)"
+              "\n  l3:\t(Aug 2023)"
+              "\n  hcho:\t(Sep 9, 2025 to present)"
+              "\n  no2:\t(Sep 9, 2025 to present)";
+            
+          } else if (availNames[i].startsWith("tempo")) {
+            return_string =
+              //"\n  Public access: Version 3 data (May 13, 2024 - present)"
+              //"\n  Non-key public access: Unvalidated data for these dates: "
+              //"Aug 2, 9, 16, 21, 22, 23, 25, 26, 2023 and Dec 17-30, 2023; "
+              //"\n  TEMPO Science Team access: " +
+              minMonthName + " " + minDay + ", " + minYear + "  to  " ;  
+            
           } else {
             return_string = prefix + minMonthName + " " + minDay + ", " + minYear + "  to  " ;
           }
 
-          if (maxAvailDate[i] == 99999999) {
-            return_string = return_string + "present";
-          } else {
-            QString maxYear  = QString::number(maxAvailDate[i]).mid(0,4);
-            QString maxMonth = QString::number(maxAvailDate[i]).mid(4,2);
-            QString maxDay   = QString::number(maxAvailDate[i]).mid(6,2);
-            QString maxMonthName = months[maxMonth.toInt()-1];
-            return_string = return_string + maxMonthName + " " + maxDay + ", " + maxYear;
+
+          if (! availNames[i].startsWith("tempoepa")) {
+            if (maxAvailDate[i] == 99999999) {
+              return_string = return_string + "present";
+            } else {
+              QString maxYear  = QString::number(maxAvailDate[i]).mid(0,4);
+              QString maxMonth = QString::number(maxAvailDate[i]).mid(4,2);
+              QString maxDay   = QString::number(maxAvailDate[i]).mid(6,2);
+              QString maxMonthName = months[maxMonth.toInt()-1];
+              return_string = return_string + maxMonthName + " " + maxDay + ", " + maxYear;
+            }
           }
         }
       }
@@ -770,7 +818,8 @@ bool isCompareVar(QString item) {
   return item.contains("abs_diff.") ||
          item.contains("percent_diff.") ||
          item.contains("diff.") ||
-         item.contains("ratio.");
+         item.contains("ratio.") ||
+         item.contains("replace.");
 }
 
 
@@ -873,18 +922,18 @@ QString swap_compare_operator1(QString source_string) {
   if (return_string.contains("abs_diff_")) {
     return_string.replace("abs_diff_", "compare_");
     return_string.append("-abs_diff");
-
   } else if (return_string.contains("percent_diff_")) {
     return_string.replace("percent_diff_", "compare_");
     return_string.append("-percent_diff");
-
   } else if (return_string.contains("diff_")) {
     return_string.replace("diff_", "compare_");
     return_string.append("-diff");
-  
   } else if (return_string.contains("ratio_")) {
     return_string.replace("ratio_", "compare_");
     return_string.append("-ratio");
+  } else if (return_string.contains("replace_")) {
+    return_string.replace("replace_", "compare_");
+    return_string.append("-replace");
   }
 
   return return_string;
@@ -906,8 +955,7 @@ QDomElement ControlDockWidget::domElement(const QString& id, QDomDocument& docum
   QDomElement stateNode;
   VisOptions *vOptions = VisOptionsSingleton::getInstance();
   const RSIGState * gState = RSIGStateSingleton::getInstance();
-  QString uniqueID = QUuid::createUuid().toString().remove("{").remove("}").remove("-");
-  vOptions->setUniqueId(uniqueID);
+  
 
   if (id.compare("Control") == 0) {
     stateNode = document.createElement(id);
@@ -1230,6 +1278,13 @@ QDomElement ControlDockWidget::domElement(const QString& id, QDomDocument& docum
   stateNode.appendChild(node2);
 
   // MODIS TrueColor
+  QString uniqueID = vOptions->getUniqueId();
+  QString bboxString =
+      QString::number(vOptions->getBboxMinLon()) + "_" +
+      QString::number(vOptions->getBboxMinLat()) + "_" +
+      QString::number(vOptions->getBboxMinLon()) + "_" +
+      QString::number(vOptions->getBboxMinLat());
+  
   QDomElement node4 = document.createElement("truecolor");
   node4.setAttribute("draw_truecolor", vOptions->getDrawModisTrueColor());
 
@@ -1247,10 +1302,12 @@ QDomElement ControlDockWidget::domElement(const QString& id, QDomDocument& docum
     QString mm   = QString("%1").arg(xdate.month(), 2, 10, QChar('0'));
     QString dd   = QString("%1").arg(xdate.day(),   2, 10, QChar('0'));
     QString yyyymmdd = yyyy + mm + dd;
-    QString filename_4326 = QDir::homePath() + "/.rsig/trueColor_" + curTrueColor + "_" + yyyymmdd +"_4326.png";
-    QString filename_3857 = QDir::homePath() + "/.rsig/trueColor_" + curTrueColor + "_" + yyyymmdd +"_3857.png";
-    QFile::rename(filename_4326, filename_4326+"_"+uniqueID);
-    QFile::rename(filename_3857, filename_3857+"_"+uniqueID);
+    //QString filename_4326 = QDir::homePath() + "/.rsig/trueColor_" + curTrueColor + "_" + yyyymmdd +"_4326.png";
+    //QString filename_3857 = QDir::homePath() + "/.rsig/trueColor_" + curTrueColor + "_" + yyyymmdd +"_3857.png";
+    //QFile::rename(filename_4326, filename_4326+"_"+uniqueID);
+    //QFile::rename(filename_3857, filename_3857+"_"+uniqueID);
+    QString filename_4326 = QDir::homePath() + "/.rsig/trueColor_" + curTrueColor + "_" + yyyymmdd +"_4326_" + bboxString + ".png";
+    QString filename_3857 = QDir::homePath() + "/.rsig/trueColor_" + curTrueColor + "_" + yyyymmdd +"_3857_" + bboxString + ".png";
   }
 
   // Regrid settings
@@ -1304,6 +1361,7 @@ QDomElement ControlDockWidget::domElement(const QString& id, QDomDocument& docum
   node6.setAttribute("MOSmax",         filterData->MOSmax);
   node6.setAttribute("SCAmin",         filterData->SCAmin);
   node6.setAttribute("SCAmax",         filterData->SCAmax);
+  node6.setAttribute("HRRRStride",     filterData->HRRRStride);
   node6.setAttribute("TropomiQuality", filterData->TropomiQuality);
   node6.setAttribute("CALIPSOL1DataVersion", filterData->CALIPSOL1DataVersion);
   node6.setAttribute("CALIPSOL2DataVersion", filterData->CALIPSOL2DataVersion);
@@ -1863,16 +1921,25 @@ void ControlDockWidget::initFromDOMElement(const QDomElement& element) {
         ui->vizVarCombobox->setCurrentIndex( ui->vizVarCombobox->count()-1);
         ui->vizCheckBox->setChecked(true);
 
+        QString uniqueID = vOptions->getUniqueId();
+        QString bboxString =
+          QString::number(vOptions->getBboxMinLon()) + "_" +
+          QString::number(vOptions->getBboxMinLat()) + "_" +
+          QString::number(vOptions->getBboxMinLon()) + "_" +
+          QString::number(vOptions->getBboxMinLat());
+ 
         for (int daynum=0; daynum<truecolor_ndays; daynum++) {
           const QDate xdate = ui->dateDateEdit->date().addDays(daynum);
           QString yyyy = QString("%1").arg(xdate.year(),  4, 10, QChar('0'));
           QString mm   = QString("%1").arg(xdate.month(), 2, 10, QChar('0'));
           QString dd   = QString("%1").arg(xdate.day(),   2, 10, QChar('0'));
           QString yyyymmdd = yyyy + mm + dd;
-          QString filename_4326 = QDir::homePath() + "/.rsig/trueColor_" + curTrueColor + "_" + yyyymmdd +"_4326.png";
-          QString filename_3857 = QDir::homePath() + "/.rsig/trueColor_" + curTrueColor + "_" + yyyymmdd +"_3857.png";
-          QFile::rename(filename_4326+"_"+truecolor_uniqueID, filename_4326);
-          QFile::rename(filename_3857+"_"+truecolor_uniqueID, filename_3857);
+          //QString filename_4326 = QDir::homePath() + "/.rsig/trueColor_" + curTrueColor + "_" + yyyymmdd +"_4326.png";
+          //QString filename_3857 = QDir::homePath() + "/.rsig/trueColor_" + curTrueColor + "_" + yyyymmdd +"_3857.png";
+          //QFile::rename(filename_4326+"_"+truecolor_uniqueID, filename_4326);
+          //QFile::rename(filename_3857+"_"+truecolor_uniqueID, filename_3857);
+          QString filename_4326 = QDir::homePath() + "/.rsig/trueColor_" + curTrueColor + "_" + yyyymmdd +"_4326_" + bboxString + ".png";
+          QString filename_3857 = QDir::homePath() + "/.rsig/trueColor_" + curTrueColor + "_" + yyyymmdd +"_3857_" + bboxString + ".png";
         }
       }
     } else if ( tagName == "regrid_parameters" ) {
@@ -1923,52 +1990,65 @@ void ControlDockWidget::initFromDOMElement(const QDomElement& element) {
       filterData->MOSmax             = DomUtils::stringFromDom(child, "MOSmax", "").toDouble();
       filterData->SCAmin             = DomUtils::stringFromDom(child, "SCAmin", "").toDouble();
       filterData->SCAmax             = DomUtils::stringFromDom(child, "SCAmax", "").toDouble();
+      filterData->HRRRStride         = DomUtils::stringFromDom(child, "HRRRStride", "").toInt();
       filterData->TropomiQuality     = DomUtils::stringFromDom(child, "TropomiQuality", "").toInt();
       filterData->CALIPSOL1DataVersion = DomUtils::stringFromDom(child, "CALIPSOL1DataVersion", "");
       filterData->CALIPSOL2DataVersion = DomUtils::stringFromDom(child, "CALIPSOL2DataVersion", "");
 
     } else if ( tagName == "swath_persist" ) {
-      bool persistBEHR      = DomUtils::stringFromDom(child, "persistBEHR", "").toInt();
-      int  persistBEHRHours = DomUtils::stringFromDom(child, "persistBEHRHours", "").toInt();
-      vOptions->setPersistBEHR(persistBEHR);
-      vOptions->setPersistBEHRHours(persistBEHRHours);
-      ui->persistBEHR->setChecked(persistBEHR);
-      ui->persistBEHRHours->setValue(persistBEHRHours);
+      if (! vOptions->getIsBEHRPagedFromDisk()) { // pagedtodisk already set when dataset was loaded
+        bool persistBEHR      = DomUtils::stringFromDom(child, "persistBEHR", "").toInt();
+        int  persistBEHRHours = DomUtils::stringFromDom(child, "persistBEHRHours", "").toInt();
+        vOptions->setPersistBEHR(persistBEHR);
+        vOptions->setPersistBEHRHours(persistBEHRHours);
+        ui->persistBEHR->setChecked(persistBEHR);
+        ui->persistBEHRHours->setValue(persistBEHRHours);
+      }
 
-      bool persistMODIS      = DomUtils::stringFromDom(child, "persistMODIS", "").toInt();
-      int  persistMODISHours = DomUtils::stringFromDom(child, "persistMODISHours", "").toInt();
-      vOptions->setPersistMODIS(persistMODIS);
-      vOptions->setPersistMODISHours(persistMODISHours);
-      ui->persistMODIS->setChecked(persistMODIS);
-      ui->persistMODISHours->setValue(persistMODISHours);
+      if (! vOptions->getIsMODISPagedFromDisk()) { // pagedtodisk already set when dataset was loaded
+        bool persistMODIS      = DomUtils::stringFromDom(child, "persistMODIS", "").toInt();
+        int  persistMODISHours = DomUtils::stringFromDom(child, "persistMODISHours", "").toInt();
+        vOptions->setPersistMODIS(persistMODIS);
+        vOptions->setPersistMODISHours(persistMODISHours);
+        ui->persistMODIS->setChecked(persistMODIS);
+        ui->persistMODISHours->setValue(persistMODISHours);
+      }
       
-      bool persistVIIRS      = DomUtils::stringFromDom(child, "persistVIIRS", "").toInt();
-      int  persistVIIRSHours = DomUtils::stringFromDom(child, "persistVIIRSHours", "").toInt();
-      vOptions->setPersistVIIRS(persistVIIRS);
-      vOptions->setPersistVIIRSHours(persistVIIRSHours);
-      ui->persistVIIRS->setChecked(persistVIIRS);
-      ui->persistVIIRSHours->setValue(persistVIIRSHours);
+      if (! vOptions->getIsVIIRSPagedFromDisk()) { // pagedtodisk already set when dataset was loaded
+        bool persistVIIRS      = DomUtils::stringFromDom(child, "persistVIIRS", "").toInt();
+        int  persistVIIRSHours = DomUtils::stringFromDom(child, "persistVIIRSHours", "").toInt();
+        vOptions->setPersistVIIRS(persistVIIRS);
+        vOptions->setPersistVIIRSHours(persistVIIRSHours);
+        ui->persistVIIRS->setChecked(persistVIIRS);
+        ui->persistVIIRSHours->setValue(persistVIIRSHours);
+      }
       
-      bool persistTROPOMI      = DomUtils::stringFromDom(child, "persistTROPOMI", "").toInt();
-      int  persistTROPOMIHours = DomUtils::stringFromDom(child, "persistTROPOMIHours", "").toInt();
-      vOptions->setPersistTROPOMI(persistTROPOMI);
-      vOptions->setPersistTROPOMIHours(persistTROPOMIHours);
-      ui->persistTROPOMI->setChecked(persistTROPOMI);
-      ui->persistTROPOMIHours->setValue(persistTROPOMIHours);
+      if (! vOptions->getIsTROPOMIPagedFromDisk()) { // pagedtodisk already set when dataset was loaded
+        bool persistTROPOMI      = DomUtils::stringFromDom(child, "persistTROPOMI", "").toInt();
+        int  persistTROPOMIHours = DomUtils::stringFromDom(child, "persistTROPOMIHours", "").toInt();
+        vOptions->setPersistTROPOMI(persistTROPOMI);
+        vOptions->setPersistTROPOMIHours(persistTROPOMIHours);
+        ui->persistTROPOMI->setChecked(persistTROPOMI);
+        ui->persistTROPOMIHours->setValue(persistTROPOMIHours);
+      }
       
-      bool persistTEMPO      = DomUtils::stringFromDom(child, "persistTEMPO", "").toInt();
-      int  persistTEMPOHours = DomUtils::stringFromDom(child, "persistTEMPOHours", "").toInt();
-      vOptions->setPersistTEMPO(persistTEMPO);
-      vOptions->setPersistTEMPOHours(persistTEMPOHours);
-      ui->persistTEMPO->setChecked(persistTEMPO);
-      ui->persistTEMPOHours->setValue(persistTEMPOHours);
+      if (! vOptions->getIsTEMPOPagedFromDisk()) { // pagedtodisk already set when dataset was loaded
+        bool persistTEMPO      = DomUtils::stringFromDom(child, "persistTEMPO", "").toInt();
+        int  persistTEMPOHours = DomUtils::stringFromDom(child, "persistTEMPOHours", "").toInt();
+        vOptions->setPersistTEMPO(persistTEMPO);
+        vOptions->setPersistTEMPOHours(persistTEMPOHours);
+        ui->persistTEMPO->setChecked(persistTEMPO);
+        ui->persistTEMPOHours->setValue(persistTEMPOHours);
+      }
       
-      bool persistHMS      = DomUtils::stringFromDom(child, "persistHMS", "").toInt();
-      int  persistHMSHours = DomUtils::stringFromDom(child, "persistHMSHours", "").toInt();
-      vOptions->setPersistHMS(persistHMS);
-      vOptions->setPersistHMSHours(persistHMSHours);
-      ui->persistHMS->setChecked(persistHMS);
-      ui->persistHMSHours->setValue(persistHMSHours);
+      if (! vOptions->getIsHMSPagedFromDisk()) { // pagedtodisk already set when dataset was loaded
+        bool persistHMS      = DomUtils::stringFromDom(child, "persistHMS", "").toInt();
+        int  persistHMSHours = DomUtils::stringFromDom(child, "persistHMSHours", "").toInt();
+        vOptions->setPersistHMS(persistHMS);
+        vOptions->setPersistHMSHours(persistHMSHours);
+        ui->persistHMS->setChecked(persistHMS);
+        ui->persistHMSHours->setValue(persistHMSHours);
+      }
     }
   }
 
@@ -2042,9 +2122,14 @@ void ControlDockWidget::initFromDOMElement(const QDomElement& element) {
   const int useDataPreferences = strUseDataPreferences.toInt();
   ui->chkUseDataPrefs->setChecked(useDataPreferences);
 
-  const QString strGuiFontSize = element.attribute("guiFontSize", "8");
+  #ifdef __APPLE__
+    const QString strGuiFontSize = element.attribute("guiFontSize", "11");
+  #else
+    const QString strGuiFontSize = element.attribute("guiFontSize", "8");
+  #endif
   const int guiFontSize = strGuiFontSize.toInt();
   ui->guiFontsizeSpinbox->setValue(guiFontSize);
+  
 
 
 

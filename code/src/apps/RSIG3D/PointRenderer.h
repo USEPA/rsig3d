@@ -25,6 +25,8 @@ class PointRenderer: public VisDataObject {
 
 public:
 
+  // commented out Q_PROPERTYs prevents them from being exposed in the property editor (Info tab)
+  
   Q_PROPERTY(int pointShape READ pointShape WRITE setPointShape DESIGNABLE true USER true)
   int pointShape() const;
   void setPointShape(int shape);
@@ -33,15 +35,15 @@ public:
   float pointSize() const;
   void setPointSize(float r);
 
-  Q_PROPERTY(qreal lineWidth READ lineWidth WRITE setLineWidth DESIGNABLE true USER true)
+  //Q_PROPERTY(qreal lineWidth READ lineWidth WRITE setLineWidth DESIGNABLE true USER true)
   float lineWidth() const;
   void setLineWidth(float w);
 
-  Q_PROPERTY(QColor pointColor READ pointColor WRITE setPointColor DESIGNABLE true USER true)
+  //Q_PROPERTY(QColor pointColor READ pointColor WRITE setPointColor DESIGNABLE true USER true)
   QColor pointColor() const;
   void setPointColor(const QColor& color);
 
-  Q_PROPERTY(bool showNullSample READ showNullSample WRITE setShowNullSample DESIGNABLE true USER true)
+  //Q_PROPERTY(bool showNullSample READ showNullSample WRITE setShowNullSample DESIGNABLE true USER true)
   bool showNullSample() const;
   void setShowNullSample(bool flag);
 

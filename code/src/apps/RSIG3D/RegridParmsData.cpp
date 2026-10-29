@@ -533,16 +533,14 @@ void RegridParmsData::init_lonlat_parameters() {
 
   VGTYP = 6;
   GDTYP = 1;
-  NCOLS = 1;
-  NROWS = 1;
+  NCOLS = 60;
+  NROWS = 26;
   NLAYS = 1;
 
-  MainWin& mainWin = MainWin::getInstance();
-  ControlDockWidget* const controlDockWidget = mainWin.controlWidget();
-  XORIG = controlDockWidget->get_currentGuiBbox_minLon();
-  YORIG = controlDockWidget->get_currentGuiBbox_minLat();
-  XCELL = controlDockWidget->get_currentGuiBbox_maxLon() - XORIG;
-  YCELL = controlDockWidget->get_currentGuiBbox_maxLat() - YORIG;
+  XORIG = -126.0;
+  YORIG = 24.0;
+  XCELL = 1.0;
+  YCELL = 1.0;
   VGTOP = 5000.0;
   
   PALP   = 0.0;

@@ -23,6 +23,14 @@ private:
   bool persistTROPOMI;
   bool persistTEMPO;
   bool persistHMS;
+
+  bool isBEHRPagedFromDisk;
+  bool isMODISPagedFromDisk;
+  bool isVIIRSPagedFromDisk;
+  bool isTROPOMIPagedFromDisk;
+  bool isTEMPOPagedFromDisk;
+  bool isHMSPagedFromDisk;
+  
   bool drawModisTrueColor;
   float opacityModisTrueColor;
   QString trueColorType;
@@ -134,6 +142,24 @@ public:
 
   bool getPersistHMS() const;
   void setPersistHMS(bool x);
+
+  bool getIsBEHRPagedFromDisk() const;
+  void setIsBEHRPagedFromDisk(bool x);
+
+  bool getIsMODISPagedFromDisk() const;
+  void setIsMODISPagedFromDisk(bool x);
+
+  bool getIsVIIRSPagedFromDisk() const;
+  void setIsVIIRSPagedFromDisk(bool x);
+
+  bool getIsTROPOMIPagedFromDisk() const;
+  void setIsTROPOMIPagedFromDisk(bool x);
+
+  bool getIsTEMPOPagedFromDisk() const;
+  void setIsTEMPOPagedFromDisk(bool x);
+
+  bool getIsHMSPagedFromDisk() const;
+  void setIsHMSPagedFromDisk(bool x);
   
   bool getDrawModisTrueColor() const;
   void setDrawModisTrueColor(bool x);

@@ -40,6 +40,14 @@ VisOptions::VisOptions():QObject() {
   persistTROPOMI = false;
   persistTEMPO = false;
   persistHMS = false;
+
+  isBEHRPagedFromDisk = false;
+  isMODISPagedFromDisk = false;
+  isVIIRSPagedFromDisk = false;
+  isTROPOMIPagedFromDisk = false;
+  isTEMPOPagedFromDisk = false;
+  isHMSPagedFromDisk = false;
+  
   drawModisTrueColor = false;
   opacityModisTrueColor = 100.0;
   trueColorType = "None";
@@ -174,6 +182,30 @@ bool VisOptions::getPersistTEMPO() const {
 
 bool VisOptions::getPersistHMS() const {
   return persistHMS;
+}
+
+bool VisOptions::getIsBEHRPagedFromDisk() const {
+  return isBEHRPagedFromDisk;
+}
+
+bool VisOptions::getIsMODISPagedFromDisk() const {
+  return isMODISPagedFromDisk;
+}
+
+bool VisOptions::getIsVIIRSPagedFromDisk() const {
+  return isVIIRSPagedFromDisk;
+}
+
+bool VisOptions::getIsTROPOMIPagedFromDisk() const {
+  return isTROPOMIPagedFromDisk;
+}
+
+bool VisOptions::getIsTEMPOPagedFromDisk() const {
+  return isTEMPOPagedFromDisk;
+}
+
+bool VisOptions::getIsHMSPagedFromDisk() const {
+  return isHMSPagedFromDisk;
 }
 
 bool VisOptions::getShowRuler() const {
@@ -430,6 +462,30 @@ void VisOptions::setPersistTEMPO(bool x) {
 
 void VisOptions::setPersistHMS(bool x) {
   persistHMS = x;
+}
+
+void VisOptions::setIsBEHRPagedFromDisk(bool x) {
+  isBEHRPagedFromDisk = x;
+}
+
+void VisOptions::setIsMODISPagedFromDisk(bool x) {
+  isMODISPagedFromDisk = x;
+}
+
+void VisOptions::setIsVIIRSPagedFromDisk(bool x) {
+  isVIIRSPagedFromDisk = x;
+}
+
+void VisOptions::setIsTROPOMIPagedFromDisk(bool x) {
+  isTROPOMIPagedFromDisk = x;
+}
+
+void VisOptions::setIsTEMPOPagedFromDisk(bool x) {
+  isTEMPOPagedFromDisk = x;
+}
+
+void VisOptions::setIsHMSPagedFromDisk(bool x) {
+  isHMSPagedFromDisk = x;
 }
 
 void VisOptions::setShowRuler(bool x) {

@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'downloaddialog.ui'
 **
-** Created: Thu Jun 12 13:29:43 2025
+** Created: Thu Jul 23 13:53:07 2026
 **      by: Qt User Interface Compiler version 4.8.3
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -16,6 +16,7 @@
 #include <QtGui/QButtonGroup>
 #include <QtGui/QCheckBox>
 #include <QtGui/QDialog>
+#include <QtGui/QGridLayout>
 #include <QtGui/QGroupBox>
 #include <QtGui/QHBoxLayout>
 #include <QtGui/QHeaderView>
@@ -26,14 +27,13 @@
 #include <QtGui/QTextBrowser>
 #include <QtGui/QToolButton>
 #include <QtGui/QVBoxLayout>
-#include <QtGui/QWidget>
 
 QT_BEGIN_NAMESPACE
 
 class Ui_DownloadDialog
 {
 public:
-    QWidget *layoutWidget;
+    QGridLayout *gridLayout;
     QVBoxLayout *verticalLayout;
     QGroupBox *groupBox;
     QToolButton *showlogToolButton;
@@ -64,13 +64,11 @@ public:
         DownloadDialog->setSizePolicy(sizePolicy);
         DownloadDialog->setMinimumSize(QSize(480, 420));
         DownloadDialog->setMaximumSize(QSize(480, 4200));
-        layoutWidget = new QWidget(DownloadDialog);
-        layoutWidget->setObjectName(QString::fromUtf8("layoutWidget"));
-        layoutWidget->setGeometry(QRect(10, 10, 461, 433));
-        verticalLayout = new QVBoxLayout(layoutWidget);
+        gridLayout = new QGridLayout(DownloadDialog);
+        gridLayout->setObjectName(QString::fromUtf8("gridLayout"));
+        verticalLayout = new QVBoxLayout();
         verticalLayout->setObjectName(QString::fromUtf8("verticalLayout"));
-        verticalLayout->setContentsMargins(0, 0, 0, 0);
-        groupBox = new QGroupBox(layoutWidget);
+        groupBox = new QGroupBox(DownloadDialog);
         groupBox->setObjectName(QString::fromUtf8("groupBox"));
         sizePolicy.setHeightForWidth(groupBox->sizePolicy().hasHeightForWidth());
         groupBox->setSizePolicy(sizePolicy);
@@ -79,9 +77,17 @@ public:
         showlogToolButton = new QToolButton(groupBox);
         showlogToolButton->setObjectName(QString::fromUtf8("showlogToolButton"));
         showlogToolButton->setGeometry(QRect(370, 72, 72, 22));
+        QSizePolicy sizePolicy1(QSizePolicy::MinimumExpanding, QSizePolicy::MinimumExpanding);
+        sizePolicy1.setHorizontalStretch(0);
+        sizePolicy1.setVerticalStretch(0);
+        sizePolicy1.setHeightForWidth(showlogToolButton->sizePolicy().hasHeightForWidth());
+        showlogToolButton->setSizePolicy(sizePolicy1);
         sourceTitleLabel = new QLabel(groupBox);
         sourceTitleLabel->setObjectName(QString::fromUtf8("sourceTitleLabel"));
         sourceTitleLabel->setGeometry(QRect(10, 12, 81, 16));
+        sizePolicy1.setHeightForWidth(sourceTitleLabel->sizePolicy().hasHeightForWidth());
+        sourceTitleLabel->setSizePolicy(sizePolicy1);
+        sourceTitleLabel->setMinimumSize(QSize(60, 0));
         sourceTitleLabel->setTextFormat(Qt::RichText);
         sourceLabel = new QLabel(groupBox);
         sourceLabel->setObjectName(QString::fromUtf8("sourceLabel"));
@@ -89,16 +95,21 @@ public:
         dataTitleLabel = new QLabel(groupBox);
         dataTitleLabel->setObjectName(QString::fromUtf8("dataTitleLabel"));
         dataTitleLabel->setGeometry(QRect(10, 40, 61, 16));
+        sizePolicy1.setHeightForWidth(dataTitleLabel->sizePolicy().hasHeightForWidth());
+        dataTitleLabel->setSizePolicy(sizePolicy1);
+        dataTitleLabel->setMinimumSize(QSize(60, 0));
         closeonfinishCheckBox = new QCheckBox(groupBox);
         closeonfinishCheckBox->setObjectName(QString::fromUtf8("closeonfinishCheckBox"));
         closeonfinishCheckBox->setGeometry(QRect(10, 70, 151, 20));
+        sizePolicy1.setHeightForWidth(closeonfinishCheckBox->sizePolicy().hasHeightForWidth());
+        closeonfinishCheckBox->setSizePolicy(sizePolicy1);
         dataLabel = new QLabel(groupBox);
         dataLabel->setObjectName(QString::fromUtf8("dataLabel"));
         dataLabel->setGeometry(QRect(70, 40, 380, 16));
 
         verticalLayout->addWidget(groupBox);
 
-        logTextBrowser = new QTextBrowser(layoutWidget);
+        logTextBrowser = new QTextBrowser(DownloadDialog);
         logTextBrowser->setObjectName(QString::fromUtf8("logTextBrowser"));
         logTextBrowser->setMinimumSize(QSize(0, 220));
         logTextBrowser->setMaximumSize(QSize(16777215, 220));
@@ -107,14 +118,16 @@ public:
 
         horizontalLayout = new QHBoxLayout();
         horizontalLayout->setObjectName(QString::fromUtf8("horizontalLayout"));
-        progressLabel = new QLabel(layoutWidget);
+        progressLabel = new QLabel(DownloadDialog);
         progressLabel->setObjectName(QString::fromUtf8("progressLabel"));
         progressLabel->setTextFormat(Qt::PlainText);
 
         horizontalLayout->addWidget(progressLabel);
 
-        progressBar = new QProgressBar(layoutWidget);
+        progressBar = new QProgressBar(DownloadDialog);
         progressBar->setObjectName(QString::fromUtf8("progressBar"));
+        sizePolicy1.setHeightForWidth(progressBar->sizePolicy().hasHeightForWidth());
+        progressBar->setSizePolicy(sizePolicy1);
         progressBar->setMinimumSize(QSize(0, 18));
         progressBar->setMaximumSize(QSize(16777215, 18));
         progressBar->setValue(0);
@@ -130,16 +143,20 @@ public:
 
         horizontalLayout_2->addItem(horizontalSpacer);
 
-        okPushButton = new QPushButton(layoutWidget);
+        okPushButton = new QPushButton(DownloadDialog);
         okPushButton->setObjectName(QString::fromUtf8("okPushButton"));
+        sizePolicy1.setHeightForWidth(okPushButton->sizePolicy().hasHeightForWidth());
+        okPushButton->setSizePolicy(sizePolicy1);
         okPushButton->setMinimumSize(QSize(0, 24));
         okPushButton->setMaximumSize(QSize(16777215, 24));
         okPushButton->setDefault(true);
 
         horizontalLayout_2->addWidget(okPushButton);
 
-        cancelPushButton = new QPushButton(layoutWidget);
+        cancelPushButton = new QPushButton(DownloadDialog);
         cancelPushButton->setObjectName(QString::fromUtf8("cancelPushButton"));
+        sizePolicy1.setHeightForWidth(cancelPushButton->sizePolicy().hasHeightForWidth());
+        cancelPushButton->setSizePolicy(sizePolicy1);
         cancelPushButton->setMinimumSize(QSize(0, 24));
         cancelPushButton->setMaximumSize(QSize(16777215, 24));
 
@@ -151,6 +168,9 @@ public:
         verticalSpacer = new QSpacerItem(20, 18, QSizePolicy::Minimum, QSizePolicy::Expanding);
 
         verticalLayout->addItem(verticalSpacer);
+
+
+        gridLayout->addLayout(verticalLayout, 0, 0, 1, 1);
 
 
         retranslateUi(DownloadDialog);

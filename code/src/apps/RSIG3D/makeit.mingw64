@@ -24,15 +24,13 @@ where g++
 g++ -m64 -v
 
 #############################################################################
-# Here is where RSIG3D code is installed for this platform:
+# Here is where RSIG3D code is installed:
 
-#MY_RSIG3D_DIR="$MY_HOME/projects/rsig/dev/RSIG3D"
-MY_RSIG3D_DIR="/home/mfreem02/github/rsig3d"
+MY_RSIG3D_DIR="$MY_HOME/projects/rsig/RSIG3D"
 
 #############################################################################
 # Here is where QT is installed for this platform:
 
-#MY_QT_DIR="$MY_RSIG3D_DIR/package/QT/Win64/qt-everywhere-opensource-src-4.8.6-master"
 MY_QT_DIR="$MY_RSIG3D_DIR/code/package/QT/Win64/qt-everywhere-opensource-src-4.8.6-master"
 MY_QT_INCLUDE_DIR="$MY_QT_DIR/include"
 MY_QT_LIB_DIR="$MY_QT_DIR/lib"
@@ -88,7 +86,6 @@ MY_QT_DFLAGS=\
 " -DQT_THREAD_SUPPORT "\
 ""
 
-
 #############################################################################
 # Other (non-QT) libraries used by this application:
 
@@ -119,6 +116,7 @@ MY_MARBLE_IFLAGS=\
 ""
 
 MY_INCLUDE_DIR="$MY_RSIG3D_DIR/code/include"
+MY_INCLUDE_DIR2="$MY_RSIG3D_DIR/code/include/PropertyEditor"
 MY_LIB_DIR="$MY_RSIG3D_DIR/code/lib/Win64"
 
 # Available libraries: Dataset Utilities Shapefile GPC netcdf hdf hdf_hl QMapControl PropertyEditor marble glew freeglut PNG Z m
@@ -143,7 +141,6 @@ MY_LIB_LFLAGS=\
 " -lZ "\
 " -lm "\
 ""
-
 
 #############################################################################
 # Files for this application:
@@ -178,6 +175,7 @@ MY_UI_FILES=\
 MY_MOC_HEADER_FILES=\
 " CMAQFileReaderDialog.h "\
 " ControlDockWidget.h "\
+" DataPreferences.h "\
 " DataUsePolicy.h "\
 " FileOrientedDownloader.h "\
 " FileOrientedDownloaderWorker.h "\
@@ -203,6 +201,7 @@ MY_MOC_HEADER_FILES=\
 " VisDataList.h "\
 " VisDataObject.h "\
 " VisDataObjectProperties.h "\
+" VisDataPropertyDelegate.h "\
 " VisDataPropertyEdit.h "\
 " VisOptions.h "\
 ""
@@ -215,6 +214,7 @@ MY_SOURCE_FILES=\
 " ControlDockWidget.cpp "\
 " ControlDockWidget_init.cpp "\
 " ControlDockWidget_slots.cpp "\
+" DataPreferences.cpp "\
 " DataUsePolicy.cpp "\
 " FileOrientedDownloader.cpp "\
 " FileOrientedDownloaderWorker.cpp "\
@@ -276,7 +276,7 @@ MY_DFLAGS=\
 " -DNO_ASSERTIONS "\
 ""
 
-MY_IFLAGS="-I. -I$MY_BUILD_DIR $MY_QT_IFLAGS $MY_MARBLE_IFLAGS -I$MY_INCLUDE_DIR"
+MY_IFLAGS="-I. -I$MY_BUILD_DIR $MY_QT_IFLAGS $MY_MARBLE_IFLAGS -I$MY_INCLUDE_DIR -I$MY_INCLUDE_DIR2"
 
 MY_SYSTEM_LFLAGS=\
 " -lmingw32 "\
@@ -473,12 +473,16 @@ echo "g++ $MY_LINK_FLAGS -o $MY_EXECUTABLE $MY_OBJECT_FILES $MY_LFLAGS"
 
 g++ $MY_LINK_FLAGS -o $MY_EXECUTABLE $MY_OBJECT_FILES $MY_LFLAGS
 
-if [ $? != 0 ] ; then exit $? ; fi
+if [ $? != 0 ]; then exit $?; fi
 
+rm -rf  $MY_BUILD_DIR
 echo
+strip   $MY_EXECUTABLE
 objdump -p $MY_EXECUTABLE | grep "DLL Name:"
-ls -l      $MY_EXECUTABLE
-file       $MY_EXECUTABLE
+ls -l   $MY_EXECUTABLE
+file    $MY_EXECUTABLE
+
+# Also copy to $HOME/RSIG3D:
 
 if [ ! -d $MY_HOME/RSIG3D ]
 then
@@ -487,4 +491,7 @@ else
   cp -p $MY_EXECUTABLE $MY_HOME/RSIG3D/
 fi
 
+ls -Flast  $MY_HOME/RSIG3D
+
 echo Done
+

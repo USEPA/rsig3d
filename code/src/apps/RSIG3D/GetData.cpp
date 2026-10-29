@@ -82,6 +82,16 @@ static void urlCallback( const char* const url ) {
   ControlDockWidget* const controlDockWidget = mainWin.controlWidget();
   QString buf = QString("WCS: ");
   buf.append(QString(url));
+
+  // Do not print the secret RSIG_ID option:
+
+  const char* const rsig_id_option = "&RSIG_ID=rsig3d";
+  const size_t rsig_id_option_length = strlen( rsig_id_option );
+
+  if ( buf.endsWith( rsig_id_option ) ) {
+    buf.chop( rsig_id_option_length );
+  }
+
   controlDockWidget->postMessage(buf, RSIGState::NORMAL_TEXT);
 
 }
@@ -191,6 +201,12 @@ emvl::Dataset* downloadData( const bool getMetadata,
   } else if ( strstr( variableName, "ceilometer." ) ) {
     boundsZ[ 0 ] = 0.0;
     boundsZ[ 1 ] = 15000.0;
+  } else if ( OR4( strstr( variableName, "tempo.l2.o3prof." ),
+                   strstr( variableName, "tempo.l3.o3prof." ),
+                   strstr( variableName, "tempoepa.l2.o3prof." ),
+                   strstr( variableName, "tempoepa.l3.o3prof." ) ) ) {
+    boundsZ[ 0 ] = layer;
+    boundsZ[ 1 ] = layer;
   }
 
   std::string directory;

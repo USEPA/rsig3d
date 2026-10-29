@@ -1,0 +1,88 @@
+
+Please read shapelib.html.
+
+Building on Unix
+----------------
+
+1) Edit Makefile, and set CFLAGS, and CC macros as required for the
+   target system.  Often the defaults will work fine.
+
+2) type "make" 
+
+The result should be:
+
+Core shapelib support.  
+  shpopen.o
+  dbfopen.o
+  safileio.o
+  shptree.o
+  libshp.a
+
+Utility/demonstration programs:
+  shpcreate, shpdump, shpadd, dbfcreate, dbfdump, dbfadd, shptreedump
+
+3) To test type:
+  make test
+
+4) To libshp.a and the test binaries in /usr/local:
+  make install 
+
+
+Building on Windows
+-------------------
+
+If you have run the VC++ VCVARS32.BAT, you should be able to type the 
+following in a command window to build the code and executables:
+
+C:>  nmake /f makefile.vc 
+
+Otherwise create your own VC++ project.  There aren't many files to deal with
+here!
+
+Thread-Safety:
+--------------
+
+http://lists.maptools.org/pipermail/shapelib/2007-November/000400.html
+
+[Shapelib] is the shaplib library thread safe?
+
+Frank Warmerdam warmerdam at pobox.com 
+Fri Nov 30 11:43:04 EST 2007
+Previous message: [Shapelib] is the shaplib library thread safe?
+Next message: [Shapelib] is the shaplib library thread safe?
+Messages sorted by: [ date ] [ thread ] [ subject ] [ author ]
+Bram de Greve wrote:
+> C S wrote:
+>> i am going to be using the library for multi
+>> processing and was wondering or just making sure if it
+>> was thread safe...thanks!
+>>   
+> AFAIK, the library itself is thread safe, but the different objects are
+> not.  So, it should be safe to open two different DBF files in two
+> different threads, but opening one DBF file and accessing it from
+> different threads is not.
+> 
+> Frank, am I right on this? =)
+
+Bram,
+
+I think that is correct.   I did an analysis of the core shapelib code
+a few months ago and fixed two things:
+
+  * Revision 1.73  2007/09/03 19:48:11  fwarmerdam
+  * move DBFReadAttribute() static dDoubleField into dbfinfo
+  *
+  * Revision 1.72  2007/09/03 19:34:06  fwarmerdam
+  * Avoid use of static tuple buffer in DBFReadTuple()
+
+With those changes I believe it is thread safe.  So C S should likely
+grab shapelib from CVS for safest operation.
+
+Best regards,
+-- 
+---------------------------------------+--------------------------------------
+I set the clouds in motion - turn up   | Frank Warmerdam, warmerdam at pobox.com
+light and sound - activate the windows | http://pobox.com/~warmerdam
+and watch the world go round - Rush    | President OSGeo, http://osgeo.org
+
+

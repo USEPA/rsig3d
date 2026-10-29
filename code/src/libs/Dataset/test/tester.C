@@ -1,6 +1,7 @@
 /******************************************************************************
 PURPOSE: tester.C - Test driver for Dataset Library.
 HISTORY: 2012-11-20 plessel.todd@epa.gov
+NOTES: To run: test/tester or on Windows: test\tester
 ******************************************************************************/
 
 //================================ INCLUDES ===================================
@@ -65,6 +66,7 @@ static const char* const tempDirectoryName = "test/output_dir/junk_dir";
 static FILE* outputKMLFile = 0;
 static const char* const tempFileName      = "test/junk";      // Transient.
 static const char* const nonExistentFileName = "/no/such/file";
+
 #if defined( _WIN32 )
 static const char* const unwritableDirectoryName = "/..";
 #define MKDIR(name,unused) mkdir(name)
@@ -75,26 +77,32 @@ static const char* const unwritableDirectoryName = "/dev";
 
 static const char* remoteUser = 0; // login name on atmos1, if needed.
 
-// Set path to curl: up to RSIG3D/bin/$platform
+// Set path to curl: /usr/bin/curl or on Windows: up to RSIG3D/bin/$platform
 
-#if defined( __APPLE__ ) && defined( __x86_64__ )
-static const char* const curlPath = "../../../../bin/Darwin.x86_64/RSIG3D.app/Contents/MacOS";
-#elif defined( __APPLE__ ) && defined (__arm64__)
-static const char* const curlPath = "../../../../bin/Darwin.arm64/RSIG3D.app/Contents/MacOS";
-#elif defined( __linux__ ) && defined( __x86_64__ )
-static const char* const curlPath = "../../../../bin/Linux.x86_64";
-#elif defined( _WIN64 )
-/* static const char* const curlPath = "../../../../bin/Win64"; */
-static const char* const curlPath = "..\\..\\..\\..\\bin\\Win64";
-#elif defined( _WIN32 )
-/* static const char* const curlPath = "../../../../bin/Win32"; */
-static const char* const curlPath = "..\\..\\..\\..\\bin\\Win32";
+#if defined( _WIN64 )
+static const char* const curlPath = "..\\..\\..\\bin\\Win64";
 #else
-#error "Unsupported platform"
+static const char* const curlPath = "/usr/bin";
 #endif
 
 static const char* const curlCommand =
   "curl -k --silent --retry 0 -L --tcp-nodelay --max-time";
+
+// Set path to CMAQSubset:
+
+#if defined( _WIN32 ) || defined( _WIN64 )
+static const char* const CMAQSubsetPath = "..\\..\\..\\bin\\Win64\\bin\\Win64";
+#elif defined( __APPLE__ )
+#if defined( __x86_64__ )
+const char* const CMAQSubsetPath = "../../../bin/Darwin.x86_64/bin/Darwin.x86_64";
+#elif defined( __arm64__ )
+const char* const CMAQSubsetPath = "../../../bin/Darwin.arm64/bin/Darwin.arm64";
+#endif
+#elif defined( __linux__ )
+#if defined( __x86_64__ )
+const char* const CMAQSubsetPath = "../../../bin/Linux.x86_64/bin/Linux.x86_64";
+#endif
+#endif
 
 // Point:
 
@@ -660,6 +668,17 @@ int main( int argc, char* argv[] ) {
     emvl::removeAllFiles( testDirectoryName );
   }
 
+  printf( "\nensure ~/.rsig directory exists:\n" );
+
+  const std::string rsigDirectory =
+    emvl::getHomeDirectory() + emvl::slash + ".rsig";
+
+  if ( ! emvl::isDirectory( rsigDirectory ) ) {
+    MKDIR( rsigDirectory.c_str(), 0755 );  // rwxr-xr-x.
+  }
+
+  assert( emvl::isDirectory( rsigDirectory ) );
+
   printf( "calling emvl::DatasetManager::checkAndSetServerHost( curlPath = '%s')\n",
            curlPath );
   emvl::DatasetManager::checkAndSetServerHost( curlPath ); //x
@@ -870,7 +889,7 @@ static void testResourceHandler() {
   assert( ! emvl::fileExists( tempFileName ) ); // Temp file removed.
 
   {
-    char command[ 256 ] = "";
+    char command[ 512 ] = "";
     memset( command, 0, sizeof command );
     snprintf( command, sizeof command / sizeof *command,
              "%s%ccurl --version", curlPath, emvl::slash );
@@ -1309,16 +1328,18 @@ PURPOSE: isSizetTests - Tests of isSizet routine.
 ******************************************************************************/
 
 static void isSizetTests() {
-  assert( ! emvl::isSizet( LLONG_MIN ) );
-  assert( ! emvl::isSizet( -1 ) );
+
+  printf( "sizeof (int) = %d\n", (int) sizeof (int) );
+  printf( "sizeof (long) = %d\n", (int) sizeof (long) );
+  printf( "sizeof (size_t) = %d\n", (int) sizeof (size_t) );
+  printf( "sizeof (long long) = %d\n", (int) sizeof (long long) );
+
   assert( emvl::isSizet( 0 ) );
   assert( emvl::isSizet( 1 ) );
-  assert( emvl::isSizet( ULONG_MAX - 1LL )
-          == ( sizeof (size_t) < sizeof (long long) ) );
+  assert( ! emvl::isSizet( -1 ) );
+  assert( ! emvl::isSizet( LLONG_MIN ) );
   assert( emvl::isSizet( ULONG_MAX )
-          == ( sizeof (size_t) < sizeof (long long) ) );
-  assert( emvl::isSizet( ULONG_MAX + 1LL )
-          != ( sizeof (size_t) < sizeof (long long) ) );
+          == ( sizeof (unsigned long) < sizeof (long long) ) );
   assert( emvl::isSizet( LLONG_MAX )
           != ( sizeof (size_t) < sizeof (long long) ) );
 
@@ -1342,7 +1363,7 @@ static void isSizetTests() {
                   emvl::isSignedLong( value ),
                   emvl::isUnsignedLong( value ),
                   emvl::isSizet( value ),
-                  sizeof (size_t) < sizeof (long long) ) );
+                  value < 0 ) );
     value = (long long) cvalue;
     assert( emvl::isSignedChar( value ) );
     value = (long long) ucvalue;
@@ -4517,7 +4538,7 @@ static void lowercaseTests() {
   }
 
   for ( size_t index = 0; index < scount1; ++index ) {
-    char string[ 256 ] = "";
+    char string[ 512 ] = "";
     memset( string, 0, sizeof string );
     strncpy( string, svalues1[ index ], sizeof string );
     emvl::lowercase( string );
@@ -4593,7 +4614,7 @@ static void eraseDoubleQuotedCommasTests() {
   }
 
   for ( size_t index = 0; index < scount1; ++index ) {
-    char string[ 256 ] = "";
+    char string[ 512 ] = "";
     memset( string, 0, sizeof string );
     strncpy( string, svalues1[ index ], sizeof string );
     emvl::eraseDoubleQuotedCommas( string );
@@ -4655,7 +4676,7 @@ static void substituteWordTests() {
     const char* const input = svalues1[ index ];
     const char* const from = "unmatched";
     const char* const to = "XYZ";
-    char output[ 256 ] = "";
+    char output[ 512 ] = "";
     memset( output, 0, sizeof output );
     emvl::substituteWord( input, from, to, output );
     assert( output[ sizeof output / sizeof *output - 1 ] == '\0' );
@@ -4666,7 +4687,7 @@ static void substituteWordTests() {
     const char* const input = svalues1[ index ];
     const char* const from = svalues1[ index ];
     const char* const to = "XYZ";
-    char output[ 256 ] = "";
+    char output[ 512 ] = "";
     memset( output, 0, sizeof output );
     emvl::substituteWord( input, from, to, output );
     assert( output[ sizeof output / sizeof *output - 1 ] == '\0' );
@@ -4798,7 +4819,7 @@ PURPOSE: removeAllFilesTests - Test removeAllFiles routine.
 static void removeAllFilesTests() {
   emvl::removeAllFiles( testDirectoryName, "xdr nc" );
   emvl::removeAllFiles( testDirectoryName );
-  char outputFileName[ 256 ] = "";
+  char outputFileName[ 512 ] = "";
   memset( outputFileName, 0, sizeof outputFileName );
   snprintf( outputFileName, sizeof outputFileName / sizeof *outputFileName,
            "%s/junk", testDirectoryName );
@@ -4826,7 +4847,7 @@ static void removeDirectoryTests() {
   // Create several temporary sub-directories and files to be removed:
 
   for ( int subdir = 1; subdir <= 3; ++subdir ) {
-    char outputDirectoryName[ 256 ] = "";
+    char outputDirectoryName[ 512 ] = "";
     memset( outputDirectoryName, 0, sizeof outputDirectoryName );
     snprintf( outputDirectoryName,
               sizeof outputDirectoryName / sizeof *outputDirectoryName,
@@ -4839,7 +4860,7 @@ static void removeDirectoryTests() {
       perror( "removeDirectoryTests mkdir problem:" );
       assert( status == 0 ); // Stop tester.
     } else {
-      char outputFileName[ 256 ] = "";
+      char outputFileName[ 1024 ] = "";
       memset( outputFileName, 0, sizeof outputFileName );
       snprintf( outputFileName,
                 sizeof outputFileName / sizeof *outputFileName,
@@ -4892,7 +4913,7 @@ static void directoryListingTests() {
   {
     char result[ 10 ] = "";
     const size_t size = sizeof result / sizeof *result;
-    char outputFileName[ 256 ] = "";
+    char outputFileName[ 512 ] = "";
     memset( outputFileName, 0, sizeof outputFileName );
     snprintf( outputFileName, sizeof outputFileName / sizeof *outputFileName,
              "%s/junk.txt", testDirectoryName );
@@ -4905,7 +4926,7 @@ static void directoryListingTests() {
   {
     char result[ 1024 ] = "";
     const size_t size = sizeof result / sizeof *result;
-    char outputFileName[ 256 ] = "";
+    char outputFileName[ 512 ] = "";
     memset( outputFileName, 0, sizeof outputFileName );
     snprintf( outputFileName, sizeof outputFileName / sizeof *outputFileName,
              "%s/junk.txt", testDirectoryName );
@@ -4920,7 +4941,7 @@ static void directoryListingTests() {
   {
     char result[ 1024 ] = "";
     const size_t size = sizeof result / sizeof *result;
-    char outputFileName[ 256 ] = "";
+    char outputFileName[ 512 ] = "";
     memset( outputFileName, 0, sizeof outputFileName );
     const size_t files = 5000; // Number of temp test files to create.
 
@@ -6787,7 +6808,7 @@ static void testHTTPConnection() {
   int test = 0;
 
   for ( ; test < 2; ++test ) {
-    char program[ 256 ] = "";
+    char program[ 512 ] = "";
 
     if ( test == 0 ) {
       snprintf( program, sizeof program / sizeof *program,
@@ -6867,7 +6888,7 @@ static void testHTTPConnection() {
         FILE* const stream = connection.getStream();
         assert( stream );
         int lines = 0;
-        char line[ 256 ] = "";
+        char line[ 512 ] = "";
         memset( line, 0, sizeof line );
 
         printf( "Reading data:...\n" );
@@ -6915,7 +6936,7 @@ static void testHTTPConnection() {
         int lines = 0;
         int timesteps = 0;
         int stations = 0;
-        char line[ 256 ] = "";
+        char line[ 512 ] = "";
         memset( line, 0, sizeof line );
 
         printf( "Reading header...\n" );
@@ -7023,6 +7044,7 @@ static void testDataFilterParameters() {
   assert( object.GASPMOSMaximum() == 0.425 );
   assert( object.GASPSCAMinimum() == 0.0 );
   assert( object.GASPSCAMaximum() == 255.0 );
+  assert( object.HRRRStride() == 1 );
   assert( object.TROPOMIMinimumAcceptedQuality() == 100 );
   assert( object.TROPOMIMaximumCloudFraction() == 1.0 );
   assert( object.TROPOMIGroundPixelMinimum() == emvl::IMISSING );
@@ -7070,6 +7092,7 @@ static void testDataFilterParameters() {
   assert( object2.GASPMOSMaximum() == 0.425 );
   assert( object2.GASPSCAMinimum() == 0.0 );
   assert( object2.GASPSCAMaximum() == 255.0 );
+  assert( object2.HRRRStride() == 1 );
   assert( object2.TROPOMIMinimumAcceptedQuality() == 100 );
   assert( object2.TROPOMIMaximumCloudFraction() == 1.0 );
   assert( object2.TROPOMIGroundPixelMinimum() == emvl::IMISSING );
@@ -7126,6 +7149,7 @@ static void testDataFilterParameters() {
                                       0.9,
                                       0.0,
                                       50.0,
+                                      10.0,
                                       dataVersion ) );
 
   emvl::DataFilterParameters object3( 20.0,  99.0,
@@ -7159,6 +7183,7 @@ static void testDataFilterParameters() {
                                       0.9,
                                       0.0,
                                       50.0,
+                                      10.0,
                                       dataVersion );
 
   assert( object3.CALIPSOMinimumAcceptedCADScore() == 20.0 );
@@ -7179,6 +7204,7 @@ static void testDataFilterParameters() {
   assert( object3.GASPMOSMaximum() == 0.425 );
   assert( object3.GASPSCAMinimum() == 0.0 );
   assert( object3.GASPSCAMaximum() == 255.0 );
+  assert( object3.HRRRStride() == 1 );
   assert( object3.TROPOMIMinimumAcceptedQuality() == 100 );
   assert( object3.TROPOMIMaximumCloudFraction() == 1.0 );
   assert( object3.TROPOMIGroundPixelMinimum() == 0 );
@@ -7213,6 +7239,7 @@ static void testDataFilterParameters() {
   object3.GASPSFCRange( -0.1, -0.1 );
   object3.GASPMOSRange( 0.1, 0.1 );
   object3.GASPSCARange( 0.2, 200.0 );
+  object3.HRRRStride( 10 );
   object3.TROPOMIMinimumAcceptedQuality( 50 );
   object3.TROPOMIMaximumCloudFraction( 0.5 );
   object3.TROPOMIGroundPixelRange( 100, 300 );
@@ -7254,6 +7281,7 @@ static void testDataFilterParameters() {
   assert( object3.GASPMOSMaximum() == 0.1 );
   assert( object3.GASPSCAMinimum() == 0.2 );
   assert( object3.GASPSCAMaximum() == 200.0 );
+  assert( object3.HRRRStride() == 10 );
   assert( object3.TROPOMIMinimumAcceptedQuality() == 50 );
   assert( object3.TROPOMIMaximumCloudFraction() == 0.5 );
   assert( object3.TROPOMIGroundPixelMinimum() == 100 );
@@ -7302,6 +7330,7 @@ static void testDataFilterParameters() {
   assert( object3.GASPMOSMaximum() == 0.425 );
   assert( object3.GASPSCAMinimum() == 0.0 );
   assert( object3.GASPSCAMaximum() == 255.0 );
+  assert( object3.HRRRStride() == 1 );
   assert( object3.TROPOMIMinimumAcceptedQuality() == 100 );
   assert( object3.TROPOMIMaximumCloudFraction() == 1.0 );
   assert( object3.TROPOMIGroundPixelMinimum() == emvl::IMISSING );
@@ -10429,8 +10458,16 @@ static void testDatasetManager() {
     printf( "calling emvl::DatasetManager::checkAndSetServerHost( curlPath = '%s')\n",
            curlPath );
     emvl::DatasetManager::checkAndSetServerHost( curlPath ); //x
-    printf("emvl::DatasetManager::remoteVersion() = '%d\n",
-            emvl::DatasetManager::remoteVersion() );
+
+    std::cout << "webservice = " << emvl::DatasetManager::webservice()
+              << std::endl;
+    std::cout << "server host = " << emvl::DatasetManager::serverHost()
+              << std::endl;
+    std::cout << "RSIG3D_VERSION = " << emvl::DatasetManager::remoteVersion()
+              << std::endl;
+
+    const int version = emvl::DatasetManager::remoteVersion();
+    assert( version > 20100101 ); // Can't complete tests if offline.
 
     // Test isValidPurpleAirKey():
 
@@ -10686,18 +10723,6 @@ static void testDatasetManager() {
     };
     size_t count = sizeof table / sizeof *table;
 
-    std::cout << "RSIG3D_VERSION = " << emvl::DatasetManager::remoteVersion()
-              << std::endl;
-    std::cout << "webservice = " << emvl::DatasetManager::webservice()
-              << std::endl;
-    std::cout << "server host = " << emvl::DatasetManager::serverHost()
-              << std::endl;
-    emvl::DatasetManager::checkAndSetServerHost( curlPath );
-    std::cout << "webservice = " << emvl::DatasetManager::webservice()
-              << std::endl;
-    std::cout << "server host = " << emvl::DatasetManager::serverHost()
-              << std::endl;
-
     // Test remote file retrieval:
 
     const std::string remoteFile( "download/RSIG3D_VERSION" );
@@ -10943,9 +10968,7 @@ static void testCMAQSubset() {
 
   // Set path to CMAQSubset:
 
-  const std::string subsetterDirectory( emvl::DatasetManager::getCurlPath() +
-                                        emvl::slash + "bin" +
-                                        emvl::slash + emvl::platform );
+  const std::string subsetterDirectory( CMAQSubsetPath );
   std::cout << "set subsetterDirectory = " << subsetterDirectory << std::endl;
   emvl::DatasetManager::setLocalSubsetterDirectory( subsetterDirectory );
 

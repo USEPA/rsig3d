@@ -832,7 +832,7 @@ void SwathDataset::readScanData( FILE* stream ) {
   const size_t scanVariables = 2 + variables_ + 8; // lon,lat, aod,... lat_nw
   const size_t datasetBytes = totalPoints_ * scanVariables * sizeof (double);
   const bool useBuffering =
-    AND2( ! fileName_.empty(), datasetBytes > PAGE_THREHOLD_GB );
+    AND2( ! fileName_.empty(), datasetBytes > PAGE_THREHOLD_BYTES );
   const size_t verticesPerCell = 4; // QUADRILATERAL: SW, SE, NE, NW.
   const size_t unbufferedDataSize = variables_ * totalPoints_;
   const size_t bufferedDataSize   = variables_ * maximumPoints_;
@@ -1107,6 +1107,8 @@ bool SwathDataset::readScans( FILE* stream,
                        AND2( data_.size() == variables_ * totalPoints_,
                              coordinates_.size() == totalPoints_ * 4 ) ) );
   bool result = true;
+  const char* const elevationTag = strstr( description_.c_str(), "@" );
+  const double elevation = elevationTag ? atof( elevationTag + 1 ) : 0.0;
 
   /*
    * Read XDR-format data from fileName_ into data_.
@@ -1218,10 +1220,10 @@ bool SwathDataset::readScans( FILE* stream,
                       isLatitude( latitudeNE ) );
 
               if ( result ) {
-                const Point pointSW = { longitudeSW, latitudeSW, 0.0 };
-                const Point pointSE = { longitudeSE, latitudeSE, 0.0 };
-                const Point pointNW = { longitudeNW, latitudeNW, 0.0 };
-                const Point pointNE = { longitudeNE, latitudeNE, 0.0 };
+                const Point pointSW = { longitudeSW, latitudeSW, elevation };
+                const Point pointSE = { longitudeSE, latitudeSE, elevation };
+                const Point pointNW = { longitudeNW, latitudeNW, elevation };
+                const Point pointNE = { longitudeNE, latitudeNE, elevation };
 
                 // Store vertices in counter-clockwise order:
 

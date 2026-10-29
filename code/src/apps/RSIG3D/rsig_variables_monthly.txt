@@ -12,5 +12,4 @@ Model.cmaq.read.file2                                                           
 Model.cmaq.read.file3                                                                                                                     (-)                 Read a CMAQ file on local or remote host.
 Model.cmaq.read.file4                                                                                                                     (-)                 Read a CMAQ file on local or remote host.
 Model.cmaq.read.file5                                                                                                                     (-)                 Read a CMAQ file on local or remote host.
-#AirQuality.purpleair.pm25_corrected_monthly                                                                                          (ug/m3)            Monthly average scaled humidity-corrected particulate matter not more than 2.5 microns in diameter.
-Other.pandora.ozone                                                                                                      (molecules/cm3)            Ground-based Pandora Spectrometer instrument measured ozone.
+
